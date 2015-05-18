@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22609.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RageLib", "RageLib\RageLib.csproj", "{718F3F76-51AE-46CB-B11B-027B9BBC8A0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RageLib.GTA5", "RageLib.GTA5\RageLib.GTA5.csproj", "{569CDE34-96F0-44BE-BD31-62B6A43C85B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{36EED776-1944-4C7B-A662-FBB1E36B6773}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{E35F87C9-1E39-44E4-BC72-336F5B63CB04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchiveTool", "Tools\ArchiveTool\ArchiveTool.csproj", "{7A5CAE95-08CD-4E4A-A900-77E2732EE6BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{718F3F76-51AE-46CB-B11B-027B9BBC8A0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{718F3F76-51AE-46CB-B11B-027B9BBC8A0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{718F3F76-51AE-46CB-B11B-027B9BBC8A0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{718F3F76-51AE-46CB-B11B-027B9BBC8A0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{569CDE34-96F0-44BE-BD31-62B6A43C85B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{569CDE34-96F0-44BE-BD31-62B6A43C85B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{569CDE34-96F0-44BE-BD31-62B6A43C85B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{569CDE34-96F0-44BE-BD31-62B6A43C85B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E35F87C9-1E39-44E4-BC72-336F5B63CB04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E35F87C9-1E39-44E4-BC72-336F5B63CB04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E35F87C9-1E39-44E4-BC72-336F5B63CB04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E35F87C9-1E39-44E4-BC72-336F5B63CB04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A5CAE95-08CD-4E4A-A900-77E2732EE6BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A5CAE95-08CD-4E4A-A900-77E2732EE6BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A5CAE95-08CD-4E4A-A900-77E2732EE6BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A5CAE95-08CD-4E4A-A900-77E2732EE6BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7A5CAE95-08CD-4E4A-A900-77E2732EE6BC} = {36EED776-1944-4C7B-A662-FBB1E36B6773}
+	EndGlobalSection
+EndGlobal

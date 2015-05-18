@@ -1,0 +1,9 @@
+.vs/
+packages/*
+**/bin/
+**/obj/
+*.suo
+
+# ignore testing project
+Testing
+
