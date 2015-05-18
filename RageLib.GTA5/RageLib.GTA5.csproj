@@ -23,7 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -46,6 +46,13 @@
     <Compile Include="Cryptography\GTA5Encryption.cs" />
     <Compile Include="Cryptography\GTA5Hash.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\PC\ResourceFile_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Texture\TextureBase_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Texture\TextureDictionary_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Texture\Texture_GTA5_pc.cs" />
+    <Compile Include="ResourceWrappers\PC\Texture\TextureDictionaryFile_GTA5_pc.cs" />
+    <Compile Include="ResourceWrappers\PC\Texture\TextureDictionaryWrapper_GTA5_pc.cs" />
+    <Compile Include="ResourceWrappers\PC\Texture\TextureWrapper_GTA5_pc.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RageLib\RageLib.csproj">
