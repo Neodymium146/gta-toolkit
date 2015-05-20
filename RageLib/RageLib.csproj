@@ -65,9 +65,11 @@
     <Compile Include="Resources\Common\ResourcePointerList.cs" />
     <Compile Include="Resources\Common\ResourcePointerList64.cs" />
     <Compile Include="Resources\Common\ResourceSimpleArray.cs" />
+    <Compile Include="Resources\Common\ResourceSimpleArrayArray64.cs" />
     <Compile Include="Resources\Common\Simple\byte_r.cs" />
     <Compile Include="Resources\Common\Simple\string_r.cs" />
     <Compile Include="Resources\Common\Simple\uint_r.cs" />
+    <Compile Include="Resources\Common\Simple\ulong_r.cs" />
     <Compile Include="Resources\Common\Simple\ushort_r.cs" />
     <Compile Include="Resources\IResourceBlock.cs" />
     <Compile Include="Resources\IResourceFile.cs" />
