@@ -21,12 +21,13 @@
 */
 
 using RageLib.Hash;
+using RageLib.Resources;
 using RageLib.Resources.Common;
-using RageLib.Resources.GTA5.PC.Texture;
+using RageLib.Resources.GTA5.PC.Textures;
 using System;
 using System.Collections.Generic;
 
-namespace RageLib.ResourceWrappers.GTA5.PC.Texture
+namespace RageLib.ResourceWrappers.GTA5.PC.Textures
 {
     /// <summary>
     /// Represents a wrapper for a GTA5 PC texture dictionary.
@@ -72,12 +73,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Texture
 
             // references
 
-            textureDictionary.PagesInfo = new PagesInfo_GTA5_pc();
-            textureDictionary.PagesInfo.Unknown_0h = 0x00000000;
-            textureDictionary.PagesInfo.Unknown_4h = 0x00000000;
-            textureDictionary.PagesInfo.Unknown_8h = 0x00000000;
-            textureDictionary.PagesInfo.Unknown_Ch = 0x00000000;
-            textureDictionary.PagesInfo.Unknown_10h = 0x00000000;
+            textureDictionary.PagesInfo = null;
 
             if (textureDictionary.Textures != null)
             {

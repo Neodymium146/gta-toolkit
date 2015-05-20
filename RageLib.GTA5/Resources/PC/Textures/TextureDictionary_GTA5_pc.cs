@@ -23,9 +23,9 @@
 using RageLib.Resources.Common;
 using System.Collections.Generic;
 
-namespace RageLib.Resources.GTA5.PC.Texture
+namespace RageLib.Resources.GTA5.PC.Textures
 {
-    public class TextureDictionary_GTA5_pc : ResourceSystemBlock
+    public class TextureDictionary_GTA5_pc : FileBase64_GTA5_pc
     {
         public override long Length
         {
@@ -36,9 +36,6 @@ namespace RageLib.Resources.GTA5.PC.Texture
         }
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h;
-        public ulong PagesInfoPointer;
         public uint Unknown_10h;
         public uint Unknown_14h;
         public uint Unknown_18h;
@@ -53,7 +50,6 @@ namespace RageLib.Resources.GTA5.PC.Texture
         public uint Unknown_3Ch;
 
         // reference data
-        public PagesInfo_GTA5_pc PagesInfo;
         public ResourceSimpleArray<uint_r> Hashes;
         public ResourcePointerArray64<Texture_GTA5_pc> Textures;
 
@@ -62,10 +58,9 @@ namespace RageLib.Resources.GTA5.PC.Texture
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.PagesInfoPointer = reader.ReadUInt64();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
@@ -78,11 +73,8 @@ namespace RageLib.Resources.GTA5.PC.Texture
             this.TexturesCount1 = reader.ReadUInt16();
             this.TexturesCount2 = reader.ReadUInt16();
             this.Unknown_3Ch = reader.ReadUInt32();
-            
+
             // read reference data
-            this.PagesInfo = reader.ReadBlockAt<PagesInfo_GTA5_pc>(
-                this.PagesInfoPointer
-            );
             this.Hashes = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
                 this.HashesPointer, // offset
                 this.HashesCount1
@@ -98,8 +90,9 @@ namespace RageLib.Resources.GTA5.PC.Texture
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
-            this.PagesInfoPointer = (ulong)(this.PagesInfo != null ? this.PagesInfo.Position : 0);
             this.HashesPointer = (ulong)(this.Hashes != null ? this.Hashes.Position : 0);
             this.HashesCount1 = (ushort)(this.Hashes != null ? this.Hashes.Count : 0);
             this.HashesCount2 = (ushort)(this.Hashes != null ? this.Hashes.Count : 0);
@@ -108,9 +101,6 @@ namespace RageLib.Resources.GTA5.PC.Texture
             this.TexturesCount2 = (ushort)(this.Textures != null ? this.Textures.Count : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.PagesInfoPointer);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
@@ -131,54 +121,10 @@ namespace RageLib.Resources.GTA5.PC.Texture
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (PagesInfo != null) list.Add(PagesInfo);
+            list.AddRange(base.GetReferences());
             if (Hashes != null) list.Add(Hashes);
             if (Textures != null) list.Add(Textures);
             return list.ToArray();
-        }
-    }
-
-    public class PagesInfo_GTA5_pc : ResourceSystemBlock
-    {
-        public override long Length
-        {
-            get
-            {
-                return 0x14; // or longer (at least more than 0x10)
-            }
-        }
-
-        // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public uint Unknown_10h;
-
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
-        {
-            // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h);
         }
     }
 }

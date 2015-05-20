@@ -23,7 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RageLib.Resources.GTA5.PC.Texture
+namespace RageLib.Resources.GTA5.PC.Textures
 {
     public class Texture_GTA5_pc : TextureBase_GTA5_pc
     {

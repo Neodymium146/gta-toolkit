@@ -21,7 +21,7 @@
 */
 
 using RageLib.Data;
-using RageLib.Resources.GTA5.PC.Texture;
+using RageLib.Resources.GTA5.PC.Textures;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -211,19 +211,15 @@ namespace RageLib.Resources.GTA5
 
 
 
-            // WORKAROUND FOR TEXTURES
+
             var resBlock = (IResourceBlock)ResourceData;
-            var texDict = (TextureDictionary_GTA5_pc)resBlock;
-            if (texDict.PagesInfo != null)
-            {
-                texDict.PagesInfo.Unknown_8h = 0;
-                if (systemPageCount > 0)
-                    texDict.PagesInfo.Unknown_8h |= 1;
-                texDict.PagesInfo.Unknown_8h |= (uint)(graphicsPageCount << 8);
-            }
-            else
-                throw new Exception("no pages info found!");
-            
+            var fileBase = (FileBase64_GTA5_pc)resBlock;
+            fileBase.PagesInfo = new PagesInfo_GTA5_pc();
+            fileBase.PagesInfo.SystemPagesCount = 0;
+            if (systemPageCount > 0)
+                fileBase.PagesInfo.SystemPagesCount = 1;
+            fileBase.PagesInfo.GraphicsPagesCount = (byte)graphicsPageCount;
+
 
 
 

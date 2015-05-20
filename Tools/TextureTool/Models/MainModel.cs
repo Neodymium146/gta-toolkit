@@ -22,7 +22,7 @@
 
 using RageLib.Helpers;
 using RageLib.ResourceWrappers;
-using RageLib.ResourceWrappers.GTA5.PC.Texture;
+using RageLib.ResourceWrappers.GTA5.PC.Textures;
 using System;
 using System.IO;
 
