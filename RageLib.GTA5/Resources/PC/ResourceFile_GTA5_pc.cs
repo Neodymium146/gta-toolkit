@@ -196,10 +196,14 @@ namespace RageLib.Resources.GTA5
 
         public override void Save(Stream stream)
         {
+            var resBlock = (IResourceBlock)ResourceData;
+            var fileBase = (FileBase64_GTA5_pc)resBlock;
+            fileBase.PagesInfo = new PagesInfo_GTA5_pc();
+
             IList<IResourceBlock> systemBlocks;
             IList<IResourceBlock> graphicBlocks;
             ResourceHelpers.GetBlocks(ResourceData, out systemBlocks, out graphicBlocks);
-
+            
             int systemPageSize = BASE_SIZE;
             int systemPageCount;
             ResourceHelpers.AssignPositions(systemBlocks, 0x50000000, ref systemPageSize, out systemPageCount);
@@ -207,14 +211,10 @@ namespace RageLib.Resources.GTA5
             int graphicsPageSize = BASE_SIZE;
             int graphicsPageCount;
             ResourceHelpers.AssignPositions(graphicBlocks, 0x60000000, ref graphicsPageSize, out graphicsPageCount);
+            
 
 
 
-
-
-            var resBlock = (IResourceBlock)ResourceData;
-            var fileBase = (FileBase64_GTA5_pc)resBlock;
-            fileBase.PagesInfo = new PagesInfo_GTA5_pc();
             fileBase.PagesInfo.SystemPagesCount = 0;
             if (systemPageCount > 0)
                 fileBase.PagesInfo.SystemPagesCount = 1;
