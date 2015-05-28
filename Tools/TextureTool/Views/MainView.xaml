@@ -5,6 +5,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -29,7 +30,28 @@
             </MenuItem>
         </Menu>
 
-        <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Textures}" SelectedItem="{Binding SelectedTexture}">
+        <ListView Grid.Row="1" Grid.Column="0" MinHeight="100"
+                  ItemsSource="{Binding TextureDictionaries}" SelectedItem="{Binding SelectedTextureDictionary}">
+            <ListBox.Style>
+                <Style TargetType="ListView">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding TextureFilesVisibility}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.Style>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Drawable Name" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Textures" DisplayMemberBinding="{Binding Count}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <ListView Grid.Row="2" Grid.Column="0"
+                  ItemsSource="{Binding Textures}" SelectedItem="{Binding SelectedTexture}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
@@ -40,7 +62,7 @@
             </ListView.View>
         </ListView>
 
-        <Grid Grid.Row="1" Grid.Column="1" Background="LightGray">
+        <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Background="LightGray">
             <Image Source="{Binding SelectedTexture.Image}" />
         </Grid>
        

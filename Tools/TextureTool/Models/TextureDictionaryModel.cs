@@ -31,12 +31,21 @@ namespace TextureTool.Models
     public class TextureDictionaryModel
     {
         private ITextureDictionary textureDictionary;
+        private string name;
 
-        private ITextureDictionary TextureDictionary
+        public ITextureDictionary TextureDictionary
         {
             get
             {
                 return textureDictionary;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return name;
             }
         }
 
@@ -45,15 +54,19 @@ namespace TextureTool.Models
             get
             {
                 var list = new List<TextureModel>();
-                foreach (var texture in textureDictionary.Textures)
-                    list.Add(new TextureModel(texture));
+                if (textureDictionary != null)
+                {
+                    foreach (var texture in textureDictionary.Textures)
+                        list.Add(new TextureModel(texture));
+                }
                 return list;
             }
         }
 
-        public TextureDictionaryModel(ITextureDictionary textureDictionary)
+        public TextureDictionaryModel(ITextureDictionary textureDictionary, string name = "")
         {
             this.textureDictionary = textureDictionary;
+            this.name = name;
         }
 
         public void Import(string fileName, bool replaceOnly = false)

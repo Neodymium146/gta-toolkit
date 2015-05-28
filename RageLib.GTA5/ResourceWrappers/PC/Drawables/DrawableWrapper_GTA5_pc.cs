@@ -89,7 +89,8 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
 
         public IEnumerator<IDrawable> GetEnumerator()
         {
-            throw new NotImplementedException();
+            foreach (var x in list)
+                yield return new DrawableWrapper_GTA5_pc(x);
         }
 
         public int IndexOf(IDrawable item)

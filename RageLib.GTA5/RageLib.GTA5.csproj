@@ -95,6 +95,8 @@
     <Compile Include="Resources\PC\Textures\TextureBase_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Textures\TextureDictionary_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Textures\Texture_GTA5_pc.cs" />
+    <Compile Include="ResourceWrappers\PC\Drawables\DrawableDictionaryFileWrapper_GTA5_pc.cs" />
+    <Compile Include="ResourceWrappers\PC\Drawables\DrawableDictionaryWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Drawables\DrawableFileWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Drawables\DrawableWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Drawables\ShaderGroupWrapper_GTA5_pc.cs" />

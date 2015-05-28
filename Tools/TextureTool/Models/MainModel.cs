@@ -25,12 +25,14 @@ using RageLib.ResourceWrappers;
 using RageLib.ResourceWrappers.Drawables;
 using RageLib.ResourceWrappers.GTA5.PC.Textures;
 using System;
+using System.Collections.Generic;
 
 namespace TextureTool.Models
 {
     public enum FileType
     {
         TextureDictionaryFile,
+        DrawableDictionaryFile,
         DrawableFile,
         None
     }
@@ -38,6 +40,7 @@ namespace TextureTool.Models
     public class MainModel
     {
         private ITextureDictionaryFile textureDictionaryFile;
+        private IDrawableDictionaryFile drawableDictionaryFile;
         private IDrawableFile drawableFile;
         private string fileName;
 
@@ -46,44 +49,54 @@ namespace TextureTool.Models
             get
             {
                 if (textureDictionaryFile != null)
-                {
                     return FileType.TextureDictionaryFile;
-                }
+                else if (drawableDictionaryFile != null)
+                    return FileType.DrawableDictionaryFile;
                 else if (drawableFile != null)
-                {
                     return FileType.DrawableFile;
-                }
                 else
-                {
                     return FileType.None;
-                }
             }
         }
 
-        public TextureDictionaryModel TextureDictionary
+        public List<TextureDictionaryModel> TextureDictionaries
         {
             get
             {
+                var list = new List<TextureDictionaryModel>();
                 if (textureDictionaryFile != null)
                 {
-                    return new TextureDictionaryModel(textureDictionaryFile.TextureDictionary);
+                    list.Add(new TextureDictionaryModel(textureDictionaryFile.TextureDictionary));
+                }
+                else if (drawableDictionaryFile != null)
+                {
+                    if (drawableDictionaryFile.DrawableDictionary.Drawables != null)
+                    {
+                        for (int i = 0; i < drawableDictionaryFile.DrawableDictionary.Drawables.Count; i++)
+                        {
+                            var drawable = drawableDictionaryFile.DrawableDictionary.Drawables[i];
+                            var drawableName = "0x" + drawableDictionaryFile.DrawableDictionary.GetHash(i).ToString("X8");
+                            if (drawable.ShaderGroup != null &&
+                               drawable.ShaderGroup.TextureDictionary != null)
+                            {
+                                list.Add(new TextureDictionaryModel(drawable.ShaderGroup.TextureDictionary, drawableName));
+                            }
+                            else
+                            {
+                                list.Add(new TextureDictionaryModel(null, drawableName));
+                            }
+                        }                        
+                    }                   
                 }
                 else if (drawableFile != null)
                 {
                     if (drawableFile.Drawable.ShaderGroup != null &&
                         drawableFile.Drawable.ShaderGroup.TextureDictionary != null)
                     {
-                        return new TextureDictionaryModel(drawableFile.Drawable.ShaderGroup.TextureDictionary);
-                    }
-                    else
-                    {
-                        return null;
+                        list.Add(new TextureDictionaryModel(drawableFile.Drawable.ShaderGroup.TextureDictionary));
                     }
                 }
-                else
-                {
-                    return null;
-                }
+                return list;
             }
         }
 
@@ -102,6 +115,7 @@ namespace TextureTool.Models
         public void New()
         {
             this.textureDictionaryFile = new TextureDictionaryFileWrapper_GTA5_pc();
+            this.drawableDictionaryFile = null;
             this.drawableFile = null;
             this.fileName = null;
         }
@@ -112,12 +126,21 @@ namespace TextureTool.Models
             {
                 this.textureDictionaryFile = new TextureDictionaryFileWrapper_GTA5_pc();
                 this.textureDictionaryFile.Load(fileName);
+                this.drawableDictionaryFile = null;
+                this.drawableFile = null;
+                this.fileName = fileName;
+            } else if (fileName.EndsWith(".ydd"))
+            {
+                this.textureDictionaryFile = null;
+                this.drawableDictionaryFile = new DrawableDictionaryFileWrapper_GTA5_pc();
+                this.drawableDictionaryFile.Load(fileName);
                 this.drawableFile = null;
                 this.fileName = fileName;
             }
             else if (fileName.EndsWith(".ydr"))
             {
                 this.textureDictionaryFile = null;
+                this.drawableDictionaryFile = null;
                 this.drawableFile = new DrawableFileWrapper_GTA5_pc();
                 this.drawableFile.Load(fileName);
                 this.fileName = fileName;
@@ -135,11 +158,16 @@ namespace TextureTool.Models
                 this.textureDictionaryFile.Save(fileName);
                 this.fileName = fileName;
             }
+            else if (drawableDictionaryFile != null)
+            {
+                this.drawableDictionaryFile.Save(fileName);
+                this.fileName = fileName;
+            }
             else if (drawableFile != null)
             {
                 this.drawableFile.Save(fileName);
                 this.fileName = fileName;
-            }          
+            }
         }
     }
 }
