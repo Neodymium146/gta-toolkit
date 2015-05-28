@@ -77,6 +77,10 @@
     <Compile Include="Resources\ResourceDataReader.cs" />
     <Compile Include="Resources\ResourceDataWriter.cs" />
     <Compile Include="Resources\ResourceHelpers.cs" />
+    <Compile Include="ResourceWrappers\Drawables\IDrawable.cs" />
+    <Compile Include="ResourceWrappers\Drawables\IDrawableFile.cs" />
+    <Compile Include="ResourceWrappers\Drawables\IShader.cs" />
+    <Compile Include="ResourceWrappers\Drawables\IShaderGroup.cs" />
     <Compile Include="ResourceWrappers\IResourceFile.cs" />
     <Compile Include="ResourceWrappers\Texture\ITexture.cs" />
     <Compile Include="ResourceWrappers\Texture\ITextureDictionary.cs" />

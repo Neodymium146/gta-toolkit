@@ -77,6 +77,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\RgbaBitmapSource.cs" />
+    <Compile Include="Models\TextureDictionaryModel.cs" />
+    <Compile Include="Models\TextureModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\TextureViewModel.cs" />

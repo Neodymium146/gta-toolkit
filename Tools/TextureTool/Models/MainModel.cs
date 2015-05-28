@@ -20,85 +20,126 @@
     THE SOFTWARE.
 */
 
-using RageLib.Helpers;
+using RageLib.GTA5.ResourceWrappers.PC.Drawables;
 using RageLib.ResourceWrappers;
+using RageLib.ResourceWrappers.Drawables;
 using RageLib.ResourceWrappers.GTA5.PC.Textures;
 using System;
-using System.IO;
 
 namespace TextureTool.Models
 {
+    public enum FileType
+    {
+        TextureDictionaryFile,
+        DrawableFile,
+        None
+    }
+
     public class MainModel
     {
         private ITextureDictionaryFile textureDictionaryFile;
+        private IDrawableFile drawableFile;
+        private string fileName;
 
-        public ITextureList TextureList
+        public FileType FileType
         {
             get
             {
                 if (textureDictionaryFile != null)
-                    return textureDictionaryFile.TextureDictionary.Textures;
+                {
+                    return FileType.TextureDictionaryFile;
+                }
+                else if (drawableFile != null)
+                {
+                    return FileType.DrawableFile;
+                }
                 else
-                    return null;
+                {
+                    return FileType.None;
+                }
             }
         }
 
-        public string FileName { get; set; }
+        public TextureDictionaryModel TextureDictionary
+        {
+            get
+            {
+                if (textureDictionaryFile != null)
+                {
+                    return new TextureDictionaryModel(textureDictionaryFile.TextureDictionary);
+                }
+                else if (drawableFile != null)
+                {
+                    if (drawableFile.Drawable.ShaderGroup != null &&
+                        drawableFile.Drawable.ShaderGroup.TextureDictionary != null)
+                    {
+                        return new TextureDictionaryModel(drawableFile.Drawable.ShaderGroup.TextureDictionary);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public string FileName
+        {
+            get
+            {
+                return fileName;
+            }
+            set
+            {
+                fileName = value;
+            }
+        }
 
         public void New()
         {
-            textureDictionaryFile = new TextureDictionaryFileWrapper_GTA5_pc();
-            FileName = null;
+            this.textureDictionaryFile = new TextureDictionaryFileWrapper_GTA5_pc();
+            this.drawableFile = null;
+            this.fileName = null;
         }
 
         public void Load(string fileName)
         {
-            textureDictionaryFile = new TextureDictionaryFileWrapper_GTA5_pc();
-            textureDictionaryFile.Load(fileName);
-            FileName = fileName;
+            if (fileName.EndsWith(".ytd"))
+            {
+                this.textureDictionaryFile = new TextureDictionaryFileWrapper_GTA5_pc();
+                this.textureDictionaryFile.Load(fileName);
+                this.drawableFile = null;
+                this.fileName = fileName;
+            }
+            else if (fileName.EndsWith(".ydr"))
+            {
+                this.textureDictionaryFile = null;
+                this.drawableFile = new DrawableFileWrapper_GTA5_pc();
+                this.drawableFile.Load(fileName);
+                this.fileName = fileName;
+            }
+            else
+            {
+                throw new Exception("Unsupported file type.");
+            }
         }
 
         public void Save(string fileName)
         {
-            textureDictionaryFile.Save(fileName);
-            FileName = fileName;
-        }
-
-        public void Import(string fileName)
-        {
-            try
+            if (textureDictionaryFile != null)
             {
-                var info = new FileInfo(fileName);
-
-                // remove texture from list
-                for (int i = TextureList.Count - 1; i >= 0; i--)
-                    if (TextureList[i].Name.Equals(info.Name.Replace(".dds", ""), StringComparison.OrdinalIgnoreCase))
-                        TextureList.RemoveAt(i);
-
-                ITexture texture = new TextureWrapper_GTA5_pc();
-                texture.Name = info.Name.Replace(".dds", "");
-                DDSIO.LoadTextureData(texture, fileName);
-
-                // add texture to list
-                TextureList.Add(texture);
+                this.textureDictionaryFile.Save(fileName);
+                this.fileName = fileName;
             }
-            catch
-            { }
-        }
-
-        public void Export(ITexture texture, string fileName)
-        {
-            try
+            else if (drawableFile != null)
             {
-                DDSIO.SaveTextureData(texture, fileName);
-            }
-            catch
-            { }
-        }
-
-        public void Delete(ITexture texture)
-        {
-            TextureList.Remove(texture);
+                this.drawableFile.Save(fileName);
+                this.fileName = fileName;
+            }          
         }
     }
 }

@@ -93,7 +93,8 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
 
         public IEnumerator<ITexture> GetEnumerator()
         {
-            throw new NotImplementedException();
+            foreach(var x in list)
+                yield return new TextureWrapper_GTA5_pc(x);
         }
 
         public int IndexOf(ITexture item)

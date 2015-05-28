@@ -93,12 +93,15 @@ namespace RageLib.Resources.Common
             //foreach (var f in Data)
             //    f.Write(writer);
 
+
             ptr_list = new List<ulong>();
             foreach (var x in Data)
                 ptr_list.Add((ulong)x.Position);
 
             foreach (var x in ptr_list)
                 writer.Write(x);
+            foreach (var x in Data)
+                x.Write(writer);
 
         }
 

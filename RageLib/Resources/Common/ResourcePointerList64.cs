@@ -33,7 +33,7 @@ namespace RageLib.Resources
     
         public override long Length
         {
-            get { return 8; }
+            get { return 12; }
         }
 
 
@@ -46,7 +46,7 @@ namespace RageLib.Resources
 
 
         // reference data
-        public ResourcePointerArray<T> data_items;
+        public ResourcePointerArray64<T> data_items;
 
 
 
@@ -56,7 +56,7 @@ namespace RageLib.Resources
             this.DataCount1 = reader.ReadUInt16();
             this.DataCount2 = reader.ReadUInt16();
 
-            this.data_items = reader.ReadBlockAt<ResourcePointerArray<T>>(
+            this.data_items = reader.ReadBlockAt<ResourcePointerArray64<T>>(
                 this.DataPointer, // offset
                 this.DataCount1
             );

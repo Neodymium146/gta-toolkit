@@ -21,7 +21,6 @@
 */
 
 using RageLib.Compression;
-using RageLib.Helpers;
 using RageLib.ResourceWrappers;
 using System.Windows.Media;
 using TextureTool.Models;
@@ -30,7 +29,7 @@ namespace TextureTool.ViewModels
 {
     public class TextureViewModel : BaseViewModel
     {
-        private ITexture model;
+        private TextureModel model;
 
         public string Name
         {
@@ -44,7 +43,7 @@ namespace TextureTool.ViewModels
         {
             get
             {
-                return model.Width + "x" + model.Height;
+                return model.Texture.Width + "x" + model.Texture.Height;
             }
         }
 
@@ -52,7 +51,7 @@ namespace TextureTool.ViewModels
         {
             get
             {
-                return model.MipMapLevels;
+                return model.Texture.MipMapLevels;
             }
         }
 
@@ -60,7 +59,7 @@ namespace TextureTool.ViewModels
         {
             get
             {
-                switch (model.Format)
+                switch (model.Texture.Format)
                 {
                     case TextureFormat.D3DFMT_DXT1: return "DXT1";
                     case TextureFormat.D3DFMT_DXT3: return "DXT3";
@@ -82,17 +81,17 @@ namespace TextureTool.ViewModels
         {
             get
             {
-                var y = TextureHelper.GetRgbaImage(model, 0);
-                return new RgbaBitmapSource(y, model.Width, model.Height);
+                var y = TextureHelper.GetRgbaImage(model.Texture, 0);
+                return new RgbaBitmapSource(y, model.Texture.Width, model.Texture.Height);
             }
         }
 
-        public TextureViewModel(ITexture model)
+        public TextureViewModel(TextureModel model)
         {
             this.model = model;
         }
 
-        public ITexture GetModel()
+        public TextureModel GetModel()
         {
             return model;
         }

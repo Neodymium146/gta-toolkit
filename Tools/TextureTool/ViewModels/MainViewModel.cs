@@ -20,7 +20,7 @@
     THE SOFTWARE.
 */
 
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows.Input;
 using TextureTool.Commands;
@@ -31,6 +31,9 @@ namespace TextureTool.ViewModels
     public class MainViewModel : BaseViewModel
     {
         private MainModel model;
+        private string title;
+        private List<TextureViewModel> textures;
+        private TextureViewModel selectedTexture;
 
         public ICommand NewCommand { get; private set; }
         public ICommand LoadCommand { get; private set; }
@@ -41,17 +44,33 @@ namespace TextureTool.ViewModels
         public ICommand ExportCommand { get; private set; }
         public ICommand ExportAllCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
+               
+        public string Title
+        {
+            get
+            {
+                return title;
+            }
+            set
+            {
+                title = value;
+                NotifyPropertyChanged();
+            }
+        }
 
-        private ObservableCollection<TextureViewModel> textures;
-        public ObservableCollection<TextureViewModel> Textures
+        public List<TextureViewModel> Textures
         {
             get
             {
                 return textures;
             }
+            set
+            {
+                textures = value;
+                NotifyPropertyChanged();
+            }
         }
-
-        private TextureViewModel selectedTexture;
+               
         public TextureViewModel SelectedTexture
         {
             get
@@ -61,16 +80,16 @@ namespace TextureTool.ViewModels
             set
             {
                 selectedTexture = value;
-                NotifyPropertyChanged("SelectedTexture");
+                NotifyPropertyChanged();
             }
         }
-
-
 
         public MainViewModel()
         {
             model = new MainModel();
-            model.New();
+            //model.New();
+
+            Title = "Texture Toolkit";
             
             NewCommand = new ActionCommand(New_Execute);
             LoadCommand = new ActionCommand(Load_Execute);
@@ -85,15 +104,25 @@ namespace TextureTool.ViewModels
 
         public void BuildTextureList()
         {
-            textures = new ObservableCollection<TextureViewModel>();
-            for (int index = 0; index < model.TextureList.Count; index++)
+            if (model.TextureDictionary != null)
             {
-                var texture = model.TextureList[index];
-                var textureVM = new TextureViewModel(texture);
-                textures.Add(textureVM);
+                var list = new List<TextureViewModel>();
+                for (int index = 0; index < model.TextureDictionary.Textures.Count; index++)
+                {
+                    var texture = model.TextureDictionary.Textures[index];
+                    var textureVM = new TextureViewModel(texture);
+                    list.Add(textureVM);
+                }
+                
+                Textures = list;
+                if (Textures.Count > 0)
+                    SelectedTexture = Textures[0];
             }
-
-            NotifyPropertyChanged("Textures");
+            else
+            {
+                Textures = null;
+                SelectedTexture = null;
+            }           
         }
 
 
@@ -101,6 +130,7 @@ namespace TextureTool.ViewModels
         public void New_Execute(object parameter)
         {
             model.New();
+            Title = "Texture Toolkit";
 
             BuildTextureList();
         }
@@ -108,19 +138,19 @@ namespace TextureTool.ViewModels
         public void Load_Execute(object parameter)
         {
             var openDialog = new OpenFileDialog();
-            openDialog.FileName = "*.ytd";
-            openDialog.Filter = "Texture dictionaries (.ytd)|*.ytd";
+            openDialog.FileName = "*.*";
+            openDialog.Filter = "All files|*.*|Texture dictionaries (.ytd)|*.ytd|Drawable (.ydr)|*.ydr";
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 model.Load(openDialog.FileName);
+                Title = openDialog.FileName + " - Texture Toolkit";
+                BuildTextureList();
             }
-
-            BuildTextureList();            
         }
         
         public bool Save_CanExecute(object parameter)
         {
-            if (model.TextureList != null && !string.IsNullOrEmpty(model.FileName))
+            if (model.FileType != FileType.None && !string.IsNullOrEmpty(model.FileName))
                 return true;
             else
                 return false;
@@ -133,7 +163,7 @@ namespace TextureTool.ViewModels
 
         public bool SaveAs_CanExecute(object parameter)
         {
-            if (model.TextureList != null)
+            if (model.FileType != FileType.None)
                 return true;
             else
                 return false;
@@ -143,10 +173,11 @@ namespace TextureTool.ViewModels
         {
             var saveDialog = new SaveFileDialog();
             saveDialog.FileName = model.FileName;
-            saveDialog.Filter = "Texture dictionaries (.ytd)|*.ytd";
+            saveDialog.Filter = "All files|*.*|Texture dictionaries (.ytd)|*.ytd|Drawable (.ydr)|*.ydr";
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
                 model.Save(saveDialog.FileName);
+                Title = saveDialog.FileName + " - Texture Toolkit";
             }
         }
 
@@ -157,7 +188,7 @@ namespace TextureTool.ViewModels
         
         public bool Import_CanExecute(object parameter)
         {
-            if (model.TextureList != null)
+            if (model.TextureDictionary != null)
                 return true;
             else
                 return false;
@@ -172,7 +203,7 @@ namespace TextureTool.ViewModels
             if (importDialog.ShowDialog() == DialogResult.OK)
             {
                 foreach (var fileName in importDialog.FileNames)
-                    model.Import(fileName);
+                    model.TextureDictionary.Import(fileName, model.FileType != FileType.TextureDictionaryFile);
             }
 
             BuildTextureList();
@@ -180,7 +211,7 @@ namespace TextureTool.ViewModels
 
         public bool Export_CanExecute(object parameter)
         {
-            if (model.TextureList != null && selectedTexture != null)
+            if (SelectedTexture != null)
                 return true;
             else
                 return false;
@@ -193,13 +224,13 @@ namespace TextureTool.ViewModels
             exportDialog.Filter = "DDS files (.dds)|*.dds";
             if (exportDialog.ShowDialog() == DialogResult.OK)
             {
-                model.Export(SelectedTexture.GetModel(), exportDialog.FileName);
+                SelectedTexture.GetModel().Export(exportDialog.FileName);
             }
         }
         
         public bool ExportAll_CanExecute(object parameter)
         {
-            if (model.TextureList != null)
+            if (model.TextureDictionary != null)
                 return true;
             else
                 return false;
@@ -211,13 +242,13 @@ namespace TextureTool.ViewModels
             if (exportDialog.ShowDialog() == DialogResult.OK)
             {
                 foreach (var texture in Textures)
-                    model.Export(texture.GetModel(), exportDialog.SelectedPath + "\\" + texture.Name + ".dds");
+                    texture.GetModel().Export(exportDialog.SelectedPath + "\\" + texture.Name + ".dds");
             }
         }
         
         public bool Delete_CanExecute(object parameter)
         {
-            if (model.TextureList != null && selectedTexture != null)
+            if (model.FileType == FileType.TextureDictionaryFile && SelectedTexture != null)
                 return true;
             else
                 return false;
@@ -225,7 +256,7 @@ namespace TextureTool.ViewModels
 
         public void Delete_Execute(object parameter)
         {
-            model.Delete(SelectedTexture.GetModel());
+            model.TextureDictionary.Delete(SelectedTexture.GetModel());
 
             BuildTextureList();
         }

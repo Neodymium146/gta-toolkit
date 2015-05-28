@@ -205,8 +205,8 @@ namespace RageLib.Resources
                 {
                     if (block.Position != -1)
                         throw new Exception("A position of -1 is not possible!");
-                    if (block.Length == 0)
-                        throw new Exception("A length of 0 is not allowed!");
+                    //if (block.Length == 0)
+                    //    throw new Exception("A length of 0 is not allowed!");
 
                     // check if new page is necessary...
                     // if yes, add a new page and align to it
