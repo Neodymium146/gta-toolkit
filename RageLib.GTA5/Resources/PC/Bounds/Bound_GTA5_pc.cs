@@ -145,6 +145,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 case 4: return new BoundGeometry_GTA5_pc();
                 case 8: return new BoundBVH_GTA5_pc();
                 case 10: return new BoundComposite_GTA5_pc();
+                case 12: return new BoundDisc_GTA5_pc();
                 case 13: return new BoundCylinder_GTA5_pc();
                 default: throw new Exception("Unknown bound type");
             }

@@ -160,8 +160,9 @@ namespace RageLib.Resources
                 blockPool.Add(Position, blocks);
             }
 
-            result.Position = Position;
+            var classPosition = Position;            
             result.Read(this, parameters);
+            result.Position = classPosition;
             return (T)result;
         }
 
