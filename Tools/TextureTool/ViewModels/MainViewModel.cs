@@ -203,12 +203,12 @@ namespace TextureTool.ViewModels
         {
             var openDialog = new OpenFileDialog();
             openDialog.FileName = "*.*";
-            openDialog.Filter = "All files|*.*|Texture dictionaries (.ytd)|*.ytd|Drawable (.ydr)|*.ydr|Drawable dictionaries (.ydd)|*.ydd";
+            openDialog.Filter = "All files|*.*|Texture dictionaries (.ytd)|*.ytd|Drawable (.ydr)|*.ydr|Drawable dictionaries (.ydd)|*.ydd|Fragments (.yft)|*.yft";
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
                 model.Load(openDialog.FileName);
                 Title = openDialog.FileName + " - Texture Toolkit";
-                TextureFilesVisibility = model.FileType == FileType.DrawableDictionaryFile;
+                TextureFilesVisibility = model.FileType == FileType.DrawableDictionaryFile || model.FileType == FileType.FragmentFile;
                 BuildTextureDictionaryList();
             }
         }
@@ -238,7 +238,7 @@ namespace TextureTool.ViewModels
         {
             var saveDialog = new SaveFileDialog();
             saveDialog.FileName = model.FileName;
-            saveDialog.Filter = "All files|*.*|Texture dictionaries (.ytd)|*.ytd|Drawable (.ydr)|*.ydr|Drawable dictionaries (.ydd)|*.ydd";
+            saveDialog.Filter = "All files|*.*|Texture dictionaries (.ytd)|*.ytd|Drawable (.ydr)|*.ydr|Drawable dictionaries (.ydd)|*.ydd|Fragments (.yft)|*.yft";
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
                 model.Save(saveDialog.FileName);

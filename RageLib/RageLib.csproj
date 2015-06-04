@@ -83,6 +83,9 @@
     <Compile Include="ResourceWrappers\Drawables\IDrawableFile.cs" />
     <Compile Include="ResourceWrappers\Drawables\IShader.cs" />
     <Compile Include="ResourceWrappers\Drawables\IShaderGroup.cs" />
+    <Compile Include="ResourceWrappers\Fragments\IFragDrawable.cs" />
+    <Compile Include="ResourceWrappers\Fragments\IFragmentFile.cs" />
+    <Compile Include="ResourceWrappers\Fragments\IFragType.cs" />
     <Compile Include="ResourceWrappers\IResourceFile.cs" />
     <Compile Include="ResourceWrappers\Texture\ITexture.cs" />
     <Compile Include="ResourceWrappers\Texture\ITextureDictionary.cs" />
