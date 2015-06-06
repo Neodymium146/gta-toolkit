@@ -54,7 +54,7 @@ namespace TextureTool.Models
             get
             {
                 var list = new List<TextureModel>();
-                if (textureDictionary != null)
+                if (textureDictionary != null && TextureDictionary.Textures != null)
                 {
                     foreach (var texture in textureDictionary.Textures)
                         list.Add(new TextureModel(texture));

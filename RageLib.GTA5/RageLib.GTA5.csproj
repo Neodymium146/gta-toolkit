@@ -194,6 +194,8 @@
     <Compile Include="ResourceWrappers\PC\Fragments\FragDrawableWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Fragments\FragmentFileWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Fragments\FragTypeWrapper_GTA5_pc.cs" />
+    <Compile Include="ResourceWrappers\PC\Particles\ParticlesFileWrapper_GTA5_pc.cs" />
+    <Compile Include="ResourceWrappers\PC\Particles\ParticlesWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Textures\TextureDictionaryFile_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Textures\TextureDictionaryWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Textures\TextureWrapper_GTA5_pc.cs" />
@@ -204,6 +206,7 @@
       <Name>RageLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

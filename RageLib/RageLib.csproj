@@ -87,6 +87,8 @@
     <Compile Include="ResourceWrappers\Fragments\IFragmentFile.cs" />
     <Compile Include="ResourceWrappers\Fragments\IFragType.cs" />
     <Compile Include="ResourceWrappers\IResourceFile.cs" />
+    <Compile Include="ResourceWrappers\Particles\IParticles.cs" />
+    <Compile Include="ResourceWrappers\Particles\IParticlesFile.cs" />
     <Compile Include="ResourceWrappers\Texture\ITexture.cs" />
     <Compile Include="ResourceWrappers\Texture\ITextureDictionary.cs" />
     <Compile Include="ResourceWrappers\Texture\ITextureDictionaryFile.cs" />

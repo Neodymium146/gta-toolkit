@@ -40,7 +40,10 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
         {
             get
             {
-                return new TextureListWrapper_GTA5_pc(textureDictionary.Textures);
+                if (textureDictionary.Textures != null)
+                    return new TextureListWrapper_GTA5_pc(textureDictionary.Textures);
+                else
+                    return null;
             }
 
             set

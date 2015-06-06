@@ -22,10 +22,12 @@
 
 using RageLib.GTA5.ResourceWrappers.PC.Drawables;
 using RageLib.GTA5.ResourceWrappers.PC.Fragments;
+using RageLib.GTA5.ResourceWrappers.PC.Particles;
 using RageLib.ResourceWrappers;
 using RageLib.ResourceWrappers.Drawables;
 using RageLib.ResourceWrappers.Fragments;
 using RageLib.ResourceWrappers.GTA5.PC.Textures;
+using RageLib.ResourceWrappers.Particles;
 using System;
 using System.Collections.Generic;
 
@@ -37,6 +39,7 @@ namespace TextureTool.Models
         DrawableDictionaryFile,
         DrawableFile,
         FragmentFile,
+        ParticlesFile,
         None
     }
 
@@ -46,6 +49,7 @@ namespace TextureTool.Models
         private IDrawableDictionaryFile drawableDictionaryFile;
         private IDrawableFile drawableFile;
         private IFragmentFile fragmentFile;
+        private IParticlesFile particlesFile;
         private string fileName;
 
         public FileType FileType
@@ -60,8 +64,9 @@ namespace TextureTool.Models
                     return FileType.DrawableFile;
                 else if (fragmentFile != null)
                     return FileType.FragmentFile;
-                else
-                    return FileType.None;
+                else if (particlesFile != null)
+                    return FileType.ParticlesFile;
+                return FileType.None;
             }
         }
 
@@ -117,6 +122,11 @@ namespace TextureTool.Models
                         list.Add(new TextureDictionaryModel(fragmentFile.FragType.Drawable2.ShaderGroup.TextureDictionary, fragmentFile.FragType.Drawable2.Name));
                     }
                 }
+                else if (particlesFile != null)
+                {
+                    list.Add(new TextureDictionaryModel(particlesFile.Particles.TextureDictionary));
+                }
+
                 return list;
             }
         }
@@ -139,6 +149,7 @@ namespace TextureTool.Models
             this.drawableDictionaryFile = null;
             this.drawableFile = null;
             this.fragmentFile = null;
+            this.particlesFile = null;
             this.fileName = null;
         }
 
@@ -151,6 +162,7 @@ namespace TextureTool.Models
                 this.drawableDictionaryFile = null;
                 this.drawableFile = null;
                 this.fragmentFile = null;
+                this.particlesFile = null;
                 this.fileName = fileName;
             }
             else if (fileName.EndsWith(".ydd"))
@@ -160,6 +172,7 @@ namespace TextureTool.Models
                 this.drawableDictionaryFile.Load(fileName);
                 this.drawableFile = null;
                 this.fragmentFile = null;
+                this.particlesFile = null;
                 this.fileName = fileName;
             }
             else if (fileName.EndsWith(".ydr"))
@@ -169,6 +182,7 @@ namespace TextureTool.Models
                 this.drawableFile = new DrawableFileWrapper_GTA5_pc();
                 this.drawableFile.Load(fileName);
                 this.fragmentFile = null;
+                this.particlesFile = null;
                 this.fileName = fileName;
             }
             else if (fileName.EndsWith(".yft"))
@@ -178,6 +192,17 @@ namespace TextureTool.Models
                 this.drawableFile = null;
                 this.fragmentFile = new FragmentFileWrapper_GTA5_pc();
                 this.fragmentFile.Load(fileName);
+                this.particlesFile = null;
+                this.fileName = fileName;
+            }
+            else if (fileName.EndsWith(".ypt"))
+            {
+                this.textureDictionaryFile = null;
+                this.drawableDictionaryFile = null;
+                this.drawableFile = null;
+                this.fragmentFile = null;
+                this.particlesFile = new ParticlesFileWrapper_GTA5_pc();
+                this.particlesFile.Load(fileName);
                 this.fileName = fileName;
             }
             else
@@ -206,6 +231,11 @@ namespace TextureTool.Models
             else if (fragmentFile != null)
             {
                 this.fragmentFile.Save(fileName);
+                this.fileName = fileName;
+            }
+            else if (particlesFile != null)
+            {
+                this.particlesFile.Save(fileName);
                 this.fileName = fileName;
             }
         }
