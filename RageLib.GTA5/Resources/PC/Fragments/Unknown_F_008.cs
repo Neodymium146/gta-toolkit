@@ -24,102 +24,102 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class Unknown_F_008: ResourceSystemBlock
-	{
-		public override long Length
-		{
-			get { return 64; }
-		}
+    public class Unknown_F_008 : ResourceSystemBlock
+    {
+        public override long Length
+        {
+            get { return 64; }
+        }
 
-		// structure data
-		public uint VFT;
-		public uint Unknown_4h;
-		public uint Unknown_8h;
-		public uint Unknown_Ch;
-		public uint Unknown_10h;
-		public uint Unknown_14h;
-		public ulong Unknown_18h_Pointer;
-		public ulong Unknown_20h_Pointer;
-		public ulong Unknown_28h_Pointer;
-		public uint Unknown_30h;
-		public uint Unknown_34h;
-		public uint Unknown_38h;
-		public uint Unknown_3Ch;
+        // structure data
+        public uint VFT;
+        public uint Unknown_4h; // 0x00000001
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
+        public ulong Unknown_18h_Pointer;
+        public ulong Unknown_20h_Pointer;
+        public ulong Unknown_28h_Pointer;
+        public uint Unknown_30h; // 0x00000000
+        public uint Unknown_34h; // 0x00000000
+        public uint Unknown_38h; // 0x00000000
+        public uint Unknown_3Ch; // 0x00000000
 
-		// reference data
-		public Unknown_F_007 Unknown_18h_Data;
-		public Unknown_F_007 Unknown_20h_Data;
-		public Unknown_F_007 Unknown_28h_Data;
+        // reference data
+        public Unknown_F_007 Unknown_18h_Data;
+        public Unknown_F_007 Unknown_20h_Data;
+        public Unknown_F_007 Unknown_28h_Data;
 
-		/// <summary>
-		/// Reads the data-block from a stream.
-		/// </summary>
-		public override void Read(ResourceDataReader reader, params object[] parameters)
-		{
-			// read structure data
-			this.VFT = reader.ReadUInt32();
-			this.Unknown_4h = reader.ReadUInt32();
-			this.Unknown_8h = reader.ReadUInt32();
-			this.Unknown_Ch = reader.ReadUInt32();
-			this.Unknown_10h = reader.ReadUInt32();
-			this.Unknown_14h = reader.ReadUInt32();
-			this.Unknown_18h_Pointer = reader.ReadUInt64();
-			this.Unknown_20h_Pointer = reader.ReadUInt64();
-			this.Unknown_28h_Pointer = reader.ReadUInt64();
-			this.Unknown_30h = reader.ReadUInt32();
-			this.Unknown_34h = reader.ReadUInt32();
-			this.Unknown_38h = reader.ReadUInt32();
-			this.Unknown_3Ch = reader.ReadUInt32();
+        /// <summary>
+        /// Reads the data-block from a stream.
+        /// </summary>
+        public override void Read(ResourceDataReader reader, params object[] parameters)
+        {
+            // read structure data
+            this.VFT = reader.ReadUInt32();
+            this.Unknown_4h = reader.ReadUInt32();
+            this.Unknown_8h = reader.ReadUInt32();
+            this.Unknown_Ch = reader.ReadUInt32();
+            this.Unknown_10h = reader.ReadUInt32();
+            this.Unknown_14h = reader.ReadUInt32();
+            this.Unknown_18h_Pointer = reader.ReadUInt64();
+            this.Unknown_20h_Pointer = reader.ReadUInt64();
+            this.Unknown_28h_Pointer = reader.ReadUInt64();
+            this.Unknown_30h = reader.ReadUInt32();
+            this.Unknown_34h = reader.ReadUInt32();
+            this.Unknown_38h = reader.ReadUInt32();
+            this.Unknown_3Ch = reader.ReadUInt32();
 
-			// read reference data
-			this.Unknown_18h_Data = reader.ReadBlockAt<Unknown_F_007>(
-				this.Unknown_18h_Pointer // offset
-			);
-			this.Unknown_20h_Data = reader.ReadBlockAt<Unknown_F_007>(
-				this.Unknown_20h_Pointer // offset
-			);
-			this.Unknown_28h_Data = reader.ReadBlockAt<Unknown_F_007>(
-				this.Unknown_28h_Pointer // offset
-			);
-		}
+            // read reference data
+            this.Unknown_18h_Data = reader.ReadBlockAt<Unknown_F_007>(
+                this.Unknown_18h_Pointer // offset
+            );
+            this.Unknown_20h_Data = reader.ReadBlockAt<Unknown_F_007>(
+                this.Unknown_20h_Pointer // offset
+            );
+            this.Unknown_28h_Data = reader.ReadBlockAt<Unknown_F_007>(
+                this.Unknown_28h_Pointer // offset
+            );
+        }
 
-		/// <summary>
-		/// Writes the data-block to a stream.
-		/// </summary>
-		public override void Write(ResourceDataWriter writer, params object[] parameters)
-		{
-			// update structure data
-			this.Unknown_18h_Pointer = (ulong)(this.Unknown_18h_Data != null ? this.Unknown_18h_Data.Position : 0);
-			this.Unknown_20h_Pointer = (ulong)(this.Unknown_20h_Data != null ? this.Unknown_20h_Data.Position : 0);
-			this.Unknown_28h_Pointer = (ulong)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.Position : 0);
+        /// <summary>
+        /// Writes the data-block to a stream.
+        /// </summary>
+        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        {
+            // update structure data
+            this.Unknown_18h_Pointer = (ulong)(this.Unknown_18h_Data != null ? this.Unknown_18h_Data.Position : 0);
+            this.Unknown_20h_Pointer = (ulong)(this.Unknown_20h_Data != null ? this.Unknown_20h_Data.Position : 0);
+            this.Unknown_28h_Pointer = (ulong)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.Position : 0);
 
-			// write structure data
-			writer.Write(this.VFT);
-			writer.Write(this.Unknown_4h);
-			writer.Write(this.Unknown_8h);
-			writer.Write(this.Unknown_Ch);
-			writer.Write(this.Unknown_10h);
-			writer.Write(this.Unknown_14h);
-			writer.Write(this.Unknown_18h_Pointer);
-			writer.Write(this.Unknown_20h_Pointer);
-			writer.Write(this.Unknown_28h_Pointer);
-			writer.Write(this.Unknown_30h);
-			writer.Write(this.Unknown_34h);
-			writer.Write(this.Unknown_38h);
-			writer.Write(this.Unknown_3Ch);
-		}
+            // write structure data
+            writer.Write(this.VFT);
+            writer.Write(this.Unknown_4h);
+            writer.Write(this.Unknown_8h);
+            writer.Write(this.Unknown_Ch);
+            writer.Write(this.Unknown_10h);
+            writer.Write(this.Unknown_14h);
+            writer.Write(this.Unknown_18h_Pointer);
+            writer.Write(this.Unknown_20h_Pointer);
+            writer.Write(this.Unknown_28h_Pointer);
+            writer.Write(this.Unknown_30h);
+            writer.Write(this.Unknown_34h);
+            writer.Write(this.Unknown_38h);
+            writer.Write(this.Unknown_3Ch);
+        }
 
-		/// <summary>
-		/// Returns a list of data blocks which are referenced by this block.
-		/// </summary>
-		public override IResourceBlock[] GetReferences()
-		{
-			var list = new List<IResourceBlock>();
-			if (Unknown_18h_Data != null) list.Add(Unknown_18h_Data);
-			if (Unknown_20h_Data != null) list.Add(Unknown_20h_Data);
-			if (Unknown_28h_Data != null) list.Add(Unknown_28h_Data);
-			return list.ToArray();
-		}
+        /// <summary>
+        /// Returns a list of data blocks which are referenced by this block.
+        /// </summary>
+        public override IResourceBlock[] GetReferences()
+        {
+            var list = new List<IResourceBlock>();
+            if (Unknown_18h_Data != null) list.Add(Unknown_18h_Data);
+            if (Unknown_20h_Data != null) list.Add(Unknown_20h_Data);
+            if (Unknown_28h_Data != null) list.Add(Unknown_28h_Data);
+            return list.ToArray();
+        }
 
-	}
+    }
 }

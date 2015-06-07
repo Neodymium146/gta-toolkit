@@ -33,15 +33,16 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
         // structure data
         public ulong Unknown_130h_Pointer;
-        public uint Unknown_138h;
-        public uint Unknown_13Ch;
-        public uint Unknown_140h;
-        public uint Unknown_144h;
-        public uint Unknown_148h;
-        public uint Unknown_14Ch;
+        public uint Unknown_138h; // 0x00000000
+        public uint Unknown_13Ch; // 0x00000000
+        public ushort Unknown_140h; // 0xFFFF
+        public ushort Unknown_142h; // 0x0000
+        public uint Unknown_144h; // 0x00000000
+        public uint Unknown_148h; // 0x00000000
+        public uint Unknown_14Ch; // 0x00000000
 
         // reference data
-        public Unknown_B_003 Unknown_130h_Data;
+        public BVH_GTA5_pc Unknown_130h_Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -54,13 +55,14 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Unknown_130h_Pointer = reader.ReadUInt64();
             this.Unknown_138h = reader.ReadUInt32();
             this.Unknown_13Ch = reader.ReadUInt32();
-            this.Unknown_140h = reader.ReadUInt32();
+            this.Unknown_140h = reader.ReadUInt16();
+            this.Unknown_142h = reader.ReadUInt16();
             this.Unknown_144h = reader.ReadUInt32();
             this.Unknown_148h = reader.ReadUInt32();
             this.Unknown_14Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Unknown_130h_Data = reader.ReadBlockAt<Unknown_B_003>(
+            this.Unknown_130h_Data = reader.ReadBlockAt<BVH_GTA5_pc>(
                 this.Unknown_130h_Pointer // offset
             );
         }
@@ -80,6 +82,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             writer.Write(this.Unknown_138h);
             writer.Write(this.Unknown_13Ch);
             writer.Write(this.Unknown_140h);
+            writer.Write(this.Unknown_142h);
             writer.Write(this.Unknown_144h);
             writer.Write(this.Unknown_148h);
             writer.Write(this.Unknown_14Ch);

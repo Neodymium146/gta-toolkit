@@ -36,19 +36,19 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // structure data
         public ulong NamePointer;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
+        public uint Unknown_18h; // 0x00000000
+        public uint Unknown_1Ch; // 0x00000000
         public ulong TextureDictionaryPointer;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
         public ulong DrawableDictionaryPointer;
         public ulong ParticleRuleDictionaryPointer;
-        public uint Unknown_40h;
-        public uint Unknown_44h;
+        public uint Unknown_40h; // 0x00000000
+        public uint Unknown_44h; // 0x00000000
         public ulong EmitterRuleDictionaryPointer;
         public ulong EffectRuleDictionaryPointer;
-        public uint Unknown_58h;
-        public uint Unknown_5Ch;
+        public uint Unknown_58h; // 0x00000000
+        public uint Unknown_5Ch; // 0x00000000
 
         // reference data
         public string_r Name;

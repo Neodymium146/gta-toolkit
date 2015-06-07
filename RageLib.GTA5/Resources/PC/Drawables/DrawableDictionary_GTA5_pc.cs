@@ -33,18 +33,18 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         }
 
         // structure data
-        public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x00000001
+        public uint Unknown_1Ch; // 0x00000000
         public ulong HashesPointer;
         public ushort HashesCount1;
         public ushort HashesCount2;
-        public uint Unknown_2Ch;
+        public uint Unknown_2Ch; // 0x00000000
         public ulong DrawablesPointer;
         public ushort DrawablesCount1;
         public ushort DrawablesCount2;
-        public uint Unknown_3Ch;
+        public uint Unknown_3Ch; // 0x00000000
 
         // reference data
         public ResourceSimpleArray<uint_r> Hashes;

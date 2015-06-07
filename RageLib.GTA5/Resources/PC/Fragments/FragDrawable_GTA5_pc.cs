@@ -34,51 +34,53 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 			get { return 336; }
 		}
 
-		// structure data
-		public uint Unknown_B0h;
+        // structure data
+        public uint Unknown_A8h;
+        public uint Unknown_ACh;
+        public uint Unknown_B0h;
 		public uint Unknown_B4h;
 		public uint Unknown_B8h;
-		public uint Unknown_BCh;
-		public uint Unknown_C0h;
+		public uint Unknown_BCh; // 0x7F800001
+        public uint Unknown_C0h;
 		public uint Unknown_C4h;
 		public uint Unknown_C8h;
-		public uint Unknown_CCh;
-		public uint Unknown_D0h;
+		public uint Unknown_CCh; // 0x7F800001
+        public uint Unknown_D0h;
 		public uint Unknown_D4h;
 		public uint Unknown_D8h;
-		public uint Unknown_DCh;
-		public uint Unknown_E0h;
+		public uint Unknown_DCh; // 0x7F800001
+        public uint Unknown_E0h;
 		public uint Unknown_E4h;
 		public uint Unknown_E8h;
-		public uint Unknown_ECh;
-		public ulong BoundPointer;
+		public uint Unknown_ECh; // 0x7F800001
+        public ulong BoundPointer;
 		public ulong Unknown_F8h_Pointer;
 		public ushort Count1;
 		public ushort Count2;
-		public uint Unknown_104h;
-		public ulong Unknown_108h_Pointer;
+		public uint Unknown_104h; // 0x00000000
+        public ulong Unknown_108h_Pointer;
 		public ushort Count3;
 		public ushort Count4;
-		public uint Unknown_114h;
-		public uint Unknown_118h;
-		public uint Unknown_11Ch;
-		public uint Unknown_120h;
-		public uint Unknown_124h;
-		public uint Unknown_128h;
-		public uint Unknown_12Ch;
-		public ulong NamePointer2;
-		public uint Unknown_138h;
-		public uint Unknown_13Ch;
-		public uint Unknown_140h;
-		public uint Unknown_144h;
-		public uint Unknown_148h;
-		public uint Unknown_14Ch;
+		public uint Unknown_114h; // 0x00000000
+        public uint Unknown_118h; // 0x00000000
+        public uint Unknown_11Ch; // 0x00000000
+        public uint Unknown_120h; // 0x00000000
+        public uint Unknown_124h; // 0x00000000
+        public uint Unknown_128h; // 0x00000000
+        public uint Unknown_12Ch; // 0x00000000
+        public ulong NamePointer;
+		public uint Unknown_138h; // 0x00000000
+        public uint Unknown_13Ch; // 0x00000000
+        public uint Unknown_140h; // 0x00000000
+        public uint Unknown_144h; // 0x00000000
+        public uint Unknown_148h; // 0x00000000
+        public uint Unknown_14Ch; // 0x00000000
 
-		// reference data
-		public Bound_GTA5_pc Bound;
+        // reference data
+        public Bound_GTA5_pc Bound;
 		public ResourceSimpleArray<ulong_r> Unknown_F8h_Data;
 		public ResourceSimpleArray<RAGE_Matrix4> Unknown_108h_Data;
-		public string_r Name2;
+		public string_r Name;
 
 		/// <summary>
 		/// Reads the data-block from a stream.
@@ -87,8 +89,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 		{
 			base.Read(reader, parameters);
 
-			// read structure data
-			this.Unknown_B0h = reader.ReadUInt32();
+            // read structure data
+            this.Unknown_A8h = reader.ReadUInt32();
+            this.Unknown_ACh = reader.ReadUInt32();
+            this.Unknown_B0h = reader.ReadUInt32();
 			this.Unknown_B4h = reader.ReadUInt32();
 			this.Unknown_B8h = reader.ReadUInt32();
 			this.Unknown_BCh = reader.ReadUInt32();
@@ -119,7 +123,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 			this.Unknown_124h = reader.ReadUInt32();
 			this.Unknown_128h = reader.ReadUInt32();
 			this.Unknown_12Ch = reader.ReadUInt32();
-			this.NamePointer2 = reader.ReadUInt64();
+			this.NamePointer = reader.ReadUInt64();
 			this.Unknown_138h = reader.ReadUInt32();
 			this.Unknown_13Ch = reader.ReadUInt32();
 			this.Unknown_140h = reader.ReadUInt32();
@@ -139,8 +143,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 				this.Unknown_108h_Pointer, // offset
 				this.Count2
 			);
-			this.Name2 = reader.ReadBlockAt<string_r>(
-				this.NamePointer2 // offset
+			this.Name = reader.ReadBlockAt<string_r>(
+				this.NamePointer // offset
 			);
 		}
 
@@ -157,10 +161,12 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 			//this.c1qqq = (ushort)(this.pxx2data != null ? this.pxx2data.Count : 0);
 			//this.c2qqq = (ushort)(this.pxx3data != null ? this.pxx3data.Count : 0);
 			this.Unknown_108h_Pointer = (ulong)(this.Unknown_108h_Data != null ? this.Unknown_108h_Data.Position : 0);
-			this.NamePointer2 = (ulong)(this.Name2 != null ? this.Name2.Position : 0);
+			this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
 
-			// write structure data
-			writer.Write(this.Unknown_B0h);
+            // write structure data
+            writer.Write(this.Unknown_A8h);
+            writer.Write(this.Unknown_ACh);
+            writer.Write(this.Unknown_B0h);
 			writer.Write(this.Unknown_B4h);
 			writer.Write(this.Unknown_B8h);
 			writer.Write(this.Unknown_BCh);
@@ -191,7 +197,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 			writer.Write(this.Unknown_124h);
 			writer.Write(this.Unknown_128h);
 			writer.Write(this.Unknown_12Ch);
-			writer.Write(this.NamePointer2);
+			writer.Write(this.NamePointer);
 			writer.Write(this.Unknown_138h);
 			writer.Write(this.Unknown_13Ch);
 			writer.Write(this.Unknown_140h);
@@ -209,7 +215,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 			if (Bound != null) list.Add(Bound);
 			if (Unknown_F8h_Data != null) list.Add(Unknown_F8h_Data);
 			if (Unknown_108h_Data != null) list.Add(Unknown_108h_Data);
-			if (Name2 != null) list.Add(Name2);
+			if (Name != null) list.Add(Name);
 			return list.ToArray();
 		}
 

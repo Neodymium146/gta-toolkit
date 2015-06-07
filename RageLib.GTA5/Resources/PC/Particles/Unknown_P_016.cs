@@ -32,8 +32,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
         // structure data
         public uint Unknown_0h;
         public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
         public uint Unknown_10h;
         public uint Unknown_14h;
         public uint Unknown_18h;

@@ -34,40 +34,40 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         // structure data
         public uint VFT;
-        public uint Unknown_4h;
+        public uint Unknown_4h; // 0x00000001
         public ushort VertexStride;
         public ushort Unknown_Ah;
-        public uint Unknown_Ch;
+        public uint Unknown_Ch; // 0x00000000
         public ulong DataPointer1;
         public uint VertexCount;
-        public uint Unknown_1Ch;
+        public uint Unknown_1Ch; // 0x00000000
         public ulong DataPointer2;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
         public ulong InfoPointer;
-        public uint Unknown_38h;
-        public uint Unknown_3Ch;
-        public uint Unknown_40h;
-        public uint Unknown_44h;
-        public uint Unknown_48h;
-        public uint Unknown_4Ch;
-        public uint Unknown_50h;
-        public uint Unknown_54h;
-        public uint Unknown_58h;
-        public uint Unknown_5Ch;
-        public uint Unknown_60h;
-        public uint Unknown_64h;
-        public uint Unknown_68h;
-        public uint Unknown_6Ch;
-        public uint Unknown_70h;
-        public uint Unknown_74h;
-        public uint Unknown_78h;
-        public uint Unknown_7Ch;
+        public uint Unknown_38h; // 0x00000000
+        public uint Unknown_3Ch; // 0x00000000
+        public uint Unknown_40h; // 0x00000000
+        public uint Unknown_44h; // 0x00000000
+        public uint Unknown_48h; // 0x00000000
+        public uint Unknown_4Ch; // 0x00000000
+        public uint Unknown_50h; // 0x00000000
+        public uint Unknown_54h; // 0x00000000
+        public uint Unknown_58h; // 0x00000000
+        public uint Unknown_5Ch; // 0x00000000
+        public uint Unknown_60h; // 0x00000000
+        public uint Unknown_64h; // 0x00000000
+        public uint Unknown_68h; // 0x00000000
+        public uint Unknown_6Ch; // 0x00000000
+        public uint Unknown_70h; // 0x00000000
+        public uint Unknown_74h; // 0x00000000
+        public uint Unknown_78h; // 0x00000000
+        public uint Unknown_7Ch; // 0x00000000
 
         // reference data
         public VertexData_GTA5_pc Data1;
         public VertexData_GTA5_pc Data2;
-        public VertexBufferInfo_GTA5_pc Info;
+        public VertexDeclaration_GTA5_pc Info;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -107,18 +107,20 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_7Ch = reader.ReadUInt32();
 
             // read reference data
+            this.Info = reader.ReadBlockAt<VertexDeclaration_GTA5_pc>(
+                this.InfoPointer // offset
+            );
             this.Data1 = reader.ReadBlockAt<VertexData_GTA5_pc>(
                 this.DataPointer1, // offset
                 this.VertexStride,
-                this.VertexCount
+                this.VertexCount,
+                this.Info
             );
             this.Data2 = reader.ReadBlockAt<VertexData_GTA5_pc>(
                 this.DataPointer2, // offset
                 this.VertexStride,
-                this.VertexCount
-            );
-            this.Info = reader.ReadBlockAt<VertexBufferInfo_GTA5_pc>(
-                this.InfoPointer // offset
+                this.VertexCount,
+                this.Info
             );
         }
 
@@ -183,40 +185,262 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     public class VertexData_GTA5_pc : ResourceSystemBlock
     {
 
+
+        private int length = 0;
         public override long Length
         {
             get
             {
-                return Data.Length;
+                return this.length;
             }
         }
 
 
 
-        public byte[] Data;
+        private int cnt;
+        private VertexDeclaration_GTA5_pc info;
+        public object[] VertexData;
+        private uint[] Types;
+
 
 
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            int i1 = Convert.ToInt32(parameters[0]);
-            int i2 = Convert.ToInt32(parameters[1]);
+            int stride = Convert.ToInt32(parameters[0]);
+            int count = Convert.ToInt32(parameters[1]);
+            var info = (VertexDeclaration_GTA5_pc)parameters[2];
+            this.cnt = count;
+            this.info = info;
 
-            try
+
+
+            bool[] IsUsed = new bool[16];
+            for (int i = 0; i < 16; i++)
+                IsUsed[i] = ((info.Flags >> i) & 0x1) == 1;
+
+            Types = new uint[16];
+            for (int i = 0; i < 16; i++)
+                Types[i] = (uint)((info.Types >> (int)(4 * i)) & 0xF);
+
+
+
+            VertexData = new object[16];
+            for (int i = 0; i < 16; i++)
             {
-                Data = reader.ReadBytes(i1 * i2);
+                if (IsUsed[i])
+                {
+                    switch (Types[i])
+                    {
+                        case 0: VertexData[i] = new ushort[1 * count]; break;
+                        case 1: VertexData[i] = new ushort[2 * count]; break;
+                        case 2: VertexData[i] = new ushort[3 * count]; break;
+                        case 3: VertexData[i] = new ushort[4 * count]; break;
+                        case 4: VertexData[i] = new float[1 * count]; break;
+                        case 5: VertexData[i] = new float[2 * count]; break;
+                        case 6: VertexData[i] = new float[3 * count]; break;
+                        case 7: VertexData[i] = new float[4 * count]; break;
+                        case 8: VertexData[i] = new uint[count]; break;
+                        case 9: VertexData[i] = new uint[count]; break;
+                        case 10: VertexData[i] = new uint[count]; break;
+                        default:
+                            throw new Exception();
+                    }
+                }
             }
-            catch
+
+
+
+            long pos = reader.Position;
+
+            // read...
+            for (int i = 0; i < count; i++)
             {
 
+                for (int k = 0; k < 16; k++)
+                {
+                    if (IsUsed[k])
+                    {
+                        switch (Types[k])
+                        {
+                            // float16
+                            case 0:
+                                {
+                                    var buf = VertexData[k] as ushort[];
+                                    buf[i * 1 + 0] = reader.ReadUInt16();
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    var buf = VertexData[k] as ushort[];
+                                    buf[i * 2 + 0] = reader.ReadUInt16();
+                                    buf[i * 2 + 1] = reader.ReadUInt16();
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    var buf = VertexData[k] as ushort[];
+                                    buf[i * 3 + 0] = reader.ReadUInt16();
+                                    buf[i * 3 + 1] = reader.ReadUInt16();
+                                    buf[i * 3 + 2] = reader.ReadUInt16();
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    var buf = VertexData[k] as ushort[];
+                                    buf[i * 4 + 0] = reader.ReadUInt16();
+                                    buf[i * 4 + 1] = reader.ReadUInt16();
+                                    buf[i * 4 + 2] = reader.ReadUInt16();
+                                    buf[i * 4 + 3] = reader.ReadUInt16();
+                                    break;
+                                }
+
+                            // float32
+                            case 4:
+                                {
+                                    var buf = VertexData[k] as float[];
+                                    buf[i * 1 + 0] = reader.ReadSingle();
+                                    break;
+                                }
+                            case 5:
+                                {
+                                    var buf = VertexData[k] as float[];
+                                    buf[i * 2 + 0] = reader.ReadSingle();
+                                    buf[i * 2 + 1] = reader.ReadSingle();
+                                    break;
+                                }
+                            case 6:
+                                {
+                                    var buf = VertexData[k] as float[];
+                                    buf[i * 3 + 0] = reader.ReadSingle();
+                                    buf[i * 3 + 1] = reader.ReadSingle();
+                                    buf[i * 3 + 2] = reader.ReadSingle();
+                                    break;
+                                }
+                            case 7:
+                                {
+                                    var buf = VertexData[k] as float[];
+                                    buf[i * 4 + 0] = reader.ReadSingle();
+                                    buf[i * 4 + 1] = reader.ReadSingle();
+                                    buf[i * 4 + 2] = reader.ReadSingle();
+                                    buf[i * 4 + 3] = reader.ReadSingle();
+                                    break;
+                                }
+
+                            case 8:
+                            case 9:
+                            case 10:
+                                {
+                                    var buf = VertexData[k] as uint[];
+                                    buf[i * 1 + 0] = reader.ReadUInt32();
+                                    break;
+                                }
+
+                            default:
+                                throw new Exception();
+                        }
+                    }
+                }
 
             }
 
+            this.length = stride * count;
         }
 
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            writer.Write(Data);
+
+            // write...
+            for (int i = 0; i < cnt; i++)
+            {
+
+                for (int k = 0; k < 16; k++)
+                {
+                    if (VertexData[k] != null)
+                    {
+                        switch (Types[k])
+                        {
+                            // float16
+                            case 0:
+                                {
+                                    var buf = VertexData[k] as ushort[];
+                                    writer.Write(buf[i * 1 + 0]);
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    var buf = VertexData[k] as ushort[];
+                                    writer.Write(buf[i * 2 + 0]);
+                                    writer.Write(buf[i * 2 + 1]);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    var buf = VertexData[k] as ushort[];
+                                    writer.Write(buf[i * 3 + 0]);
+                                    writer.Write(buf[i * 3 + 1]);
+                                    writer.Write(buf[i * 3 + 2]);
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    var buf = VertexData[k] as ushort[];
+                                    writer.Write(buf[i * 4 + 0]);
+                                    writer.Write(buf[i * 4 + 1]);
+                                    writer.Write(buf[i * 4 + 2]);
+                                    writer.Write(buf[i * 4 + 3]);
+                                    break;
+                                }
+
+                            // float32
+                            case 4:
+                                {
+                                    var buf = VertexData[k] as float[];
+                                    writer.Write(buf[i * 1 + 0]);
+                                    break;
+                                }
+                            case 5:
+                                {
+                                    var buf = VertexData[k] as float[];
+                                    writer.Write(buf[i * 2 + 0]);
+                                    writer.Write(buf[i * 2 + 1]);
+                                    break;
+                                }
+                            case 6:
+                                {
+                                    var buf = VertexData[k] as float[];
+                                    writer.Write(buf[i * 3 + 0]);
+                                    writer.Write(buf[i * 3 + 1]);
+                                    writer.Write(buf[i * 3 + 2]);
+                                    break;
+                                }
+                            case 7:
+                                {
+                                    var buf = VertexData[k] as float[];
+                                    writer.Write(buf[i * 4 + 0]);
+                                    writer.Write(buf[i * 4 + 1]);
+                                    writer.Write(buf[i * 4 + 2]);
+                                    writer.Write(buf[i * 4 + 3]);
+                                    break;
+                                }
+
+                            case 8:
+                            case 9:
+                            case 10:
+                                {
+                                    var buf = VertexData[k] as uint[];
+                                    writer.Write(buf[i * 1 + 0]);
+                                    break;
+                                }
+
+                            default:
+                                throw new Exception();
+                        }
+                    }
+                }
+
+            }
+
         }
 
     }

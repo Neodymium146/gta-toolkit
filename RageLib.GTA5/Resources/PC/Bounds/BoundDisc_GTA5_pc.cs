@@ -30,10 +30,10 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         }
 
         // structure data
-        public uint Unknown_70h;
-        public uint Unknown_74h;
-        public uint Unknown_78h;
-        public uint Unknown_7Ch;
+        public uint Unknown_70h; // 0x00000000
+        public uint Unknown_74h; // 0x00000000
+        public uint Unknown_78h; // 0x00000000
+        public uint Unknown_7Ch; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.

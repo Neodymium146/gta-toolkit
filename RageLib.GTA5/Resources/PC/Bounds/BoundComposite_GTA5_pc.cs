@@ -41,7 +41,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public ulong Unknown_98h_Pointer;
         public ushort ChildrenCount1;
         public ushort ChildrenCount2;
-        public uint Unknown_A4h;
+        public uint Unknown_A4h; // 0x00000000
         public ulong Unknown_A8h_Pointer;
 
         // reference data
@@ -51,7 +51,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public ResourceSimpleArray<RAGE_AABB> Unknown_88h_Data;
         public ResourceSimpleArray<Unknown_B_002> Unknown_90h_Data;
         public ResourceSimpleArray<Unknown_B_002> Unknown_98h_Data;
-        public Unknown_B_010 Unknown_A8h_Data;
+        public BVH_GTA5_pc Unknown_A8h_Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -97,7 +97,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 this.Unknown_98h_Pointer, // offset
                 this.ChildrenCount1
             );
-            this.Unknown_A8h_Data = reader.ReadBlockAt<Unknown_B_010>(
+            this.Unknown_A8h_Data = reader.ReadBlockAt<BVH_GTA5_pc>(
                 this.Unknown_A8h_Pointer // offset
             );
         }

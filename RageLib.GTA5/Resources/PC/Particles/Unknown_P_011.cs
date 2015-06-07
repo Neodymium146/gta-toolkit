@@ -33,7 +33,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // structure data
         public uint Unknown_0h;
-        public uint Unknown_4h;
+        public uint Unknown_4h; // 0x00000000
         public ulong p1;
 
         // reference data

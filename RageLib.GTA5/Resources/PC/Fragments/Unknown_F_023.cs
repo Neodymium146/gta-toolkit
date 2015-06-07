@@ -22,24 +22,24 @@
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class Unknown_F_023: ResourceSystemBlock
-	{
-		public override long Length
-		{
-			get { return 16; }
-		}
+    public class Unknown_F_023 : ResourceSystemBlock
+    {
+        public override long Length
+        {
+            get { return 16; }
+        }
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
+        public uint Unknown_0h; // 0x00000000
+        public uint Unknown_4h; // 0x00000000
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
-		{
+        {
             // read structure data
             this.Unknown_0h = reader.ReadUInt32();
             this.Unknown_4h = reader.ReadUInt32();
@@ -47,18 +47,16 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_Ch = reader.ReadUInt32();
         }
 
-		/// <summary>
-		/// Writes the data-block to a stream.
-		/// </summary>
-		public override void Write(ResourceDataWriter writer, params object[] parameters)
-		{
+        /// <summary>
+        /// Writes the data-block to a stream.
+        /// </summary>
+        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        {
             // write structure data
             writer.Write(this.Unknown_0h);
             writer.Write(this.Unknown_4h);
             writer.Write(this.Unknown_8h);
             writer.Write(this.Unknown_Ch);
         }
-
-
-	}
+    }
 }

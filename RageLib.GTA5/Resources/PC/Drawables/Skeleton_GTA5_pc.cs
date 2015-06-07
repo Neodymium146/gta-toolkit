@@ -34,9 +34,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         // structure data
         public uint VFT;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
+        public uint Unknown_4h; // 0x00000001
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
         public ulong Unknown_10h_Pointer;
         public ushort Count1;
         public ushort Count2;
@@ -46,18 +46,18 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public ulong Unknown_30h_Pointer;
         public ulong Unknown_38h_Pointer;
         public ulong Unknown_40h_Pointer;
-        public uint Unknown_48h;
-        public uint Unknown_4Ch;
+        public uint Unknown_48h; // 0x00000000
+        public uint Unknown_4Ch; // 0x00000000
         public uint Unknown_50h;
         public uint Unknown_54h;
         public uint Unknown_58h;
-        public ushort Unknown_5Ch;
-        public ushort Count3;
+        public ushort Unknown_5Ch; // 0x0001
+        public ushort BonesCount;
         public ushort Count4;
-        public ushort Unknown_62h;
-        public uint Unknown_64h;
-        public uint Unknown_68h;
-        public uint Unknown_6Ch;
+        public ushort Unknown_62h; // 0x0000
+        public uint Unknown_64h; // 0x00000000
+        public uint Unknown_68h; // 0x00000000
+        public uint Unknown_6Ch; // 0x00000000
 
         // reference data
         public ResourcePointerArray64<Unknown_D_001> Unknown_10h_Data;
@@ -92,7 +92,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_54h = reader.ReadUInt32();
             this.Unknown_58h = reader.ReadUInt32();
             this.Unknown_5Ch = reader.ReadUInt16();
-            this.Count3 = reader.ReadUInt16();
+            this.BonesCount = reader.ReadUInt16();
             this.Count4 = reader.ReadUInt16();
             this.Unknown_62h = reader.ReadUInt16();
             this.Unknown_64h = reader.ReadUInt32();
@@ -106,19 +106,19 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             );
             this.Bones = reader.ReadBlockAt<ResourceSimpleArray<Bone_GTA5_pc>>(
                 this.BonesPointer, // offset
-                this.Count3
+                this.BonesCount
             );
             this.Unknown_28h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
                 this.Unknown_28h_Pointer, // offset
-                this.Count3
+                this.BonesCount
             );
             this.Unknown_30h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
                 this.Unknown_30h_Pointer, // offset
-                this.Count3
+                this.BonesCount
             );
             this.Unknown_38h_Data = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
                 this.Unknown_38h_Pointer, // offset
-                this.Count3
+                this.BonesCount
             );
             this.Unknown_40h_Data = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
                 this.Unknown_40h_Pointer, // offset
@@ -162,7 +162,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Unknown_54h);
             writer.Write(this.Unknown_58h);
             writer.Write(this.Unknown_5Ch);
-            writer.Write(this.Count3);
+            writer.Write(this.BonesCount);
             writer.Write(this.Count4);
             writer.Write(this.Unknown_62h);
             writer.Write(this.Unknown_64h);

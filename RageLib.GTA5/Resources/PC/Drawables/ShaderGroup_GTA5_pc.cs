@@ -35,20 +35,20 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         // structure data
         public uint VFT;
-        public uint Unknown_4h;
+        public uint Unknown_4h; // 0x00000001
         public ulong TextureDictionaryPointer;
         public ulong ShadersPointer;
         public ushort ShadersCount1;
         public ushort ShadersCount2;
-        public uint Unknown_1Ch;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
+        public uint Unknown_1Ch; // 0x00000000
+        public uint Unknown_20h; // 0x00000000
+        public uint Unknown_24h; // 0x00000000
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
         public uint Unknown_30h;
-        public uint Unknown_34h;
-        public uint Unknown_38h;
-        public uint Unknown_3Ch;
+        public uint Unknown_34h; // 0x00000000
+        public uint Unknown_38h; // 0x00000000
+        public uint Unknown_3Ch; // 0x00000000
 
         // reference data
         public TextureDictionary_GTA5_pc TextureDictionary;

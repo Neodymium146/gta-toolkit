@@ -22,30 +22,30 @@
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class Unknown_F_024: ResourceSystemBlock
-	{
-		public override long Length
-		{
-			get { return 64; }
-		}
+    public class Unknown_F_024 : ResourceSystemBlock
+    {
+        public override long Length
+        {
+            get { return 64; }
+        }
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
-        public uint Unknown_30h;
-        public uint Unknown_34h;
-        public uint Unknown_38h;
-        public uint Unknown_3Ch;
+        public uint Unknown_0h; // 0x00000000
+        public uint Unknown_4h; // 0x00000000
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x00000000
+        public uint Unknown_1Ch; // 0x00000000
+        public uint Unknown_20h; // 0x00000000
+        public uint Unknown_24h; // 0x00000000
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
+        public uint Unknown_30h; // 0x00000000
+        public uint Unknown_34h; // 0x00000000
+        public uint Unknown_38h; // 0x00000000
+        public uint Unknown_3Ch; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -75,7 +75,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// Writes the data-block to a stream.
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
-		{
+        {
             // write structure data
             writer.Write(this.Unknown_0h);
             writer.Write(this.Unknown_4h);
@@ -94,7 +94,5 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_38h);
             writer.Write(this.Unknown_3Ch);
         }
-
-
-	}
+    }
 }

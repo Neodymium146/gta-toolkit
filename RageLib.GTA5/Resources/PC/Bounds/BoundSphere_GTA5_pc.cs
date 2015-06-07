@@ -23,26 +23,5 @@
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
     public class BoundSphere_GTA5_pc : Bound_GTA5_pc
-    {
-        public override long Length
-        {
-            get { return 112; }
-        }
-
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
-        {
-            base.Read(reader, parameters);
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            base.Write(writer, parameters);
-        }
-    }
+    { }
 }

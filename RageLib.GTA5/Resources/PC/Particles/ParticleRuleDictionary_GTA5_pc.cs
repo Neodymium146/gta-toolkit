@@ -34,21 +34,21 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // structure data
         public uint VFT;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
+        public uint Unknown_4h; // 0x00000001
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x00000001
+        public uint Unknown_1Ch; // 0x00000000
         public ulong HashesPointer;
         public ushort HashesCount1;
         public ushort HashesCount2;
-        public uint Unknown_2Ch;
+        public uint Unknown_2Ch; // 0x00000000
         public ulong ParticleRulesPointer;
         public ushort ParticleRulesCount1;
         public ushort ParticleRulesCount2;
-        public uint Unknown_3Ch;
+        public uint Unknown_3Ch; // 0x00000000
 
         // reference data
         public ResourceSimpleArray<uint_r> Hashes;

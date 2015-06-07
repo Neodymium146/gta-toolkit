@@ -35,59 +35,59 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
 		// structure data
 		public uint Unknown_0h;
-		public uint Unknown_4h;
-		public uint Unknown_8h;
-		public uint Unknown_Ch;
-		public uint Unknown_10h;
-		public uint Unknown_14h;
-		public ulong NamePointer;
+		public uint Unknown_4h; // 0x00000001
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
+        public uint Unknown_10h; // 0x00000002
+        public uint Unknown_14h; // 0x00000000
+        public ulong NamePointer;
 		public ulong BoundPointer;
-		public uint Unknown_28h;
-		public uint Unknown_2Ch;
-		public uint Unknown_30h;
-		public uint Unknown_34h;
-		public uint Unknown_38h;
-		public uint Unknown_3Ch;
-		public uint Unknown_40h;
+		public uint Unknown_28h; // 0x00000001
+        public uint Unknown_2Ch; // 0xFFFFFFFF
+        public uint Unknown_30h; // 0x00010000
+        public uint Unknown_34h; // 0x00000000
+        public uint Unknown_38h; // 0x00000000
+        public uint Unknown_3Ch; // 0x00000000
+        public uint Unknown_40h;
 		public uint Unknown_44h;
-		public uint Unknown_48h;
-		public uint Unknown_4Ch;
-		public uint Unknown_50h;
-		public uint Unknown_54h;
-		public uint Unknown_58h;
-		public uint Unknown_5Ch;
-		public uint Unknown_60h;
+		public uint Unknown_48h; // 0x3F800000
+        public uint Unknown_4Ch; // 0x43160000
+        public uint Unknown_50h; // 0x40C90FDB
+        public uint Unknown_54h; // 0x3F800000
+        public uint Unknown_58h; // 0x00000000
+        public uint Unknown_5Ch; // 0x00000000
+        public uint Unknown_60h;
 		public uint Unknown_64h;
 		public uint Unknown_68h;
-		public uint Unknown_6Ch;
-		public uint Unknown_70h;
+		public uint Unknown_6Ch; // 0x7FC00001
+        public uint Unknown_70h;
 		public uint Unknown_74h;
 		public uint Unknown_78h;
-		public uint Unknown_7Ch;
-		public uint Unknown_80h;
-		public uint Unknown_84h;
-		public uint Unknown_88h;
-		public uint Unknown_8Ch;
-		public uint Unknown_90h;
-		public uint Unknown_94h;
-		public uint Unknown_98h;
-		public uint Unknown_9Ch;
-		public uint Unknown_A0h;
-		public uint Unknown_A4h;
-		public uint Unknown_A8h;
-		public uint Unknown_ACh;
-		public uint Unknown_B0h;
-		public uint Unknown_B4h;
-		public uint Unknown_B8h;
-		public uint Unknown_BCh;
-		public uint Unknown_C0h;
-		public uint Unknown_C4h;
-		public uint Unknown_C8h;
-		public uint Unknown_CCh;
-		public uint Unknown_D0h;
-		public uint Unknown_D4h;
-		public uint Unknown_D8h;
-		public uint Unknown_DCh;
+		public uint Unknown_7Ch; // 0x7FC00001
+        public uint Unknown_80h; // 0x00000000
+        public uint Unknown_84h; // 0x00000000
+        public uint Unknown_88h; // 0x00000000
+        public uint Unknown_8Ch; // 0x7F800001
+        public uint Unknown_90h; // 0x00000000
+        public uint Unknown_94h; // 0x00000000
+        public uint Unknown_98h; // 0x00000000
+        public uint Unknown_9Ch; // 0x7F800001
+        public uint Unknown_A0h; // 0x00000000
+        public uint Unknown_A4h; // 0x00000000
+        public uint Unknown_A8h; // 0x00000000
+        public uint Unknown_ACh; // 0x7F800001
+        public uint Unknown_B0h; // 0x00000000
+        public uint Unknown_B4h; // 0x00000000
+        public uint Unknown_B8h; // 0x00000000
+        public uint Unknown_BCh; // 0x7F800001
+        public uint Unknown_C0h; // 0x00000000
+        public uint Unknown_C4h; // 0x00000000
+        public uint Unknown_C8h; // 0x00000000
+        public uint Unknown_CCh; // 0x7F800001
+        public uint Unknown_D0h; // 0x00000000
+        public uint Unknown_D4h; // 0x00000000
+        public uint Unknown_D8h; // 0x00000000
+        public uint Unknown_DCh; // 0x7F800001
 
         // reference data
         public string_r Name;

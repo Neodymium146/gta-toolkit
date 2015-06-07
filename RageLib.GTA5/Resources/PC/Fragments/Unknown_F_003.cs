@@ -25,45 +25,45 @@ using System;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class Unknown_F_003: ResourceSystemBlock
-	{
-		public override long Length
-		{
-			get { return 16 + Data.Length; }
-		}
+    public class Unknown_F_003 : ResourceSystemBlock
+    {
+        public override long Length
+        {
+            get { return 16 + Data.Length; }
+        }
 
-		// structure data
-		public uint Unknown_0h;
-		public uint Unknown_4h;
-		public uint cnt1;
-		public uint Unknown_Ch;
+        // structure data
+        public uint Unknown_0h; // 0x56475748
+        public uint Unknown_4h;
+        public uint cnt1;
+        public uint Unknown_Ch;
         public ResourceSimpleArray<byte_r> Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
-		{
-			// read structure data
-			this.Unknown_0h = reader.ReadUInt32();
-			this.Unknown_4h = reader.ReadUInt32();
-			this.cnt1 = reader.ReadUInt32();
-			this.Unknown_Ch = reader.ReadUInt32();
+        {
+            // read structure data
+            this.Unknown_0h = reader.ReadUInt32();
+            this.Unknown_4h = reader.ReadUInt32();
+            this.cnt1 = reader.ReadUInt32();
+            this.Unknown_Ch = reader.ReadUInt32();
             this.Data = reader.ReadBlock<ResourceSimpleArray<byte_r>>(
               cnt1 - 16
               );
         }
 
-		/// <summary>
-		/// Writes the data-block to a stream.
-		/// </summary>
-		public override void Write(ResourceDataWriter writer, params object[] parameters)
-		{
-			// write structure data
-			writer.Write(this.Unknown_0h);
-			writer.Write(this.Unknown_4h);
-			writer.Write(this.cnt1);
-			writer.Write(this.Unknown_Ch);
+        /// <summary>
+        /// Writes the data-block to a stream.
+        /// </summary>
+        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        {
+            // write structure data
+            writer.Write(this.Unknown_0h);
+            writer.Write(this.Unknown_4h);
+            writer.Write(this.cnt1);
+            writer.Write(this.Unknown_Ch);
             writer.WriteBlock(this.Data);
         }
 

@@ -34,20 +34,20 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         // structure data
         public uint VFT;
-        public uint Unknown_4h;
+        public uint Unknown_4h; // 0x00000001
         public ulong GeometriesPointer;
         public ushort GeometriesCount1;
         public ushort GeometriesCount2;
-        public uint Unknown_14h;
+        public uint Unknown_14h; // 0x00000000
         public ulong Unknown_18h_Pointer;
-        public ulong Unknown_20h_Pointer;
+        public ulong ShaderMappingPointer;
         public uint Unknown_28h;
         public uint Unknown_2Ch;
 
         // reference data
         public ResourcePointerArray64<DrawableGeometry_GTA5_pc> Geometries;
-        public ResourceSimpleArray<Unknown_D_002> Unknown_18h_Data;
-        public ResourceSimpleArray<ushort_r> Unknown_20h_Data;
+        public ResourceSimpleArray<RAGE_AABB> Unknown_18h_Data;
+        public ResourceSimpleArray<ushort_r> ShaderMapping;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -62,7 +62,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.GeometriesCount2 = reader.ReadUInt16();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h_Pointer = reader.ReadUInt64();
-            this.Unknown_20h_Pointer = reader.ReadUInt64();
+            this.ShaderMappingPointer = reader.ReadUInt64();
             this.Unknown_28h = reader.ReadUInt32();
             this.Unknown_2Ch = reader.ReadUInt32();
 
@@ -71,12 +71,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 this.GeometriesPointer, // offset
                 this.GeometriesCount1
             );
-            this.Unknown_18h_Data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_D_002>>(
+            this.Unknown_18h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_AABB>>(
                 this.Unknown_18h_Pointer, // offset
                 this.GeometriesCount1 > 1 ? this.GeometriesCount1 + 1 : this.GeometriesCount1
             );
-            this.Unknown_20h_Data = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
-                this.Unknown_20h_Pointer, // offset
+            this.ShaderMapping = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+                this.ShaderMappingPointer, // offset
                 this.GeometriesCount1
             );
         }
@@ -90,7 +90,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.GeometriesPointer = (ulong)(this.Geometries != null ? this.Geometries.Position : 0);
             //	this.GeometriesCount1 = (ushort)(this.Geometries != null ? this.Geometries.Count : 0);
             this.Unknown_18h_Pointer = (ulong)(this.Unknown_18h_Data != null ? this.Unknown_18h_Data.Position : 0);
-            this.Unknown_20h_Pointer = (ulong)(this.Unknown_20h_Data != null ? this.Unknown_20h_Data.Position : 0);
+            this.ShaderMappingPointer = (ulong)(this.ShaderMapping != null ? this.ShaderMapping.Position : 0);
 
             // write structure data
             writer.Write(this.VFT);
@@ -100,7 +100,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.GeometriesCount2);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h_Pointer);
-            writer.Write(this.Unknown_20h_Pointer);
+            writer.Write(this.ShaderMappingPointer);
             writer.Write(this.Unknown_28h);
             writer.Write(this.Unknown_2Ch);
         }
@@ -113,7 +113,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             var list = new List<IResourceBlock>();
             if (Geometries != null) list.Add(Geometries);
             if (Unknown_18h_Data != null) list.Add(Unknown_18h_Data);
-            if (Unknown_20h_Data != null) list.Add(Unknown_20h_Data);
+            if (ShaderMapping != null) list.Add(ShaderMapping);
             return list.ToArray();
         }
 

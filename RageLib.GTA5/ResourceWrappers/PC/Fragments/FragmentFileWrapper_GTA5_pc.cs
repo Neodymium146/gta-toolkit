@@ -85,7 +85,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Fragments
 
             var resource = new ResourceFile_GTA5_pc<FragType_GTA5_pc>();
             resource.ResourceData = fragType;
-            resource.Version = 13;
+            resource.Version = 162;
             resource.Save(stream);
         }
     }

@@ -33,16 +33,16 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         }
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
+        public uint Unknown_0h; // 0x00000000
+        public uint Unknown_4h; // 0x00000000
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
         public byte cnt1;
         public byte cnt2;
         public ushort Unknown_12h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x00000000
+        public uint Unknown_1Ch; // 0x00000000
         public ResourceSimpleArray<RAGE_Matrix3> Data;
 
         /// <summary>

@@ -65,23 +65,23 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_A0h;
         public uint Unknown_A4h;
         public uint Unknown_A8h;
-        public uint Unknown_ACh;
-        public uint Unknown_B0h;
-        public uint Unknown_B4h;
-        public uint Unknown_B8h;
-        public uint Unknown_BCh;
-        public uint Unknown_C0h;
-        public uint Unknown_C4h;
-        public uint Unknown_C8h;
-        public uint Unknown_CCh;
-        public uint Unknown_D0h;
-        public uint Unknown_D4h;
-        public uint Unknown_D8h;
-        public uint Unknown_DCh;
-        public uint Unknown_E0h;
-        public uint Unknown_E4h;
-        public uint Unknown_E8h;
-        public uint Unknown_ECh;
+        public uint Unknown_ACh; // 0x00000000
+        public uint Unknown_B0h; // 0x00000000
+        public uint Unknown_B4h; // 0x00000000
+        public uint Unknown_B8h; // 0x00000000
+        public uint Unknown_BCh; // 0x00000000
+        public uint Unknown_C0h; // 0x4CBEBC20
+        public uint Unknown_C4h; // 0x4CBEBC20
+        public uint Unknown_C8h; // 0x4CBEBC20
+        public uint Unknown_CCh; // 0x4CBEBC20
+        public uint Unknown_D0h; // 0xCCBEBC20
+        public uint Unknown_D4h; // 0xCCBEBC20
+        public uint Unknown_D8h; // 0xCCBEBC20
+        public uint Unknown_DCh; // 0xCCBEBC20
+        public uint Unknown_E0h; // 0x00000000
+        public uint Unknown_E4h; // 0x00000000
+        public uint Unknown_E8h; // 0x00000000
+        public uint Unknown_ECh; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -205,8 +205,6 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_E4h);
             writer.Write(this.Unknown_E8h);
             writer.Write(this.Unknown_ECh);
-        }
-
-
+        }        
     }
 }

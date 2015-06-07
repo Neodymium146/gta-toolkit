@@ -41,9 +41,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public ulong p1;
         public ulong p2;
         public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
+        public uint Unknown_24h; // 0x00000000
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
 
         // reference data
         public string_r p1data;

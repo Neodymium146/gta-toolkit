@@ -29,24 +29,15 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     {
         public override long Length
         {
-            get { return 176; }
+            get { return 168; }
         }
 
         // structure data
         public ulong ShaderGroupPointer;
         public ulong SkeletonPointer;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
-        public uint Unknown_30h;
-        public uint Unknown_34h;
-        public uint Unknown_38h;
-        public uint Unknown_3Ch;
-        public uint Unknown_40h;
-        public uint Unknown_44h;
-        public uint Unknown_48h;
-        public uint Unknown_4Ch;
+        public RAGE_Vector4 Unknown_20h;
+        public RAGE_Vector4 Unknown_30h;
+        public RAGE_Vector4 Unknown_40h;
         public ulong DrawableModels1Pointer;
         public ulong DrawableModels2Pointer;
         public ulong DrawableModels3Pointer;
@@ -61,10 +52,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint Unknown_8Ch;
         public ulong Unknown_90h_Pointer;
         public uint Unknown_98h;
-        public uint Unknown_9Ch;
+        public uint Unknown_9Ch; // 0x00000000
         public ulong DrawableModelsXPointer;
-        public ulong NamePointer;
-
+        
         // reference data
         public ShaderGroup_GTA5_pc ShaderGroup;
         public Skeleton_GTA5_pc Skeleton;
@@ -72,10 +62,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public ResourcePointerList64<DrawableModel_GTA5_pc> DrawableModels2;
         public ResourcePointerList64<DrawableModel_GTA5_pc> DrawableModels3;
         public ResourcePointerList64<DrawableModel_GTA5_pc> DrawableModels4;
-        public Unknown_D_003 Unknown_90h_Data;
+        public Unknown_D_002 Unknown_90h_Data;
         public ResourcePointerList64<DrawableModel_GTA5_pc> DrawableModelsX;
-        public string_r Name;
-
+        
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
@@ -86,18 +75,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             // read structure data
             this.ShaderGroupPointer = reader.ReadUInt64();
             this.SkeletonPointer = reader.ReadUInt64();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.Unknown_30h = reader.ReadUInt32();
-            this.Unknown_34h = reader.ReadUInt32();
-            this.Unknown_38h = reader.ReadUInt32();
-            this.Unknown_3Ch = reader.ReadUInt32();
-            this.Unknown_40h = reader.ReadUInt32();
-            this.Unknown_44h = reader.ReadUInt32();
-            this.Unknown_48h = reader.ReadUInt32();
-            this.Unknown_4Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadBlock<RAGE_Vector4>();
+            this.Unknown_30h = reader.ReadBlock<RAGE_Vector4>();
+            this.Unknown_40h = reader.ReadBlock<RAGE_Vector4>();
             this.DrawableModels1Pointer = reader.ReadUInt64();
             this.DrawableModels2Pointer = reader.ReadUInt64();
             this.DrawableModels3Pointer = reader.ReadUInt64();
@@ -114,8 +94,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_98h = reader.ReadUInt32();
             this.Unknown_9Ch = reader.ReadUInt32();
             this.DrawableModelsXPointer = reader.ReadUInt64();
-            this.NamePointer = reader.ReadUInt64();
-
+            
             // read reference data
             this.ShaderGroup = reader.ReadBlockAt<ShaderGroup_GTA5_pc>(
                 this.ShaderGroupPointer // offset
@@ -135,15 +114,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.DrawableModels4 = reader.ReadBlockAt<ResourcePointerList64<DrawableModel_GTA5_pc>>(
                 this.DrawableModels4Pointer // offset
             );
-            this.Unknown_90h_Data = reader.ReadBlockAt<Unknown_D_003>(
+            this.Unknown_90h_Data = reader.ReadBlockAt<Unknown_D_002>(
                 this.Unknown_90h_Pointer // offset
             );
             this.DrawableModelsX = reader.ReadBlockAt<ResourcePointerList64<DrawableModel_GTA5_pc>>(
                 this.DrawableModelsXPointer // offset
-            );
-            this.Name = reader.ReadBlockAt<string_r>(
-                this.NamePointer // offset
-            );
+            );            
         }
 
         /// <summary>
@@ -162,23 +138,13 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.DrawableModels4Pointer = (ulong)(this.DrawableModels4 != null ? this.DrawableModels4.Position : 0);
             this.Unknown_90h_Pointer = (ulong)(this.Unknown_90h_Data != null ? this.Unknown_90h_Data.Position : 0);
             this.DrawableModelsXPointer = (ulong)(this.DrawableModelsX != null ? this.DrawableModelsX.Position : 0);
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
-
+            
             // write structure data
             writer.Write(this.ShaderGroupPointer);
             writer.Write(this.SkeletonPointer);
-            writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
-            writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
-            writer.Write(this.Unknown_30h);
-            writer.Write(this.Unknown_34h);
-            writer.Write(this.Unknown_38h);
-            writer.Write(this.Unknown_3Ch);
-            writer.Write(this.Unknown_40h);
-            writer.Write(this.Unknown_44h);
-            writer.Write(this.Unknown_48h);
-            writer.Write(this.Unknown_4Ch);
+            writer.WriteBlock(this.Unknown_20h);
+            writer.WriteBlock(this.Unknown_30h);
+            writer.WriteBlock(this.Unknown_40h);
             writer.Write(this.DrawableModels1Pointer);
             writer.Write(this.DrawableModels2Pointer);
             writer.Write(this.DrawableModels3Pointer);
@@ -194,8 +160,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Unknown_90h_Pointer);
             writer.Write(this.Unknown_98h);
             writer.Write(this.Unknown_9Ch);
-            writer.Write(this.DrawableModelsXPointer);
-            writer.Write(this.NamePointer);
+            writer.Write(this.DrawableModelsXPointer);            
         }
 
         /// <summary>
@@ -211,10 +176,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             if (DrawableModels3 != null) list.Add(DrawableModels3);
             if (DrawableModels4 != null) list.Add(DrawableModels4);
             if (Unknown_90h_Data != null) list.Add(Unknown_90h_Data);
-            if (DrawableModelsX != null) list.Add(DrawableModelsX);
-            if (Name != null) list.Add(Name);
+            if (DrawableModelsX != null) list.Add(DrawableModelsX);           
             return list.ToArray();
         }
-
     }
 }

@@ -34,16 +34,16 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // structure data
         public uint VFT;
-        public uint Unknown_4h;
+        public uint Unknown_4h; // 0x00000001
         public uint Unknown_8h;
-        public uint Unknown_Ch;
+        public uint Unknown_Ch; // 0x00000000
         public uint Unknown_10h;
-        public uint Unknown_14h;
+        public uint Unknown_14h; // 0x00000000
         public ulong p1;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
+        public uint Unknown_20h; // 0x00000000
+        public uint Unknown_24h; // 0x00000000
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
         public ulong p2;
         public ulong p3;
         public ulong p4;
@@ -54,8 +54,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_5Ch;
         public uint Unknown_60h;
         public uint Unknown_64h;
-        public uint Unknown_68h;
-        public uint Unknown_6Ch;
+        public uint Unknown_68h; // 0x00000000
+        public uint Unknown_6Ch; // 0x00000000
 
         // reference data
         public Unknown_P_009 p1data;

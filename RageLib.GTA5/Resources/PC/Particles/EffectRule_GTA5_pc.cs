@@ -35,31 +35,31 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // structure data
         public uint VFT;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
+        public uint Unknown_4h; // 0x00000001
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
         public uint Unknown_10h;
-        public uint Unknown_14h;
+        public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h;
-        public uint Unknown_1Ch;
+        public uint Unknown_1Ch; // 0x00000000
         public ulong NamePointer;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
-        public uint Unknown_30h;
-        public uint Unknown_34h;
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
+        public uint Unknown_30h; // 0x00000000
+        public uint Unknown_34h; // 0x00000000
         public ulong p2;
-        public uint Unknown_40h;
-        public uint Unknown_44h;
+        public uint Unknown_40h; // 0x00000000
+        public uint Unknown_44h; // 0x00000000
         public ulong p3;
-        public uint Unknown_50h;
-        public uint Unknown_54h;
+        public uint Unknown_50h; // 0x00000000
+        public uint Unknown_54h; // 0x00000000
         public ulong p4;
-        public uint Unknown_60h;
-        public uint Unknown_64h;
-        public uint Unknown_68h;
-        public uint Unknown_6Ch;
-        public uint Unknown_70h;
-        public uint Unknown_74h;
+        public uint Unknown_60h; // 0x00000000
+        public uint Unknown_64h; // 0x00000000
+        public uint Unknown_68h; // 0x00000000
+        public uint Unknown_6Ch; // 0x00000000
+        public uint Unknown_70h; // 0x00000000
+        public uint Unknown_74h; // 0x00000000
         public Unknown_P_018 emb1;
         public Unknown_P_018 emb2;
         public Unknown_P_018 emb3;
@@ -73,9 +73,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public ulong pref;
         public ushort refcnt1;
         public ushort refcnt2;
-        public uint Unknown_624h;
+        public uint Unknown_624h; // 0x00000000
         public uint Unknown_628h;
-        public uint Unknown_62Ch;
+        public uint Unknown_62Ch; // 0x00000000
 
         // reference data
         public string_r Name;

@@ -20,28 +20,24 @@
     THE SOFTWARE.
 */
 
-namespace RageLib.Resources.GTA5.PC.Drawables
+namespace RageLib.Resources.GTA5.PC.Particles
 {
-    public class Unknown_D_005 : ResourceSystemBlock
+    public class BehaviourSprite_GTA5_pc : Behaviour_GTA5_pc
     {
         public override long Length
         {
-            get { return 192; }
+            get { return 112; }
         }
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x00000000
+        public uint Unknown_1Ch; // 0x00000000
+        public uint Unknown_20h; // 0x00000000
+        public uint Unknown_24h; // 0x00000000
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
         public uint Unknown_30h;
         public uint Unknown_34h;
         public uint Unknown_38h;
@@ -55,40 +51,18 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint Unknown_58h;
         public uint Unknown_5Ch;
         public uint Unknown_60h;
-        public uint Unknown_64h;
-        public uint Unknown_68h;
-        public uint Unknown_6Ch;
-        public uint Unknown_70h;
-        public uint Unknown_74h;
-        public uint Unknown_78h;
-        public uint Unknown_7Ch;
-        public uint Unknown_80h;
-        public uint Unknown_84h;
-        public uint Unknown_88h;
-        public uint Unknown_8Ch;
-        public uint Unknown_90h;
-        public uint Unknown_94h;
-        public uint Unknown_98h;
-        public uint Unknown_9Ch;
-        public uint Unknown_A0h;
-        public uint Unknown_A4h;
-        public uint Unknown_A8h;
-        public uint Unknown_ACh;
-        public uint Unknown_B0h;
-        public uint Unknown_B4h;
-        public uint Unknown_B8h;
-        public uint Unknown_BCh;
+        public uint Unknown_64h; // 0x00000000
+        public uint Unknown_68h; // 0x00000000
+        public uint Unknown_6Ch; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
@@ -113,26 +87,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_64h = reader.ReadUInt32();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
-            this.Unknown_70h = reader.ReadUInt32();
-            this.Unknown_74h = reader.ReadUInt32();
-            this.Unknown_78h = reader.ReadUInt32();
-            this.Unknown_7Ch = reader.ReadUInt32();
-            this.Unknown_80h = reader.ReadUInt32();
-            this.Unknown_84h = reader.ReadUInt32();
-            this.Unknown_88h = reader.ReadUInt32();
-            this.Unknown_8Ch = reader.ReadUInt32();
-            this.Unknown_90h = reader.ReadUInt32();
-            this.Unknown_94h = reader.ReadUInt32();
-            this.Unknown_98h = reader.ReadUInt32();
-            this.Unknown_9Ch = reader.ReadUInt32();
-            this.Unknown_A0h = reader.ReadUInt32();
-            this.Unknown_A4h = reader.ReadUInt32();
-            this.Unknown_A8h = reader.ReadUInt32();
-            this.Unknown_ACh = reader.ReadUInt32();
-            this.Unknown_B0h = reader.ReadUInt32();
-            this.Unknown_B4h = reader.ReadUInt32();
-            this.Unknown_B8h = reader.ReadUInt32();
-            this.Unknown_BCh = reader.ReadUInt32();
         }
 
         /// <summary>
@@ -140,11 +94,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
@@ -169,26 +121,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Unknown_64h);
             writer.Write(this.Unknown_68h);
             writer.Write(this.Unknown_6Ch);
-            writer.Write(this.Unknown_70h);
-            writer.Write(this.Unknown_74h);
-            writer.Write(this.Unknown_78h);
-            writer.Write(this.Unknown_7Ch);
-            writer.Write(this.Unknown_80h);
-            writer.Write(this.Unknown_84h);
-            writer.Write(this.Unknown_88h);
-            writer.Write(this.Unknown_8Ch);
-            writer.Write(this.Unknown_90h);
-            writer.Write(this.Unknown_94h);
-            writer.Write(this.Unknown_98h);
-            writer.Write(this.Unknown_9Ch);
-            writer.Write(this.Unknown_A0h);
-            writer.Write(this.Unknown_A4h);
-            writer.Write(this.Unknown_A8h);
-            writer.Write(this.Unknown_ACh);
-            writer.Write(this.Unknown_B0h);
-            writer.Write(this.Unknown_B4h);
-            writer.Write(this.Unknown_B8h);
-            writer.Write(this.Unknown_BCh);
         }
     }
 }

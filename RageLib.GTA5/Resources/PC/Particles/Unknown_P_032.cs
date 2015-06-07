@@ -33,28 +33,28 @@ namespace RageLib.Resources.GTA5.PC.Particles
         }
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
-        public uint Unknown_30h;
-        public uint Unknown_34h;
-        public uint Unknown_38h;
-        public uint Unknown_3Ch;
+        public uint Unknown_0h; // 0x73616942
+        public uint Unknown_4h; // 0x6E694C20
+        public uint Unknown_8h; // 0x6553206B
+        public uint Unknown_Ch; // 0x30305F74
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x00000000
+        public uint Unknown_1Ch; // 0x00000000
+        public uint Unknown_20h; // 0x00000000
+        public uint Unknown_24h; // 0x00000000
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
+        public uint Unknown_30h; // 0x00000000
+        public uint Unknown_34h; // 0x00000000
+        public uint Unknown_38h; // 0x00000000
+        public uint Unknown_3Ch; // 0x00000000
         public ulong p12;
         public ushort c12a;
         public ushort c12b;
-        public uint Unknown_4Ch;
+        public uint Unknown_4Ch; // 0x00000000
         public uint Unknown_50h;
-        public uint Unknown_54h;
+        public uint Unknown_54h; // 0x00000000
 
         // reference data
         public ResourceSimpleArray<uint_r> p12data;

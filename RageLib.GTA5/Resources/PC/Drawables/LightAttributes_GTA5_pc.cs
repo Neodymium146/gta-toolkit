@@ -30,12 +30,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         }
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
+        public uint Unknown_0h; // 0x00000000
+        public uint Unknown_4h; // 0x00000000
         public uint Unknown_8h;
         public uint Unknown_Ch;
         public uint Unknown_10h;
-        public uint Unknown_14h;
+        public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h;
         public uint Unknown_1Ch;
         public uint Unknown_20h;
@@ -48,7 +48,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint Unknown_3Ch;
         public uint Unknown_40h;
         public uint Unknown_44h;
-        public uint Unknown_48h;
+        public uint Unknown_48h; // 0x00000000
         public uint Unknown_4Ch;
         public uint Unknown_50h;
         public uint Unknown_54h;
@@ -71,7 +71,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint Unknown_98h;
         public uint Unknown_9Ch;
         public uint Unknown_A0h;
-        public uint Unknown_A4h;
+        public uint Unknown_A4h; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.

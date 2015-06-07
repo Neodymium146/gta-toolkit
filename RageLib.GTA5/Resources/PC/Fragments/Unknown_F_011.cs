@@ -25,158 +25,157 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class Unknown_F_011: ResourceSystemBlock
-	{
-		public override long Length
-		{
-			get { return 128; }
-		}
+    public class Unknown_F_011 : ResourceSystemBlock
+    {
+        public override long Length
+        {
+            get { return 128; }
+        }
 
-		// structure data
-		public uint VFT;
-		public uint Unknown_4h;
-		public uint Unknown_8h;
-		public uint Unknown_Ch;
-		public ulong pxxxxx_xxx;
-		public ulong pxxxxx_0;
-		public uint Unknown_20h;
-		public uint Unknown_24h;
-		public ulong pxxxxx_1;
-		public uint Unknown_30h;
-		public uint Unknown_34h;
-		public uint Unknown_38h;
-		public uint Unknown_3Ch;
-		public uint Unknown_40h;
-		public uint Unknown_44h;
-		public uint Unknown_48h;
-		public uint Unknown_4Ch;
-		public uint Unknown_50h;
-		public uint Unknown_54h;
-		public uint Unknown_58h;
-		public uint Unknown_5Ch;
-		public ulong pxxxxx_2;
-		public ushort cntxx51a;
-		public ushort cntxx51b;
-		public uint Unknown_6Ch;
-		public uint Unknown_70h;
-		public uint Unknown_74h;
-		public uint Unknown_78h;
-		public uint Unknown_7Ch;
+        // structure data
+        public uint VFT;
+        public uint Unknown_4h; // 0x00000001
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
+        public ulong pxxxxx_xxx;
+        public ulong pxxxxx_0;
+        public uint Unknown_20h; // 0x00000000
+        public uint Unknown_24h; // 0x00000000
+        public ulong pxxxxx_1;
+        public uint Unknown_30h; // 0x00000000
+        public uint Unknown_34h; // 0x00000000
+        public uint Unknown_38h; // 0x00000000
+        public uint Unknown_3Ch; // 0x00000000
+        public uint Unknown_40h; // 0x00000000
+        public uint Unknown_44h; // 0x00000000
+        public uint Unknown_48h; // 0x00000000
+        public uint Unknown_4Ch; // 0x00000000
+        public uint Unknown_50h; // 0x00000000
+        public uint Unknown_54h; // 0x00000000
+        public uint Unknown_58h; // 0x00000000
+        public uint Unknown_5Ch; // 0x00000000
+        public ulong pxxxxx_2;
+        public ushort cntxx51a;
+        public ushort cntxx51b;
+        public uint Unknown_6Ch; // 0x00000000
+        public uint Unknown_70h; // 0x00000000
+        public uint Unknown_74h; // 0x00000000
+        public uint Unknown_78h;
+        public uint Unknown_7Ch; // 0x00000000
 
-		// reference data
-		public Unknown_F_013 pxxxxx_xxxdata;
-		public FragDrawable_GTA5_pc pxxxxx_0data;
-		public Unknown_F_010 pxxxxx_1data;
-		public ResourceSimpleArray<uint_r> pxxxxx_2data;
+        // reference data
+        public Unknown_F_013 pxxxxx_xxxdata;
+        public FragDrawable_GTA5_pc pxxxxx_0data;
+        public Unknown_F_010 pxxxxx_1data;
+        public ResourceSimpleArray<uint_r> pxxxxx_2data;
 
-		/// <summary>
-		/// Reads the data-block from a stream.
-		/// </summary>
-		public override void Read(ResourceDataReader reader, params object[] parameters)
-		{
-			// read structure data
-			this.VFT = reader.ReadUInt32();
-			this.Unknown_4h = reader.ReadUInt32();
-			this.Unknown_8h = reader.ReadUInt32();
-			this.Unknown_Ch = reader.ReadUInt32();
-			this.pxxxxx_xxx = reader.ReadUInt64();
-			this.pxxxxx_0 = reader.ReadUInt64();
-			this.Unknown_20h = reader.ReadUInt32();
-			this.Unknown_24h = reader.ReadUInt32();
-			this.pxxxxx_1 = reader.ReadUInt64();
-			this.Unknown_30h = reader.ReadUInt32();
-			this.Unknown_34h = reader.ReadUInt32();
-			this.Unknown_38h = reader.ReadUInt32();
-			this.Unknown_3Ch = reader.ReadUInt32();
-			this.Unknown_40h = reader.ReadUInt32();
-			this.Unknown_44h = reader.ReadUInt32();
-			this.Unknown_48h = reader.ReadUInt32();
-			this.Unknown_4Ch = reader.ReadUInt32();
-			this.Unknown_50h = reader.ReadUInt32();
-			this.Unknown_54h = reader.ReadUInt32();
-			this.Unknown_58h = reader.ReadUInt32();
-			this.Unknown_5Ch = reader.ReadUInt32();
-			this.pxxxxx_2 = reader.ReadUInt64();
-			this.cntxx51a = reader.ReadUInt16();
-			this.cntxx51b = reader.ReadUInt16();
-			this.Unknown_6Ch = reader.ReadUInt32();
-			this.Unknown_70h = reader.ReadUInt32();
-			this.Unknown_74h = reader.ReadUInt32();
-			this.Unknown_78h = reader.ReadUInt32();
-			this.Unknown_7Ch = reader.ReadUInt32();
+        /// <summary>
+        /// Reads the data-block from a stream.
+        /// </summary>
+        public override void Read(ResourceDataReader reader, params object[] parameters)
+        {
+            // read structure data
+            this.VFT = reader.ReadUInt32();
+            this.Unknown_4h = reader.ReadUInt32();
+            this.Unknown_8h = reader.ReadUInt32();
+            this.Unknown_Ch = reader.ReadUInt32();
+            this.pxxxxx_xxx = reader.ReadUInt64();
+            this.pxxxxx_0 = reader.ReadUInt64();
+            this.Unknown_20h = reader.ReadUInt32();
+            this.Unknown_24h = reader.ReadUInt32();
+            this.pxxxxx_1 = reader.ReadUInt64();
+            this.Unknown_30h = reader.ReadUInt32();
+            this.Unknown_34h = reader.ReadUInt32();
+            this.Unknown_38h = reader.ReadUInt32();
+            this.Unknown_3Ch = reader.ReadUInt32();
+            this.Unknown_40h = reader.ReadUInt32();
+            this.Unknown_44h = reader.ReadUInt32();
+            this.Unknown_48h = reader.ReadUInt32();
+            this.Unknown_4Ch = reader.ReadUInt32();
+            this.Unknown_50h = reader.ReadUInt32();
+            this.Unknown_54h = reader.ReadUInt32();
+            this.Unknown_58h = reader.ReadUInt32();
+            this.Unknown_5Ch = reader.ReadUInt32();
+            this.pxxxxx_2 = reader.ReadUInt64();
+            this.cntxx51a = reader.ReadUInt16();
+            this.cntxx51b = reader.ReadUInt16();
+            this.Unknown_6Ch = reader.ReadUInt32();
+            this.Unknown_70h = reader.ReadUInt32();
+            this.Unknown_74h = reader.ReadUInt32();
+            this.Unknown_78h = reader.ReadUInt32();
+            this.Unknown_7Ch = reader.ReadUInt32();
 
-			// read reference data
-			this.pxxxxx_xxxdata = reader.ReadBlockAt<Unknown_F_013>(
-				this.pxxxxx_xxx // offset
-			);
-			this.pxxxxx_0data = reader.ReadBlockAt<FragDrawable_GTA5_pc>(
-				this.pxxxxx_0 // offset
-			);
-			this.pxxxxx_1data = reader.ReadBlockAt<Unknown_F_010>(
-				this.pxxxxx_1 // offset
-			);
-			this.pxxxxx_2data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
-				this.pxxxxx_2, // offset
-				this.cntxx51a
-			);
-		}
+            // read reference data
+            this.pxxxxx_xxxdata = reader.ReadBlockAt<Unknown_F_013>(
+                this.pxxxxx_xxx // offset
+            );
+            this.pxxxxx_0data = reader.ReadBlockAt<FragDrawable_GTA5_pc>(
+                this.pxxxxx_0 // offset
+            );
+            this.pxxxxx_1data = reader.ReadBlockAt<Unknown_F_010>(
+                this.pxxxxx_1 // offset
+            );
+            this.pxxxxx_2data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
+                this.pxxxxx_2, // offset
+                this.cntxx51a
+            );
+        }
 
-		/// <summary>
-		/// Writes the data-block to a stream.
-		/// </summary>
-		public override void Write(ResourceDataWriter writer, params object[] parameters)
-		{
-			// update structure data
-			this.pxxxxx_xxx = (ulong)(this.pxxxxx_xxxdata != null ? this.pxxxxx_xxxdata.Position : 0);
-			this.pxxxxx_0 = (ulong)(this.pxxxxx_0data != null ? this.pxxxxx_0data.Position : 0);
-			this.pxxxxx_1 = (ulong)(this.pxxxxx_1data != null ? this.pxxxxx_1data.Position : 0);
-			this.pxxxxx_2 = (ulong)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Position : 0);
-			//this.cntxx51a = (ushort)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Count : 0);
+        /// <summary>
+        /// Writes the data-block to a stream.
+        /// </summary>
+        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        {
+            // update structure data
+            this.pxxxxx_xxx = (ulong)(this.pxxxxx_xxxdata != null ? this.pxxxxx_xxxdata.Position : 0);
+            this.pxxxxx_0 = (ulong)(this.pxxxxx_0data != null ? this.pxxxxx_0data.Position : 0);
+            this.pxxxxx_1 = (ulong)(this.pxxxxx_1data != null ? this.pxxxxx_1data.Position : 0);
+            this.pxxxxx_2 = (ulong)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Position : 0);
+            //this.cntxx51a = (ushort)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Count : 0);
 
-			// write structure data
-			writer.Write(this.VFT);
-			writer.Write(this.Unknown_4h);
-			writer.Write(this.Unknown_8h);
-			writer.Write(this.Unknown_Ch);
-			writer.Write(this.pxxxxx_xxx);
-			writer.Write(this.pxxxxx_0);
-			writer.Write(this.Unknown_20h);
-			writer.Write(this.Unknown_24h);
-			writer.Write(this.pxxxxx_1);
-			writer.Write(this.Unknown_30h);
-			writer.Write(this.Unknown_34h);
-			writer.Write(this.Unknown_38h);
-			writer.Write(this.Unknown_3Ch);
-			writer.Write(this.Unknown_40h);
-			writer.Write(this.Unknown_44h);
-			writer.Write(this.Unknown_48h);
-			writer.Write(this.Unknown_4Ch);
-			writer.Write(this.Unknown_50h);
-			writer.Write(this.Unknown_54h);
-			writer.Write(this.Unknown_58h);
-			writer.Write(this.Unknown_5Ch);
-			writer.Write(this.pxxxxx_2);
-			writer.Write(this.cntxx51a);
-			writer.Write(this.cntxx51b);
-			writer.Write(this.Unknown_6Ch);
-			writer.Write(this.Unknown_70h);
-			writer.Write(this.Unknown_74h);
-			writer.Write(this.Unknown_78h);
-			writer.Write(this.Unknown_7Ch);
-		}
+            // write structure data
+            writer.Write(this.VFT);
+            writer.Write(this.Unknown_4h);
+            writer.Write(this.Unknown_8h);
+            writer.Write(this.Unknown_Ch);
+            writer.Write(this.pxxxxx_xxx);
+            writer.Write(this.pxxxxx_0);
+            writer.Write(this.Unknown_20h);
+            writer.Write(this.Unknown_24h);
+            writer.Write(this.pxxxxx_1);
+            writer.Write(this.Unknown_30h);
+            writer.Write(this.Unknown_34h);
+            writer.Write(this.Unknown_38h);
+            writer.Write(this.Unknown_3Ch);
+            writer.Write(this.Unknown_40h);
+            writer.Write(this.Unknown_44h);
+            writer.Write(this.Unknown_48h);
+            writer.Write(this.Unknown_4Ch);
+            writer.Write(this.Unknown_50h);
+            writer.Write(this.Unknown_54h);
+            writer.Write(this.Unknown_58h);
+            writer.Write(this.Unknown_5Ch);
+            writer.Write(this.pxxxxx_2);
+            writer.Write(this.cntxx51a);
+            writer.Write(this.cntxx51b);
+            writer.Write(this.Unknown_6Ch);
+            writer.Write(this.Unknown_70h);
+            writer.Write(this.Unknown_74h);
+            writer.Write(this.Unknown_78h);
+            writer.Write(this.Unknown_7Ch);
+        }
 
-		/// <summary>
-		/// Returns a list of data blocks which are referenced by this block.
-		/// </summary>
-		public override IResourceBlock[] GetReferences()
-		{
-			var list = new List<IResourceBlock>();
-			if (pxxxxx_xxxdata != null) list.Add(pxxxxx_xxxdata);
-			if (pxxxxx_0data != null) list.Add(pxxxxx_0data);
-			if (pxxxxx_1data != null) list.Add(pxxxxx_1data);
-			if (pxxxxx_2data != null) list.Add(pxxxxx_2data);
-			return list.ToArray();
-		}
-
-	}
+        /// <summary>
+        /// Returns a list of data blocks which are referenced by this block.
+        /// </summary>
+        public override IResourceBlock[] GetReferences()
+        {
+            var list = new List<IResourceBlock>();
+            if (pxxxxx_xxxdata != null) list.Add(pxxxxx_xxxdata);
+            if (pxxxxx_0data != null) list.Add(pxxxxx_0data);
+            if (pxxxxx_1data != null) list.Add(pxxxxx_1data);
+            if (pxxxxx_2data != null) list.Add(pxxxxx_2data);
+            return list.ToArray();
+        }
+    }
 }

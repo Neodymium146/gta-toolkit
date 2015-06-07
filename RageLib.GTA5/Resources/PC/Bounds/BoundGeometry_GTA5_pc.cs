@@ -53,27 +53,27 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public ulong Unknown_C8h_Pointer;
         public uint VerticesCount;
         public uint PolygonsCount;
-        public uint Unknown_D8h;
-        public uint Unknown_DCh;
-        public uint Unknown_E0h;
-        public uint Unknown_E4h;
-        public uint Unknown_E8h;
-        public uint Unknown_ECh;
+        public uint Unknown_D8h; // 0x00000000
+        public uint Unknown_DCh; // 0x00000000
+        public uint Unknown_E0h; // 0x00000000
+        public uint Unknown_E4h; // 0x00000000
+        public uint Unknown_E8h; // 0x00000000
+        public uint Unknown_ECh; // 0x00000000
         public ulong MaterialsPointer;
         public ulong Unknown_F8h_Pointer;
-        public uint Unknown_100h;
-        public uint Unknown_104h;
-        public uint Unknown_108h;
-        public uint Unknown_10Ch;
-        public uint Unknown_110h;
-        public uint Unknown_114h;
+        public uint Unknown_100h; // 0x00000000
+        public uint Unknown_104h; // 0x00000000
+        public uint Unknown_108h; // 0x00000000
+        public uint Unknown_10Ch; // 0x00000000
+        public uint Unknown_110h; // 0x00000000
+        public uint Unknown_114h; // 0x00000000
         public ulong Unknown_118h_Pointer;
         public byte MaterialsCount;
         public byte Count2;
-        public ushort Unknown_122h;
-        public uint Unknown_124h;
-        public uint Unknown_128h;
-        public uint Unknown_12Ch;
+        public ushort Unknown_122h; // 0x0000
+        public uint Unknown_124h; // 0x00000000
+        public uint Unknown_128h; // 0x00000000
+        public uint Unknown_12Ch; // 0x00000000
 
         // reference data
         public ResourceSimpleArray<BoundVertex_GTA5_pc> p1data;

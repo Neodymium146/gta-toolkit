@@ -34,28 +34,28 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         // structure data
         public uint VFT;
-        public uint Unknown_4h;
+        public uint Unknown_4h; // 0x00000001
         public uint IndicesCount;
-        public uint Unknown_Ch;
+        public uint Unknown_Ch; // 0x00000000
         public ulong IndicesPointer;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
-        public uint Unknown_30h;
-        public uint Unknown_34h;
-        public uint Unknown_38h;
-        public uint Unknown_3Ch;
-        public uint Unknown_40h;
-        public uint Unknown_44h;
-        public uint Unknown_48h;
-        public uint Unknown_4Ch;
-        public uint Unknown_50h;
-        public uint Unknown_54h;
-        public uint Unknown_58h;
-        public uint Unknown_5Ch;
+        public uint Unknown_18h; // 0x00000000
+        public uint Unknown_1Ch; // 0x00000000
+        public uint Unknown_20h; // 0x00000000
+        public uint Unknown_24h; // 0x00000000
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
+        public uint Unknown_30h; // 0x00000000
+        public uint Unknown_34h; // 0x00000000
+        public uint Unknown_38h; // 0x00000000
+        public uint Unknown_3Ch; // 0x00000000
+        public uint Unknown_40h; // 0x00000000
+        public uint Unknown_44h; // 0x00000000
+        public uint Unknown_48h; // 0x00000000
+        public uint Unknown_4Ch; // 0x00000000
+        public uint Unknown_50h; // 0x00000000
+        public uint Unknown_54h; // 0x00000000
+        public uint Unknown_58h; // 0x00000000
+        public uint Unknown_5Ch; // 0x00000000
 
         // reference data
         public ResourceSimpleArray<ushort_r> Indices;

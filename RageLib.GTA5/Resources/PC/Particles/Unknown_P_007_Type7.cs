@@ -34,19 +34,19 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // structure data
         public uint Unknown_18h;
-        public uint Unknown_1Ch;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
+        public uint Unknown_1Ch; // 0x00000001
+        public uint Unknown_20h; // 0x00000000
+        public uint Unknown_24h; // 0x00000000
         public ulong p1;
         public ushort c1a;
         public ushort c1b;
-        public uint Unknown_34h;
-        public uint Unknown_38h;
-        public uint Unknown_3Ch;
-        public uint Unknown_40h;
-        public uint Unknown_44h;
-        public uint Unknown_48h;
-        public uint Unknown_4Ch;
+        public uint Unknown_34h; // 0x00000000
+        public uint Unknown_38h; // 0x00000000
+        public uint Unknown_3Ch; // 0x00000000
+        public uint Unknown_40h; // 0x00000000
+        public uint Unknown_44h; // 0x00000000
+        public uint Unknown_48h; // 0x00000000
+        public uint Unknown_4Ch; // 0x00000000
 
         // reference data
         public ResourceSimpleArray<Unknown_P_001> p1data;

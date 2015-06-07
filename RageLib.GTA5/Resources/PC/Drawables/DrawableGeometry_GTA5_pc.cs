@@ -34,41 +34,41 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         // structure data
         public uint VFT;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public uint Unknown_10h;
-        public uint Unknown_14h;
+        public uint Unknown_4h; // 0x00000001
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
         public ulong VertexBufferPointer;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
-        public uint Unknown_30h;
-        public uint Unknown_34h;
+        public uint Unknown_20h; // 0x00000000
+        public uint Unknown_24h; // 0x00000000
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
+        public uint Unknown_30h; // 0x00000000
+        public uint Unknown_34h; // 0x00000000
         public ulong IndexBufferPointer;
-        public uint Unknown_40h;
-        public uint Unknown_44h;
-        public uint Unknown_48h;
-        public uint Unknown_4Ch;
-        public uint Unknown_50h;
-        public uint Unknown_54h;
+        public uint Unknown_40h; // 0x00000000
+        public uint Unknown_44h; // 0x00000000
+        public uint Unknown_48h; // 0x00000000
+        public uint Unknown_4Ch; // 0x00000000
+        public uint Unknown_50h; // 0x00000000
+        public uint Unknown_54h; // 0x00000000
         public uint IndicesCount;
         public uint Unknown_5Ch;
-        public ushort VertexCount;
-        public ushort Unknown_62h;
-        public uint Unknown_64h;
+        public ushort VerticesCount;
+        public ushort Unknown_62h; // 0x0003
+        public uint Unknown_64h; // 0x00000000
         public ulong Unknown_68h_Pointer;
         public ushort VertexStride;
         public ushort Count1;
-        public uint Unknown_74h;
+        public uint Unknown_74h; // 0x00000000
         public ulong VertexDataPointer;
-        public uint Unknown_80h;
-        public uint Unknown_84h;
-        public uint Unknown_88h;
-        public uint Unknown_8Ch;
-        public uint Unknown_90h;
-        public uint Unknown_94h;
+        public uint Unknown_80h; // 0x00000000
+        public uint Unknown_84h; // 0x00000000
+        public uint Unknown_88h; // 0x00000000
+        public uint Unknown_8Ch; // 0x00000000
+        public uint Unknown_90h; // 0x00000000
+        public uint Unknown_94h; // 0x00000000
 
         // reference data
         public VertexBuffer_GTA5_pc VertexBuffer;
@@ -104,7 +104,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_54h = reader.ReadUInt32();
             this.IndicesCount = reader.ReadUInt32();
             this.Unknown_5Ch = reader.ReadUInt32();
-            this.VertexCount = reader.ReadUInt16();
+            this.VerticesCount = reader.ReadUInt16();
             this.Unknown_62h = reader.ReadUInt16();
             this.Unknown_64h = reader.ReadUInt32();
             this.Unknown_68h_Pointer = reader.ReadUInt64();
@@ -133,7 +133,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.VertexData = reader.ReadBlockAt<VertexData_GTA5_pc>(
                 this.VertexDataPointer, // offset
                 this.VertexStride,
-                this.VertexCount
+                this.VerticesCount
             );
         }
 
@@ -173,7 +173,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Unknown_54h);
             writer.Write(this.IndicesCount);
             writer.Write(this.Unknown_5Ch);
-            writer.Write(this.VertexCount);
+            writer.Write(this.VerticesCount);
             writer.Write(this.Unknown_62h);
             writer.Write(this.Unknown_64h);
             writer.Write(this.Unknown_68h_Pointer);

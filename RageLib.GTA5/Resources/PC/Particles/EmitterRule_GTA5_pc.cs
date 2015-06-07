@@ -35,18 +35,18 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // structure data
         public uint VFT;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
+        public uint Unknown_4h; // 0x00000001
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
+        public uint Unknown_10h; // 0x00000001
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x40866666
+        public uint Unknown_1Ch; // 0x00000000
         public ulong NamePointer;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
+        public uint Unknown_28h; // 0x50000000
+        public uint Unknown_2Ch; // 0x00000000
         public uint Unknown_30h;
-        public uint Unknown_34h;
+        public uint Unknown_34h; // 0x00000001
         public ulong p3;
         public ushort c3a;
         public ushort c3b;
@@ -54,11 +54,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public ulong p4;
         public uint Unknown_50h;
         public uint Unknown_54h;
-        public uint Unknown_58h;
-        public uint Unknown_5Ch;
-        public uint Unknown_60h;
-        public uint Unknown_64h;
-        public uint Unknown_68h;
+        public uint Unknown_58h; // 0x00000000
+        public uint Unknown_5Ch; // 0x00000000
+        public uint Unknown_60h; // 0x00000000
+        public uint Unknown_64h; // 0x00000000
+        public uint Unknown_68h; // 0x00000000
         public uint Unknown_6Ch;
         public uint Unknown_70h;
         public uint Unknown_74h;
@@ -88,15 +88,15 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public ulong pref;
         public ushort refcnt1;
         public ushort refcnt2;
-        public uint Unknown_39Ch;
+        public uint Unknown_39Ch; // 0x00000000
         public uint Unknown_3A0h;
-        public uint Unknown_3A4h;
-        public uint Unknown_3A8h;
-        public uint Unknown_3ACh;
-        public uint Unknown_3B0h;
-        public uint Unknown_3B4h;
-        public uint Unknown_3B8h;
-        public uint Unknown_3BCh;
+        public uint Unknown_3A4h; // 0x00000000
+        public uint Unknown_3A8h; // 0x42C80000
+        public uint Unknown_3ACh; // 0x00000000
+        public uint Unknown_3B0h; // 0x00000000
+        public uint Unknown_3B4h; // 0x00000000
+        public uint Unknown_3B8h; // 0x00000000
+        public uint Unknown_3BCh; // 0x00000000
 
         // reference data
         public string_r Name;

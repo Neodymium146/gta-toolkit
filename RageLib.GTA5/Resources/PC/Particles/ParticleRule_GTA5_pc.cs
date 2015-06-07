@@ -35,20 +35,20 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // structure data
         public uint VFT;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
+        public uint Unknown_4h; // 0x00000001
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
         public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x00000000
+        public uint Unknown_1Ch; // 0x00000000
         public Unknown_P_020 emb1;
         public Unknown_P_020 emb2;
         public uint Unknown_100h;
         public uint Unknown_104h;
         public uint Unknown_108h;
         public uint Unknown_10Ch;
-        public uint Unknown_110h;
+        public uint Unknown_110h; // 0x00000000
         public uint Unknown_114h;
         public uint Unknown_118h;
         public uint Unknown_11Ch;
@@ -56,47 +56,47 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public ulong p4;
         public ushort c1;
         public ushort c2;
-        public uint Unknown_134h;
+        public uint Unknown_134h; // 0x00000000
         public ulong p5;
         public ushort c3;
         public ushort c4;
-        public uint Unknown_144h;
+        public uint Unknown_144h; // 0x00000000
         public ulong p6;
         public ushort c5;
         public ushort c6;
-        public uint Unknown_154h;
+        public uint Unknown_154h; // 0x00000000
         public ulong p7;
         public ushort c7a;
         public ushort c7b;
-        public uint Unknown_164h;
+        public uint Unknown_164h; // 0x00000000
         public ulong p8;
         public ushort c8;
         public ushort c9;
-        public uint Unknown_174h;
-        public uint Unknown_178h;
-        public uint Unknown_17Ch;
-        public uint Unknown_180h;
-        public uint Unknown_184h;
+        public uint Unknown_174h; // 0x00000000
+        public uint Unknown_178h; // 0x00000000
+        public uint Unknown_17Ch; // 0x00000000
+        public uint Unknown_180h; // 0x00000000
+        public uint Unknown_184h; // 0x00000000
         public ulong pxx;
         public ushort cxx1;
         public ushort cxx2;
-        public uint Unknown_194h;
-        public uint Unknown_198h;
-        public uint Unknown_19Ch;
-        public uint Unknown_1A0h;
-        public uint Unknown_1A4h;
-        public uint Unknown_1A8h;
-        public uint Unknown_1ACh;
+        public uint Unknown_194h; // 0x00000000
+        public uint Unknown_198h; // 0x00000000
+        public uint Unknown_19Ch; // 0x00000000
+        public uint Unknown_1A0h; // 0x00000000
+        public uint Unknown_1A4h; // 0x00000000
+        public uint Unknown_1A8h; // 0x00000000
+        public uint Unknown_1ACh; // 0x00000000
         public uint VFTx3;
-        public uint Unknown_1B4h;
+        public uint Unknown_1B4h; // 0x00000001
         public ulong p9;
         public ulong p10;
-        public uint Unknown_1C8h;
-        public uint Unknown_1CCh;
+        public uint Unknown_1C8h; // 0x00000000
+        public uint Unknown_1CCh; // 0x00000000
         public uint Unknown_1D0h;
-        public uint Unknown_1D4h;
+        public uint Unknown_1D4h; // 0x00000000
         public uint VFTx4;
-        public uint Unknown_1DCh;
+        public uint Unknown_1DCh; // 0x00000001
         public uint Unknown_1E0h;
         public uint Unknown_1E4h;
         public uint Unknown_1E8h;
@@ -104,31 +104,31 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public ulong p11;
         public ushort c11a;
         public ushort c11b;
-        public uint Unknown_1FCh;
-        public uint Unknown_200h;
-        public uint Unknown_204h;
+        public uint Unknown_1FCh; // 0x00000000
+        public uint Unknown_200h; // 0x00000001
+        public uint Unknown_204h; // 0x00000000
         public uint Unknown_208h;
-        public uint Unknown_20Ch;
+        public uint Unknown_20Ch; // 0x00000000
         public ulong p12;
         public ushort c12a;
         public ushort c12b;
-        public uint Unknown_21Ch;
+        public uint Unknown_21Ch; // 0x00000000
         public uint Unknown_220h;
-        public uint Unknown_224h;
-        public uint Unknown_228h;
-        public uint Unknown_22Ch;
-        public uint Unknown_230h;
-        public uint Unknown_234h;
-        public uint Unknown_238h;
-        public uint Unknown_23Ch;
+        public uint Unknown_224h; // 0x00000000
+        public uint Unknown_228h; // 0x00000000
+        public uint Unknown_22Ch; // 0x00000000
+        public uint Unknown_230h; // 0x00000000
+        public uint Unknown_234h; // 0x00000000
+        public uint Unknown_238h; // 0x00000000
+        public uint Unknown_23Ch; // 0x00000000
 
         // reference data
         public string_r Name;
-        public ResourcePointerArray64<Unknown_P_006> p4data;
-        public ResourcePointerArray64<Unknown_P_006> p5data;
-        public ResourcePointerArray64<Unknown_P_006> p6data;
-        public ResourcePointerArray64<Unknown_P_006> p7data;
-        public ResourcePointerArray64<Unknown_P_006> p8data;
+        public ResourcePointerArray64<Behaviour_GTA5_pc> p4data;
+        public ResourcePointerArray64<Behaviour_GTA5_pc> p5data;
+        public ResourcePointerArray64<Behaviour_GTA5_pc> p6data;
+        public ResourcePointerArray64<Behaviour_GTA5_pc> p7data;
+        public ResourcePointerArray64<Behaviour_GTA5_pc> p8data;
         public ResourceSimpleArray<Unknown_P_032> pxxdata;
         public string_r p9data;
         public string_r p10data;
@@ -233,23 +233,23 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
             );
-            this.p4data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_P_006>>(
+            this.p4data = reader.ReadBlockAt<ResourcePointerArray64<Behaviour_GTA5_pc>>(
                 this.p4, // offset
                 this.c1
             );
-            this.p5data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_P_006>>(
+            this.p5data = reader.ReadBlockAt<ResourcePointerArray64<Behaviour_GTA5_pc>>(
                 this.p5, // offset
                 this.c3
             );
-            this.p6data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_P_006>>(
+            this.p6data = reader.ReadBlockAt<ResourcePointerArray64<Behaviour_GTA5_pc>>(
                 this.p6, // offset
                 this.c5
             );
-            this.p7data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_P_006>>(
+            this.p7data = reader.ReadBlockAt<ResourcePointerArray64<Behaviour_GTA5_pc>>(
                 this.p7, // offset
                 this.c7a
             );
-            this.p8data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_P_006>>(
+            this.p8data = reader.ReadBlockAt<ResourcePointerArray64<Behaviour_GTA5_pc>>(
                 this.p8, // offset
                 this.c8
             );

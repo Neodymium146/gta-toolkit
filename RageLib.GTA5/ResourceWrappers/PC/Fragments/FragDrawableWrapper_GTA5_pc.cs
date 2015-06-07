@@ -40,7 +40,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Fragments
         {
             get
             {
-                return (string)fragDrawable.Name2;
+                return (string)fragDrawable.Name;
             }
         }
 

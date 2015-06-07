@@ -36,15 +36,15 @@ namespace RageLib.Resources.GTA5.PC.Particles
 		public ulong p1;
 		public ushort c1a;
 		public ushort c1b;
-		public uint Unknown_Ch;
-		public uint Unknown_10h;
-		public uint Unknown_14h;
-		public uint Unknown_18h;
-		public uint Unknown_1Ch;
+		public uint Unknown_Ch; // 0x00000000
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x00000000
+        public uint Unknown_1Ch; // 0x00000000
         public uint Unknown_20h;
         public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
 
 
 

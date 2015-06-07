@@ -34,17 +34,17 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
 		// structure data
 		public uint VFT;
-		public uint Unknown_4h;
-		public uint Unknown_8h;
-		public uint Unknown_Ch;
-		public uint Unknown_10h;
-		public uint Unknown_14h;
-		public ulong Unknown_18h_Pointer;
-		public uint Unknown_20h;
-		public uint Unknown_24h;
-		public uint Unknown_28h;
-		public uint Unknown_2Ch;
-		public uint Unknown_30h;
+		public uint Unknown_4h; // 0x00000001
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
+        public ulong Unknown_18h_Pointer;
+		public uint Unknown_20h; // 0x00000000
+        public uint Unknown_24h; // 0x00000000
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
+        public uint Unknown_30h;
 		public uint Unknown_34h;
 		public uint Unknown_38h;
 		public uint Unknown_3Ch;
@@ -53,82 +53,82 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 		public uint Unknown_48h;
 		public uint Unknown_4Ch;
 		public uint Unknown_50h;
-		public uint Unknown_54h;
-		public uint Unknown_58h;
-		public uint Unknown_5Ch;
-		public uint Unknown_60h;
-		public uint Unknown_64h;
-		public uint Unknown_68h;
-		public uint Unknown_6Ch;
-		public uint Unknown_70h;
-		public uint Unknown_74h;
-		public uint Unknown_78h;
-		public uint Unknown_7Ch;
-		public ulong Unknown_80h_Pointer;
+		public uint Unknown_54h; // 0x00000001
+        public uint Unknown_58h; // 0x00000000
+        public uint Unknown_5Ch; // 0x00000000
+        public uint Unknown_60h; // 0x00000000
+        public uint Unknown_64h; // 0x00000000
+        public uint Unknown_68h; // 0x00000000
+        public uint Unknown_6Ch; // 0x00000000
+        public uint Unknown_70h; // 0x00000000
+        public uint Unknown_74h; // 0x00000000
+        public uint Unknown_78h; // 0x00000000
+        public uint Unknown_7Ch; // 0x00000000
+        public ulong Unknown_80h_Pointer;
 		public ushort Count1;
 		public ushort Count2;
-		public uint Unknown_8Ch;
-		public uint Unknown_90h;
-		public uint Unknown_94h;
-		public uint Unknown_98h;
-		public uint Unknown_9Ch;
-		public uint Unknown_A0h;
-		public uint Unknown_A4h;
-		public uint Unknown_A8h;
+		public uint Unknown_8Ch; // 0x00000000
+        public uint Unknown_90h; // 0x00000000
+        public uint Unknown_94h; // 0x00000000
+        public uint Unknown_98h; // 0x00000000
+        public uint Unknown_9Ch; // 0x00000000
+        public uint Unknown_A0h; // 0x00000000
+        public uint Unknown_A4h; // 0x00000000
+        public uint Unknown_A8h;
 		public uint Unknown_ACh;
-		public uint Unknown_B0h;
-		public uint Unknown_B4h;
-		public uint Unknown_B8h;
-		public uint Unknown_BCh;
-		public uint Unknown_C0h;
-		public uint Unknown_C4h;
-		public uint Unknown_C8h;
-		public uint Unknown_CCh;
-		public uint Unknown_D0h;
-		public uint Unknown_D4h;
-		public uint Unknown_D8h;
-		public uint Unknown_DCh;
-		public uint Unknown_E0h;
-		public uint Unknown_E4h;
-		public uint Unknown_E8h;
+		public uint Unknown_B0h; // 0x00000000
+        public uint Unknown_B4h; // 0x00000000
+        public uint Unknown_B8h; // 0x00000000
+        public uint Unknown_BCh; // 0x00000000
+        public uint Unknown_C0h; // 0x00000000
+        public uint Unknown_C4h; // 0x00000000
+        public uint Unknown_C8h; // 0x00000000
+        public uint Unknown_CCh; // 0x00000000
+        public uint Unknown_D0h; // 0x00000000
+        public uint Unknown_D4h; // 0x00000000
+        public uint Unknown_D8h; // 0x00000000
+        public uint Unknown_DCh; // 0x00000000
+        public uint Unknown_E0h; // 0x00000000
+        public uint Unknown_E4h; // 0x00000000
+        public uint Unknown_E8h;
 		public uint Unknown_ECh;
 		public uint Unknown_F0h;
-		public uint Unknown_F4h;
-		public uint Unknown_F8h;
-		public uint Unknown_FCh;
-		public ulong Unknown_100h_Pointer;
+		public uint Unknown_F4h; // 0x00000000
+        public uint Unknown_F8h;
+		public uint Unknown_FCh; // 0x00000000
+        public ulong Unknown_100h_Pointer;
 		public ushort Count3;
 		public ushort Count4;
-		public uint Unknown_10Ch;
-		public ulong Unknown_110h_Pointer;
+		public uint Unknown_10Ch; // 0x00000000
+        public ulong Unknown_110h_Pointer;
 		public ushort Count5;
 		public ushort Count6;
-		public uint Unknown_11Ch;
-		public uint Unknown_120h;
-		public uint Unknown_124h;
-		public uint Unknown_128h;
-		public uint Unknown_12Ch;
-		public ulong Unknown_130h_Pointer;
-		public uint Unknown_138h;
-		public uint Unknown_13Ch;
-		public ulong Unknown_140h_Pointer;
+		public uint Unknown_11Ch; // 0x00000000
+        public uint Unknown_120h; // 0x00000000
+        public uint Unknown_124h; // 0x00000000
+        public uint Unknown_128h; // 0x00000000
+        public uint Unknown_12Ch; // 0x00000000
+        public ulong Unknown_130h_Pointer;
+		public uint Unknown_138h; // 0x00100000
+        public uint Unknown_13Ch; // 0x00000000
+        public ulong Unknown_140h_Pointer;
 		public uint Unknown_148h;
-		public uint Unknown_14Ch;
-		public uint Unknown_150h;
-		public uint Unknown_154h;
-		public uint Unknown_158h;
-		public uint Unknown_15Ch;
-		public uint Unknown_160h;
-		public uint Unknown_164h;
-		public uint Unknown_168h;
-		public uint Unknown_16Ch;
-		public uint Unknown_170h;
-		public uint Unknown_174h;
-		public uint Unknown_178h;
-		public uint Unknown_17Ch;
+		public uint Unknown_14Ch; // 0x00000000
+        public uint Unknown_150h; // 0x00000000
+        public uint Unknown_154h; // 0x00000000
+        public uint Unknown_158h;
+		public uint Unknown_15Ch; // 0x00000000
+        public uint Unknown_160h; // 0x00000000
+        public uint Unknown_164h; // 0x00000000
+        public uint Unknown_168h; // 0x00000000
+        public uint Unknown_16Ch; // 0x00000000
+        public uint Unknown_170h; // 0x00000000
+        public uint Unknown_174h; // 0x00000000
+        public uint Unknown_178h; // 0x00000000
+        public uint Unknown_17Ch; // 0x00000000
 
-		// reference data
-		public Unknown_F_020 Unknown_18h_Data;
+        // reference data
+        public Unknown_F_020 Unknown_18h_Data;
 		public ResourceSimpleArray<RAGE_Vector4> Unknown_100h_Data;
 		public ResourceSimpleArray<RAGE_Vector4> Unknown_80h_Data;
 		public ResourceSimpleArray<RAGE_Vector4> Unknown_110h_Data;
