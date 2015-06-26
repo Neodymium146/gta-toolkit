@@ -292,6 +292,10 @@
     <Compile Include="Resources\PC\Types\Unknown_T_004_objs_entry.cs" />
     <Compile Include="Resources\PC\Types\Unknown_T_004_types.cs" />
     <Compile Include="Resources\PC\Types\Unknown_T_004_types_entry.cs" />
+    <Compile Include="Resources\PC\VehicleRecords\VehicleRecordsEntry_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\VehicleRecords\VehicleRecords_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\WaypointRecords\WaypointRecordEntry_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\WaypointRecords\WayPointRecord_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Drawables\DrawableDictionaryFileWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Drawables\DrawableDictionaryWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Drawables\DrawableFileWrapper_GTA5_pc.cs" />
