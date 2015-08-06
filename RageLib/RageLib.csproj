@@ -47,6 +47,7 @@
     <Compile Include="Archives\ArchiveHelpers.cs" />
     <Compile Include="Compression\DeflateCompression.cs" />
     <Compile Include="Compression\ICompressionAlgorithm.cs" />
+    <Compile Include="Extensions\RageArchiveExtensions.cs" />
     <Compile Include="Helpers\HashSearch.cs" />
     <Compile Include="Helpers\DDSIO.cs" />
     <Compile Include="Helpers\TextureCompression.cs" />
