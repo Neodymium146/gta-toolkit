@@ -13,19 +13,25 @@ namespace RpfGeneratorTool
     public class Packager
     {
         private const string PackageConfigFileName = "package.config";
+        private readonly PackagerConfig _config;
         private readonly IAbsoluteDirectoryPath _gamePath;
         private readonly IAbsoluteDirectoryPath _outputPath;
         private readonly RpfListBuilder _rpfListBuilder;
         private readonly IAbsoluteDirectoryPath _tempPath;
-        public bool TreatImportsAsInserts;
 
         public Packager(IAbsoluteDirectoryPath gamePath, IAbsoluteDirectoryPath outputPath,
-            IAbsoluteDirectoryPath tempPath)
+            IAbsoluteDirectoryPath tempPath, PackagerConfig config)
         {
+            _config = config;
             _gamePath = gamePath;
             _outputPath = outputPath;
-            _rpfListBuilder = new RpfListBuilder(_gamePath);
             _tempPath = tempPath;
+            _rpfListBuilder = new RpfListBuilder(_gamePath, _config.BuilderConfig);
+        }
+
+        public Packager(IAbsoluteDirectoryPath gamePath, IAbsoluteDirectoryPath outputPath,
+            IAbsoluteDirectoryPath tempPath) : this(gamePath, outputPath, tempPath, new PackagerConfig())
+        {
         }
 
         public void PackageMod(IAbsoluteDirectoryPath modPackagePath)
@@ -107,7 +113,7 @@ namespace RpfGeneratorTool
                     break;
                 case ContentAction.Import:
                 {
-                    if (!TreatImportsAsInserts)
+                    if (!_config.TreatImportsAsInserts)
                         break;
                     NewImport(root, file, file.FilePath, name);
                     break;
@@ -158,6 +164,14 @@ namespace RpfGeneratorTool
             {
                 return (Package) serializer.Deserialize(reader);
             }
+        }
+
+        public class PackagerConfig
+        {
+            public bool TreatImportsAsInserts { get; set; }
+
+            public RpfListBuilder.RpfListBuilderConfig BuilderConfig { get; set; } =
+                new RpfListBuilder.RpfListBuilderConfig();
         }
     }
 

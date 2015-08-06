@@ -21,20 +21,26 @@ namespace RpfGeneratorTool
                 args = new[]
                 {
                     @"D:\games\Rockstar Games\Grand Theft Auto V",
-                    @"D:\games\Rockstar Games\Grand Theft Auto V\syncpackages\@RealismDispatchEnhanced"
+                    @"D:\games\Rockstar Games\Grand Theft Auto V\syncpackages\@RealismDispatchEnhanced",
+                    "--treat-imports-as-inserts"
                 };
             }
 #endif
             var gamePath = args.First().ToAbsoluteDirectoryPath();
             var tempPath = Path.GetTempPath().ToAbsoluteDirectoryPath().GetChildDirectoryWithName("RpfGenerator");
+
+            var treatImportsAsInsert = args.Contains("--treat-imports-as-inserts");
+            var audioPathsOnly = args.Contains("--audio-paths-only");
             try
             {
                 if (!tempPath.Exists)
                     Directory.CreateDirectory(tempPath.ToString());
-                var p = new Packager(gamePath, gamePath.GetChildDirectoryWithName("mods"), tempPath)
-                {
-                    TreatImportsAsInserts = true
-                };
+                var p = new Packager(gamePath, gamePath.GetChildDirectoryWithName("mods"), tempPath,
+                    new Packager.PackagerConfig
+                    {
+                        TreatImportsAsInserts = treatImportsAsInsert,
+                        BuilderConfig = new RpfListBuilder.RpfListBuilderConfig {AudioPathsOnly = audioPathsOnly}
+                    });
                 var dir = args.Length > 1 ? args[1] : Directory.GetCurrentDirectory();
                 p.PackageMod(dir.ToAbsoluteDirectoryPath());
             }

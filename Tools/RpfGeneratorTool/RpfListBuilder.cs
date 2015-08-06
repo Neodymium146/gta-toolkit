@@ -8,11 +8,18 @@ namespace RpfGeneratorTool
 {
     public class RpfListBuilder
     {
+        private readonly string[] _audioPaths = {@"x64\audio"};
+        private readonly RpfListBuilderConfig _config;
         private readonly IAbsoluteDirectoryPath _gameDir;
 
-        public RpfListBuilder(IAbsoluteDirectoryPath gameDir)
+        public RpfListBuilder(IAbsoluteDirectoryPath gameDir, RpfListBuilderConfig config)
         {
             _gameDir = gameDir;
+            _config = config;
+        }
+
+        public RpfListBuilder(IAbsoluteDirectoryPath gameDir) : this(gameDir, new RpfListBuilderConfig())
+        {
         }
 
         private static FileType GetType(string type)
@@ -45,13 +52,12 @@ namespace RpfGeneratorTool
             return list;
         }
 
-        private void ProcessDeletes(IAbsoluteDirectoryPath modPackagePath, Package p, ICollection<RootRpf> list)
+        private void ProcessInserts(IAbsoluteDirectoryPath modPackagePath, Package p, ICollection<RootRpf> list)
         {
-            foreach (var d in p.Delete)
+            foreach (var i in p.Insert)
             {
-                var f = BuildFileContent(modPackagePath, d.TargetDirPath.GetAbsolutePathFrom(_gameDir), d.FilePath, list);
-                f.Action = ContentAction.Delete;
-                //f.Type = GetType(d.Type);
+                BuildFileContent(modPackagePath, i.TargetDirPath.GetAbsolutePathFrom(_gameDir), i.FilePath, list,
+                    ContentAction.Insert, GetType(i.Type));
             }
         }
 
@@ -59,31 +65,32 @@ namespace RpfGeneratorTool
         {
             foreach (var i in p.Import)
             {
-                var f = BuildFileContent(modPackagePath, i.TargetDirPath.GetAbsolutePathFrom(_gameDir), i.FilePath, list);
-                f.Action = ContentAction.Import;
-                f.Type = GetType(i.Type);
+                BuildFileContent(modPackagePath, i.TargetDirPath.GetAbsolutePathFrom(_gameDir), i.FilePath, list,
+                    ContentAction.Import, GetType(i.Type));
             }
         }
 
-        private void ProcessInserts(IAbsoluteDirectoryPath modPackagePath, Package p, ICollection<RootRpf> list)
+        private void ProcessDeletes(IAbsoluteDirectoryPath modPackagePath, Package p, ICollection<RootRpf> list)
         {
-            foreach (var i in p.Insert)
+            foreach (var d in p.Delete)
             {
-                var f = BuildFileContent(modPackagePath, i.TargetDirPath.GetAbsolutePathFrom(_gameDir), i.FilePath, list);
-                f.Action = ContentAction.Insert;
-                f.Type = GetType(i.Type);
+                BuildFileContent(modPackagePath, d.TargetDirPath.GetAbsolutePathFrom(_gameDir), d.FilePath, list,
+                    ContentAction.Delete);
             }
         }
 
-        private static IFileContent BuildFileContent(IAbsoluteDirectoryPath modPackagePath,
-            IAbsoluteDirectoryPath targetDir,
-            IRelativeFilePath relativePath, ICollection<RootRpf> list)
+        private void BuildFileContent(IAbsoluteDirectoryPath modPackagePath, IAbsoluteDirectoryPath targetDir,
+            IRelativeFilePath relativePath, ICollection<RootRpf> list, ContentAction action,
+            FileType type = FileType.Default)
         {
-            var rpfFile = RpfFile.FromPath(targetDir.ToString());
+            var rpfFile = RpfFile.FromPath(targetDir);
             if (!rpfFile.ExternalRpfFile.Exists)
             {
                 throw new Exception("Unable to find an RPF file: " + rpfFile.ExternalRpfFile);
             }
+
+            if (_config.AudioPathsOnly && !IsAudioPath(rpfFile))
+                return;
 
             IDirectory root = list.FirstOrDefault(x => x.FilePath.Equals(rpfFile.ExternalRpfFile));
             if (root == null)
@@ -92,7 +99,7 @@ namespace RpfGeneratorTool
                 root = rootRpf;
                 list.Add(rootRpf);
             }
-            foreach (var p in rpfFile.Path)
+            foreach (var p in rpfFile.PathParts)
             {
                 if (p.EndsWith(".rpf"))
                 {
@@ -119,20 +126,32 @@ namespace RpfGeneratorTool
                     ? (InnerFile) root.Contents[file]
                     : (InnerFile) (root.Contents[file] = new InnerFile());
             f.FilePath = relativePath.GetAbsolutePathFrom(modPackagePath);
-            return f;
+            f.Action = action;
+            f.Type = type;
+        }
+
+        private bool IsAudioPath(RpfFile rpfFile)
+        {
+            var path = rpfFile.GetPath();
+            return _audioPaths.Any(x => path.StartsWith(x, StringComparison.CurrentCultureIgnoreCase));
+        }
+
+        public class RpfListBuilderConfig
+        {
+            public bool AudioPathsOnly { get; set; }
         }
 
         public class RpfFile
         {
             public IAbsoluteFilePath ExternalRpfFile { get; set; }
-            public List<string> Path { get; set; }
+            public List<string> PathParts { get; set; }
 
-            public static RpfFile FromPath(string path)
+            public static RpfFile FromPath(IAbsoluteDirectoryPath path)
             {
                 var foundRoot = false;
                 var rpfRoot = new List<string>();
                 var internalPath = new List<string>();
-                foreach (var p in path.Split('\\', '/'))
+                foreach (var p in path.ToString().Split('\\', '/'))
                 {
                     if (foundRoot)
                     {
@@ -154,8 +173,13 @@ namespace RpfGeneratorTool
                 return new RpfFile
                 {
                     ExternalRpfFile = string.Join("\\", rpfRoot).ToAbsoluteFilePath(),
-                    Path = internalPath
+                    PathParts = internalPath
                 };
+            }
+
+            public string GetPath()
+            {
+                return string.Join("\\", PathParts);
             }
         }
 
