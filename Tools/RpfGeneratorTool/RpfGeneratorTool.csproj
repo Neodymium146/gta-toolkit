@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NDepend.Path, Version=1.0.0.0, Culture=neutral, PublicKeyToken=663402f81ccece54, processorArchitecture=MSIL">
-      <HintPath>..\packages\NDepend.Path.1.0.0\lib\net35\NDepend.Path.dll</HintPath>
+      <HintPath>..\..\packages\NDepend.Path.1.0.0\lib\net35\NDepend.Path.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
