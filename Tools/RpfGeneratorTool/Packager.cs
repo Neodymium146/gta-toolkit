@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Remoting.Messaging;
 using System.Xml;
 using System.Xml.Serialization;
 using NDepend.Path;
@@ -110,27 +109,23 @@ namespace RpfGeneratorTool
                 {
                     if (!TreatImportsAsInserts)
                         break;
-                    Ins(root, name, file);
+                    NewImport(root, file, file.FilePath, name);
                     break;
                 }
                 case ContentAction.Insert:
                 {
-                    Ins(root, name, file);
+                    NewImport(root, file, file.FilePath, name);
                     break;
                 }
             }
-        }
-
-        private static void Ins(IArchiveDirectory root, string name, RpfListBuilder.InnerFile file)
-        {
-            NewImport(root, file, file.FilePath, name);
         }
 
         private static void NewImport(IArchiveDirectory root, RpfListBuilder.IFileContent fc, IAbsoluteFilePath tmpRpf,
             string name)
         {
             var existingFile = root.GetFile(name);
-            var af = root.CreateArchiveFile(tmpRpf.ToString(), fc.Type == FileType.Default && existingFile != null ? DetermineType(existingFile) : fc.Type);
+            var af = root.CreateArchiveFile(tmpRpf.ToString(),
+                fc.Type == FileType.Default && existingFile != null ? DetermineType(existingFile) : fc.Type);
             if (existingFile != null)
                 root.DeleteFile(existingFile);
             //af.IsCompressed = true;
