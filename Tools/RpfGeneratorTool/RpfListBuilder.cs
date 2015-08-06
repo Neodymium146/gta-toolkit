@@ -8,7 +8,7 @@ namespace RpfGeneratorTool
 {
     public class RpfListBuilder
     {
-        private readonly string[] _audioPaths = {@"x64\audio"};
+        private readonly string[] _audioPaths = { @"x64\audio" };
         private readonly RpfListBuilderConfig _config;
         private readonly IAbsoluteDirectoryPath _gameDir;
 
@@ -56,7 +56,7 @@ namespace RpfGeneratorTool
         {
             foreach (var i in p.Insert)
             {
-                BuildFileContent(modPackagePath, i.TargetDirPath.GetAbsolutePathFrom(_gameDir), i.FilePath, list,
+                BuildFileContent(modPackagePath, i.TargetDirPath, i.FilePath, list,
                     ContentAction.Insert, GetType(i.Type));
             }
         }
@@ -65,7 +65,7 @@ namespace RpfGeneratorTool
         {
             foreach (var i in p.Import)
             {
-                BuildFileContent(modPackagePath, i.TargetDirPath.GetAbsolutePathFrom(_gameDir), i.FilePath, list,
+                BuildFileContent(modPackagePath, i.TargetDirPath, i.FilePath, list,
                     ContentAction.Import, GetType(i.Type));
             }
         }
@@ -74,23 +74,23 @@ namespace RpfGeneratorTool
         {
             foreach (var d in p.Delete)
             {
-                BuildFileContent(modPackagePath, d.TargetDirPath.GetAbsolutePathFrom(_gameDir), d.FilePath, list,
+                BuildFileContent(modPackagePath, d.TargetDirPath, d.FilePath, list,
                     ContentAction.Delete);
             }
         }
 
-        private void BuildFileContent(IAbsoluteDirectoryPath modPackagePath, IAbsoluteDirectoryPath targetDir,
+        private void BuildFileContent(IAbsoluteDirectoryPath modPackagePath, IRelativeDirectoryPath relativeTargetPath,
             IRelativeFilePath relativePath, ICollection<RootRpf> list, ContentAction action,
             FileType type = FileType.Default)
         {
-            var rpfFile = RpfFile.FromPath(targetDir);
+            if (_config.AudioPathsOnly && !IsAudioPath(relativeTargetPath))
+                return;
+
+            var rpfFile = RpfFile.FromPath(relativeTargetPath.GetAbsolutePathFrom(_gameDir));
             if (!rpfFile.ExternalRpfFile.Exists)
             {
                 throw new Exception("Unable to find an RPF file: " + rpfFile.ExternalRpfFile);
             }
-
-            if (_config.AudioPathsOnly && !IsAudioPath(rpfFile))
-                return;
 
             IDirectory root = list.FirstOrDefault(x => x.FilePath.Equals(rpfFile.ExternalRpfFile));
             if (root == null)
@@ -104,14 +104,14 @@ namespace RpfGeneratorTool
                 if (p.EndsWith(".rpf"))
                 {
                     root = root.Contents.ContainsKey(p)
-                        ? (InnerRpf) root.Contents[p]
-                        : (InnerRpf) (root.Contents[p] = new InnerRpf());
+                        ? (InnerRpf)root.Contents[p]
+                        : (InnerRpf)(root.Contents[p] = new InnerRpf());
                 }
                 else
                 {
                     root = root.Contents.ContainsKey(p)
-                        ? (InnerDirectory) root.Contents[p]
-                        : (InnerDirectory) (root.Contents[p] = new InnerDirectory());
+                        ? (InnerDirectory)root.Contents[p]
+                        : (InnerDirectory)(root.Contents[p] = new InnerDirectory());
                 }
             }
 
@@ -119,20 +119,20 @@ namespace RpfGeneratorTool
             IFileContent f;
             if (file.EndsWith(".rpf"))
                 f = root.Contents.ContainsKey(file)
-                    ? (InnerRpf) root.Contents[file]
-                    : (InnerRpf) (root.Contents[file] = new InnerRpf());
+                    ? (InnerRpf)root.Contents[file]
+                    : (InnerRpf)(root.Contents[file] = new InnerRpf());
             else
                 f = root.Contents.ContainsKey(file)
-                    ? (InnerFile) root.Contents[file]
-                    : (InnerFile) (root.Contents[file] = new InnerFile());
+                    ? (InnerFile)root.Contents[file]
+                    : (InnerFile)(root.Contents[file] = new InnerFile());
             f.FilePath = relativePath.GetAbsolutePathFrom(modPackagePath);
             f.Action = action;
             f.Type = type;
         }
 
-        private bool IsAudioPath(RpfFile rpfFile)
+        private bool IsAudioPath(IPath relativeTargetDir)
         {
-            var path = rpfFile.GetPath();
+            var path = relativeTargetDir.ToString().Substring(2);
             return _audioPaths.Any(x => path.StartsWith(x, StringComparison.CurrentCultureIgnoreCase));
         }
 
