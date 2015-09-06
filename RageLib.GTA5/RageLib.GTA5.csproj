@@ -182,6 +182,11 @@
     <Compile Include="Resources\PC\Navigations\Vertex.cs" />
     <Compile Include="Resources\PC\Navigations\VerticesData.cs" />
     <Compile Include="Resources\PC\Navigations\VerticesList.cs" />
+    <Compile Include="Resources\PC\Nodes\Node.cs" />
+    <Compile Include="Resources\PC\Nodes\NodesFile_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Nodes\Unknown_ND_002.cs" />
+    <Compile Include="Resources\PC\Nodes\Unknown_ND_003.cs" />
+    <Compile Include="Resources\PC\Nodes\Unknown_ND_004.cs" />
     <Compile Include="Resources\PC\Particles\EffectRuleDictionary_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Particles\EffectRule_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Particles\EmitterRuleDictionary_GTA5_pc.cs" />
