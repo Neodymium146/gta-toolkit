@@ -102,6 +102,8 @@
     <Compile Include="Resources\PC\Drawables\Unknown_D_004.cs" />
     <Compile Include="Resources\PC\Drawables\VertexDeclaration_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Drawables\VertexBuffer_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Filters\FilterDictionary_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Filters\Filter_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Fragments\Archetype_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Fragments\FragDrawable_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Fragments\fragNameStruct_GTA5_pc.cs" />
