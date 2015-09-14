@@ -44,14 +44,21 @@ namespace RageLib.GTA5.Archives
         uint FileSize { get; set; }
     }
 
+    public enum RageArchiveEncryption7
+    {
+        None,
+        AES,
+        NG
+    }
+
     /// <summary>
     /// Represents an RPFv7 archive.
     /// </summary>
     public class RageArchive7 : IDisposable
     {
         private const uint IDENT = 0x52504637;
-        
-        public bool IsAesEncrypted = false;
+
+        public RageArchiveEncryption7 Encryption { get; set; }
 
         private bool LeaveOpen;
         public Stream BaseStream { get; private set; }
@@ -88,18 +95,18 @@ namespace RageLib.GTA5.Archives
             byte[] names_data_dec = null;
 
             if (header_encryption == 0x04E45504F) // for OpenIV compatibility
-            {                
+            {
                 // no encryption...
-
+                Encryption = RageArchiveEncryption7.None;
                 entries_data_dec = reader.ReadBytes(16 * (int)header_entriesCount);
                 names_data_dec = reader.ReadBytes((int)header_namesLength);
 
             }
             else if (header_encryption == 0x0ffffff9)
-            {                
+            {
                 // AES enceyption...                
 
-                IsAesEncrypted = true;
+                Encryption = RageArchiveEncryption7.AES;
 
                 var entries_data = reader.ReadBytes(16 * (int)header_entriesCount);
                 entries_data_dec = AesEncryption.DecryptData(entries_data, aesKey);
@@ -108,10 +115,10 @@ namespace RageLib.GTA5.Archives
                 names_data_dec = AesEncryption.DecryptData(names_data, aesKey);
             }
             else
-            {                
+            {
                 // NG encryption...
-                
-                IsAesEncrypted = false;
+
+                Encryption = RageArchiveEncryption7.NG;
 
                 var entries_data = reader.ReadBytes(16 * (int)header_entriesCount);
                 entries_data_dec = GTA5Crypto.Decrypt(entries_data, ngKey);
@@ -160,9 +167,10 @@ namespace RageLib.GTA5.Archives
                         var e = new RageArchiveResourceFile7();
                         e.Read(entries_reader);
 
+
                         names_reader.Position = e.NameOffset;
                         e.Name = names_reader.ReadString();
-
+                        
                         entries.Add(e);
                     }
                 }
@@ -268,6 +276,7 @@ namespace RageLib.GTA5.Archives
                         stack.Push((RageArchiveDirectory7)xx);
             }
 
+
             // entries...
             var ent_str = new MemoryStream();
             var ent_wr = new DataWriter(ent_str);
@@ -279,11 +288,12 @@ namespace RageLib.GTA5.Archives
             ent_str.Position = 0;
             ent_str.Read(ent_buf, 0, ent_buf.Length);
 
-            if (IsAesEncrypted && aesKey != null)
+            if (Encryption == RageArchiveEncryption7.AES)
                 ent_buf = AesEncryption.EncryptData(ent_buf, aesKey);
-            else if (!IsAesEncrypted && ngKey != null)
-                ent_buf = GTA5Crypto.Encrypt(ent_buf, ngKey);
-
+            if (Encryption == RageArchiveEncryption7.NG)
+            {
+                Encryption = RageArchiveEncryption7.None;
+            }
 
 
             // names...
@@ -301,24 +311,26 @@ namespace RageLib.GTA5.Archives
             n_str.Position = 0;
             n_str.Read(n_buf, 0, n_buf.Length);
 
-            if (IsAesEncrypted && aesKey != null)
+            if (Encryption == RageArchiveEncryption7.AES)
                 n_buf = AesEncryption.EncryptData(n_buf, aesKey);
-            else if (!IsAesEncrypted && ngKey != null)
-                n_buf = GTA5Crypto.Encrypt(n_buf, ngKey);
             
-
-
             writer.Position = 0;
             writer.Write((uint)IDENT);
             writer.Write((uint)entries.Count);
             writer.Write((uint)n_buf.Length);
 
-            if (IsAesEncrypted && aesKey != null)
-                writer.Write((uint)0x0ffffff9);
-            else if (!IsAesEncrypted && ngKey != null)
-                writer.Write((uint)0x0fefffff);
-            else
-                writer.Write((uint)0x04E45504F); // for OpenIV compatibility
+            switch (Encryption)
+            {
+                case RageArchiveEncryption7.None:
+                    writer.Write((uint)0x04E45504F);
+                    break;
+                case RageArchiveEncryption7.AES:
+                    writer.Write((uint)0x0ffffff9);
+                    break;
+                case RageArchiveEncryption7.NG:
+                    writer.Write((uint)0x0fefffff);
+                    break;
+            }
 
             writer.Write(ent_buf);
             writer.Write(n_buf);

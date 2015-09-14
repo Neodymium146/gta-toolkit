@@ -28,11 +28,6 @@ namespace RageLib.Cryptography
     public interface IEncryptionAlgorithm
     {
         /// <summary>
-        /// Encrypts data.
-        /// </summary>
-        byte[] Encrypt(byte[] data);
-
-        /// <summary>
         /// Decrypts data.
         /// </summary>
         byte[] Decrypt(byte[] data);

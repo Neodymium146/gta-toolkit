@@ -59,18 +59,19 @@ namespace ArchiveTool.Models
         public MainModel()
         {
 
-            if (File.Exists("gta5_const.dat"))
-            {
-                var fs = new FileStream("gta5_const.dat", FileMode.Open);
-                var bf = new BinaryFormatter();
+            //if (File.Exists("gta5_const.dat"))
+            //{
+            //    var fs = new FileStream("gta5_const.dat", FileMode.Open);
+            //    var bf = new BinaryFormatter();
 
-                GTA5Constants.PC_AES_KEY = (byte[])bf.Deserialize(fs);
-                GTA5Constants.PC_NG_KEYS = (byte[][])bf.Deserialize(fs);
-                GTA5Constants.PC_NG_DECRYPT_TABLES = (byte[][])bf.Deserialize(fs);
-                GTA5Constants.PC_LUT = (byte[])bf.Deserialize(fs);
+            //    GTA5Constants.PC_AES_KEY = (byte[])bf.Deserialize(fs);
+            //    GTA5Constants.PC_NG_KEYS = (byte[][])bf.Deserialize(fs);
+            //    GTA5Constants.PC_NG_DECRYPT_TABLES = (byte[][])bf.Deserialize(fs);
+            //    GTA5Constants.PC_LUT = (byte[])bf.Deserialize(fs);
 
-                fs.Close();
-            }
+            //    fs.Close();
+            //}
+            GTA5Constants.LoadFromPath(".");
 
         }
 
@@ -223,21 +224,9 @@ namespace ArchiveTool.Models
         public void FindConstants(string exeFileName)
         {
             var exeData = File.ReadAllBytes(exeFileName);
-            var exeStr = new MemoryStream(exeData);
-            
-            GTA5Constants.PC_AES_KEY = HashSearch.SearchHash(exeStr, GTA5Constants.PC_AES_KEY_HASH, 0x20);
-            GTA5Constants.PC_NG_KEYS = HashSearch.SearchHashes(exeStr, GTA5Constants.PC_NG_KEY_HASHES, 0x110);
-            GTA5Constants.PC_NG_DECRYPT_TABLES = HashSearch.SearchHashes(exeStr, GTA5Constants.PC_NG_DECRYPT_TABLE_HASHES, 0x400);
-            GTA5Constants.PC_LUT = HashSearch.SearchHash(exeStr, GTA5Constants.PC_LUT_HASH, 0x100);
-            
-            var fs = new FileStream("gta5_const.dat", FileMode.Create);
-            var bf = new BinaryFormatter();
-            bf.Serialize(fs, GTA5Constants.PC_AES_KEY);
-            bf.Serialize(fs, GTA5Constants.PC_NG_KEYS);
-            bf.Serialize(fs, GTA5Constants.PC_NG_DECRYPT_TABLES);
-            bf.Serialize(fs, GTA5Constants.PC_LUT);
-            fs.Close();
-            
+
+            GTA5Constants.Generate(exeData);
+            GTA5Constants.SaveToPath(".");
         }
     }
 }
