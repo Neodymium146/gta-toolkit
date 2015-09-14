@@ -45,6 +45,10 @@
     <Compile Include="Cryptography\GTA5Constants.cs" />
     <Compile Include="Cryptography\GTA5Encryption.cs" />
     <Compile Include="Cryptography\GTA5Hash.cs" />
+    <Compile Include="Cryptography\Helpers\CryptoIO.cs" />
+    <Compile Include="Cryptography\Helpers\LookUpTableGenerator.cs" />
+    <Compile Include="Cryptography\Helpers\LookUpTable.cs" />
+    <Compile Include="Cryptography\Helpers\RandomGauss.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Common\FileBase64_GTA5_pc.cs" />
     <Compile Include="Resources\Common\PagesInfo_GTA5_pc.cs" />

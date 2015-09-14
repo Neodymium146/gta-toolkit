@@ -21,35 +21,14 @@
 */
 
 using RageLib.Cryptography;
+using RageLib.GTA5.Cryptography.Helpers;
 using System;
 
 namespace RageLib.GTA5.Cryptography
 {
 
 
-    /// <summary>
-    /// Represents a 'structured' look-up-table.
-    /// </summary>
-    [Serializable]
-    public class GTA5CryptoLUT
-    {
-        public byte[][] Tables;
-        public byte[] LUT;
-
-        public byte LookUp(uint value)
-        {
-            uint h = (value & 0xFFFFFF00) >> 8;
-            uint l = (value & 0x000000FF);
-
-            return Tables[GetTableIndex(h)][l];
-        }
-
-        public virtual byte GetTableIndex(uint h)
-        {
-            return LUT[h];
-        }
-    }
-
+  
 
 
     /// <summary>
@@ -57,36 +36,11 @@ namespace RageLib.GTA5.Cryptography
     /// </summary>
     public class GTA5Crypto : IEncryptionAlgorithm
     {
-        public static uint[][][] decrypt_tables;
-        public static uint[][][] encrypt_tables;
-        public static GTA5CryptoLUT[][] encrypt_luts;
-
         public byte[] Key { get; set; }
 
-        static GTA5Crypto()
-        {
-            decrypt_tables = new uint[17][][];
-            for (int i = 0; i < 17; i++)
-            {
-                decrypt_tables[i] = new uint[16][];
-                for (int j = 0; j < 16; j++)
-                {
-                    var buf = GTA5Constants.PC_NG_DECRYPT_TABLES[j + 16 * i];
-                    decrypt_tables[i][j] = new uint[256];
-                    Buffer.BlockCopy(buf, 0, decrypt_tables[i][j], 0, 1024);
-                }
-            }
-        }
-
-
-
-        /// <summary>
-        /// Encrypts data.
-        /// </summary>
-        public byte[] Encrypt(byte[] data)
-        {
-            return Encrypt(data, Key);
-        }
+        ////////////////////////////////////////////////////////////////////////////
+        // decryption
+        ////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// Decrypts data.
@@ -138,11 +92,11 @@ namespace RageLib.GTA5.Cryptography
                 subKeys[i][3] = key[4 * i + 3];
             }
 
-            buffer = DecryptRoundA(buffer, subKeys[0], decrypt_tables[0]);
-            buffer = DecryptRoundA(buffer, subKeys[1], decrypt_tables[1]);
+            buffer = DecryptRoundA(buffer, subKeys[0], GTA5Constants.PC_NG_DECRYPT_TABLES[0]);
+            buffer = DecryptRoundA(buffer, subKeys[1], GTA5Constants.PC_NG_DECRYPT_TABLES[1]);
             for (int k = 2; k <= 15; k++)
-                buffer = DecryptRoundB(buffer, subKeys[k], decrypt_tables[k]);
-            buffer = DecryptRoundA(buffer, subKeys[16], decrypt_tables[16]);
+                buffer = DecryptRoundB(buffer, subKeys[k], GTA5Constants.PC_NG_DECRYPT_TABLES[k]);
+            buffer = DecryptRoundA(buffer, subKeys[16], GTA5Constants.PC_NG_DECRYPT_TABLES[16]);
 
             return buffer;
         }
@@ -237,8 +191,18 @@ namespace RageLib.GTA5.Cryptography
             result[15] = (byte)((x4 >> 24) & 0xFF);
             return result;
         }
+        
+        ////////////////////////////////////////////////////////////////////////////
+        // encryption
+        ////////////////////////////////////////////////////////////////////////////
 
-
+        /// <summary>
+        /// Encrypts data.
+        /// </summary>
+        public byte[] Encrypt(byte[] data)
+        {
+            return Encrypt(data, Key);
+        }
 
         /// <summary>
         /// Encrypts data.
@@ -282,11 +246,11 @@ namespace RageLib.GTA5.Cryptography
                 subKeys[i][3] = key[4 * i + 3];
             }
 
-            buffer = EncryptRoundA(buffer, subKeys[16], encrypt_tables[16]);
+            buffer = EncryptRoundA(buffer, subKeys[16], GTA5Constants.PC_NG_ENCRYPT_TABLES[16]);
             for (int k = 15; k >= 2; k--)
-                buffer = EncryptRoundB_LUT(buffer, subKeys[k], encrypt_luts[k]);
-            buffer = EncryptRoundA(buffer, subKeys[1], encrypt_tables[1]);
-            buffer = EncryptRoundA(buffer, subKeys[0], encrypt_tables[0]);
+                buffer = EncryptRoundB_LUT(buffer, subKeys[k], GTA5Constants.PC_NG_ENCRYPT_LUTs[k]);
+            buffer = EncryptRoundA(buffer, subKeys[1], GTA5Constants.PC_NG_ENCRYPT_TABLES[1]);
+            buffer = EncryptRoundA(buffer, subKeys[0], GTA5Constants.PC_NG_ENCRYPT_TABLES[0]);
 
             return buffer;
         }
@@ -326,7 +290,7 @@ namespace RageLib.GTA5.Cryptography
             return buf;
         }
 
-        public static byte[] EncryptRoundA_LUT(byte[] dataOld, uint[] key, GTA5CryptoLUT[] lut)
+        public static byte[] EncryptRoundA_LUT(byte[] dataOld, uint[] key, GTA5NGLUT[] lut)
         {
             var data = (byte[])dataOld.Clone();
 
@@ -358,7 +322,7 @@ namespace RageLib.GTA5.Cryptography
             };
         }
 
-        public static byte[] EncryptRoundB_LUT(byte[] dataOld, uint[] key, GTA5CryptoLUT[] lut)
+        public static byte[] EncryptRoundB_LUT(byte[] dataOld, uint[] key, GTA5NGLUT[] lut)
         {
             var data = (byte[])dataOld.Clone();
 
