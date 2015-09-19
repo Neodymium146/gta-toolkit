@@ -540,6 +540,18 @@ namespace RageLib.GTA5.ArchiveWrappers
         /// </summary>
         public void DeleteFile(IArchiveFile file)
         {
+            var rf = file as RageArchiveResourceFileWrapper7;
+            if (rf != null)
+            {
+                this.directory.Files.Remove(rf.file);
+                return;
+            }
+            var bf = file as RageArchiveBinaryFileWrapper7;
+            if (bf != null)
+            {
+                this.directory.Files.Remove(bf.file);
+                return;
+            }
             throw new NotImplementedException();
         }
 
@@ -718,8 +730,8 @@ namespace RageLib.GTA5.ArchiveWrappers
     /// </summary>
     public class RageArchiveResourceFileWrapper7 : IArchiveResourceFile
     {
-        private RageArchiveWrapper7 archiveWrapper;
-        private RageArchiveResourceFile7 file;
+        internal RageArchiveWrapper7 archiveWrapper;
+        internal RageArchiveResourceFile7 file;
 
         /// <summary>
         /// Gets or sets the name of the file.
