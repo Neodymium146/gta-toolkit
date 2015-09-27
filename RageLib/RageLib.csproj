@@ -93,7 +93,12 @@
     <Compile Include="ResourceWrappers\Texture\ITextureDictionary.cs" />
     <Compile Include="ResourceWrappers\Texture\ITextureDictionaryFile.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\DirectXTex\DirectXTex.vcxproj">
+      <Project>{755ab64b-16b4-4c90-aa3b-bff448e5a21e}</Project>
+      <Name>DirectXTex</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

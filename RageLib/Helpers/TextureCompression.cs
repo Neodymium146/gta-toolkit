@@ -147,31 +147,6 @@ namespace RageLib.Compression
         DXGI_FORMAT_FORCE_UINT = 0xffffffff
     }
 
-    class DXTex
-    {
-        [DllImport("DirectXTex.dll", EntryPoint = "DeompressImage", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void DeompressImage(
-                   [MarshalAs(UnmanagedType.LPArray)] byte[] pIn,
-                   [MarshalAs(UnmanagedType.LPArray)] byte[] pOut,
-                   int width,
-                   int height,
-                   int stride,
-                   int format
-               );
-
-        [DllImport("DirectXTex.dll", EntryPoint = "ConvertImage", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ConvertImage(
-                  [MarshalAs(UnmanagedType.LPArray)] byte[] pIn,
-                  int inFormat,
-                  int inStr,
-                  [MarshalAs(UnmanagedType.LPArray)] byte[] pOut,
-                  int oFormat,
-                  int oStr,
-                  int width,
-                  int height
-              );
-    }
-
     public static class TextureHelper
     {
 
@@ -237,56 +212,64 @@ namespace RageLib.Compression
 
     public static class TextureCompressionHelper
     {
-
         public static byte[] DecompressBC1(byte[] data, int width, int height)
         {
-            byte[] buf = new byte[width * height * 4];
-            DXTex.DeompressImage(data, buf, width, height, width * 2, (int)DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM);
-            return buf;
+            return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM);
         }
 
         public static byte[] DecompressBC2(byte[] data, int width, int height)
         {
-            byte[] buf = new byte[width * height * 4];
-            DXTex.DeompressImage(data, buf, width, height, width * 4, (int)DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM);
-            return buf;
+            return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM);
         }
 
         public static byte[] DecompressBC3(byte[] data, int width, int height)
         {
-            byte[] buf = new byte[width * height * 4];
-            DXTex.DeompressImage(data, buf, width, height, width * 4, (int)DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM);
-            return buf;
+            return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM);
         }
 
         public static byte[] DecompressBC4(byte[] data, int width, int height)
         {
-            byte[] buf = new byte[width * height * 4];
-            DXTex.DeompressImage(data, buf, width, height, width * 2, (int)DXGI_FORMAT.DXGI_FORMAT_BC4_UNORM);
-            return buf;
+            return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC4_UNORM);
         }
 
         public static byte[] DecompressBC5(byte[] data, int width, int height)
         {
-            byte[] buf = new byte[width * height * 4];
-            DXTex.DeompressImage(data, buf, width, height, width * 4, (int)DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM);
-            return buf;
+            return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM);
         }
 
         public static byte[] DecompressBC7(byte[] data, int width, int height)
         {
-            byte[] buf = new byte[width * height * 4];
-            DXTex.DeompressImage(data, buf, width, height, width * 4, (int)DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM);
-            return buf;
+            return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM);
         }
 
+        public static byte[] CompressBC1(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM);
+        }
 
+        public static byte[] CompressBC2(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM);
+        }
 
+        public static byte[] CompressBC3(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM);
+        }
 
+        public static byte[] CompressBC4(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC4_UNORM);
+        }
 
-       
+        public static byte[] CompressBC5(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM);
+        }
 
-
-
+        public static byte[] CompressBC7(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM);
+        }
     }
 }

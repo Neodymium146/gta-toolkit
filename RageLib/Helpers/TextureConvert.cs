@@ -26,59 +26,30 @@ namespace RageLib.Helpers
 {
     public static class TextureConvert
     {
-        //case TextureFormat.D3DFMT_A8: format = DXGI_FORMAT.DXGI_FORMAT_A8_UNORM; break;
         public static byte[] MakeRGBAFromA8(byte[] data, int width, int height)
         {
-            var buf = new byte[width * height * 4];
-            DXTex.ConvertImage(
-                data, (int)DXGI_FORMAT.DXGI_FORMAT_A8_UNORM, width,
-                buf, (int)DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, width * 4,
-                width, height);
-            return buf;
+            return DirectXTex.ImageConverter.Convert(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_A8_UNORM, (int)DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM);
         }
 
-        //case TextureFormat.D3DFMT_A8B8G8R8: format = DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM; break;  
         public static byte[] MakeRGBAFromA8B8G8R8(byte[] data, int width, int height)
         {
-            var buf = new byte[width * height * 4];
-            DXTex.ConvertImage(
-                data, (int)DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, width * 4,
-                buf, (int)DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, width * 4,
-                width, height);
-            return buf;
+            // return DirectXTex.ImageConverter.Convert(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, (int)DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM);
+            return data;
         }
-        
-        //case TextureFormat.D3DFMT_A8R8G8B8: format = DXGI_FORMAT.DXGI_FORMAT_B8G8R8A8_UNORM; break;
+
         public static byte[] MakeRGBAFromA8R8G8B8(byte[] data, int width, int height)
         {
-            var buf = new byte[width * height * 4];
-            DXTex.ConvertImage(
-                data, (int)DXGI_FORMAT.DXGI_FORMAT_B8G8R8A8_UNORM, width * 4,
-                buf, (int)DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, width * 4,
-                width, height);
-            return buf;
+            return DirectXTex.ImageConverter.Convert(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_B8G8R8A8_UNORM, (int)DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM);
         }
-        
-        //case TextureFormat.D3DFMT_L8: format = DXGI_FORMAT.DXGI_FORMAT_R8_UNORM; break;
+
         public static byte[] MakeARGBFromL8(byte[] data, int width, int height)
         {
-            var buf = new byte[width * height * 4];
-            DXTex.ConvertImage(
-                data, (int)DXGI_FORMAT.DXGI_FORMAT_R8_UNORM, width,
-                buf, (int)DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, width * 4,
-                width, height);
-            return buf;
+            return DirectXTex.ImageConverter.Convert(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_R8_UNORM, (int)DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM);
         }
-        
-        //case TextureFormat.D3DFMT_A1R5G5B5: format = DXGI_FORMAT.DXGI_FORMAT_B5G5R5A1_UNORM; break;
+
         public static byte[] MakeARGBFromA1R5G5B5(byte[] data, int width, int height)
         {
-            var buf = new byte[width * height * 4];
-            DXTex.ConvertImage(
-                data, (int)DXGI_FORMAT.DXGI_FORMAT_B5G5R5A1_UNORM, width * 2,
-                buf, (int)DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM, width * 4,
-                width, height);
-            return buf;
-        }       
+            return DirectXTex.ImageConverter.Convert(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_B5G5R5A1_UNORM, (int)DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM);
+        }
     }
 }
