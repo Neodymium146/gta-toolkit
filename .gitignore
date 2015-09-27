@@ -7,3 +7,11 @@ packages/*
 # ignore testing project
 Testing
 
+Debug/*
+Release/*
+Libraries/DirectXTex/Debug/*
+Libraries/DirectXTex/Release/*
+Toolkit.opensdf
+Toolkit.sdf
+Libraries/DirectXTex/x64/Release/*
+x64/Release/*
