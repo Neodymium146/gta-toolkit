@@ -293,6 +293,7 @@
     <Compile Include="Resources\PC\Particles\Unknown_P_020.cs" />
     <Compile Include="Resources\PC\Particles\Unknown_P_022.cs" />
     <Compile Include="Resources\PC\Particles\Unknown_P_032.cs" />
+    <Compile Include="Resources\PC\ResourceFileTypes_GTA5_pc.cs" />
     <Compile Include="Resources\PC\ResourceFile_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Textures\TextureBase_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Textures\TextureDictionary_GTA5_pc.cs" />
