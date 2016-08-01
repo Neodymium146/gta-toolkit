@@ -367,7 +367,7 @@
     <Compile Include="Resources\PC\VehicleRecords\VehicleRecordsEntry_GTA5_pc.cs" />
     <Compile Include="Resources\PC\VehicleRecords\VehicleRecords_GTA5_pc.cs" />
     <Compile Include="Resources\PC\WaypointRecords\WaypointRecordEntry_GTA5_pc.cs" />
-    <Compile Include="Resources\PC\WaypointRecords\WayPointRecord_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\WaypointRecords\WaypointRecord_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Drawables\DrawableDictionaryFileWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Drawables\DrawableDictionaryWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Drawables\DrawableFileWrapper_GTA5_pc.cs" />
