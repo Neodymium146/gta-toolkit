@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -91,7 +91,7 @@ namespace RageLib.Resources.GTA5.PC.Textures
             this.Unknown_84h = reader.ReadUInt32();
             this.Unknown_88h = reader.ReadUInt32();
             this.Unknown_8Ch = reader.ReadUInt32();
-            
+
             // read reference data
             this.Data = reader.ReadBlockAt<TextureData_GTA5_pc>(
                 this.DataPointer, // offset
@@ -151,19 +151,6 @@ namespace RageLib.Resources.GTA5.PC.Textures
 
     public class TextureData_GTA5_pc : ResourceGraphicsBlock
     {
-        //public override long Length
-        //{
-        //    get
-        //    {
-        //        int length = 0;
-        //        foreach (var x in Data)
-        //            length += x.Length;
-        //        return length;
-        //    }
-        //}
-
-        //public List<byte[]> Data;
-
         public override long Length
         {
             get
@@ -185,15 +172,6 @@ namespace RageLib.Resources.GTA5.PC.Textures
             int Levels = Convert.ToInt32(parameters[3]);
             int Stride = Convert.ToInt32(parameters[4]);
 
-            //Data = new List<byte[]>();
-            //int length = Stride * Height;
-            //for (int i = 0; i < Levels; i++)
-            //{
-            //    var buf = reader.ReadBytes(length);
-            //    Data.Add(buf);
-            //    length /= 4;
-            //}
-
             int fullLength = 0;
             int length = Stride * Height;
             for (int i = 0; i < Levels; i++)
@@ -210,9 +188,6 @@ namespace RageLib.Resources.GTA5.PC.Textures
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            //foreach (var q in Data)
-            //    writer.Write(q);
-
             writer.Write(FullData);
         }
     }

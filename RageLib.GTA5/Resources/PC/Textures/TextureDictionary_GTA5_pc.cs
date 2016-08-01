@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 
 using RageLib.Resources.Common;
-using System.Collections.Generic;
+using System;
 
 namespace RageLib.Resources.GTA5.PC.Textures
 {
@@ -40,18 +40,14 @@ namespace RageLib.Resources.GTA5.PC.Textures
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000001
         public uint Unknown_1Ch; // 0x00000000
-        public ulong HashesPointer;
-        public ushort HashesCount1;
-        public ushort HashesCount2;
-        public uint Unknown_2Ch; // 0x00000000
-        public ulong TexturesPointer;
-        public ushort TexturesCount1;
-        public ushort TexturesCount2;
-        public uint Unknown_3Ch; // 0x00000000
+        public ResourceSimpleList64<uint_r> TextureNameHashes;
+        public ResourcePointerList64<Texture_GTA5_pc> Textures;
 
-        // reference data
-        public ResourceSimpleArray<uint_r> Hashes;
-        public ResourcePointerArray64<Texture_GTA5_pc> Textures;
+        public TextureDictionary_GTA5_pc()
+        {
+            this.TextureNameHashes = new ResourceSimpleList64<uint_r>();
+            this.Textures = new ResourcePointerList64<Texture_GTA5_pc>();
+        }
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -65,24 +61,8 @@ namespace RageLib.Resources.GTA5.PC.Textures
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.HashesPointer = reader.ReadUInt64();
-            this.HashesCount1 = reader.ReadUInt16();
-            this.HashesCount2 = reader.ReadUInt16();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.TexturesPointer = reader.ReadUInt64();
-            this.TexturesCount1 = reader.ReadUInt16();
-            this.TexturesCount2 = reader.ReadUInt16();
-            this.Unknown_3Ch = reader.ReadUInt32();
-
-            // read reference data
-            this.Hashes = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
-                this.HashesPointer, // offset
-                this.HashesCount1
-            );
-            this.Textures = reader.ReadBlockAt<ResourcePointerArray64<Texture_GTA5_pc>>(
-                this.TexturesPointer, // offset
-                this.TexturesCount1
-            );
+            this.TextureNameHashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Textures = reader.ReadBlock<ResourcePointerList64<Texture_GTA5_pc>>();
         }
 
         /// <summary>
@@ -92,39 +72,21 @@ namespace RageLib.Resources.GTA5.PC.Textures
         {
             base.Write(writer, parameters);
 
-            // update structure data
-            this.HashesPointer = (ulong)(this.Hashes != null ? this.Hashes.Position : 0);
-            this.HashesCount1 = (ushort)(this.Hashes != null ? this.Hashes.Count : 0);
-            this.HashesCount2 = (ushort)(this.Hashes != null ? this.Hashes.Count : 0);
-            this.TexturesPointer = (ulong)(this.Textures != null ? this.Textures.Position : 0);
-            this.TexturesCount1 = (ushort)(this.Textures != null ? this.Textures.Count : 0);
-            this.TexturesCount2 = (ushort)(this.Textures != null ? this.Textures.Count : 0);
-
             // write structure data
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.Write(this.HashesPointer);
-            writer.Write(this.HashesCount1);
-            writer.Write(this.HashesCount2);
-            writer.Write(this.Unknown_2Ch);
-            writer.Write(this.TexturesPointer);
-            writer.Write(this.TexturesCount1);
-            writer.Write(this.TexturesCount2);
-            writer.Write(this.Unknown_3Ch);
+            writer.WriteBlock(this.TextureNameHashes);
+            writer.WriteBlock(this.Textures);
         }
 
-        /// <summary>
-        /// Returns a list of data blocks which are referenced by this block.
-        /// </summary>
-        public override IResourceBlock[] GetReferences()
+        public override Tuple<long, IResourceBlock>[] GetParts()
         {
-            var list = new List<IResourceBlock>();
-            list.AddRange(base.GetReferences());
-            if (Hashes != null) list.Add(Hashes);
-            if (Textures != null) list.Add(Textures);
-            return list.ToArray();
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x20, TextureNameHashes),
+                new Tuple<long, IResourceBlock>(0x30, Textures)
+            };
         }
     }
 }
