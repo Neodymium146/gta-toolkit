@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Meta
 {
-    public class Unknown_META_002 : ResourceSystemBlock
+    public class EnumInfo_GTA5_pc : ResourceSystemBlock
     {
         public override long Length
         {
@@ -33,14 +33,14 @@ namespace RageLib.Resources.GTA5.PC.Meta
         }
 
         // structure data
-        public uint NameHash;
-        public uint Unknown_4h;
+        public uint EnumKey;
+        public uint EnumNameHash;
         public ulong EntriesPointer;
         public uint EntriesCount;
         public uint Unknown_14h; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<Unknown_META_003> Entries;
+        public ResourceSimpleArray<EnumEntryInfo_GTA5_pc> Entries;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -48,14 +48,14 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.NameHash = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
+            this.EnumKey = reader.ReadUInt32();
+            this.EnumNameHash = reader.ReadUInt32();
             this.EntriesPointer = reader.ReadUInt64();
             this.EntriesCount = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
 
             // read reference data
-            this.Entries = reader.ReadBlockAt<ResourceSimpleArray<Unknown_META_003>>(
+            this.Entries = reader.ReadBlockAt<ResourceSimpleArray<EnumEntryInfo_GTA5_pc>>(
                 this.EntriesPointer, // offset
                 this.EntriesCount
             );
@@ -71,8 +71,8 @@ namespace RageLib.Resources.GTA5.PC.Meta
             this.EntriesCount = (uint)(this.Entries != null ? this.Entries.Count : 0);
 
             // write structure data
-            writer.Write(this.NameHash);
-            writer.Write(this.Unknown_4h);
+            writer.Write(this.EnumKey);
+            writer.Write(this.EnumNameHash);
             writer.Write(this.EntriesPointer);
             writer.Write(this.EntriesCount);
             writer.Write(this.Unknown_14h);
@@ -87,6 +87,5 @@ namespace RageLib.Resources.GTA5.PC.Meta
             if (Entries != null) list.Add(Entries);
             return list.ToArray();
         }
-
     }
 }

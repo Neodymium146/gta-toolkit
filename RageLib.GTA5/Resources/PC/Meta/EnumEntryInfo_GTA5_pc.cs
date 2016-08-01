@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 
 namespace RageLib.Resources.GTA5.PC.Meta
 {
-    public class Unknown_META_003 : ResourceSystemBlock
+    public class EnumEntryInfo_GTA5_pc : ResourceSystemBlock
     {
         public override long Length
         {
@@ -30,8 +30,8 @@ namespace RageLib.Resources.GTA5.PC.Meta
         }
 
         // structure data
-        public uint NameHash;
-        public uint Unknown_4h;
+        public uint EntryNameHash;
+        public uint EntryKey;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -39,8 +39,8 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.NameHash = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
+            this.EntryNameHash = reader.ReadUInt32();
+            this.EntryKey = reader.ReadUInt32();
         }
 
         /// <summary>
@@ -49,10 +49,8 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.NameHash);
-            writer.Write(this.Unknown_4h);
+            writer.Write(this.EntryNameHash);
+            writer.Write(this.EntryKey);
         }
-
-
     }
 }

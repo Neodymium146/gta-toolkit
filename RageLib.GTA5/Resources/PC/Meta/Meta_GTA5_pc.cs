@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -37,13 +37,13 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public uint Unknown_14h;
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch;
-        public ulong ClassInfosPointer;
-        public ulong p2;
+        public ulong StructureInfosPointer;
+        public ulong EnumInfosPointer;
         public ulong DataBlocksPointer;
         public ulong NamePointer;
-        public ulong p5;
-        public ushort ClassInfosCount;
-        public ushort c2;
+        public ulong UselessPointer;
+        public ushort StructureInfosCount;
+        public ushort EnumInfosCount;
         public ushort DataBlocksCount;
         public ushort Unknown_4Eh; // 0x0000
         public uint Unknown_50h; // 0x00000000
@@ -56,11 +56,10 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public uint Unknown_6Ch; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<MetaClassInfo_GTA5_pc> ClassInfos;
-        public ResourceSimpleArray<Unknown_META_002> p2data;
-        public ResourceSimpleArray<MetaDataBlock_GTA5_pc> DataBlocks;
+        public ResourceSimpleArray<StructureInfo_GTA5_pc> StructureInfos;
+        public ResourceSimpleArray<EnumInfo_GTA5_pc> EnumInfos;
+        public ResourceSimpleArray<DataBlock_GTA5_pc> DataBlocks;
         public string_r Name;
-        public Unknown_META_001 p5data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -74,13 +73,13 @@ namespace RageLib.Resources.GTA5.PC.Meta
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.ClassInfosPointer = reader.ReadUInt64();
-            this.p2 = reader.ReadUInt64();
+            this.StructureInfosPointer = reader.ReadUInt64();
+            this.EnumInfosPointer = reader.ReadUInt64();
             this.DataBlocksPointer = reader.ReadUInt64();
             this.NamePointer = reader.ReadUInt64();
-            this.p5 = reader.ReadUInt64();
-            this.ClassInfosCount = reader.ReadUInt16();
-            this.c2 = reader.ReadUInt16();
+            this.UselessPointer = reader.ReadUInt64();
+            this.StructureInfosCount = reader.ReadUInt16();
+            this.EnumInfosCount = reader.ReadUInt16();
             this.DataBlocksCount = reader.ReadUInt16();
             this.Unknown_4Eh = reader.ReadUInt16();
             this.Unknown_50h = reader.ReadUInt32();
@@ -93,23 +92,20 @@ namespace RageLib.Resources.GTA5.PC.Meta
             this.Unknown_6Ch = reader.ReadUInt32();
 
             // read reference data
-            this.ClassInfos = reader.ReadBlockAt<ResourceSimpleArray<MetaClassInfo_GTA5_pc>>(
-                this.ClassInfosPointer, // offset
-                this.ClassInfosCount
+            this.StructureInfos = reader.ReadBlockAt<ResourceSimpleArray<StructureInfo_GTA5_pc>>(
+                this.StructureInfosPointer, // offset
+                this.StructureInfosCount
             );
-            this.p2data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_META_002>>(
-                this.p2, // offset
-                this.c2
+            this.EnumInfos = reader.ReadBlockAt<ResourceSimpleArray<EnumInfo_GTA5_pc>>(
+                this.EnumInfosPointer, // offset
+                this.EnumInfosCount
             );
-            this.DataBlocks = reader.ReadBlockAt<ResourceSimpleArray<MetaDataBlock_GTA5_pc>>(
+            this.DataBlocks = reader.ReadBlockAt<ResourceSimpleArray<DataBlock_GTA5_pc>>(
                 this.DataBlocksPointer, // offset
                 this.DataBlocksCount
             );
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
-            );
-            this.p5data = reader.ReadBlockAt<Unknown_META_001>(
-                this.p5 // offset
             );
         }
 
@@ -121,27 +117,27 @@ namespace RageLib.Resources.GTA5.PC.Meta
             base.Write(writer, parameters);
 
             // update structure data
-            this.ClassInfosPointer = (ulong)(this.ClassInfos != null ? this.ClassInfos.Position : 0);
-            this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
+            this.StructureInfosPointer = (ulong)(this.StructureInfos != null ? this.StructureInfos.Position : 0);
+            this.EnumInfosPointer = (ulong)(this.EnumInfos != null ? this.EnumInfos.Position : 0);
             this.DataBlocksPointer = (ulong)(this.DataBlocks != null ? this.DataBlocks.Position : 0);
             this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
-            this.p5 = (ulong)(this.p5data != null ? this.p5data.Position : 0);
-            //this.ClassInfosCount = (ushort)(this.ClassInfos != null ? this.ClassInfos.Count : 0);
-            //this.c2 = (ushort)(this.p2data != null ? this.p2data.Count : 0);
-            //this.DataBlocksCount = (ushort)(this.DataBlocks != null ? this.DataBlocks.Count : 0);
+            this.UselessPointer = 0;
+            this.StructureInfosCount = (ushort)(this.StructureInfos != null ? this.StructureInfos.Count : 0);
+            this.EnumInfosCount = (ushort)(this.EnumInfos != null ? this.EnumInfos.Count : 0);
+            this.DataBlocksCount = (ushort)(this.DataBlocks != null ? this.DataBlocks.Count : 0);
 
             // write structure data
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.Write(this.ClassInfosPointer);
-            writer.Write(this.p2);
+            writer.Write(this.StructureInfosPointer);
+            writer.Write(this.EnumInfosPointer);
             writer.Write(this.DataBlocksPointer);
             writer.Write(this.NamePointer);
-            writer.Write(this.p5);
-            writer.Write(this.ClassInfosCount);
-            writer.Write(this.c2);
+            writer.Write(this.UselessPointer);
+            writer.Write(this.StructureInfosCount);
+            writer.Write(this.EnumInfosCount);
             writer.Write(this.DataBlocksCount);
             writer.Write(this.Unknown_4Eh);
             writer.Write(this.Unknown_50h);
@@ -160,13 +156,11 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>(base.GetReferences());
-            if (ClassInfos != null) list.Add(ClassInfos);
-            if (p2data != null) list.Add(p2data);
+            if (StructureInfos != null) list.Add(StructureInfos);
+            if (EnumInfos != null) list.Add(EnumInfos);
             if (DataBlocks != null) list.Add(DataBlocks);
             if (Name != null) list.Add(Name);
-            if (p5data != null) list.Add(p5data);
             return list.ToArray();
         }
-
     }
 }

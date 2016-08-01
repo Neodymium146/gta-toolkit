@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Meta
 {
-    public class MetaDataBlock_GTA5_pc : ResourceSystemBlock
+    public class DataBlock_GTA5_pc : ResourceSystemBlock
     {
         public override long Length
         {
@@ -33,7 +33,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
         }
 
         // structure data
-        public uint Hash;
+        public uint StructureKey;
         public uint DataLength;
         public ulong DataPointer;
 
@@ -46,7 +46,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Hash = reader.ReadUInt32();
+            this.StructureKey = reader.ReadUInt32();
             this.DataLength = reader.ReadUInt32();
             this.DataPointer = reader.ReadUInt64();
 
@@ -63,11 +63,11 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            //this.DataLength = (uint)(this.Data != null ? this.Data.Count : 0);
+            this.DataLength = (uint)(this.Data != null ? this.Data.Count : 0);
             this.DataPointer = (ulong)(this.Data != null ? this.Data.Position : 0);
 
             // write structure data
-            writer.Write(this.Hash);
+            writer.Write(this.StructureKey);
             writer.Write(this.DataLength);
             writer.Write(this.DataPointer);
         }
@@ -81,6 +81,5 @@ namespace RageLib.Resources.GTA5.PC.Meta
             if (Data != null) list.Add(Data);
             return list.ToArray();
         }
-
     }
 }
