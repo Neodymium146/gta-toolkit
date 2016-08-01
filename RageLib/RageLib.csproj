@@ -66,6 +66,7 @@
     <Compile Include="Resources\Common\ResourcePointerList64.cs" />
     <Compile Include="Resources\Common\ResourceSimpleArray.cs" />
     <Compile Include="Resources\Common\ResourceSimpleArrayArray64.cs" />
+    <Compile Include="Resources\Common\ResourceSimpleList64.cs" />
     <Compile Include="Resources\Common\Simple\byte_r.cs" />
     <Compile Include="Resources\Common\Simple\string_r.cs" />
     <Compile Include="Resources\Common\Simple\uint_r.cs" />
