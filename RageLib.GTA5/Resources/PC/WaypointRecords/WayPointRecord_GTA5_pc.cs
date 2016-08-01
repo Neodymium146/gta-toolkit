@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.WaypointRecords
 {
-    public class WayPointRecord_GTA5_pc : FileBase64_GTA5_pc
+    public class WaypointRecord_GTA5_pc : FileBase64_GTA5_pc
     {
         public override long Length
         {
@@ -97,6 +97,5 @@ namespace RageLib.Resources.GTA5.PC.WaypointRecords
             if (Entries != null) list.Add(Entries);
             return list.ToArray();
         }
-
     }
 }
