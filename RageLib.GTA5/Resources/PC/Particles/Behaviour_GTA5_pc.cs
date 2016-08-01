@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,33 @@ using System;
 
 namespace RageLib.Resources.GTA5.PC.Particles
 {
+    public enum BehaviourType_GTA5_pc : uint
+    {
+        Age = 0xF5B33BAA,
+        Acceleration = 0xD63D9F1B,
+        Velocity = 0x6C0719BC,
+        Rotation = 0x1EE64552,
+        Size = 0x38B60240,
+        Dampening = 0x052B1293,
+        MatrixWeight = 0x64E5D702,
+        Collision = 0x928A1C45,
+        AnimateTexture = 0xECA84C1E,
+        Colour = 0x164AEA72,
+        Sprite = 0x68FA73F5,
+        Wind = 0x38B63978,
+        Light = 0x0544C710,
+        Model = 0x6232E25A,
+        Decal = 0x8F3B6036,
+        ZCull = 0xA35C721F,
+        Noise = 0xB77FED19,
+        Attractor = 0x25AC9437,
+        Trail = 0xC57377F8,
+        FogVolume = 0xA05DA63E,
+        River = 0xD4594BEF,
+        DecalPool = 0xA2D6DC3F,
+        Liquid = 0xDF229542
+    }
+
     public class Behaviour_GTA5_pc : ResourceSystemBlock, IResourceXXSystemBlock
     {
         public override long Length
@@ -65,37 +92,36 @@ namespace RageLib.Resources.GTA5.PC.Particles
         {
 
             reader.Position += 8;
-            var type = reader.ReadUInt32();
+            BehaviourType_GTA5_pc type = (BehaviourType_GTA5_pc)reader.ReadUInt32();
             reader.Position -= 12;
 
             switch (type)
             {
-                case 4122164138: return new BehaviourAge_GTA5_pc();
-                case 3594362651: return new BehaviourAcceleration_GTA5_pc();
-                case 1812404668: return new BehaviourVelocity_GTA5_pc();
-                case 518407506: return new BehaviourRotation_GTA5_pc();
-                case 951452224: return new BehaviourSize_GTA5_pc();
-                case 86708883: return new BehaviourDampening_GTA5_pc();
-                case 1692784386: return new BehaviourMatrixWeight_GTA5_pc();
-                case 2458524741: return new BehaviourCollision_GTA5_pc();
-                case 3970452510: return new BehaviourAnimateTexture_GTA5_pc();
-                case 374008434: return new BehaviourColour_GTA5_pc();
-                case 1761244149: return new BehaviourSprite_GTA5_pc();
-                case 951466360: return new BehaviourWind_GTA5_pc();
-                case 88393488: return new BehaviourLight_GTA5_pc();
-                case 1647501914: return new BehaviourModel_GTA5_pc();
-                case 2403033142: return new BehaviourDecal_GTA5_pc();
-                case 2740744735: return new BehaviourZCull_GTA5_pc();
-                case 3078614297: return new BehaviourNoise_GTA5_pc();
-                case 632067127: return new BehaviourAttractor_GTA5_pc();
-                case 3312678904: return new BehaviourTrail_GTA5_pc();
-                case 2690491966: return new BehaviourFogVolume_GTA5_pc();
-                case 3562621935: return new BehaviourRiver_GTA5_pc();
-                case 2731990079: return new BehaviourDecalPool_GTA5_pc();
-                case 3743585602: return new BehaviourLiquid_GTA5_pc();
+                case BehaviourType_GTA5_pc.Age: return new BehaviourAge_GTA5_pc();
+                case BehaviourType_GTA5_pc.Acceleration: return new BehaviourAcceleration_GTA5_pc();
+                case BehaviourType_GTA5_pc.Velocity: return new BehaviourVelocity_GTA5_pc();
+                case BehaviourType_GTA5_pc.Rotation: return new BehaviourRotation_GTA5_pc();
+                case BehaviourType_GTA5_pc.Size: return new BehaviourSize_GTA5_pc();
+                case BehaviourType_GTA5_pc.Dampening: return new BehaviourDampening_GTA5_pc();
+                case BehaviourType_GTA5_pc.MatrixWeight: return new BehaviourMatrixWeight_GTA5_pc();
+                case BehaviourType_GTA5_pc.Collision: return new BehaviourCollision_GTA5_pc();
+                case BehaviourType_GTA5_pc.AnimateTexture: return new BehaviourAnimateTexture_GTA5_pc();
+                case BehaviourType_GTA5_pc.Colour: return new BehaviourColour_GTA5_pc();
+                case BehaviourType_GTA5_pc.Sprite: return new BehaviourSprite_GTA5_pc();
+                case BehaviourType_GTA5_pc.Wind: return new BehaviourWind_GTA5_pc();
+                case BehaviourType_GTA5_pc.Light: return new BehaviourLight_GTA5_pc();
+                case BehaviourType_GTA5_pc.Model: return new BehaviourModel_GTA5_pc();
+                case BehaviourType_GTA5_pc.Decal: return new BehaviourDecal_GTA5_pc();
+                case BehaviourType_GTA5_pc.ZCull: return new BehaviourZCull_GTA5_pc();
+                case BehaviourType_GTA5_pc.Noise: return new BehaviourNoise_GTA5_pc();
+                case BehaviourType_GTA5_pc.Attractor: return new BehaviourAttractor_GTA5_pc();
+                case BehaviourType_GTA5_pc.Trail: return new BehaviourTrail_GTA5_pc();
+                case BehaviourType_GTA5_pc.FogVolume: return new BehaviourFogVolume_GTA5_pc();
+                case BehaviourType_GTA5_pc.River: return new BehaviourRiver_GTA5_pc();
+                case BehaviourType_GTA5_pc.DecalPool: return new BehaviourDecalPool_GTA5_pc();
+                case BehaviourType_GTA5_pc.Liquid: return new BehaviourLiquid_GTA5_pc();
                 default: throw new Exception("Unknown type");
             }
-
         }
     }
 }

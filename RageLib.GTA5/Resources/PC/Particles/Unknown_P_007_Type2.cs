@@ -80,7 +80,5 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_38h);
             writer.Write(this.Unknown_3Ch);
         }
-
-
     }
 }

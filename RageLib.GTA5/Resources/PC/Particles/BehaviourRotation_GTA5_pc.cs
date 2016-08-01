@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
 
 using RageLib.Resources.Common;
 using System;
-using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Particles
 {
@@ -34,10 +33,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         }
 
         // structure data
-        public ulong p1;
-        public ushort c1;
-        public ushort c2;
-        public uint Unknown_1Ch; // 0x00000000
+        public ResourcePointerList64<Unknown_P_018> Unknown_10h;
         public uint Unknown_20h; // 0x00000000
         public uint Unknown_24h; // 0x00000000
         public uint Unknown_28h; // 0x00000000
@@ -51,9 +47,6 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_278h;
         public uint Unknown_27Ch;
 
-        // reference data
-        public ResourcePointerArray64<Unknown_P_018> p1data;
-
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
@@ -62,10 +55,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             base.Read(reader, parameters);
 
             // read structure data
-            this.p1 = reader.ReadUInt64();
-            this.c1 = reader.ReadUInt16();
-            this.c2 = reader.ReadUInt16();
-            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Unknown_10h = reader.ReadBlock<ResourcePointerList64<Unknown_P_018>>();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
             this.Unknown_28h = reader.ReadUInt32();
@@ -78,12 +68,6 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_274h = reader.ReadUInt32();
             this.Unknown_278h = reader.ReadUInt32();
             this.Unknown_27Ch = reader.ReadUInt32();
-
-            // read reference data
-            this.p1data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_P_018>>(
-                this.p1, // offset
-                this.c1
-            );
         }
 
         /// <summary>
@@ -93,15 +77,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
         {
             base.Write(writer, parameters);
 
-            // update structure data
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
-            this.c1 = (ushort)(this.p1data != null ? this.p1data.Count : 0);
-
             // write structure data
-            writer.Write(this.p1);
-            writer.Write(this.c1);
-            writer.Write(this.c2);
-            writer.Write(this.Unknown_1Ch);
+            writer.WriteBlock(this.Unknown_10h);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
@@ -116,23 +93,14 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_27Ch);
         }
 
-        /// <summary>
-        /// Returns a list of data blocks which are referenced by this block.
-        /// </summary>
-        public override IResourceBlock[] GetReferences()
-        {
-            var list = new List<IResourceBlock>(base.GetReferences());
-            if (p1data != null) list.Add(p1data);
-            return list.ToArray();
-        }
-
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(48,emb1),
-                new Tuple<long, IResourceBlock>(192,emb2),
-                new Tuple<long, IResourceBlock>(336,emb3),
-                new Tuple<long, IResourceBlock>(480,emb4)
+                new Tuple<long, IResourceBlock>(16, Unknown_10h),
+                new Tuple<long, IResourceBlock>(48, emb1),
+                new Tuple<long, IResourceBlock>(192, emb2),
+                new Tuple<long, IResourceBlock>(336, emb3),
+                new Tuple<long, IResourceBlock>(480, emb4)
             };
         }
     }

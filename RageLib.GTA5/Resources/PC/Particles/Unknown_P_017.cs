@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,60 +24,59 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Particles
 {
-    public class Unknown_P_017: ResourceSystemBlock
-	{
-		public override long Length
-		{
-			get { return 16; }
-		}
+    public class Unknown_P_017 : ResourceSystemBlock
+    {
+        public override long Length
+        {
+            get { return 16; }
+        }
 
-		// structure data
-		public uint Unknown_0h;
-		public uint Unknown_4h; // 0x00000000
-        public ulong p1;
+        // structure data
+        public uint Unknown_0h;
+        public uint Unknown_4h; // 0x00000000
+        public ulong Unknown_8h_Pointer;
 
-		// reference data
-		public Unknown_P_013 p1data;
+        // reference data
+        public Unknown_P_003 Unknown_8h_Data;
 
-		/// <summary>
-		/// Reads the data-block from a stream.
-		/// </summary>
-		public override void Read(ResourceDataReader reader, params object[] parameters)
-		{
-			// read structure data
-			this.Unknown_0h = reader.ReadUInt32();
-			this.Unknown_4h = reader.ReadUInt32();
-			this.p1 = reader.ReadUInt64();
+        /// <summary>
+        /// Reads the data-block from a stream.
+        /// </summary>
+        public override void Read(ResourceDataReader reader, params object[] parameters)
+        {
+            // read structure data
+            this.Unknown_0h = reader.ReadUInt32();
+            this.Unknown_4h = reader.ReadUInt32();
+            this.Unknown_8h_Pointer = reader.ReadUInt64();
 
-			// read reference data
-			this.p1data = reader.ReadBlockAt<Unknown_P_013>(
-				this.p1 // offset
-			);
-		}
+            // read reference data
+            this.Unknown_8h_Data = reader.ReadBlockAt<Unknown_P_003>(
+                this.Unknown_8h_Pointer // offset
+            );
+        }
 
-		/// <summary>
-		/// Writes the data-block to a stream.
-		/// </summary>
-		public override void Write(ResourceDataWriter writer, params object[] parameters)
-		{
-			// update structure data
-			this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
+        /// <summary>
+        /// Writes the data-block to a stream.
+        /// </summary>
+        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        {
+            // update structure data
+            this.Unknown_8h_Pointer = (ulong)(this.Unknown_8h_Data != null ? this.Unknown_8h_Data.Position : 0);
 
-			// write structure data
-			writer.Write(this.Unknown_0h);
-			writer.Write(this.Unknown_4h);
-			writer.Write(this.p1);
-		}
+            // write structure data
+            writer.Write(this.Unknown_0h);
+            writer.Write(this.Unknown_4h);
+            writer.Write(this.Unknown_8h_Pointer);
+        }
 
-		/// <summary>
-		/// Returns a list of data blocks which are referenced by this block.
-		/// </summary>
-		public override IResourceBlock[] GetReferences()
-		{
-			var list = new List<IResourceBlock>();
-			if (p1data != null) list.Add(p1data);
-			return list.ToArray();
-		}
-
-	}
+        /// <summary>
+        /// Returns a list of data blocks which are referenced by this block.
+        /// </summary>
+        public override IResourceBlock[] GetReferences()
+        {
+            var list = new List<IResourceBlock>();
+            if (Unknown_8h_Data != null) list.Add(Unknown_8h_Data);
+            return list.ToArray();
+        }
+    }
 }

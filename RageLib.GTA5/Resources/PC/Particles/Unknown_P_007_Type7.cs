@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 */
 
 using RageLib.Resources.Common;
-using System.Collections.Generic;
+using System;
 
 namespace RageLib.Resources.GTA5.PC.Particles
 {
@@ -37,19 +37,13 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_1Ch; // 0x00000001
         public uint Unknown_20h; // 0x00000000
         public uint Unknown_24h; // 0x00000000
-        public ulong p1;
-        public ushort c1a;
-        public ushort c1b;
-        public uint Unknown_34h; // 0x00000000
+        public ResourceSimpleList64<Unknown_P_001> Unknown_28h;
         public uint Unknown_38h; // 0x00000000
         public uint Unknown_3Ch; // 0x00000000
         public uint Unknown_40h; // 0x00000000
         public uint Unknown_44h; // 0x00000000
         public uint Unknown_48h; // 0x00000000
         public uint Unknown_4Ch; // 0x00000000
-
-        // reference data
-        public ResourceSimpleArray<Unknown_P_001> p1data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -63,22 +57,13 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_1Ch = reader.ReadUInt32();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
-            this.p1 = reader.ReadUInt64();
-            this.c1a = reader.ReadUInt16();
-            this.c1b = reader.ReadUInt16();
-            this.Unknown_34h = reader.ReadUInt32();
+            this.Unknown_28h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_001>>();
             this.Unknown_38h = reader.ReadUInt32();
             this.Unknown_3Ch = reader.ReadUInt32();
             this.Unknown_40h = reader.ReadUInt32();
             this.Unknown_44h = reader.ReadUInt32();
             this.Unknown_48h = reader.ReadUInt32();
             this.Unknown_4Ch = reader.ReadUInt32();
-
-            // read reference data
-            this.p1data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_P_001>>(
-                this.p1, // offset
-                this.c1a
-            );
         }
 
         /// <summary>
@@ -88,19 +73,12 @@ namespace RageLib.Resources.GTA5.PC.Particles
         {
             base.Write(writer, parameters);
 
-            // update structure data
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
-            //this.c1 = (ushort)(this.p1data != null ? this.p1data.Count : 0);
-
             // write structure data
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
-            writer.Write(this.p1);
-            writer.Write(this.c1a);
-            writer.Write(this.c1b);
-            writer.Write(this.Unknown_34h);
+            writer.WriteBlock(this.Unknown_28h);
             writer.Write(this.Unknown_38h);
             writer.Write(this.Unknown_3Ch);
             writer.Write(this.Unknown_40h);
@@ -109,15 +87,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_4Ch);
         }
 
-        /// <summary>
-        /// Returns a list of data blocks which are referenced by this block.
-        /// </summary>
-        public override IResourceBlock[] GetReferences()
+        public override Tuple<long, IResourceBlock>[] GetParts()
         {
-            var list = new List<IResourceBlock>(base.GetReferences());
-            if (p1data != null) list.Add(p1data);
-            return list.ToArray();
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x28, Unknown_28h)
+            };
         }
-
     }
 }
