@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -55,13 +55,13 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_4Ch; // 0x00000000
         public uint Unknown_50h; // 0x00000000
         public uint Unknown_54h; // 0x00000000
-        public ulong p0;
+        public ulong EmitterRulePointer;
         public ulong p1;
         public uint Unknown_68h;
         public uint Unknown_6Ch;
 
         // reference data
-        public EmitterRule_GTA5_pc p0data;
+        public EmitterRule_GTA5_pc EmitterRule;
         public string_r p1data;
 
         /// <summary>
@@ -92,14 +92,14 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_4Ch = reader.ReadUInt32();
             this.Unknown_50h = reader.ReadUInt32();
             this.Unknown_54h = reader.ReadUInt32();
-            this.p0 = reader.ReadUInt64();
+            this.EmitterRulePointer = reader.ReadUInt64();
             this.p1 = reader.ReadUInt64();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
 
             // read reference data
-            this.p0data = reader.ReadBlockAt<EmitterRule_GTA5_pc>(
-                this.p0 // offset
+            this.EmitterRule = reader.ReadBlockAt<EmitterRule_GTA5_pc>(
+                this.EmitterRulePointer // offset
             );
             this.p1data = reader.ReadBlockAt<string_r>(
                 this.p1 // offset
@@ -112,7 +112,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.p0 = (ulong)(this.p0data != null ? this.p0data.Position : 0);
+            this.EmitterRulePointer = (ulong)(this.EmitterRule != null ? this.EmitterRule.Position : 0);
             this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
 
             // write structure data
@@ -138,7 +138,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_4Ch);
             writer.Write(this.Unknown_50h);
             writer.Write(this.Unknown_54h);
-            writer.Write(this.p0);
+            writer.Write(this.EmitterRulePointer);
             writer.Write(this.p1);
             writer.Write(this.Unknown_68h);
             writer.Write(this.Unknown_6Ch);
@@ -150,10 +150,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (p0data != null) list.Add(p0data);
+            if (EmitterRule != null) list.Add(EmitterRule);
             if (p1data != null) list.Add(p1data);
             return list.ToArray();
         }
-
     }
 }

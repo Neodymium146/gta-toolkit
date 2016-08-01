@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -21,22 +21,19 @@
 */
 
 using RageLib.Resources.Common;
-using System.Collections.Generic;
+using System;
 
 namespace RageLib.Resources.GTA5.PC.Particles
 {
     public class Unknown_P_010 : ResourceSystemBlock
-	{
-		public override long Length
-		{
-			get { return 48; }
-		}
+    {
+        public override long Length
+        {
+            get { return 48; }
+        }
 
-		// structure data
-		public ulong p1;
-		public ushort c1a;
-		public ushort c1b;
-		public uint Unknown_Ch; // 0x00000000
+        // structure data
+        public ResourceSimpleList64<Unknown_P_016> Unknown_0h;
         public uint Unknown_10h; // 0x00000000
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
@@ -46,70 +43,45 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_28h; // 0x00000000
         public uint Unknown_2Ch; // 0x00000000
 
-
-
-        // reference data
-        public ResourceSimpleArray<Unknown_P_016> p1data;
-
-		/// <summary>
-		/// Reads the data-block from a stream.
-		/// </summary>
-		public override void Read(ResourceDataReader reader, params object[] parameters)
-		{
-			// read structure data
-			this.p1 = reader.ReadUInt64();
-			this.c1a = reader.ReadUInt16();
-			this.c1b = reader.ReadUInt16();
-			this.Unknown_Ch = reader.ReadUInt32();
-			this.Unknown_10h = reader.ReadUInt32();
-			this.Unknown_14h = reader.ReadUInt32();
-			this.Unknown_18h = reader.ReadUInt32();
-			this.Unknown_1Ch = reader.ReadUInt32();
+        /// <summary>
+        /// Reads the data-block from a stream.
+        /// </summary>
+        public override void Read(ResourceDataReader reader, params object[] parameters)
+        {
+            // read structure data
+            this.Unknown_0h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_016>>();
+            this.Unknown_10h = reader.ReadUInt32();
+            this.Unknown_14h = reader.ReadUInt32();
+            this.Unknown_18h = reader.ReadUInt32();
+            this.Unknown_1Ch = reader.ReadUInt32();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
             this.Unknown_28h = reader.ReadUInt32();
             this.Unknown_2Ch = reader.ReadUInt32();
+        }
 
-            // read reference data
-            this.p1data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_P_016>>(
-				this.p1, // offset
-				this.c1a
-			);
-		}
-
-		/// <summary>
-		/// Writes the data-block to a stream.
-		/// </summary>
-		public override void Write(ResourceDataWriter writer, params object[] parameters)
-		{
-			// update structure data
-			this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
-			//this.c1 = (ushort)(this.p1data != null ? this.p1data.Count : 0);
-
-			// write structure data
-			writer.Write(this.p1);
-			writer.Write(this.c1a);
-			writer.Write(this.c1b);
-			writer.Write(this.Unknown_Ch);
-			writer.Write(this.Unknown_10h);
-			writer.Write(this.Unknown_14h);
-			writer.Write(this.Unknown_18h);
-			writer.Write(this.Unknown_1Ch);
+        /// <summary>
+        /// Writes the data-block to a stream.
+        /// </summary>
+        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        {
+            // write structure data
+            writer.WriteBlock(this.Unknown_0h);
+            writer.Write(this.Unknown_10h);
+            writer.Write(this.Unknown_14h);
+            writer.Write(this.Unknown_18h);
+            writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
             writer.Write(this.Unknown_2Ch);
         }
 
-		/// <summary>
-		/// Returns a list of data blocks which are referenced by this block.
-		/// </summary>
-		public override IResourceBlock[] GetReferences()
-		{
-			var list = new List<IResourceBlock>();
-			if (p1data != null) list.Add(p1data);
-			return list.ToArray();
-		}
-
-	}
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0, Unknown_0h)
+            };
+        }
+    }
 }

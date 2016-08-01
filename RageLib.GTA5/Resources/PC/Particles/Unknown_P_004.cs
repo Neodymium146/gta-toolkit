@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
 
 using RageLib.Resources.Common;
 using System;
-using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Particles
 {
@@ -46,17 +45,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public Unknown_P_018 emb4;
         public uint Unknown_258h;
         public uint Unknown_25Ch; // 0x00000000
-        public ulong pref;
-        public ushort refcnt1;
-        public ushort refcnt2;
-        public uint Unknown_26Ch; // 0x00000000
+        public ResourcePointerList64<Unknown_P_018> Unknown_260h;
         public uint Unknown_270h; // 0x00000000
         public uint Unknown_274h; // 0x00000000
         public uint Unknown_278h; // 0x00000000
         public uint Unknown_27Ch; // 0x00000000
-
-        // reference data
-        public ResourcePointerArray64<Unknown_P_018> refs;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -76,20 +69,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.emb4 = reader.ReadBlock<Unknown_P_018>();
             this.Unknown_258h = reader.ReadUInt32();
             this.Unknown_25Ch = reader.ReadUInt32();
-            this.pref = reader.ReadUInt64();
-            this.refcnt1 = reader.ReadUInt16();
-            this.refcnt2 = reader.ReadUInt16();
-            this.Unknown_26Ch = reader.ReadUInt32();
+            this.Unknown_260h = reader.ReadBlock<ResourcePointerList64<Unknown_P_018>>();
             this.Unknown_270h = reader.ReadUInt32();
             this.Unknown_274h = reader.ReadUInt32();
             this.Unknown_278h = reader.ReadUInt32();
             this.Unknown_27Ch = reader.ReadUInt32();
-
-            // read reference data
-            this.refs = reader.ReadBlockAt<ResourcePointerArray64<Unknown_P_018>>(
-                this.pref, // offset
-                this.refcnt2
-            );
         }
 
         /// <summary>
@@ -97,10 +81,6 @@ namespace RageLib.Resources.GTA5.PC.Particles
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            // update structure data
-            this.pref = (ulong)(this.refs != null ? this.refs.Position : 0);
-            //this.refcnt2 = (ushort)(this.refs != null ? this.refs.Count : 0);
-
             // write structure data
             writer.Write(this.VFT);
             writer.Write(this.Unknown_4h);
@@ -114,24 +94,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.WriteBlock(this.emb4);
             writer.Write(this.Unknown_258h);
             writer.Write(this.Unknown_25Ch);
-            writer.Write(this.pref);
-            writer.Write(this.refcnt1);
-            writer.Write(this.refcnt2);
-            writer.Write(this.Unknown_26Ch);
+            writer.WriteBlock(this.Unknown_260h);
             writer.Write(this.Unknown_270h);
             writer.Write(this.Unknown_274h);
             writer.Write(this.Unknown_278h);
             writer.Write(this.Unknown_27Ch);
-        }
-
-        /// <summary>
-        /// Returns a list of data blocks which are referenced by this block.
-        /// </summary>
-        public override IResourceBlock[] GetReferences()
-        {
-            var list = new List<IResourceBlock>();
-            if (refs != null) list.Add(refs);
-            return list.ToArray();
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()
@@ -140,7 +107,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
                 new Tuple<long, IResourceBlock>(24, emb1),
                 new Tuple<long, IResourceBlock>(168, emb2),
                 new Tuple<long, IResourceBlock>(312, emb3),
-                new Tuple<long, IResourceBlock>(456, emb4)
+                new Tuple<long, IResourceBlock>(456, emb4),
+                new Tuple<long, IResourceBlock>(0x260, Unknown_260h)
             };
         }
     }

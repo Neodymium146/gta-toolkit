@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -38,16 +38,16 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_4h;
         public uint Unknown_8h;
         public uint Unknown_Ch;
-        public ulong p1;
-        public ulong p2;
+        public ulong Unknown_10h_Pointer;
+        public ulong Unknown_18h_Pointer;
         public uint Unknown_20h;
         public uint Unknown_24h; // 0x00000000
         public uint Unknown_28h; // 0x00000000
         public uint Unknown_2Ch; // 0x00000000
 
         // reference data
-        public string_r p1data;
-        public DrawableBase_GTA5_pc p2data;
+        public string_r Unknown_10h_Data;
+        public DrawableBase_GTA5_pc Unknown_18h_Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -59,19 +59,19 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_4h = reader.ReadUInt32();
             this.Unknown_8h = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
-            this.p1 = reader.ReadUInt64();
-            this.p2 = reader.ReadUInt64();
+            this.Unknown_10h_Pointer = reader.ReadUInt64();
+            this.Unknown_18h_Pointer = reader.ReadUInt64();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
             this.Unknown_28h = reader.ReadUInt32();
             this.Unknown_2Ch = reader.ReadUInt32();
 
             // read reference data
-            this.p1data = reader.ReadBlockAt<string_r>(
-                this.p1 // offset
+            this.Unknown_10h_Data = reader.ReadBlockAt<string_r>(
+                this.Unknown_10h_Pointer // offset
             );
-            this.p2data = reader.ReadBlockAt<DrawableBase_GTA5_pc>(
-                this.p2 // offset
+            this.Unknown_18h_Data = reader.ReadBlockAt<DrawableBase_GTA5_pc>(
+                this.Unknown_18h_Pointer // offset
             );
         }
 
@@ -81,16 +81,16 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
-            this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
+            this.Unknown_10h_Pointer = (ulong)(this.Unknown_10h_Data != null ? this.Unknown_10h_Data.Position : 0);
+            this.Unknown_18h_Pointer = (ulong)(this.Unknown_18h_Data != null ? this.Unknown_18h_Data.Position : 0);
 
             // write structure data
             writer.Write(this.Unknown_0h);
             writer.Write(this.Unknown_4h);
             writer.Write(this.Unknown_8h);
             writer.Write(this.Unknown_Ch);
-            writer.Write(this.p1);
-            writer.Write(this.p2);
+            writer.Write(this.Unknown_10h_Pointer);
+            writer.Write(this.Unknown_18h_Pointer);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
@@ -103,10 +103,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (p1data != null) list.Add(p1data);
-            if (p2data != null) list.Add(p2data);
+            if (Unknown_10h_Data != null) list.Add(Unknown_10h_Data);
+            if (Unknown_18h_Data != null) list.Add(Unknown_18h_Data);
             return list.ToArray();
         }
-
     }
 }

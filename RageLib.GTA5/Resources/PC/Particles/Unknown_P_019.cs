@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -30,14 +30,14 @@ namespace RageLib.Resources.GTA5.PC.Particles
         }
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
+        public float Unknown_0h;
+        public float Unknown_4h;
         public uint Unknown_8h; // 0x00000000
         public uint Unknown_Ch; // 0x00000000
-        public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
+        public float Unknown_10h;
+        public float Unknown_14h;
+        public float Unknown_18h;
+        public float Unknown_1Ch;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -45,14 +45,14 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
+            this.Unknown_0h = reader.ReadSingle();
+            this.Unknown_4h = reader.ReadSingle();
             this.Unknown_8h = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Unknown_10h = reader.ReadSingle();
+            this.Unknown_14h = reader.ReadSingle();
+            this.Unknown_18h = reader.ReadSingle();
+            this.Unknown_1Ch = reader.ReadSingle();
         }
 
         /// <summary>
@@ -70,7 +70,5 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
         }
-
-
     }
 }
