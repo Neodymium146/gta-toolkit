@@ -32,13 +32,12 @@ namespace RageLib.Resources.Common
         }
 
         // structure data
-        public ulong ValuesPointer;
-        public ushort ValuesCount1;
-        public ushort ValuesCount2;
-        public uint Unknown_Ch;
+        public ulong EntriesPointer;
+        public ushort EntriesCount;
+        public ushort EntriesCapacity;
 
         // reference data
-        public ResourceSimpleArray<T> Values;
+        public ResourceSimpleArray<T> Entries;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -46,15 +45,15 @@ namespace RageLib.Resources.Common
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.ValuesPointer = reader.ReadUInt64();
-            this.ValuesCount1 = reader.ReadUInt16();
-            this.ValuesCount2 = reader.ReadUInt16();
-            this.Unknown_Ch = reader.ReadUInt32();
+            this.EntriesPointer = reader.ReadUInt64();
+            this.EntriesCount = reader.ReadUInt16();
+            this.EntriesCapacity = reader.ReadUInt16();
+            reader.Position += 4;
 
             // read reference data
-            this.Values = reader.ReadBlockAt<ResourceSimpleArray<T>>(
-                this.ValuesPointer, // offset
-                this.ValuesCount2
+            this.Entries = reader.ReadBlockAt<ResourceSimpleArray<T>>(
+                this.EntriesPointer, // offset
+                this.EntriesCount
             );
         }
 
@@ -64,15 +63,15 @@ namespace RageLib.Resources.Common
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.ValuesPointer = (ulong)(this.Values != null ? this.Values.Position : 0);
-            this.ValuesCount1 = (ushort)(this.Values != null ? this.Values.Count : 0);
-            this.ValuesCount2 = (ushort)(this.Values != null ? this.Values.Count : 0);
+            this.EntriesPointer = (ulong)(this.Entries != null ? this.Entries.Position : 0);
+            this.EntriesCount = (ushort)(this.Entries != null ? this.Entries.Count : 0);
+            this.EntriesCapacity = (ushort)(this.Entries != null ? this.Entries.Count : 0);
 
             // write structure data
-            writer.Write(this.ValuesPointer);
-            writer.Write(this.ValuesCount1);
-            writer.Write(this.ValuesCount2);
-            writer.Write(this.Unknown_Ch);
+            writer.Write(this.EntriesPointer);
+            writer.Write(this.EntriesCount);
+            writer.Write(this.EntriesCapacity);
+            writer.Write((uint)0x00000000);
         }
 
         /// <summary>
@@ -81,7 +80,7 @@ namespace RageLib.Resources.Common
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (Values != null) list.Add(Values);
+            if (Entries != null) list.Add(Entries);
             return list.ToArray();
         }
     }

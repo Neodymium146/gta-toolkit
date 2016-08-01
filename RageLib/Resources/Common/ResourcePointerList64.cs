@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,73 +20,62 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.Common;
 using System;
 using System.Collections.Generic;
 
-namespace RageLib.Resources
+namespace RageLib.Resources.Common
 {
-
-
     public class ResourcePointerList64<T> : ResourceSystemBlock, IList<T> where T : IResourceSystemBlock, new()
     {
-    
         public override long Length
         {
-            get { return 12; }
+            get { return 16; }
         }
 
-
-
         // structure data
-        public ulong DataPointer;
-        public ushort DataCount1;
-        public ushort DataCount2;
-
-
+        public ulong EntriesPointer;
+        public ushort EntriesCount;
+        public ushort EntriesCapacity;
 
         // reference data
-        public ResourcePointerArray64<T> data_items;
-
-
+        public ResourcePointerArray64<T> Entries;
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            this.DataPointer = reader.ReadUInt64();
-            this.DataCount1 = reader.ReadUInt16();
-            this.DataCount2 = reader.ReadUInt16();
+            this.EntriesPointer = reader.ReadUInt64();
+            this.EntriesCount = reader.ReadUInt16();
+            this.EntriesCapacity = reader.ReadUInt16();
+            reader.Position += 4;
 
-            this.data_items = reader.ReadBlockAt<ResourcePointerArray64<T>>(
-                this.DataPointer, // offset
-                this.DataCount1
+            this.Entries = reader.ReadBlockAt<ResourcePointerArray64<T>>(
+                this.EntriesPointer, // offset
+                this.EntriesCount
             );
         }
 
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update...
-            this.DataPointer = (ulong)data_items.Position;
-            this.DataCount1 = (ushort)data_items.Count;
-            this.DataCount2 = (ushort)data_items.Count;
+            this.EntriesPointer = (ulong)(this.Entries != null ? this.Entries.Position : 0);
+            this.EntriesCount = (ushort)(this.Entries != null ? this.Entries.Count : 0);
+            this.EntriesCapacity = (ushort)(this.Entries != null ? this.Entries.Count : 0);
 
             // write...
-            writer.Write(DataPointer);
-            writer.Write(DataCount1);
-            writer.Write(DataCount2);
+            writer.Write(EntriesPointer);
+            writer.Write(EntriesCount);
+            writer.Write(EntriesCapacity);
+            writer.Write((uint)0x0000000);
         }
-
-
-
-
-
+        
         public override IResourceBlock[] GetReferences()
         {
-            var children = new List<IResourceBlock>();
-
-            if (data_items != null) children.Add(data_items);
-
-            return children.ToArray();
+            var list = new List<IResourceBlock>();
+            if (Entries != null) list.Add(Entries);
+            return list.ToArray();
         }
+
+
+
 
         public int IndexOf(T item)
         {
@@ -107,7 +96,7 @@ namespace RageLib.Resources
         {
             get
             {
-                return data_items[index];
+                return Entries[index];
             }
             set
             {
@@ -137,7 +126,7 @@ namespace RageLib.Resources
 
         public int Count
         {
-            get { return data_items.Count; }
+            get { return Entries.Count; }
         }
 
         public bool IsReadOnly

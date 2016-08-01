@@ -71,8 +71,6 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
             textureDictionary.Unknown_14h = 0x00000000;
             textureDictionary.Unknown_18h = 0x00000001;
             textureDictionary.Unknown_1Ch = 0x00000000;
-            textureDictionary.Unknown_2Ch = 0x00000000;
-            textureDictionary.Unknown_3Ch = 0x00000000;
 
             // references
 
@@ -90,11 +88,11 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
                 theHashList.Sort();
 
                 var bak = textureDictionary.Textures;
-                textureDictionary.Hashes = new ResourceSimpleArray<uint_r>();
-                textureDictionary.Textures = new ResourcePointerArray64<Texture_GTA5_pc>();
+                textureDictionary.TextureNameHashes.Entries = new ResourceSimpleArray<uint_r>();
+                textureDictionary.Textures.Entries = new ResourcePointerArray64<Texture_GTA5_pc>();
                 foreach (uint x in theHashList)
                 {
-                    textureDictionary.Hashes.Add((uint_r)x);
+                    textureDictionary.TextureNameHashes.Entries.Add((uint_r)x);
                     foreach (var g in bak)
                     {
                         uint tx = Jenkins.Hash((string)g.Name);
