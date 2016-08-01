@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,8 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         }
 
         // structure data
-        public uint Unknown_0h;
+        public ushort Unknown_0h;
+        public ushort Unknown_2h;
         public ushort Unknown_4h;
 
         /// <summary>
@@ -39,7 +40,8 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
+            this.Unknown_0h = reader.ReadUInt16();
+            this.Unknown_2h = reader.ReadUInt16();
             this.Unknown_4h = reader.ReadUInt16();
         }
 
@@ -50,9 +52,8 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         {
             // write structure data
             writer.Write(this.Unknown_0h);
+            writer.Write(this.Unknown_2h);
             writer.Write(this.Unknown_4h);
         }
-
-
     }
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
+    // occurrences: 13969
     public class Portal : ResourceSystemBlock
     {
         public override long Length
@@ -34,8 +35,10 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public uint Unknown_4h;
         public uint Unknown_8h;
         public uint Unknown_Ch;
-        public uint Unknown_10h;
-        public uint Unknown_14h;
+        public ushort Unknown_10h;
+        public ushort Unknown_12h;
+        public ushort Unknown_14h;
+        public ushort Unknown_16h;
         public uint Unknown_18h;
 
         /// <summary>
@@ -48,8 +51,10 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             this.Unknown_4h = reader.ReadUInt32();
             this.Unknown_8h = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
+            this.Unknown_10h = reader.ReadUInt16();
+            this.Unknown_12h = reader.ReadUInt16();
+            this.Unknown_14h = reader.ReadUInt16();
+            this.Unknown_16h = reader.ReadUInt16();
             this.Unknown_18h = reader.ReadUInt32();
         }
 
@@ -64,10 +69,10 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             writer.Write(this.Unknown_8h);
             writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
+            writer.Write(this.Unknown_12h);
             writer.Write(this.Unknown_14h);
+            writer.Write(this.Unknown_16h);
             writer.Write(this.Unknown_18h);
         }
-
-
     }
 }

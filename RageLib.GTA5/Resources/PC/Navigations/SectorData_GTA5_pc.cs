@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -78,8 +78,8 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             // update structure data
             this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
             this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
-            // this.c2 = (ushort)(this.p1data != null ? this.p1data.Count : 0);
-            // this.c3 = (ushort)(this.p2data != null ? this.p2data.Count : 0);
+            this.c2 = (ushort)(this.p1data != null ? this.p1data.Count : 0);
+            this.c3 = (ushort)(this.p2data != null ? this.p2data.Count : 0);
 
             // write structure data
             writer.Write(this.c1);
@@ -101,6 +101,5 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             if (p2data != null) list.Add(p2data);
             return list.ToArray();
         }
-
     }
 }
