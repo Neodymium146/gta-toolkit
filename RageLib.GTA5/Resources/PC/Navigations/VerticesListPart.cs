@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,28 +25,20 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
-    public class PolysData : ResourceSystemBlock
+    public class VerticesListPart : ResourceSystemBlock
     {
         public override long Length
         {
-            get { return 48; }
+            get { return 16; }
         }
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h;
+        public ulong VerticesPointer;
+        public uint VerticesCount;
         public uint Unknown_Ch; // 0x00000000
-        public ulong p1;
-        public ulong p2;
-        public uint c1;
-        public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<PolysList> p1data;
-        public ResourceSimpleArray<uint_r> p2data;
+        public ResourceSimpleArray<Vertex> Vertices;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -54,25 +46,14 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
+            this.VerticesPointer = reader.ReadUInt64();
+            this.VerticesCount = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
-            this.p1 = reader.ReadUInt64();
-            this.p2 = reader.ReadUInt64();
-            this.c1 = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
 
             // read reference data
-            this.p1data = reader.ReadBlockAt<ResourceSimpleArray<PolysList>>(
-                this.p1, // offset
-                this.c1
-            );
-            this.p2data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
-                this.p2, // offset
-                this.c1
+            this.Vertices = reader.ReadBlockAt<ResourceSimpleArray<Vertex>>(
+                this.VerticesPointer, // offset
+                this.VerticesCount
             );
         }
 
@@ -82,21 +63,13 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
-            this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
-           // this.c1 = (uint)(this.p1data != null ? this.p1data.Count : 0);
+            this.VerticesPointer = (ulong)(this.Vertices != null ? this.Vertices.Position : 0);
+            this.VerticesCount = (uint)(this.Vertices != null ? this.Vertices.Count : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
+            writer.Write(this.VerticesPointer);
+            writer.Write(this.VerticesCount);
             writer.Write(this.Unknown_Ch);
-            writer.Write(this.p1);
-            writer.Write(this.p2);
-            writer.Write(this.c1);
-            writer.Write(this.Unknown_24h);
-            writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
         }
 
         /// <summary>
@@ -105,10 +78,8 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (p1data != null) list.Add(p1data);
-            if (p2data != null) list.Add(p2data);
+            if (Vertices != null) list.Add(Vertices);
             return list.ToArray();
         }
-
     }
 }
