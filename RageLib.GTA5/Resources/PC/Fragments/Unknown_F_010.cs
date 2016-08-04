@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -36,11 +36,11 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_4h; // 0x00000001
         public uint Unknown_8h; // 0x00000000
         public uint Unknown_Ch; // 0x00000000
-        public ulong Unknown_10h;
-        public ulong Unknown_18h;
-        public ulong Unknown_20h;
-        public ulong Unknown_28h;
-        public ulong Unknown_30h;
+        public ulong Unknown_10h;  // pointer
+        public ulong Unknown_18h;  // pointer
+        public ulong Unknown_20h;  // pointer
+        public ulong Unknown_28h;  // pointer
+        public ulong Unknown_30h;  // pointer
         public uint Unknown_38h; // 0x00000000
         public uint Unknown_3Ch; // 0x00000000
         public uint Unknown_40h; // 0x00000000
@@ -49,13 +49,13 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_4Ch; // 0x00000000
         public uint Unknown_50h; // 0x00000003
         public uint Unknown_54h; // 0x00000000
-        public uint Unknown_58h;
-        public uint Unknown_5Ch;
-        public uint Unknown_60h;
-        public uint Unknown_64h;
-        public uint Unknown_68h;
-        public uint Unknown_6Ch;
-        public uint Unknown_70h;
+        public uint Unknown_58h;  // no float
+        public uint Unknown_5Ch;  // no float
+        public uint Unknown_60h;  // no float
+        public uint Unknown_64h;  // no float
+        public uint Unknown_68h;  // no float
+        public uint Unknown_6Ch;  // no float
+        public uint Unknown_70h;  // no float
         public uint Unknown_74h; // 0x00000000
         public uint Unknown_78h; // 0x00000000
         public uint Unknown_7Ch; // 0x00000000

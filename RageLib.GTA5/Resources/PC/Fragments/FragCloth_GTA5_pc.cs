@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class Unknown_F_011 : ResourceSystemBlock
+    public class FragCloth_GTA5_pc : ResourceSystemBlock
     {
         public override long Length
         {
@@ -38,7 +38,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_8h; // 0x00000000
         public uint Unknown_Ch; // 0x00000000
         public ulong pxxxxx_xxx;
-        public ulong pxxxxx_0;
+        public ulong DrawablePointer;
         public uint Unknown_20h; // 0x00000000
         public uint Unknown_24h; // 0x00000000
         public ulong pxxxxx_1;
@@ -65,7 +65,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
         // reference data
         public Unknown_F_013 pxxxxx_xxxdata;
-        public FragDrawable_GTA5_pc pxxxxx_0data;
+        public FragDrawable_GTA5_pc Drawable;
         public Unknown_F_010 pxxxxx_1data;
         public ResourceSimpleArray<uint_r> pxxxxx_2data;
 
@@ -80,7 +80,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_8h = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
             this.pxxxxx_xxx = reader.ReadUInt64();
-            this.pxxxxx_0 = reader.ReadUInt64();
+            this.DrawablePointer = reader.ReadUInt64();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
             this.pxxxxx_1 = reader.ReadUInt64();
@@ -109,8 +109,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.pxxxxx_xxxdata = reader.ReadBlockAt<Unknown_F_013>(
                 this.pxxxxx_xxx // offset
             );
-            this.pxxxxx_0data = reader.ReadBlockAt<FragDrawable_GTA5_pc>(
-                this.pxxxxx_0 // offset
+            this.Drawable = reader.ReadBlockAt<FragDrawable_GTA5_pc>(
+                this.DrawablePointer // offset
             );
             this.pxxxxx_1data = reader.ReadBlockAt<Unknown_F_010>(
                 this.pxxxxx_1 // offset
@@ -128,7 +128,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         {
             // update structure data
             this.pxxxxx_xxx = (ulong)(this.pxxxxx_xxxdata != null ? this.pxxxxx_xxxdata.Position : 0);
-            this.pxxxxx_0 = (ulong)(this.pxxxxx_0data != null ? this.pxxxxx_0data.Position : 0);
+            this.DrawablePointer = (ulong)(this.Drawable != null ? this.Drawable.Position : 0);
             this.pxxxxx_1 = (ulong)(this.pxxxxx_1data != null ? this.pxxxxx_1data.Position : 0);
             this.pxxxxx_2 = (ulong)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Position : 0);
             //this.cntxx51a = (ushort)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Count : 0);
@@ -139,7 +139,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_8h);
             writer.Write(this.Unknown_Ch);
             writer.Write(this.pxxxxx_xxx);
-            writer.Write(this.pxxxxx_0);
+            writer.Write(this.DrawablePointer);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
             writer.Write(this.pxxxxx_1);
@@ -172,7 +172,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         {
             var list = new List<IResourceBlock>();
             if (pxxxxx_xxxdata != null) list.Add(pxxxxx_xxxdata);
-            if (pxxxxx_0data != null) list.Add(pxxxxx_0data);
+            if (Drawable != null) list.Add(Drawable);
             if (pxxxxx_1data != null) list.Add(pxxxxx_1data);
             if (pxxxxx_2data != null) list.Add(pxxxxx_2data);
             return list.ToArray();

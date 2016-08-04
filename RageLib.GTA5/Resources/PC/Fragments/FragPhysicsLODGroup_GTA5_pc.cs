@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,90 +24,89 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class FragPhysicsLODGroup_GTA5_pc: ResourceSystemBlock
-	{
-		public override long Length
-		{
-			get { return 48; }
-		}
+    public class FragPhysicsLODGroup_GTA5_pc : ResourceSystemBlock
+    {
+        public override long Length
+        {
+            get { return 48; }
+        }
 
-		// structure data
-		public uint VFT;
-		public uint Unknown_4h; // 0x00000001
+        // structure data
+        public uint VFT;
+        public uint Unknown_4h; // 0x00000001
         public uint Unknown_8h; // 0x00000000
         public uint Unknown_Ch; // 0x00000000
         public ulong PhysicsLOD1Pointer;
-		public ulong PhysicsLOD2Pointer;
-		public ulong PhysicsLOD3Pointer;
-		public uint Unknown_28h; // 0x00000000
+        public ulong PhysicsLOD2Pointer;
+        public ulong PhysicsLOD3Pointer;
+        public uint Unknown_28h; // 0x00000000
         public uint Unknown_2Ch; // 0x00000000
 
         // reference data
         public FragPhysicsLOD_GTA5_pc PhysicsLOD1;
-		public FragPhysicsLOD_GTA5_pc PhysicsLOD2;
-		public FragPhysicsLOD_GTA5_pc PhysicsLOD3;
+        public FragPhysicsLOD_GTA5_pc PhysicsLOD2;
+        public FragPhysicsLOD_GTA5_pc PhysicsLOD3;
 
-		/// <summary>
-		/// Reads the data-block from a stream.
-		/// </summary>
-		public override void Read(ResourceDataReader reader, params object[] parameters)
-		{
-			// read structure data
-			this.VFT = reader.ReadUInt32();
-			this.Unknown_4h = reader.ReadUInt32();
-			this.Unknown_8h = reader.ReadUInt32();
-			this.Unknown_Ch = reader.ReadUInt32();
-			this.PhysicsLOD1Pointer = reader.ReadUInt64();
-			this.PhysicsLOD2Pointer = reader.ReadUInt64();
-			this.PhysicsLOD3Pointer = reader.ReadUInt64();
-			this.Unknown_28h = reader.ReadUInt32();
-			this.Unknown_2Ch = reader.ReadUInt32();
+        /// <summary>
+        /// Reads the data-block from a stream.
+        /// </summary>
+        public override void Read(ResourceDataReader reader, params object[] parameters)
+        {
+            // read structure data
+            this.VFT = reader.ReadUInt32();
+            this.Unknown_4h = reader.ReadUInt32();
+            this.Unknown_8h = reader.ReadUInt32();
+            this.Unknown_Ch = reader.ReadUInt32();
+            this.PhysicsLOD1Pointer = reader.ReadUInt64();
+            this.PhysicsLOD2Pointer = reader.ReadUInt64();
+            this.PhysicsLOD3Pointer = reader.ReadUInt64();
+            this.Unknown_28h = reader.ReadUInt32();
+            this.Unknown_2Ch = reader.ReadUInt32();
 
-			// read reference data
-			this.PhysicsLOD1 = reader.ReadBlockAt<FragPhysicsLOD_GTA5_pc>(
-				this.PhysicsLOD1Pointer // offset
-			);
-			this.PhysicsLOD2 = reader.ReadBlockAt<FragPhysicsLOD_GTA5_pc>(
-				this.PhysicsLOD2Pointer // offset
-			);
-			this.PhysicsLOD3 = reader.ReadBlockAt<FragPhysicsLOD_GTA5_pc>(
-				this.PhysicsLOD3Pointer // offset
-			);
-		}
+            // read reference data
+            this.PhysicsLOD1 = reader.ReadBlockAt<FragPhysicsLOD_GTA5_pc>(
+                this.PhysicsLOD1Pointer // offset
+            );
+            this.PhysicsLOD2 = reader.ReadBlockAt<FragPhysicsLOD_GTA5_pc>(
+                this.PhysicsLOD2Pointer // offset
+            );
+            this.PhysicsLOD3 = reader.ReadBlockAt<FragPhysicsLOD_GTA5_pc>(
+                this.PhysicsLOD3Pointer // offset
+            );
+        }
 
-		/// <summary>
-		/// Writes the data-block to a stream.
-		/// </summary>
-		public override void Write(ResourceDataWriter writer, params object[] parameters)
-		{
-			// update structure data
-			this.PhysicsLOD1Pointer = (ulong)(this.PhysicsLOD1 != null ? this.PhysicsLOD1.Position : 0);
-			this.PhysicsLOD2Pointer = (ulong)(this.PhysicsLOD2 != null ? this.PhysicsLOD2.Position : 0);
-			this.PhysicsLOD3Pointer = (ulong)(this.PhysicsLOD3 != null ? this.PhysicsLOD3.Position : 0);
+        /// <summary>
+        /// Writes the data-block to a stream.
+        /// </summary>
+        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        {
+            // update structure data
+            this.PhysicsLOD1Pointer = (ulong)(this.PhysicsLOD1 != null ? this.PhysicsLOD1.Position : 0);
+            this.PhysicsLOD2Pointer = (ulong)(this.PhysicsLOD2 != null ? this.PhysicsLOD2.Position : 0);
+            this.PhysicsLOD3Pointer = (ulong)(this.PhysicsLOD3 != null ? this.PhysicsLOD3.Position : 0);
 
-			// write structure data
-			writer.Write(this.VFT);
-			writer.Write(this.Unknown_4h);
-			writer.Write(this.Unknown_8h);
-			writer.Write(this.Unknown_Ch);
-			writer.Write(this.PhysicsLOD1Pointer);
-			writer.Write(this.PhysicsLOD2Pointer);
-			writer.Write(this.PhysicsLOD3Pointer);
-			writer.Write(this.Unknown_28h);
-			writer.Write(this.Unknown_2Ch);
-		}
+            // write structure data
+            writer.Write(this.VFT);
+            writer.Write(this.Unknown_4h);
+            writer.Write(this.Unknown_8h);
+            writer.Write(this.Unknown_Ch);
+            writer.Write(this.PhysicsLOD1Pointer);
+            writer.Write(this.PhysicsLOD2Pointer);
+            writer.Write(this.PhysicsLOD3Pointer);
+            writer.Write(this.Unknown_28h);
+            writer.Write(this.Unknown_2Ch);
+        }
 
-		/// <summary>
-		/// Returns a list of data blocks which are referenced by this block.
-		/// </summary>
-		public override IResourceBlock[] GetReferences()
-		{
-			var list = new List<IResourceBlock>();
-			if (PhysicsLOD1 != null) list.Add(PhysicsLOD1);
-			if (PhysicsLOD2 != null) list.Add(PhysicsLOD2);
-			if (PhysicsLOD3 != null) list.Add(PhysicsLOD3);
-			return list.ToArray();
-		}
-
-	}
+        /// <summary>
+        /// Returns a list of data blocks which are referenced by this block.
+        /// </summary>
+        public override IResourceBlock[] GetReferences()
+        {
+            var list = new List<IResourceBlock>();
+            if (PhysicsLOD1 != null) list.Add(PhysicsLOD1);
+            if (PhysicsLOD2 != null) list.Add(PhysicsLOD2);
+            if (PhysicsLOD3 != null) list.Add(PhysicsLOD3);
+            return list.ToArray();
+        }
+    }
 }

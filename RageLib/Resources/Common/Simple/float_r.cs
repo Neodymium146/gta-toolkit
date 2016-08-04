@@ -1,5 +1,5 @@
-/*
-    Copyright(c) 2016 Neodymium
+﻿/*
+    Copyright(c) 2015 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,43 +20,37 @@
     THE SOFTWARE.
 */
 
-namespace RageLib.Resources.GTA5.PC.Fragments
+namespace RageLib.Resources.Common
 {
-    public class Unknown_F_023 : ResourceSystemBlock
+    public class float_r : ResourceSystemBlock
     {
         public override long Length
         {
-            get { return 16; }
+            get { return 4; }
         }
 
-        // structure data
-        public uint Unknown_0h; // 0x00000000
-        public uint Unknown_4h; // 0x00000000
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
+        public float Value { get; set; }
 
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
+            Value = reader.ReadSingle();
         }
 
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
+            writer.Write(Value);
+        }
+
+        public static explicit operator float(float_r value)
+        {
+            return value.Value;
+        }
+
+        public static explicit operator float_r(float value)
+        {
+            var x = new float_r();
+            x.Value = value;
+            return x;
         }
     }
 }
