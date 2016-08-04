@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -42,9 +42,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public ushort Count2;
         public uint Unknown_1Ch;
         public ulong BonesPointer;
-        public ulong Unknown_28h_Pointer;
-        public ulong Unknown_30h_Pointer;
-        public ulong Unknown_38h_Pointer;
+        public ulong TransformationsInvertedPointer;
+        public ulong TransformationsPointer;
+        public ulong ParentIndicesPointer;
         public ulong Unknown_40h_Pointer;
         public uint Unknown_48h; // 0x00000000
         public uint Unknown_4Ch; // 0x00000000
@@ -62,9 +62,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         // reference data
         public ResourcePointerArray64<Unknown_D_001> Unknown_10h_Data;
         public ResourceSimpleArray<Bone_GTA5_pc> Bones;
-        public ResourceSimpleArray<RAGE_Matrix4> Unknown_28h_Data;
-        public ResourceSimpleArray<RAGE_Matrix4> Unknown_30h_Data;
-        public ResourceSimpleArray<ushort_r> Unknown_38h_Data;
+        public ResourceSimpleArray<RAGE_Matrix4> TransformationsInverted;
+        public ResourceSimpleArray<RAGE_Matrix4> Transformations;
+        public ResourceSimpleArray<ushort_r> ParentIndices;
         public ResourceSimpleArray<ushort_r> Unknown_40h_Data;
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Count2 = reader.ReadUInt16();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.BonesPointer = reader.ReadUInt64();
-            this.Unknown_28h_Pointer = reader.ReadUInt64();
-            this.Unknown_30h_Pointer = reader.ReadUInt64();
-            this.Unknown_38h_Pointer = reader.ReadUInt64();
+            this.TransformationsInvertedPointer = reader.ReadUInt64();
+            this.TransformationsPointer = reader.ReadUInt64();
+            this.ParentIndicesPointer = reader.ReadUInt64();
             this.Unknown_40h_Pointer = reader.ReadUInt64();
             this.Unknown_48h = reader.ReadUInt32();
             this.Unknown_4Ch = reader.ReadUInt32();
@@ -108,16 +108,16 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 this.BonesPointer, // offset
                 this.BonesCount
             );
-            this.Unknown_28h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
-                this.Unknown_28h_Pointer, // offset
+            this.TransformationsInverted = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
+                this.TransformationsInvertedPointer, // offset
                 this.BonesCount
             );
-            this.Unknown_30h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
-                this.Unknown_30h_Pointer, // offset
+            this.Transformations = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
+                this.TransformationsPointer, // offset
                 this.BonesCount
             );
-            this.Unknown_38h_Data = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
-                this.Unknown_38h_Pointer, // offset
+            this.ParentIndices = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+                this.ParentIndicesPointer, // offset
                 this.BonesCount
             );
             this.Unknown_40h_Data = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
@@ -135,9 +135,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_10h_Pointer = (ulong)(this.Unknown_10h_Data != null ? this.Unknown_10h_Data.Position : 0);
             //	this.c1 = (ushort)(this.arr1 != null ? this.arr1.Count : 0);
             this.BonesPointer = (ulong)(this.Bones != null ? this.Bones.Position : 0);
-            this.Unknown_28h_Pointer = (ulong)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.Position : 0);
-            this.Unknown_30h_Pointer = (ulong)(this.Unknown_30h_Data != null ? this.Unknown_30h_Data.Position : 0);
-            this.Unknown_38h_Pointer = (ulong)(this.Unknown_38h_Data != null ? this.Unknown_38h_Data.Position : 0);
+            this.TransformationsInvertedPointer = (ulong)(this.TransformationsInverted != null ? this.TransformationsInverted.Position : 0);
+            this.TransformationsPointer = (ulong)(this.Transformations != null ? this.Transformations.Position : 0);
+            this.ParentIndicesPointer = (ulong)(this.ParentIndices != null ? this.ParentIndices.Position : 0);
             this.Unknown_40h_Pointer = (ulong)(this.Unknown_40h_Data != null ? this.Unknown_40h_Data.Position : 0);
             //	this.c3 = (ushort)(this.Bones != null ? this.Bones.Count : 0);
             this.Count4 = (ushort)(this.Unknown_40h_Data != null ? this.Unknown_40h_Data.Count : 0);
@@ -152,9 +152,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Count2);
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.BonesPointer);
-            writer.Write(this.Unknown_28h_Pointer);
-            writer.Write(this.Unknown_30h_Pointer);
-            writer.Write(this.Unknown_38h_Pointer);
+            writer.Write(this.TransformationsInvertedPointer);
+            writer.Write(this.TransformationsPointer);
+            writer.Write(this.ParentIndicesPointer);
             writer.Write(this.Unknown_40h_Pointer);
             writer.Write(this.Unknown_48h);
             writer.Write(this.Unknown_4Ch);
@@ -178,12 +178,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             var list = new List<IResourceBlock>();
             if (Unknown_10h_Data != null) list.Add(Unknown_10h_Data);
             if (Bones != null) list.Add(Bones);
-            if (Unknown_28h_Data != null) list.Add(Unknown_28h_Data);
-            if (Unknown_30h_Data != null) list.Add(Unknown_30h_Data);
-            if (Unknown_38h_Data != null) list.Add(Unknown_38h_Data);
+            if (TransformationsInverted != null) list.Add(TransformationsInverted);
+            if (Transformations != null) list.Add(Transformations);
+            if (ParentIndices != null) list.Add(ParentIndices);
             if (Unknown_40h_Data != null) list.Add(Unknown_40h_Data);
             return list.ToArray();
         }
-
     }
 }
