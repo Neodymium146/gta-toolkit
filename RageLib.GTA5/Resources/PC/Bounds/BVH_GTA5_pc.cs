@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -34,26 +34,22 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         }
 
         // structure data
-        public ulong Unknown_0h_Pointer;
-        public uint Count1;
+        public ulong NodesPointer;
+        public uint NodesCount;
         public uint Count2;
         public uint Unknown_10h; // 0x00000000
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
-        public RAGE_Vector4 Unknown_20h;
-        public RAGE_Vector4 Unknown_30h;
-        public RAGE_Vector4 Unknown_40h;
-        public RAGE_Vector4 Unknown_50h;
-        public RAGE_Vector4 Unknown_60h;
-        public ulong Unknown_70h_Pointer;
-        public ushort Count3;
-        public ushort Count4;
-        public uint Unknown_7Ch; // 0x00000000
+        public RAGE_Vector4 BoundingBoxMin;
+        public RAGE_Vector4 BoundingBoxMax;
+        public RAGE_Vector4 BoundingBoxCenter;
+        public RAGE_Vector4 QuantumInverse;
+        public RAGE_Vector4 Quantum; // bounding box dimension / 2^16
+        public ResourceSimpleList64<BVHTreeInfo_GTA5_pc> Trees;
 
         // reference data
-        public ResourceSimpleArray<Unknown_B_004> Unknown_0h_Data;
-        public ResourceSimpleArray<Unknown_B_005> Unknown_70h_Data;
+        public ResourceSimpleArray2<BVHNode_GTA5_pc, Unknown_B_003> Nodes;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -61,31 +57,25 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h_Pointer = reader.ReadUInt64();
-            this.Count1 = reader.ReadUInt32();
+            this.NodesPointer = reader.ReadUInt64();
+            this.NodesCount = reader.ReadUInt32();
             this.Count2 = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_30h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_40h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_50h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_60h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_70h_Pointer = reader.ReadUInt64();
-            this.Count3 = reader.ReadUInt16();
-            this.Count4 = reader.ReadUInt16();
-            this.Unknown_7Ch = reader.ReadUInt32();
+            this.BoundingBoxMin = reader.ReadBlock<RAGE_Vector4>();
+            this.BoundingBoxMax = reader.ReadBlock<RAGE_Vector4>();
+            this.BoundingBoxCenter = reader.ReadBlock<RAGE_Vector4>();
+            this.QuantumInverse = reader.ReadBlock<RAGE_Vector4>();
+            this.Quantum = reader.ReadBlock<RAGE_Vector4>();
+            this.Trees = reader.ReadBlock<ResourceSimpleList64<BVHTreeInfo_GTA5_pc>>();
 
             // read reference data
-            this.Unknown_0h_Data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_B_004>>(
-                this.Unknown_0h_Pointer, // offset
-                this.Count1
-            );
-            this.Unknown_70h_Data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_B_005>>(
-                this.Unknown_70h_Pointer, // offset
-                this.Count3
+            this.Nodes = reader.ReadBlockAt<ResourceSimpleArray2<BVHNode_GTA5_pc, Unknown_B_003>>(
+                this.NodesPointer, // offset
+                this.NodesCount,
+                this.Count2 - this.NodesCount
             );
         }
 
@@ -95,28 +85,24 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.Unknown_0h_Pointer = (ulong)(this.Unknown_0h_Data != null ? this.Unknown_0h_Data.Position : 0);
-            this.Count1 = (uint)(this.Unknown_0h_Data != null ? this.Unknown_0h_Data.Count : 0);
-            this.Unknown_70h_Pointer = (ulong)(this.Unknown_70h_Data != null ? this.Unknown_70h_Data.Position : 0);
-            this.Count3 = (ushort)(this.Unknown_70h_Data != null ? this.Unknown_70h_Data.Count : 0);
+            this.NodesPointer = (ulong)(this.Nodes != null ? this.Nodes.Position : 0);
+            this.NodesCount = (uint)(this.Nodes != null ? this.Nodes.Array1.Count : 0);
+            this.Count2 = (uint)(this.Nodes != null ? this.Nodes.Array1.Count + this.Nodes.Array2.Count : 0);
 
             // write structure data
-            writer.Write(this.Unknown_0h_Pointer);
-            writer.Write(this.Count1);
+            writer.Write(this.NodesPointer);
+            writer.Write(this.NodesCount);
             writer.Write(this.Count2);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.WriteBlock(this.Unknown_20h);
-            writer.WriteBlock(this.Unknown_30h);
-            writer.WriteBlock(this.Unknown_40h);
-            writer.WriteBlock(this.Unknown_50h);
-            writer.WriteBlock(this.Unknown_60h);
-            writer.Write(this.Unknown_70h_Pointer);
-            writer.Write(this.Count3);
-            writer.Write(this.Count4);
-            writer.Write(this.Unknown_7Ch);
+            writer.WriteBlock(this.BoundingBoxMin);
+            writer.WriteBlock(this.BoundingBoxMax);
+            writer.WriteBlock(this.BoundingBoxCenter);
+            writer.WriteBlock(this.QuantumInverse);
+            writer.WriteBlock(this.Quantum);
+            writer.WriteBlock(this.Trees);
         }
 
         /// <summary>
@@ -125,21 +111,21 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (Unknown_0h_Data != null) list.Add(Unknown_0h_Data);
-            if (Unknown_70h_Data != null) list.Add(Unknown_70h_Data);
+            if (Nodes != null) list.Add(Nodes);
+            if (Trees != null) list.Add(Trees);
             return list.ToArray();
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x20,Unknown_20h ),
-                new Tuple<long, IResourceBlock>(0x30,Unknown_30h ),
-                new Tuple<long, IResourceBlock>(0x40,Unknown_40h ),
-                new Tuple<long, IResourceBlock>(0x50,Unknown_50h ),
-                new Tuple<long, IResourceBlock>(0x60,Unknown_60h )
+                new Tuple<long, IResourceBlock>(0x20, BoundingBoxMin),
+                new Tuple<long, IResourceBlock>(0x30, BoundingBoxMax),
+                new Tuple<long, IResourceBlock>(0x40, BoundingBoxCenter),
+                new Tuple<long, IResourceBlock>(0x50, QuantumInverse),
+                new Tuple<long, IResourceBlock>(0x60, Quantum),
+                new Tuple<long, IResourceBlock>(0x70, Trees)
             };
-                 
         }
     }
 }

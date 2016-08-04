@@ -20,7 +20,6 @@
     THE SOFTWARE.
 */
 
-using RageLib.GTA5.Resources.Common;
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Bounds;
 using System;

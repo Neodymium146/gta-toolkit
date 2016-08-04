@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -35,28 +35,20 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public byte Type;
         public byte Unknown_11h;
         public ushort Unknown_12h;
-        public uint Unknown_14h;
+        public float BoundingSphereRadius;
         public uint Unknown_18h;
         public uint Unknown_1Ch;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
-        public uint Unknown_30h;
-        public uint Unknown_34h;
-        public uint Unknown_38h;
+        public RAGE_Vector3 BoundingBoxMax;
+        public float Unknown_2Ch;
+        public RAGE_Vector3 BoundingBoxMin;
         public uint Unknown_3Ch;
-        public uint Unknown_40h;
-        public uint Unknown_44h;
-        public uint Unknown_48h;
+        public RAGE_Vector3 BoundingBoxCenter;
         public uint Unknown_4Ch;
-        public uint Unknown_50h;
-        public uint Unknown_54h;
-        public uint Unknown_58h;
+        public RAGE_Vector3 Center;
         public uint Unknown_5Ch;
-        public uint Unknown_60h;
-        public uint Unknown_64h;
-        public uint Unknown_68h;
+        public float Unknown_60h;
+        public float Unknown_64h;
+        public float Unknown_68h;
         public uint Unknown_6Ch;
 
         /// <summary>
@@ -70,28 +62,20 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Type = reader.ReadByte();
             this.Unknown_11h = reader.ReadByte();
             this.Unknown_12h = reader.ReadUInt16();
-            this.Unknown_14h = reader.ReadUInt32();
+            this.BoundingSphereRadius = reader.ReadSingle();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.Unknown_30h = reader.ReadUInt32();
-            this.Unknown_34h = reader.ReadUInt32();
-            this.Unknown_38h = reader.ReadUInt32();
+            this.BoundingBoxMax = reader.ReadBlock<RAGE_Vector3>();
+            this.Unknown_2Ch = reader.ReadSingle();
+            this.BoundingBoxMin = reader.ReadBlock<RAGE_Vector3>();
             this.Unknown_3Ch = reader.ReadUInt32();
-            this.Unknown_40h = reader.ReadUInt32();
-            this.Unknown_44h = reader.ReadUInt32();
-            this.Unknown_48h = reader.ReadUInt32();
+            this.BoundingBoxCenter = reader.ReadBlock<RAGE_Vector3>();
             this.Unknown_4Ch = reader.ReadUInt32();
-            this.Unknown_50h = reader.ReadUInt32();
-            this.Unknown_54h = reader.ReadUInt32();
-            this.Unknown_58h = reader.ReadUInt32();
+            this.Center = reader.ReadBlock<RAGE_Vector3>();
             this.Unknown_5Ch = reader.ReadUInt32();
-            this.Unknown_60h = reader.ReadUInt32();
-            this.Unknown_64h = reader.ReadUInt32();
-            this.Unknown_68h = reader.ReadUInt32();
+            this.Unknown_60h = reader.ReadSingle();
+            this.Unknown_64h = reader.ReadSingle();
+            this.Unknown_68h = reader.ReadSingle();
             this.Unknown_6Ch = reader.ReadUInt32();
         }
 
@@ -106,24 +90,16 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             writer.Write(this.Type);
             writer.Write(this.Unknown_11h);
             writer.Write(this.Unknown_12h);
-            writer.Write(this.Unknown_14h);
+            writer.Write(this.BoundingSphereRadius);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
-            writer.Write(this.Unknown_28h);
+            writer.WriteBlock(this.BoundingBoxMax);
             writer.Write(this.Unknown_2Ch);
-            writer.Write(this.Unknown_30h);
-            writer.Write(this.Unknown_34h);
-            writer.Write(this.Unknown_38h);
+            writer.WriteBlock(this.BoundingBoxMin);
             writer.Write(this.Unknown_3Ch);
-            writer.Write(this.Unknown_40h);
-            writer.Write(this.Unknown_44h);
-            writer.Write(this.Unknown_48h);
+            writer.WriteBlock(this.BoundingBoxCenter);
             writer.Write(this.Unknown_4Ch);
-            writer.Write(this.Unknown_50h);
-            writer.Write(this.Unknown_54h);
-            writer.Write(this.Unknown_58h);
+            writer.WriteBlock(this.Center);
             writer.Write(this.Unknown_5Ch);
             writer.Write(this.Unknown_60h);
             writer.Write(this.Unknown_64h);

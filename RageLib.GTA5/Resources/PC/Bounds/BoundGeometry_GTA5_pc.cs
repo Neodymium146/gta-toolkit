@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -43,10 +43,10 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public uint Unknown_94h;
         public uint Unknown_98h;
         public uint Unknown_9Ch;
-        public uint Unknown_A0h;
-        public uint Unknown_A4h;
-        public uint Unknown_A8h;
-        public uint Unknown_ACh;
+        public float Unknown_A0h;
+        public float Unknown_A4h;
+        public float Unknown_A8h;
+        public float Unknown_ACh;
         public ulong VerticesPointer;
         public ulong Unknown_B8h_Pointer;
         public ulong Unknown_C0h_Pointer;
@@ -67,7 +67,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public uint Unknown_10Ch; // 0x00000000
         public uint Unknown_110h; // 0x00000000
         public uint Unknown_114h; // 0x00000000
-        public ulong Unknown_118h_Pointer;
+        public ulong PolygonMaterialIndicesPointer;
         public byte MaterialsCount;
         public byte Count2;
         public ushort Unknown_122h; // 0x0000
@@ -84,7 +84,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public ResourceSimpleArrayArray64<uint_r> Unknown_C8h_Data;
         public ResourceSimpleArray<ulong_r> Materials;
         public ResourceSimpleArray<uint_r> Unknown_F8h_Data;
-        public ResourceSimpleArray<byte_r> PolygonMaterials;
+        public ResourceSimpleArray<byte_r> PolygonMaterialIndices;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -104,10 +104,10 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Unknown_94h = reader.ReadUInt32();
             this.Unknown_98h = reader.ReadUInt32();
             this.Unknown_9Ch = reader.ReadUInt32();
-            this.Unknown_A0h = reader.ReadUInt32();
-            this.Unknown_A4h = reader.ReadUInt32();
-            this.Unknown_A8h = reader.ReadUInt32();
-            this.Unknown_ACh = reader.ReadUInt32();
+            this.Unknown_A0h = reader.ReadSingle();
+            this.Unknown_A4h = reader.ReadSingle();
+            this.Unknown_A8h = reader.ReadSingle();
+            this.Unknown_ACh = reader.ReadSingle();
             this.VerticesPointer = reader.ReadUInt64();
             this.Unknown_B8h_Pointer = reader.ReadUInt64();
             this.Unknown_C0h_Pointer = reader.ReadUInt64();
@@ -128,7 +128,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Unknown_10Ch = reader.ReadUInt32();
             this.Unknown_110h = reader.ReadUInt32();
             this.Unknown_114h = reader.ReadUInt32();
-            this.Unknown_118h_Pointer = reader.ReadUInt64();
+            this.PolygonMaterialIndicesPointer = reader.ReadUInt64();
             this.MaterialsCount = reader.ReadByte();
             this.Count2 = reader.ReadByte();
             this.Unknown_122h = reader.ReadUInt16();
@@ -170,8 +170,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 this.Unknown_F8h_Pointer, // offset
                 this.Count2
             );
-            this.PolygonMaterials = reader.ReadBlockAt<ResourceSimpleArray<byte_r>>(
-                this.Unknown_118h_Pointer, // offset
+            this.PolygonMaterialIndices = reader.ReadBlockAt<ResourceSimpleArray<byte_r>>(
+                this.PolygonMaterialIndicesPointer, // offset
                 this.PolygonsCount
             );
         }
@@ -194,7 +194,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.PolygonsCount = (uint)(this.Polygons != null ? this.Polygons.Count : 0);
             this.MaterialsPointer = (ulong)(this.Materials != null ? this.Materials.Position : 0);
             this.Unknown_F8h_Pointer = (ulong)(this.Unknown_F8h_Data != null ? this.Unknown_F8h_Data.Position : 0);
-            this.Unknown_118h_Pointer = (ulong)(this.PolygonMaterials != null ? this.PolygonMaterials.Position : 0);
+            this.PolygonMaterialIndicesPointer = (ulong)(this.PolygonMaterialIndices != null ? this.PolygonMaterialIndices.Position : 0);
             this.MaterialsCount = (byte)(this.Materials != null ? this.Materials.Count : 0);
             this.Count2 = (byte)(this.Unknown_F8h_Data != null ? this.Unknown_F8h_Data.Count : 0);
 
@@ -233,7 +233,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             writer.Write(this.Unknown_10Ch);
             writer.Write(this.Unknown_110h);
             writer.Write(this.Unknown_114h);
-            writer.Write(this.Unknown_118h_Pointer);
+            writer.Write(this.PolygonMaterialIndicesPointer);
             writer.Write(this.MaterialsCount);
             writer.Write(this.Count2);
             writer.Write(this.Unknown_122h);
@@ -256,9 +256,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             if (Unknown_C8h_Data != null) list.Add(Unknown_C8h_Data);
             if (Materials != null) list.Add(Materials);
             if (Unknown_F8h_Data != null) list.Add(Unknown_F8h_Data);
-            if (PolygonMaterials != null) list.Add(PolygonMaterials);
+            if (PolygonMaterialIndices != null) list.Add(PolygonMaterialIndices);
             return list.ToArray();
         }
-
     }
 }

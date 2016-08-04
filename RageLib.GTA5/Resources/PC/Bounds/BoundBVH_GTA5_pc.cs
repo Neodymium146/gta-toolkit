@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         }
 
         // structure data
-        public ulong Unknown_130h_Pointer;
+        public ulong BvhPointer;
         public uint Unknown_138h; // 0x00000000
         public uint Unknown_13Ch; // 0x00000000
         public ushort Unknown_140h; // 0xFFFF
@@ -42,7 +42,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public uint Unknown_14Ch; // 0x00000000
 
         // reference data
-        public BVH_GTA5_pc Unknown_130h_Data;
+        public BVH_GTA5_pc BVH;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -52,7 +52,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_130h_Pointer = reader.ReadUInt64();
+            this.BvhPointer = reader.ReadUInt64();
             this.Unknown_138h = reader.ReadUInt32();
             this.Unknown_13Ch = reader.ReadUInt32();
             this.Unknown_140h = reader.ReadUInt16();
@@ -62,8 +62,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Unknown_14Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Unknown_130h_Data = reader.ReadBlockAt<BVH_GTA5_pc>(
-                this.Unknown_130h_Pointer // offset
+            this.BVH = reader.ReadBlockAt<BVH_GTA5_pc>(
+                this.BvhPointer // offset
             );
         }
 
@@ -75,10 +75,10 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             base.Write(writer, parameters);
 
             // update structure data
-            this.Unknown_130h_Pointer = (ulong)(this.Unknown_130h_Data != null ? this.Unknown_130h_Data.Position : 0);
+            this.BvhPointer = (ulong)(this.BVH != null ? this.BVH.Position : 0);
 
             // write structure data
-            writer.Write(this.Unknown_130h_Pointer);
+            writer.Write(this.BvhPointer);
             writer.Write(this.Unknown_138h);
             writer.Write(this.Unknown_13Ch);
             writer.Write(this.Unknown_140h);
@@ -94,9 +94,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>(base.GetReferences());
-            if (Unknown_130h_Data != null) list.Add(Unknown_130h_Data);
+            if (BVH != null) list.Add(BVH);
             return list.ToArray();
         }
-
     }
 }

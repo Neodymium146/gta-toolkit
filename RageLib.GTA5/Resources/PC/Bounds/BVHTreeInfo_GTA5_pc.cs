@@ -20,40 +20,39 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.Common;
-using System;
-
-namespace RageLib.Resources
+namespace RageLib.Resources.GTA5.PC.Bounds
 {
-    public class ClothDictionary_GTA5_pc : FileBase64_GTA5_pc
+    public class BVHTreeInfo_GTA5_pc : ResourceSystemBlock
     {
         public override long Length
         {
-            get { return 64; }
+            get { return 16; }
         }
 
         // structure data
-        public uint Unknown_10h; // 0x00000000
-        public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h; // 0x00000001
-        public uint Unknown_1Ch; // 0x00000000
-        public ResourceSimpleList64<uint_r> ClothNameHashes;
-        public ResourcePointerList64<Cloth_GTA5_pc> Clothes;
+        public ushort MinX;
+        public ushort MinY;
+        public ushort MinZ;
+        public ushort MaxX;
+        public ushort MaxY;
+        public ushort MaxZ;
+        public ushort NodeIndex1;
+        public ushort NodeIndex2;
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            base.Read(reader, parameters);
-
             // read structure data
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
-            this.ClothNameHashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
-            this.Clothes = reader.ReadBlock<ResourcePointerList64<Cloth_GTA5_pc>>();
+            this.MinX = reader.ReadUInt16();
+            this.MinY = reader.ReadUInt16();
+            this.MinZ = reader.ReadUInt16();
+            this.MaxX = reader.ReadUInt16();
+            this.MaxY = reader.ReadUInt16();
+            this.MaxZ = reader.ReadUInt16();
+            this.NodeIndex1 = reader.ReadUInt16();
+            this.NodeIndex2 = reader.ReadUInt16();
         }
 
         /// <summary>
@@ -61,23 +60,15 @@ namespace RageLib.Resources
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            base.Write(writer, parameters);
-
             // write structure data
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
-            writer.WriteBlock(this.ClothNameHashes);
-            writer.WriteBlock(this.Clothes);
-        }
-
-        public override Tuple<long, IResourceBlock>[] GetParts()
-        {
-            return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x20, ClothNameHashes),
-                new Tuple<long, IResourceBlock>(0x30, Clothes)
-            };
+            writer.Write(this.MinX);
+            writer.Write(this.MinY);
+            writer.Write(this.MinZ);
+            writer.Write(this.MaxX);
+            writer.Write(this.MaxY);
+            writer.Write(this.MaxZ);
+            writer.Write(this.NodeIndex1);
+            writer.Write(this.NodeIndex2);
         }
     }
 }

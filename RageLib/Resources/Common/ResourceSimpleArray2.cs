@@ -1,5 +1,5 @@
-/*
-    Copyright(c) 2016 Neodymium
+﻿/*
+    Copyright(c) 2015 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,47 +20,64 @@
     THE SOFTWARE.
 */
 
-namespace RageLib.Resources.GTA5.PC.Bounds
-{
-    public class BoundDisc_GTA5_pc : Bound_GTA5_pc
-    {
-        public override long Length
-        {
-            get { return 128; }
-        }
+using System;
+using System.Collections.Generic;
 
-        // structure data
-        public uint Unknown_70h; // 0x00000000
-        public uint Unknown_74h; // 0x00000000
-        public uint Unknown_78h; // 0x00000000
-        public uint Unknown_7Ch; // 0x00000000
+namespace RageLib.Resources.Common
+{
+    /// <summary>
+    /// Represents an array of type T.
+    /// </summary>
+    public class ResourceSimpleArray2<T, U> : ResourceSystemBlock where T : IResourceSystemBlock, new() where U : IResourceSystemBlock, new()
+    {
+        public ResourceSimpleArray<T> Array1;
+        public ResourceSimpleArray<U> Array2;
 
         /// <summary>
-        /// Reads the data-block from a stream.
+        /// Gets the length of the data block.
+        /// </summary>
+        public override long Length
+        {
+            get
+            {
+                return Array1.Length + Array2.Length;
+            }
+        }
+                
+        /// <summary>
+        /// Reads the data block.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            base.Read(reader, parameters);
-
-            // read structure data
-            this.Unknown_70h = reader.ReadUInt32();
-            this.Unknown_74h = reader.ReadUInt32();
-            this.Unknown_78h = reader.ReadUInt32();
-            this.Unknown_7Ch = reader.ReadUInt32();
+            int numElements1 = Convert.ToInt32(parameters[0]);
+            int numElements2 = Convert.ToInt32(parameters[1]);
+            Array1 = reader.ReadBlock<ResourceSimpleArray<T>>(numElements1);
+            Array2 = reader.ReadBlock<ResourceSimpleArray<U>>(numElements2);
         }
 
         /// <summary>
-        /// Writes the data-block to a stream.
+        /// Writes the data block.
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            base.Write(writer, parameters);
-
-            // write structure data
-            writer.Write(this.Unknown_70h);
-            writer.Write(this.Unknown_74h);
-            writer.Write(this.Unknown_78h);
-            writer.Write(this.Unknown_7Ch);
+            writer.WriteBlock(Array1);
+            writer.WriteBlock(Array2);
         }
+        
+
+
+
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            var list = new List<Tuple<long, IResourceBlock>>();
+            list.Add(new Tuple<long, IResourceBlock>(0, Array1));
+            list.Add(new Tuple<long, IResourceBlock>(Array1.Length, Array2));            
+            return list.ToArray();
+        }
+
+
+
+
+        
     }
 }
