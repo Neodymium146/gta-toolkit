@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,9 @@
     THE SOFTWARE.
 */
 
+using RageLib.GTA5.Resources.Common;
 using RageLib.Resources.Common;
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Expressions
@@ -41,24 +43,12 @@ namespace RageLib.Resources.GTA5.PC.Expressions
         public uint Unknown_14h;
         public uint Unknown_18h;
         public uint Unknown_1Ch;
-        public ulong ptr1;
-        public ushort cnt1;
-        public ushort cnt2;
-        public uint Unknown_2Ch;
-        public ulong ptr2;
-        public ushort cnt3;
-        public ushort cnt4;
-        public uint Unknown_3Ch;
-        public ulong ptr3;
-        public ushort cnt5;
-        public ushort cnt6;
-        public uint Unknown_4Ch;
-        public ulong ptr4;
-        public ushort cnt7;
-        public ushort cnt8;
-        public uint Unknown_5Ch;
+        public ResourcePointerList64<Expression_Unk1_GTA5_pc> Unknown_20h;
+        public ResourceSimpleList64<uint_r> Unknown_30h;
+        public ResourceSimpleList64<Expression_Unk2_GTA5_pc> Unknown_40h;
+        public ResourceSimpleList64<uint_r> Unknown_50h;
         public ulong NamePointer;
-        public uint Unknown_68h;
+        public uint Unknown_68h; // short, short, (name len, name len+1)
         public uint Unknown_6Ch;
         public uint Unknown_70h;
         public uint Unknown_74h;
@@ -71,10 +61,6 @@ namespace RageLib.Resources.GTA5.PC.Expressions
         public uint Unknown_8Ch;
 
         // reference data
-        public ResourcePointerArray64<Expression_Unk1_GTA5_pc> ptr1data;
-        public ResourceSimpleArray<uint_r> ptr2data;
-        public ResourceSimpleArray<Expression_Unk2_GTA5_pc> ptr3data;
-        public ResourceSimpleArray<uint_r> ptr4data;
         public string_r Name;
 
         /// <summary>
@@ -91,22 +77,10 @@ namespace RageLib.Resources.GTA5.PC.Expressions
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.ptr1 = reader.ReadUInt64();
-            this.cnt1 = reader.ReadUInt16();
-            this.cnt2 = reader.ReadUInt16();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.ptr2 = reader.ReadUInt64();
-            this.cnt3 = reader.ReadUInt16();
-            this.cnt4 = reader.ReadUInt16();
-            this.Unknown_3Ch = reader.ReadUInt32();
-            this.ptr3 = reader.ReadUInt64();
-            this.cnt5 = reader.ReadUInt16();
-            this.cnt6 = reader.ReadUInt16();
-            this.Unknown_4Ch = reader.ReadUInt32();
-            this.ptr4 = reader.ReadUInt64();
-            this.cnt7 = reader.ReadUInt16();
-            this.cnt8 = reader.ReadUInt16();
-            this.Unknown_5Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadBlock<ResourcePointerList64<Expression_Unk1_GTA5_pc>>();
+            this.Unknown_30h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_40h = reader.ReadBlock<ResourceSimpleList64<Expression_Unk2_GTA5_pc>>();
+            this.Unknown_50h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
             this.NamePointer = reader.ReadUInt64();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
@@ -121,22 +95,6 @@ namespace RageLib.Resources.GTA5.PC.Expressions
             this.Unknown_8Ch = reader.ReadUInt32();
 
             // read reference data
-            this.ptr1data = reader.ReadBlockAt<ResourcePointerArray64<Expression_Unk1_GTA5_pc>>(
-                this.ptr1, // offset
-                this.cnt1
-            );
-            this.ptr2data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
-                this.ptr2, // offset
-                this.cnt3
-            );
-            this.ptr3data = reader.ReadBlockAt<ResourceSimpleArray<Expression_Unk2_GTA5_pc>>(
-                this.ptr3, // offset
-                this.cnt5
-            );
-            this.ptr4data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
-                this.ptr4, // offset
-                this.cnt7
-            );
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
             );
@@ -148,14 +106,6 @@ namespace RageLib.Resources.GTA5.PC.Expressions
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.ptr1 = (ulong)(this.ptr1data != null ? this.ptr1data.Position : 0);
-            this.cnt1 = (ushort)(this.ptr1data != null ? this.ptr1data.Count : 0);
-            this.ptr2 = (ulong)(this.ptr2data != null ? this.ptr2data.Position : 0);
-            this.cnt3 = (ushort)(this.ptr2data != null ? this.ptr2data.Count : 0);
-            this.ptr3 = (ulong)(this.ptr3data != null ? this.ptr3data.Position : 0);
-            this.cnt5 = (ushort)(this.ptr3data != null ? this.ptr3data.Count : 0);
-            this.ptr4 = (ulong)(this.ptr4data != null ? this.ptr4data.Position : 0);
-            this.cnt7 = (ushort)(this.ptr4data != null ? this.ptr4data.Count : 0);
             this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
 
             // write structure data
@@ -167,22 +117,10 @@ namespace RageLib.Resources.GTA5.PC.Expressions
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.Write(this.ptr1);
-            writer.Write(this.cnt1);
-            writer.Write(this.cnt2);
-            writer.Write(this.Unknown_2Ch);
-            writer.Write(this.ptr2);
-            writer.Write(this.cnt3);
-            writer.Write(this.cnt4);
-            writer.Write(this.Unknown_3Ch);
-            writer.Write(this.ptr3);
-            writer.Write(this.cnt5);
-            writer.Write(this.cnt6);
-            writer.Write(this.Unknown_4Ch);
-            writer.Write(this.ptr4);
-            writer.Write(this.cnt7);
-            writer.Write(this.cnt8);
-            writer.Write(this.Unknown_5Ch);
+            writer.WriteBlock(this.Unknown_20h);
+            writer.WriteBlock(this.Unknown_30h);
+            writer.WriteBlock(this.Unknown_40h);
+            writer.WriteBlock(this.Unknown_50h);
             writer.Write(this.NamePointer);
             writer.Write(this.Unknown_68h);
             writer.Write(this.Unknown_6Ch);
@@ -203,13 +141,18 @@ namespace RageLib.Resources.GTA5.PC.Expressions
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (ptr1data != null) list.Add(ptr1data);
-            if (ptr2data != null) list.Add(ptr2data);
-            if (ptr3data != null) list.Add(ptr3data);
-            if (ptr4data != null) list.Add(ptr4data);
             if (Name != null) list.Add(Name);
             return list.ToArray();
         }
 
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x20, Unknown_20h),
+                new Tuple<long, IResourceBlock>(0x30, Unknown_30h),
+                new Tuple<long, IResourceBlock>(0x40, Unknown_40h),
+                new Tuple<long, IResourceBlock>(0x50, Unknown_50h)
+            };
+        }
     }
 }
