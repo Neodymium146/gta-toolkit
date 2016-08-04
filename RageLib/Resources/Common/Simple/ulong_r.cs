@@ -42,7 +42,7 @@ namespace RageLib.Resources.Common
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            Value = reader.ReadUInt32();
+            Value = reader.ReadUInt64();
         }
 
         public override void Write(ResourceDataWriter writer, params object[] parameters)
