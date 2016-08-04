@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -120,6 +120,5 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             if (Unknown_28h_Data != null) list.Add(Unknown_28h_Data);
             return list.ToArray();
         }
-
     }
 }

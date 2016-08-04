@@ -68,6 +68,7 @@
     <Compile Include="Resources\Common\ResourceSimpleArrayArray64.cs" />
     <Compile Include="Resources\Common\ResourceSimpleList64.cs" />
     <Compile Include="Resources\Common\Simple\byte_r.cs" />
+    <Compile Include="Resources\Common\Simple\float_r.cs" />
     <Compile Include="Resources\Common\Simple\string_r.cs" />
     <Compile Include="Resources\Common\Simple\uint_r.cs" />
     <Compile Include="Resources\Common\Simple\ulong_r.cs" />

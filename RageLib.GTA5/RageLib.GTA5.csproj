@@ -133,6 +133,7 @@
     <Compile Include="Resources\PC\Filters\FilterDictionary_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Filters\Filter_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Fragments\Archetype_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Fragments\FragCloth_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Fragments\FragDrawable_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Fragments\fragNameStruct_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Fragments\FragPhysicsLODGroup_GTA5_pc.cs" />
@@ -150,7 +151,6 @@
     <Compile Include="Resources\PC\Fragments\Unknown_F_008.cs" />
     <Compile Include="Resources\PC\Fragments\Unknown_F_009.cs" />
     <Compile Include="Resources\PC\Fragments\Unknown_F_010.cs" />
-    <Compile Include="Resources\PC\Fragments\Unknown_F_011.cs" />
     <Compile Include="Resources\PC\Fragments\Unknown_F_013.cs" />
     <Compile Include="Resources\PC\Fragments\Unknown_F_020.cs" />
     <Compile Include="Resources\PC\Fragments\Unknown_F_021.cs" />
