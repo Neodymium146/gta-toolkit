@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Clips
 {
-    public class ClipEntry_GTA5_pc : ResourceSystemBlock
+    public class AnimationMapEntry : ResourceSystemBlock
     {
         public override long Length
         {
@@ -32,16 +32,16 @@ namespace RageLib.Resources.GTA5.PC.Clips
         }
 
         // structure data
-        public uint Hash;
+        public uint Unknown_0h;
         public uint Unknown_4h; // 0x00000000
-        public ulong ClipPointer;
-        public ulong NextPointer;
+        public ulong p1;
+        public ulong p2;
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
 
         // reference data
-        public Clip_GTA5_pc Clip;
-        public ClipEntry_GTA5_pc Next;
+        public Animation Animation;
+        public AnimationMapEntry NextEntry;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -49,19 +49,19 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Hash = reader.ReadUInt32();
+            this.Unknown_0h = reader.ReadUInt32();
             this.Unknown_4h = reader.ReadUInt32();
-            this.ClipPointer = reader.ReadUInt64();
-            this.NextPointer = reader.ReadUInt64();
+            this.p1 = reader.ReadUInt64();
+            this.p2 = reader.ReadUInt64();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Clip = reader.ReadBlockAt<Clip_GTA5_pc>(
-                this.ClipPointer // offset
+            this.Animation = reader.ReadBlockAt<Animation>(
+                this.p1 // offset
             );
-            this.Next = reader.ReadBlockAt<ClipEntry_GTA5_pc>(
-                this.NextPointer // offset
+            this.NextEntry = reader.ReadBlockAt<AnimationMapEntry>(
+                this.p2 // offset
             );
         }
 
@@ -71,14 +71,14 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.ClipPointer = (ulong)(this.Clip != null ? this.Clip.Position : 0);
-            this.NextPointer = (ulong)(this.Next != null ? this.Next.Position : 0);
+            this.p1 = (ulong)(this.Animation != null ? this.Animation.Position : 0);
+            this.p2 = (ulong)(this.NextEntry != null ? this.NextEntry.Position : 0);
 
             // write structure data
-            writer.Write(this.Hash);
+            writer.Write(this.Unknown_0h);
             writer.Write(this.Unknown_4h);
-            writer.Write(this.ClipPointer);
-            writer.Write(this.NextPointer);
+            writer.Write(this.p1);
+            writer.Write(this.p2);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
         }
@@ -89,10 +89,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (Clip != null) list.Add(Clip);
-            if (Next != null) list.Add(Next);
+            if (Animation != null) list.Add(Animation);
+            if (NextEntry != null) list.Add(NextEntry);
             return list.ToArray();
         }
-
     }
 }

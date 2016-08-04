@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -34,8 +34,8 @@ namespace RageLib.Resources.GTA5.PC.Clips
         // structure data
         public uint Unknown_0h;
         public uint Unknown_4h; // 0x00000000
-        public ulong p1;
-        public ulong p2;
+        public ulong DataPointer;
+        public ulong NextPointer;
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
 
@@ -51,17 +51,17 @@ namespace RageLib.Resources.GTA5.PC.Clips
             // read structure data
             this.Unknown_0h = reader.ReadUInt32();
             this.Unknown_4h = reader.ReadUInt32();
-            this.p1 = reader.ReadUInt64();
-            this.p2 = reader.ReadUInt64();
+            this.DataPointer = reader.ReadUInt64();
+            this.NextPointer = reader.ReadUInt64();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
 
             // read reference data
             this.Data = reader.ReadBlockAt<Unknown_CL_003>(
-                this.p1 // offset
+                this.DataPointer // offset
             );
             this.Next = reader.ReadBlockAt<Unknown_CL_002>(
-                this.p2 // offset
+                this.NextPointer // offset
             );
         }
 
@@ -71,14 +71,14 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.p1 = (ulong)(this.Data != null ? this.Data.Position : 0);
-            this.p2 = (ulong)(this.Next != null ? this.Next.Position : 0);
+            this.DataPointer = (ulong)(this.Data != null ? this.Data.Position : 0);
+            this.NextPointer = (ulong)(this.Next != null ? this.Next.Position : 0);
 
             // write structure data
             writer.Write(this.Unknown_0h);
             writer.Write(this.Unknown_4h);
-            writer.Write(this.p1);
-            writer.Write(this.p2);
+            writer.Write(this.DataPointer);
+            writer.Write(this.NextPointer);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
         }
@@ -93,6 +93,5 @@ namespace RageLib.Resources.GTA5.PC.Clips
             if (Next != null) list.Add(Next);
             return list.ToArray();
         }
-
     }
 }

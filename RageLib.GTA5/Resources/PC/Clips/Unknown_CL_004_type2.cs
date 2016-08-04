@@ -74,7 +74,5 @@ namespace RageLib.Resources.GTA5.PC.Clips
             writer.Write(this.Unknown_28h);
             writer.Write(this.Unknown_2Ch);
         }
-
-
     }
 }

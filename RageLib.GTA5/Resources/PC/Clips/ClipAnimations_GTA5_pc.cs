@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Clips
 {
-    public class Clip2_GTA5_pc : Clip_GTA5_pc
+    public class ClipAnimations_GTA5_pc : Clip_GTA5_pc
     {
         public override long Length
         {
@@ -33,9 +33,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
         }
 
         // structure data
-        public ulong p4;
-        public ushort c1;
-        public ushort c2;
+        public ulong AnimationsPointer;
+        public ushort AnimationsCount1;
+        public ushort AnimationsCount2;
         public uint Unknown_5Ch; // 0x00000000
         public uint Unknown_60h;
         public uint Unknown_64h; // 0x00000001
@@ -43,7 +43,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public uint Unknown_6Ch; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<Unknown_CL_100> p4data;
+        public ResourceSimpleArray<ClipAnimationsEntry_GTA5_pc> Animations;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -51,18 +51,18 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             base.Read(reader, parameters);
-            this.p4 = reader.ReadUInt64();
-            this.c1 = reader.ReadUInt16();
-            this.c2 = reader.ReadUInt16();
+            this.AnimationsPointer = reader.ReadUInt64();
+            this.AnimationsCount1 = reader.ReadUInt16();
+            this.AnimationsCount2 = reader.ReadUInt16();
             this.Unknown_5Ch = reader.ReadUInt32();
             this.Unknown_60h = reader.ReadUInt32();
             this.Unknown_64h = reader.ReadUInt32();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
 
-            this.p4data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_CL_100>>(
-                this.p4, // offset
-                this.c1
+            this.Animations = reader.ReadBlockAt<ResourceSimpleArray<ClipAnimationsEntry_GTA5_pc>>(
+                this.AnimationsPointer, // offset
+                this.AnimationsCount1
             );
         }
 
@@ -73,13 +73,13 @@ namespace RageLib.Resources.GTA5.PC.Clips
         {
             base.Write(writer, parameters);
 
-            this.p4 = (ulong)(this.p4data != null ? this.p4data.Position : 0);
+            this.AnimationsPointer = (ulong)(this.Animations != null ? this.Animations.Position : 0);
             //this.p4 = (ulong)(this.p4data != null ? this.p4data.Position : 0);
             //this.c1 = (ushort)(this.p4data != null ? this.p4data.Count : 0);
 
-            writer.Write(this.p4);
-            writer.Write(this.c1);
-            writer.Write(this.c2);
+            writer.Write(this.AnimationsPointer);
+            writer.Write(this.AnimationsCount1);
+            writer.Write(this.AnimationsCount2);
             writer.Write(this.Unknown_5Ch);
             writer.Write(this.Unknown_60h);
             writer.Write(this.Unknown_64h);
@@ -94,10 +94,8 @@ namespace RageLib.Resources.GTA5.PC.Clips
         {
             var list = new List<IResourceBlock>();
             list.AddRange(base.GetReferences());
-            if (p4data != null) list.Add(p4data);
+            if (Animations != null) list.Add(Animations);
             return list.ToArray();
         }
-
-
     }
 }

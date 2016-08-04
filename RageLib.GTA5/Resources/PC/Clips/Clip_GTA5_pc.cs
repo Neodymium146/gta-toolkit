@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public uint Unknown_10h;
         public uint Unknown_14h; // 0x00000000
         public ulong NamePointer;
-        public uint Unknown_20h;
+        public uint Unknown_20h; // short, short -> name length (+1)
         public uint Unknown_24h; // 0x00000000
         public uint Unknown_28h; // 0x50000000
         public uint Unknown_2Ch; // 0x00000000
@@ -143,8 +143,8 @@ namespace RageLib.Resources.GTA5.PC.Clips
 
             switch (type)
             {
-                case 1: return new Clip1_GTA5_pc();
-                case 2: return new Clip2_GTA5_pc();
+                case 1: return new ClipAnimation_GTA5_pc();
+                case 2: return new ClipAnimations_GTA5_pc();
                 default: throw new Exception("Unknown type");
             }
         }

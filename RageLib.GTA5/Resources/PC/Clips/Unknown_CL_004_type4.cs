@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public uint Unknown_2Ch; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<byte_r> p1data;
+        public ResourceSimpleArray<byte_r> p1data; // string (byte array...)
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -100,6 +100,5 @@ namespace RageLib.Resources.GTA5.PC.Clips
             if (p1data != null) list.Add(p1data);
             return list.ToArray();
         }
-
     }
 }
