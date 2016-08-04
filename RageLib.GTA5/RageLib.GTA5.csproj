@@ -267,6 +267,7 @@
     <Compile Include="ResourceWrappers\PC\Textures\TextureDictionaryFile_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Textures\TextureDictionaryWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Textures\TextureWrapper_GTA5_pc.cs" />
+    <Compile Include="Utilities\RebuildUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RageLib\RageLib.csproj">
