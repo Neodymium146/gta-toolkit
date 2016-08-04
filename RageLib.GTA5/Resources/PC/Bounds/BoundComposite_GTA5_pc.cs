@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -34,24 +34,24 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
         // structure data
         public ulong ChildrenPointer;
-        public ulong Unknown_78h_Pointer;
-        public ulong Unknown_80h_Pointer;
-        public ulong Unknown_88h_Pointer;
+        public ulong ChildrenTransformation1Pointer;
+        public ulong ChildrenTransformation2Pointer;
+        public ulong ChildrenBoundingBoxesPointer;
         public ulong Unknown_90h_Pointer;
         public ulong Unknown_98h_Pointer;
         public ushort ChildrenCount1;
         public ushort ChildrenCount2;
         public uint Unknown_A4h; // 0x00000000
-        public ulong Unknown_A8h_Pointer;
+        public ulong BVHPointer;
 
         // reference data
         public ResourcePointerArray64<Bound_GTA5_pc> Children;
-        public ResourceSimpleArray<RAGE_Matrix4> Unknown_78h_Data;
-        public ResourceSimpleArray<RAGE_Matrix4> Unknown_80h_Data;
-        public ResourceSimpleArray<RAGE_AABB> Unknown_88h_Data;
+        public ResourceSimpleArray<RAGE_Matrix4> ChildrenTransformation1;
+        public ResourceSimpleArray<RAGE_Matrix4> ChildrenTransformation2;
+        public ResourceSimpleArray<RAGE_AABB> ChildrenBoundingBoxes;
         public ResourceSimpleArray<Unknown_B_002> Unknown_90h_Data;
         public ResourceSimpleArray<Unknown_B_002> Unknown_98h_Data;
-        public BVH_GTA5_pc Unknown_A8h_Data;
+        public BVH_GTA5_pc BVH;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -62,31 +62,31 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
             // read structure data
             this.ChildrenPointer = reader.ReadUInt64();
-            this.Unknown_78h_Pointer = reader.ReadUInt64();
-            this.Unknown_80h_Pointer = reader.ReadUInt64();
-            this.Unknown_88h_Pointer = reader.ReadUInt64();
+            this.ChildrenTransformation1Pointer = reader.ReadUInt64();
+            this.ChildrenTransformation2Pointer = reader.ReadUInt64();
+            this.ChildrenBoundingBoxesPointer = reader.ReadUInt64();
             this.Unknown_90h_Pointer = reader.ReadUInt64();
             this.Unknown_98h_Pointer = reader.ReadUInt64();
             this.ChildrenCount1 = reader.ReadUInt16();
             this.ChildrenCount2 = reader.ReadUInt16();
             this.Unknown_A4h = reader.ReadUInt32();
-            this.Unknown_A8h_Pointer = reader.ReadUInt64();
+            this.BVHPointer = reader.ReadUInt64();
 
             // read reference data
             this.Children = reader.ReadBlockAt<ResourcePointerArray64<Bound_GTA5_pc>>(
                 this.ChildrenPointer, // offset
                 this.ChildrenCount1
             );
-            this.Unknown_78h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
-                this.Unknown_78h_Pointer, // offset
+            this.ChildrenTransformation1 = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
+                this.ChildrenTransformation1Pointer, // offset
                 this.ChildrenCount1
             );
-            this.Unknown_80h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
-                this.Unknown_80h_Pointer, // offset
+            this.ChildrenTransformation2 = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
+                this.ChildrenTransformation2Pointer, // offset
                 this.ChildrenCount1
             );
-            this.Unknown_88h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_AABB>>(
-                this.Unknown_88h_Pointer, // offset
+            this.ChildrenBoundingBoxes = reader.ReadBlockAt<ResourceSimpleArray<RAGE_AABB>>(
+                this.ChildrenBoundingBoxesPointer, // offset
                 this.ChildrenCount1
             );
             this.Unknown_90h_Data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_B_002>>(
@@ -97,8 +97,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 this.Unknown_98h_Pointer, // offset
                 this.ChildrenCount1
             );
-            this.Unknown_A8h_Data = reader.ReadBlockAt<BVH_GTA5_pc>(
-                this.Unknown_A8h_Pointer // offset
+            this.BVH = reader.ReadBlockAt<BVH_GTA5_pc>(
+                this.BVHPointer // offset
             );
         }
 
@@ -111,26 +111,26 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
             // update structure data
             this.ChildrenPointer = (ulong)(this.Children != null ? this.Children.Position : 0);
-            this.Unknown_78h_Pointer = (ulong)(this.Unknown_78h_Data != null ? this.Unknown_78h_Data.Position : 0);
-            this.Unknown_80h_Pointer = (ulong)(this.Unknown_80h_Data != null ? this.Unknown_80h_Data.Position : 0);
-            this.Unknown_88h_Pointer = (ulong)(this.Unknown_88h_Data != null ? this.Unknown_88h_Data.Position : 0);
+            this.ChildrenTransformation1Pointer = (ulong)(this.ChildrenTransformation1 != null ? this.ChildrenTransformation1.Position : 0);
+            this.ChildrenTransformation2Pointer = (ulong)(this.ChildrenTransformation2 != null ? this.ChildrenTransformation2.Position : 0);
+            this.ChildrenBoundingBoxesPointer = (ulong)(this.ChildrenBoundingBoxes != null ? this.ChildrenBoundingBoxes.Position : 0);
             this.Unknown_90h_Pointer = (ulong)(this.Unknown_90h_Data != null ? this.Unknown_90h_Data.Position : 0);
             this.Unknown_98h_Pointer = (ulong)(this.Unknown_98h_Data != null ? this.Unknown_98h_Data.Position : 0);
             this.ChildrenCount1 = (ushort)(this.Children != null ? this.Children.Count : 0);
             this.ChildrenCount2 = (ushort)(this.Children != null ? this.Children.Count : 0);
-            this.Unknown_A8h_Pointer = (ulong)(this.Unknown_A8h_Data != null ? this.Unknown_A8h_Data.Position : 0);
+            this.BVHPointer = (ulong)(this.BVH != null ? this.BVH.Position : 0);
 
             // write structure data
             writer.Write(this.ChildrenPointer);
-            writer.Write(this.Unknown_78h_Pointer);
-            writer.Write(this.Unknown_80h_Pointer);
-            writer.Write(this.Unknown_88h_Pointer);
+            writer.Write(this.ChildrenTransformation1Pointer);
+            writer.Write(this.ChildrenTransformation2Pointer);
+            writer.Write(this.ChildrenBoundingBoxesPointer);
             writer.Write(this.Unknown_90h_Pointer);
             writer.Write(this.Unknown_98h_Pointer);
             writer.Write(this.ChildrenCount1);
             writer.Write(this.ChildrenCount2);
             writer.Write(this.Unknown_A4h);
-            writer.Write(this.Unknown_A8h_Pointer);
+            writer.Write(this.BVHPointer);
         }
 
         /// <summary>
@@ -140,14 +140,13 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         {
             var list = new List<IResourceBlock>(base.GetReferences());
             if (Children != null) list.Add(Children);
-            if (Unknown_78h_Data != null) list.Add(Unknown_78h_Data);
-            if (Unknown_80h_Data != null) list.Add(Unknown_80h_Data);
-            if (Unknown_88h_Data != null) list.Add(Unknown_88h_Data);
+            if (ChildrenTransformation1 != null) list.Add(ChildrenTransformation1);
+            if (ChildrenTransformation2 != null) list.Add(ChildrenTransformation2);
+            if (ChildrenBoundingBoxes != null) list.Add(ChildrenBoundingBoxes);
             if (Unknown_90h_Data != null) list.Add(Unknown_90h_Data);
             if (Unknown_98h_Data != null) list.Add(Unknown_98h_Data);
-            if (Unknown_A8h_Data != null) list.Add(Unknown_A8h_Data);
+            if (BVH != null) list.Add(BVH);
             return list.ToArray();
         }
-
     }
 }

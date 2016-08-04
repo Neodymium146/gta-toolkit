@@ -66,12 +66,12 @@
     <Compile Include="Resources\PC\Bounds\BoundSphere_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Bounds\BoundVertex_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Bounds\Bound_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Bounds\BVHNode_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Bounds\BVHTreeInfo_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Bounds\BVH_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Bounds\Unknown_B_001.cs" />
     <Compile Include="Resources\PC\Bounds\Unknown_B_002.cs" />
-    <Compile Include="Resources\PC\Bounds\BVH_GTA5_pc.cs" />
-    <Compile Include="Resources\PC\Bounds\Unknown_B_004.cs" />
-    <Compile Include="Resources\PC\Bounds\Unknown_B_005.cs" />
-    <Compile Include="Resources\PC\Bounds\Unknown_B_007.cs" />
+    <Compile Include="Resources\PC\Bounds\Unknown_B_003.cs" />
     <Compile Include="Resources\PC\Clips\Animation.cs" />
     <Compile Include="Resources\PC\Clips\AnimationMap.cs" />
     <Compile Include="Resources\PC\Clips\AnimationMapEntry.cs" />
