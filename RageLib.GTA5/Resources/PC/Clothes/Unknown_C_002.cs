@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,9 @@
     THE SOFTWARE.
 */
 
+using RageLib.GTA5.Resources.Common;
 using RageLib.Resources.Common;
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources
@@ -63,43 +65,23 @@ namespace RageLib.Resources
         public uint Unknown_74h; // 0x00000000
         public uint Unknown_78h; // 0x3F800000
         public uint Unknown_7Ch; // 0x00000000
-        public ulong p2;
-        public ushort c2a;
-        public ushort c2b;
-        public uint Unknown_8Ch; // 0x00000000
-        public ulong p3;
-        public ushort c3a;
-        public ushort c3b;
-        public uint Unknown_9Ch; // 0x00000000
+        public ResourceSimpleList64<ushort_r> Unknown_80h;
+        public ResourceSimpleList64<Unknown_C_005> Unknown_90h;
         public uint Unknown_A0h; // 0x3D23D70A
         public uint Unknown_A4h; // 0x00000000
         public uint Unknown_A8h; // 0x00000000
         public uint Unknown_ACh; // 0x00000000
-        public ulong p4;
-        public ushort c4a;
-        public ushort c4b;
-        public uint Unknown_BCh; // 0x00000000
-        public ulong p5;
-        public ushort c5a;
-        public ushort c5b;
-        public uint Unknown_CCh; // 0x00000000
+        public ResourceSimpleList64<uint_r> Unknown_B0h;
+        public ResourceSimpleList64<Unknown_C_006> Unknown_C0h;
         public uint Unknown_D0h; // 0x00000000
         public uint Unknown_D4h; // 0x00000000
         public uint Unknown_D8h; // 0x00000000
         public uint Unknown_DCh; // 0x3F800000
-        public ulong p6;
-        public ushort c6a;
-        public ushort c6b;
-        public uint Unknown_ECh; // 0x00000000
+        public ResourceSimpleList64<uint_r> Unknown_E0h;
 
         // reference data
         public Unknown_C_003 p0data;
         public Unknown_C_004 p1data;
-        public ResourceSimpleArray<ushort_r> p2data;
-        public ResourceSimpleArray<Unknown_C_005> p3data;
-        public ResourceSimpleArray<uint_r> p4data;
-        public ResourceSimpleArray<Unknown_C_006> p5data;
-        public ResourceSimpleArray<uint_r> p6data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -137,34 +119,19 @@ namespace RageLib.Resources
             this.Unknown_74h = reader.ReadUInt32();
             this.Unknown_78h = reader.ReadUInt32();
             this.Unknown_7Ch = reader.ReadUInt32();
-            this.p2 = reader.ReadUInt64();
-            this.c2a = reader.ReadUInt16();
-            this.c2b = reader.ReadUInt16();
-            this.Unknown_8Ch = reader.ReadUInt32();
-            this.p3 = reader.ReadUInt64();
-            this.c3a = reader.ReadUInt16();
-            this.c3b = reader.ReadUInt16();
-            this.Unknown_9Ch = reader.ReadUInt32();
+            this.Unknown_80h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
+            this.Unknown_90h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_005>>();
             this.Unknown_A0h = reader.ReadUInt32();
             this.Unknown_A4h = reader.ReadUInt32();
             this.Unknown_A8h = reader.ReadUInt32();
             this.Unknown_ACh = reader.ReadUInt32();
-            this.p4 = reader.ReadUInt64();
-            this.c4a = reader.ReadUInt16();
-            this.c4b = reader.ReadUInt16();
-            this.Unknown_BCh = reader.ReadUInt32();
-            this.p5 = reader.ReadUInt64();
-            this.c5a = reader.ReadUInt16();
-            this.c5b = reader.ReadUInt16();
-            this.Unknown_CCh = reader.ReadUInt32();
+            this.Unknown_B0h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_C0h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_006>>();
             this.Unknown_D0h = reader.ReadUInt32();
             this.Unknown_D4h = reader.ReadUInt32();
             this.Unknown_D8h = reader.ReadUInt32();
             this.Unknown_DCh = reader.ReadUInt32();
-            this.p6 = reader.ReadUInt64();
-            this.c6a = reader.ReadUInt16();
-            this.c6b = reader.ReadUInt16();
-            this.Unknown_ECh = reader.ReadUInt32();
+            this.Unknown_E0h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
 
             // read reference data
             this.p0data = reader.ReadBlockAt<Unknown_C_003>(
@@ -172,26 +139,6 @@ namespace RageLib.Resources
             );
             this.p1data = reader.ReadBlockAt<Unknown_C_004>(
                 this.p1 // offset
-            );
-            this.p2data = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
-                this.p2, // offset
-                this.c2a
-            );
-            this.p3data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_C_005>>(
-                this.p3, // offset
-                this.c3a
-            );
-            this.p4data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
-                this.p4, // offset
-                this.c4a
-            );
-            this.p5data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_C_006>>(
-                this.p5, // offset
-                this.c5a
-            );
-            this.p6data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
-                this.p6, // offset
-                this.c6a
             );
         }
 
@@ -203,16 +150,6 @@ namespace RageLib.Resources
             // update structure data
             this.p0 = (ulong)(this.p0data != null ? this.p0data.Position : 0);
             this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
-            this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
-            //this.c2a = (ushort)(this.p2data != null ? this.p2data.Count : 0);
-            this.p3 = (ulong)(this.p3data != null ? this.p3data.Position : 0);
-            //this.c3a = (ushort)(this.p3data != null ? this.p3data.Count : 0);
-            this.p4 = (ulong)(this.p4data != null ? this.p4data.Position : 0);
-            //this.c4a = (ushort)(this.p4data != null ? this.p4data.Count : 0);
-            this.p5 = (ulong)(this.p5data != null ? this.p5data.Position : 0);
-            //this.c5a = (ushort)(this.p5data != null ? this.p5data.Count : 0);
-            this.p6 = (ulong)(this.p6data != null ? this.p6data.Position : 0);
-            //this.c6a = (ushort)(this.p6data != null ? this.p6data.Count : 0);
 
             // write structure data
             writer.Write(this.VFT);
@@ -245,34 +182,19 @@ namespace RageLib.Resources
             writer.Write(this.Unknown_74h);
             writer.Write(this.Unknown_78h);
             writer.Write(this.Unknown_7Ch);
-            writer.Write(this.p2);
-            writer.Write(this.c2a);
-            writer.Write(this.c2b);
-            writer.Write(this.Unknown_8Ch);
-            writer.Write(this.p3);
-            writer.Write(this.c3a);
-            writer.Write(this.c3b);
-            writer.Write(this.Unknown_9Ch);
+            writer.WriteBlock(this.Unknown_80h);
+            writer.WriteBlock(this.Unknown_90h);
             writer.Write(this.Unknown_A0h);
             writer.Write(this.Unknown_A4h);
             writer.Write(this.Unknown_A8h);
             writer.Write(this.Unknown_ACh);
-            writer.Write(this.p4);
-            writer.Write(this.c4a);
-            writer.Write(this.c4b);
-            writer.Write(this.Unknown_BCh);
-            writer.Write(this.p5);
-            writer.Write(this.c5a);
-            writer.Write(this.c5b);
-            writer.Write(this.Unknown_CCh);
+            writer.WriteBlock(this.Unknown_B0h);
+            writer.WriteBlock(this.Unknown_C0h);
             writer.Write(this.Unknown_D0h);
             writer.Write(this.Unknown_D4h);
             writer.Write(this.Unknown_D8h);
             writer.Write(this.Unknown_DCh);
-            writer.Write(this.p6);
-            writer.Write(this.c6a);
-            writer.Write(this.c6b);
-            writer.Write(this.Unknown_ECh);
+            writer.WriteBlock(this.Unknown_E0h);
         }
 
         /// <summary>
@@ -283,13 +205,18 @@ namespace RageLib.Resources
             var list = new List<IResourceBlock>();
             if (p0data != null) list.Add(p0data);
             if (p1data != null) list.Add(p1data);
-            if (p2data != null) list.Add(p2data);
-            if (p3data != null) list.Add(p3data);
-            if (p4data != null) list.Add(p4data);
-            if (p5data != null) list.Add(p5data);
-            if (p6data != null) list.Add(p6data);
             return list.ToArray();
         }
 
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x80, Unknown_80h),
+                new Tuple<long, IResourceBlock>(0x90, Unknown_90h),
+                new Tuple<long, IResourceBlock>(0xB0, Unknown_B0h),
+                new Tuple<long, IResourceBlock>(0xC0, Unknown_C0h),
+                new Tuple<long, IResourceBlock>(0xE0, Unknown_E0h)
+            };
+        }
     }
 }

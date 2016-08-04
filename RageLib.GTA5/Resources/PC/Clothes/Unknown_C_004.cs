@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,9 @@
     THE SOFTWARE.
 */
 
+using RageLib.GTA5.Resources.Common;
 using RageLib.Resources.Common;
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources
@@ -61,14 +63,8 @@ namespace RageLib.Resources
         public uint Unknown_64h; // 0x00000000
         public uint Unknown_68h; // 0x00000000
         public uint Unknown_6Ch; // 0x00000000
-        public ulong p0;
-        public ushort c0a;
-        public ushort c0b;
-        public uint Unknown_7Ch; // 0x00000000
-        public ulong p1;
-        public ushort c1a;
-        public ushort c1b;
-        public uint Unknown_8Ch; // 0x00000000
+        public ResourceSimpleList64<Unknown_C_007> Unknown_70h;
+        public ResourceSimpleList64<Unknown_C_008> Unknown_80h;
         public uint Unknown_90h; // 0x00000000
         public uint Unknown_94h; // 0x00000000
         public uint Unknown_98h; // 0x00000000
@@ -97,14 +93,8 @@ namespace RageLib.Resources
         public uint Unknown_F4h; // 0x00000000
         public uint Unknown_F8h; // 0x00000003
         public uint Unknown_FCh; // 0x00000000
-        public ulong p444;
-        public ushort c444a;
-        public ushort c444b;
-        public uint Unknown_10Ch; // 0x00000000
-        public ulong p2;
-        public ushort c2a;
-        public ushort c2b;
-        public uint Unknown_11Ch; // 0x00000000
+        public ResourceSimpleList64<Unknown_C_009> Unknown_100h;
+        public ResourceSimpleList64<Unknown_C_010> Unknown_110h;
         public uint Unknown_120h; // 0x00000000
         public uint Unknown_124h; // 0x00000000
         public uint Unknown_128h; // 0x00000000
@@ -112,10 +102,7 @@ namespace RageLib.Resources
         public ulong p3;
         public uint Unknown_138h; // 0x00100000
         public uint Unknown_13Ch; // 0x00000000
-        public ulong p4;
-        public ushort c4a;
-        public ushort c4b;
-        public uint Unknown_14Ch; // 0x00000000
+        public ResourceSimpleList64<uint_r> Unknown_140h;
         public uint Unknown_150h; // 0x00000000
         public uint Unknown_154h; // 0x00000000
         public uint Unknown_158h;
@@ -130,12 +117,7 @@ namespace RageLib.Resources
         public uint Unknown_17Ch; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<Unknown_C_007> p0data;
-        public ResourceSimpleArray<Unknown_C_008> p1data;
-        public ResourceSimpleArray<Unknown_C_009> p444data;
-        public ResourceSimpleArray<Unknown_C_010> p2data;
         public Unknown_C_011 p3data;
-        public ResourceSimpleArray<uint_r> p4data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -171,14 +153,8 @@ namespace RageLib.Resources
             this.Unknown_64h = reader.ReadUInt32();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
-            this.p0 = reader.ReadUInt64();
-            this.c0a = reader.ReadUInt16();
-            this.c0b = reader.ReadUInt16();
-            this.Unknown_7Ch = reader.ReadUInt32();
-            this.p1 = reader.ReadUInt64();
-            this.c1a = reader.ReadUInt16();
-            this.c1b = reader.ReadUInt16();
-            this.Unknown_8Ch = reader.ReadUInt32();
+            this.Unknown_70h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_007>>();
+            this.Unknown_80h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_008>>();
             this.Unknown_90h = reader.ReadUInt32();
             this.Unknown_94h = reader.ReadUInt32();
             this.Unknown_98h = reader.ReadUInt32();
@@ -207,14 +183,8 @@ namespace RageLib.Resources
             this.Unknown_F4h = reader.ReadUInt32();
             this.Unknown_F8h = reader.ReadUInt32();
             this.Unknown_FCh = reader.ReadUInt32();
-            this.p444 = reader.ReadUInt64();
-            this.c444a = reader.ReadUInt16();
-            this.c444b = reader.ReadUInt16();
-            this.Unknown_10Ch = reader.ReadUInt32();
-            this.p2 = reader.ReadUInt64();
-            this.c2a = reader.ReadUInt16();
-            this.c2b = reader.ReadUInt16();
-            this.Unknown_11Ch = reader.ReadUInt32();
+            this.Unknown_100h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_009>>();
+            this.Unknown_110h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_010>>();
             this.Unknown_120h = reader.ReadUInt32();
             this.Unknown_124h = reader.ReadUInt32();
             this.Unknown_128h = reader.ReadUInt32();
@@ -222,10 +192,7 @@ namespace RageLib.Resources
             this.p3 = reader.ReadUInt64();
             this.Unknown_138h = reader.ReadUInt32();
             this.Unknown_13Ch = reader.ReadUInt32();
-            this.p4 = reader.ReadUInt64();
-            this.c4a = reader.ReadUInt16();
-            this.c4b = reader.ReadUInt16();
-            this.Unknown_14Ch = reader.ReadUInt32();
+            this.Unknown_140h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
             this.Unknown_150h = reader.ReadUInt32();
             this.Unknown_154h = reader.ReadUInt32();
             this.Unknown_158h = reader.ReadUInt32();
@@ -240,28 +207,8 @@ namespace RageLib.Resources
             this.Unknown_17Ch = reader.ReadUInt32();
 
             // read reference data
-            this.p0data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_C_007>>(
-                this.p0, // offset
-                this.c0a
-            );
-            this.p1data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_C_008>>(
-                this.p1, // offset
-                this.c1a
-            );
-            this.p444data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_C_009>>(
-                this.p444, // offset
-                this.c444a
-            );
-            this.p2data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_C_010>>(
-                this.p2, // offset
-                this.c2a
-            );
             this.p3data = reader.ReadBlockAt<Unknown_C_011>(
                 this.p3 // offset
-            );
-            this.p4data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
-                this.p4, // offset
-                this.c4a
             );
         }
 
@@ -271,17 +218,7 @@ namespace RageLib.Resources
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.p0 = (ulong)(this.p0data != null ? this.p0data.Position : 0);
-            //this.c0a = (ushort)(this.p0data != null ? this.p0data.Count : 0);
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
-            //this.c1a = (ushort)(this.p1data != null ? this.p1data.Count : 0);
-            this.p444 = (ulong)(this.p444data != null ? this.p444data.Position : 0);
-            //this.c444a = (ushort)(this.p444data != null ? this.p444data.Count : 0);
-            this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
-            //this.c2a = (ushort)(this.p2data != null ? this.p2data.Count : 0);
             this.p3 = (ulong)(this.p3data != null ? this.p3data.Position : 0);
-            this.p4 = (ulong)(this.p4data != null ? this.p4data.Position : 0);
-            //this.c4a = (ushort)(this.p4data != null ? this.p4data.Count : 0);
 
             // write structure data
             writer.Write(this.VFT);
@@ -312,14 +249,8 @@ namespace RageLib.Resources
             writer.Write(this.Unknown_64h);
             writer.Write(this.Unknown_68h);
             writer.Write(this.Unknown_6Ch);
-            writer.Write(this.p0);
-            writer.Write(this.c0a);
-            writer.Write(this.c0b);
-            writer.Write(this.Unknown_7Ch);
-            writer.Write(this.p1);
-            writer.Write(this.c1a);
-            writer.Write(this.c1b);
-            writer.Write(this.Unknown_8Ch);
+            writer.WriteBlock(this.Unknown_70h);
+            writer.WriteBlock(this.Unknown_80h);
             writer.Write(this.Unknown_90h);
             writer.Write(this.Unknown_94h);
             writer.Write(this.Unknown_98h);
@@ -348,14 +279,8 @@ namespace RageLib.Resources
             writer.Write(this.Unknown_F4h);
             writer.Write(this.Unknown_F8h);
             writer.Write(this.Unknown_FCh);
-            writer.Write(this.p444);
-            writer.Write(this.c444a);
-            writer.Write(this.c444b);
-            writer.Write(this.Unknown_10Ch);
-            writer.Write(this.p2);
-            writer.Write(this.c2a);
-            writer.Write(this.c2b);
-            writer.Write(this.Unknown_11Ch);
+            writer.WriteBlock(this.Unknown_100h);
+            writer.WriteBlock(this.Unknown_110h);
             writer.Write(this.Unknown_120h);
             writer.Write(this.Unknown_124h);
             writer.Write(this.Unknown_128h);
@@ -363,10 +288,7 @@ namespace RageLib.Resources
             writer.Write(this.p3);
             writer.Write(this.Unknown_138h);
             writer.Write(this.Unknown_13Ch);
-            writer.Write(this.p4);
-            writer.Write(this.c4a);
-            writer.Write(this.c4b);
-            writer.Write(this.Unknown_14Ch);
+            writer.WriteBlock(this.Unknown_140h);
             writer.Write(this.Unknown_150h);
             writer.Write(this.Unknown_154h);
             writer.Write(this.Unknown_158h);
@@ -387,14 +309,19 @@ namespace RageLib.Resources
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (p0data != null) list.Add(p0data);
-            if (p1data != null) list.Add(p1data);
-            if (p444data != null) list.Add(p444data);
-            if (p2data != null) list.Add(p2data);
             if (p3data != null) list.Add(p3data);
-            if (p4data != null) list.Add(p4data);
             return list.ToArray();
         }
 
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x70, Unknown_70h),
+                new Tuple<long, IResourceBlock>(0x80, Unknown_80h),
+                new Tuple<long, IResourceBlock>(0x100, Unknown_100h),
+                new Tuple<long, IResourceBlock>(0x110, Unknown_110h),
+                new Tuple<long, IResourceBlock>(0x140, Unknown_140h)
+            };
+        }
     }
 }
