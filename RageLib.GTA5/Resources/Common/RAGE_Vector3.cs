@@ -20,40 +20,29 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.Common;
-using System;
-
 namespace RageLib.Resources
 {
-    public class FilterDictionary_GTA5_pc : FileBase64_GTA5_pc
+    public class RAGE_Vector3 : ResourceSystemBlock
     {
         public override long Length
         {
-            get { return 64; }
+            get { return 12; }
         }
 
         // structure data
-        public uint Unknown_10h; // 0x00000000
-        public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h; // 0x00000001
-        public uint Unknown_1Ch; // 0x00000000
-        public ResourceSimpleList64<uint_r> FilterNameHashes;
-        public ResourcePointerList64<Filter_GTA5_pc> Filters;
+        public float x1;
+        public float x2;
+        public float x3;
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            base.Read(reader, parameters);
-
             // read structure data
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
-            this.FilterNameHashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
-            this.Filters = reader.ReadBlock<ResourcePointerList64<Filter_GTA5_pc>>();
+            this.x1 = reader.ReadSingle();
+            this.x2 = reader.ReadSingle();
+            this.x3 = reader.ReadSingle();
         }
 
         /// <summary>
@@ -61,23 +50,10 @@ namespace RageLib.Resources
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            base.Write(writer, parameters);
-
             // write structure data
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
-            writer.WriteBlock(this.FilterNameHashes);
-            writer.WriteBlock(this.Filters);
-        }
-
-        public override Tuple<long, IResourceBlock>[] GetParts()
-        {
-            return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x20, FilterNameHashes),
-                new Tuple<long, IResourceBlock>(0x30, Filters)
-            };
+            writer.Write(this.x1);
+            writer.Write(this.x2);
+            writer.Write(this.x3);
         }
     }
 }

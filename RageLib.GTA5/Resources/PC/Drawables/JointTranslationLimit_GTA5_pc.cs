@@ -20,12 +20,9 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.Common;
-using System;
-
-namespace RageLib.Resources
+namespace RageLib.Resources.GTA5.PC.Drawables
 {
-    public class FilterDictionary_GTA5_pc : FileBase64_GTA5_pc
+    public class JointTranslationLimit_GTA5_pc : ResourceSystemBlock
     {
         public override long Length
         {
@@ -33,27 +30,37 @@ namespace RageLib.Resources
         }
 
         // structure data
+        public uint Unknown_0h; // 0x00000000
+        public uint Unknown_4h; // 0x00000000
+        public uint BoneId;
+        public uint Unknown_Ch; // 0x00000000
         public uint Unknown_10h; // 0x00000000
         public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h; // 0x00000001
+        public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
-        public ResourceSimpleList64<uint_r> FilterNameHashes;
-        public ResourcePointerList64<Filter_GTA5_pc> Filters;
+        public RAGE_Vector3 Min;
+        public uint Unknown_2Ch; // 0x00000000
+        public RAGE_Vector3 Max;
+        public uint Unknown_3Ch; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            base.Read(reader, parameters);
-
             // read structure data
+            this.Unknown_0h = reader.ReadUInt32();
+            this.Unknown_4h = reader.ReadUInt32();
+            this.BoneId = reader.ReadUInt32();
+            this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.FilterNameHashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
-            this.Filters = reader.ReadBlock<ResourcePointerList64<Filter_GTA5_pc>>();
+            this.Min = reader.ReadBlock<RAGE_Vector3>();
+            this.Unknown_2Ch = reader.ReadUInt32();
+            this.Max = reader.ReadBlock<RAGE_Vector3>();
+            this.Unknown_3Ch = reader.ReadUInt32();
         }
 
         /// <summary>
@@ -61,23 +68,19 @@ namespace RageLib.Resources
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            base.Write(writer, parameters);
-
             // write structure data
+            writer.Write(this.Unknown_0h);
+            writer.Write(this.Unknown_4h);
+            writer.Write(this.BoneId);
+            writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.WriteBlock(this.FilterNameHashes);
-            writer.WriteBlock(this.Filters);
-        }
-
-        public override Tuple<long, IResourceBlock>[] GetParts()
-        {
-            return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x20, FilterNameHashes),
-                new Tuple<long, IResourceBlock>(0x30, Filters)
-            };
+            writer.WriteBlock(this.Min);
+            writer.Write(this.Unknown_2Ch);
+            writer.WriteBlock(this.Max);
+            writer.Write(this.Unknown_3Ch);
         }
     }
 }

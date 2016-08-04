@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -33,23 +33,25 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         }
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
+        public float RotationX;
+        public float RotationY;
+        public float RotationZ;
+        public float RotationW;
+        public float TranslationX;
+        public float TranslationY;
+        public float TranslationZ;
         public uint Unknown_1Ch; // 0x00000000
-        public uint Unknown_20h; // 0x3F800000
-        public uint Unknown_24h; // 0x3F800000
-        public uint Unknown_28h; // 0x3F800000
-        public uint Unknown_2Ch; // 0x3F800000
+        public float Unknown_20h; // 1.0
+        public float Unknown_24h; // 1.0
+        public float Unknown_28h; // 1.0
+        public float Unknown_2Ch; // 1.0
         public uint Unknown_30h;
         public uint Unknown_34h; // 0x00000000
         public ulong NamePointer;
-        public uint Unknown_40h;
-        public uint Unknown_44h;
+        public ushort Unknown_40h;
+        public ushort Unknown_42h;
+        public ushort Id;
+        public ushort Unknown_46h;
         public uint Unknown_48h; // 0x00000000
         public uint Unknown_4Ch; // 0x00000000
 
@@ -62,23 +64,25 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
+            this.RotationX = reader.ReadSingle();
+            this.RotationY = reader.ReadSingle();
+            this.RotationZ = reader.ReadSingle();
+            this.RotationW = reader.ReadSingle();
+            this.TranslationX = reader.ReadSingle();
+            this.TranslationY = reader.ReadSingle();
+            this.TranslationZ = reader.ReadSingle();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadSingle();
+            this.Unknown_24h = reader.ReadSingle();
+            this.Unknown_28h = reader.ReadSingle();
+            this.Unknown_2Ch = reader.ReadSingle();
             this.Unknown_30h = reader.ReadUInt32();
             this.Unknown_34h = reader.ReadUInt32();
             this.NamePointer = reader.ReadUInt64();
-            this.Unknown_40h = reader.ReadUInt32();
-            this.Unknown_44h = reader.ReadUInt32();
+            this.Unknown_40h = reader.ReadUInt16();
+            this.Unknown_42h = reader.ReadUInt16();
+            this.Id = reader.ReadUInt16();
+            this.Unknown_46h = reader.ReadUInt16();
             this.Unknown_48h = reader.ReadUInt32();
             this.Unknown_4Ch = reader.ReadUInt32();
 
@@ -97,13 +101,13 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
 
             // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
+            writer.Write(this.RotationX);
+            writer.Write(this.RotationY);
+            writer.Write(this.RotationZ);
+            writer.Write(this.RotationW);
+            writer.Write(this.TranslationX);
+            writer.Write(this.TranslationY);
+            writer.Write(this.TranslationZ);
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
@@ -113,7 +117,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Unknown_34h);
             writer.Write(this.NamePointer);
             writer.Write(this.Unknown_40h);
-            writer.Write(this.Unknown_44h);
+            writer.Write(this.Unknown_42h);
+            writer.Write(this.Id);
+            writer.Write(this.Unknown_46h);
             writer.Write(this.Unknown_48h);
             writer.Write(this.Unknown_4Ch);
         }
@@ -127,6 +133,5 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             if (Name != null) list.Add(Name);
             return list.ToArray();
         }
-
     }
 }
