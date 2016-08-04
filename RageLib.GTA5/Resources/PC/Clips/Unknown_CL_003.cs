@@ -120,6 +120,5 @@ namespace RageLib.Resources.GTA5.PC.Clips
             if (p1data != null) list.Add(p1data);
             return list.ToArray();
         }
-
     }
 }
