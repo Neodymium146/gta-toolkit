@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,8 +20,9 @@
     THE SOFTWARE.
 */
 
+using RageLib.GTA5.Resources.Common;
 using RageLib.Resources.Common;
-using System.Collections.Generic;
+using System;
 
 namespace RageLib.Resources
 {
@@ -37,18 +38,8 @@ namespace RageLib.Resources
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000001
         public uint Unknown_1Ch; // 0x00000000
-        public ulong HashesPointer;
-        public ushort HashesCount1;
-        public ushort HashesCount2;
-        public uint Unknown_2Ch; // 0x00000000
-        public ulong FiltersPointer;
-        public ushort FiltersCount1;
-        public ushort FiltersCount2;
-        public uint Unknown_3Ch; // 0x00000000
-
-        // reference data
-        public ResourceSimpleArray<uint_r> Hashes;
-        public ResourcePointerArray64<Filter_GTA5_pc> Filters;
+        public ResourceSimpleList64<uint_r> FilterNameHashes;
+        public ResourcePointerList64<Filter_GTA5_pc> Filters;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -62,24 +53,8 @@ namespace RageLib.Resources
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.HashesPointer = reader.ReadUInt64();
-            this.HashesCount1 = reader.ReadUInt16();
-            this.HashesCount2 = reader.ReadUInt16();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.FiltersPointer = reader.ReadUInt64();
-            this.FiltersCount1 = reader.ReadUInt16();
-            this.FiltersCount2 = reader.ReadUInt16();
-            this.Unknown_3Ch = reader.ReadUInt32();
-
-            // read reference data
-            this.Hashes = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
-                this.HashesPointer, // offset
-                this.HashesCount1
-            );
-            this.Filters = reader.ReadBlockAt<ResourcePointerArray64<Filter_GTA5_pc>>(
-                this.FiltersPointer, // offset
-                this.FiltersCount1
-            );
+            this.FilterNameHashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Filters = reader.ReadBlock<ResourcePointerList64<Filter_GTA5_pc>>();
         }
 
         /// <summary>
@@ -89,37 +64,21 @@ namespace RageLib.Resources
         {
             base.Write(writer, parameters);
 
-            // update structure data
-            this.HashesPointer = (ulong)(this.Hashes != null ? this.Hashes.Position : 0);
-            this.HashesCount1 = (ushort)(this.Hashes != null ? this.Hashes.Count : 0);
-            this.FiltersPointer = (ulong)(this.Filters != null ? this.Filters.Position : 0);
-            this.FiltersCount1 = (ushort)(this.Filters != null ? this.Filters.Count : 0);
-
             // write structure data
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.Write(this.HashesPointer);
-            writer.Write(this.HashesCount1);
-            writer.Write(this.HashesCount2);
-            writer.Write(this.Unknown_2Ch);
-            writer.Write(this.FiltersPointer);
-            writer.Write(this.FiltersCount1);
-            writer.Write(this.FiltersCount2);
-            writer.Write(this.Unknown_3Ch);
+            writer.WriteBlock(this.FilterNameHashes);
+            writer.WriteBlock(this.Filters);
         }
 
-        /// <summary>
-        /// Returns a list of data blocks which are referenced by this block.
-        /// </summary>
-        public override IResourceBlock[] GetReferences()
+        public override Tuple<long, IResourceBlock>[] GetParts()
         {
-            var list = new List<IResourceBlock>(base.GetReferences());
-            if (Hashes != null) list.Add(Hashes);
-            if (Filters != null) list.Add(Filters);
-            return list.ToArray();
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x20, FilterNameHashes),
+                new Tuple<long, IResourceBlock>(0x30, Filters)
+            };
         }
-
     }
 }
