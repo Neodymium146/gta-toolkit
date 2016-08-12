@@ -1,4 +1,4 @@
-/*
+﻿/*
     Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,37 +20,32 @@
     THE SOFTWARE.
 */
 
-namespace RageLib.Resources.GTA5.PC.Meta
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using RageLib.Data;
+
+namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
-    public class EnumEntryInfo_GTA5_pc : ResourceSystemBlock
+    public class MetaArray : IMetaValue
     {
-        public override long Length
-        {
-            get { return 8; }
-        }
+        public int BlockIndex { get; set; }
+        public int Offset { get; set; }
+        public int NumberOfEntries { get; set; }
 
-        // structure data
-        public uint EntryNameHash;
-        public int EntryValue;
+        // Reference values
+        public List<IMetaValue> Entries { get; set; }
 
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public void Read(DataReader reader)
         {
-            // read structure data
-            this.EntryNameHash = reader.ReadUInt32();
-            this.EntryValue = reader.ReadInt32();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.EntryNameHash);
-            writer.Write(this.EntryValue);
+            var yyy = reader.ReadUInt32();
+            BlockIndex = (int)(yyy & 0x00000FFF);
+            Offset = (int)((yyy & 0xFFFFF000) >> 12);
+            var pp = reader.ReadUInt32();
+            NumberOfEntries = reader.ReadUInt16();
+            var yy = reader.ReadUInt32();
         }
     }
 }

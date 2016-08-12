@@ -34,7 +34,9 @@ namespace RageLib.Resources.GTA5.PC.Meta
 
         // structure data
         public uint Unknown_10h; // 0x50524430
-        public uint Unknown_14h;
+        public ushort Unknown_14h; // 0x0079
+        public byte HasUselessData;
+        public byte Unknown_17h; // 0x00
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch;
         public ulong StructureInfosPointer;
@@ -70,7 +72,9 @@ namespace RageLib.Resources.GTA5.PC.Meta
 
             // read structure data
             this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
+            this.Unknown_14h = reader.ReadUInt16();
+            this.HasUselessData = reader.ReadByte();
+            this.Unknown_17h = reader.ReadByte();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.StructureInfosPointer = reader.ReadUInt64();
@@ -129,6 +133,8 @@ namespace RageLib.Resources.GTA5.PC.Meta
             // write structure data
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
+            writer.Write(this.HasUselessData);
+            writer.Write(this.Unknown_17h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.StructureInfosPointer);

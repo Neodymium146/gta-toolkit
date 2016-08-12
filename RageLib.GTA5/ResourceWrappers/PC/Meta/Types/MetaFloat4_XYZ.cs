@@ -1,4 +1,4 @@
-/*
+﻿/*
     Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,37 +20,26 @@
     THE SOFTWARE.
 */
 
-namespace RageLib.Resources.GTA5.PC.Meta
+using RageLib.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
-    public class EnumEntryInfo_GTA5_pc : ResourceSystemBlock
+    public class MetaFloat4_XYZ : IMetaValue
     {
-        public override long Length
-        {
-            get { return 8; }
-        }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
 
-        // structure data
-        public uint EntryNameHash;
-        public int EntryValue;
-
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public void Read(DataReader reader)
         {
-            // read structure data
-            this.EntryNameHash = reader.ReadUInt32();
-            this.EntryValue = reader.ReadInt32();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.EntryNameHash);
-            writer.Write(this.EntryValue);
+            this.X = reader.ReadSingle();
+            this.Y = reader.ReadSingle();
+            this.Z = reader.ReadSingle();
         }
     }
 }
