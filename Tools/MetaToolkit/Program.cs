@@ -1,4 +1,4 @@
-/*
+﻿/*
     Copyright(c) 2016 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,37 +20,38 @@
     THE SOFTWARE.
 */
 
-namespace RageLib.Resources.GTA5.PC.Meta
+using RageLib.GTA5.ResourceWrappers.PC.Meta;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MetaToolkit
 {
-    public class EnumEntryInfo_GTA5_pc : ResourceSystemBlock
+    public class Program
     {
-        public override long Length
+        private string[] arguments;
+
+        public static void Main(string[] args)
         {
-            get { return 8; }
+            new Program(args).Run();
         }
 
-        // structure data
-        public uint EntryNameHash;
-        public int EntryValue;
-
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public Program(string[] arguments)
         {
-            // read structure data
-            this.EntryNameHash = reader.ReadUInt32();
-            this.EntryValue = reader.ReadInt32();
+            this.arguments = arguments;
         }
 
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        public void Run()
         {
-            // write structure data
-            writer.Write(this.EntryNameHash);
-            writer.Write(this.EntryValue);
+            string inputFileName = arguments[0];
+            string outputFileName = inputFileName + ".xml";
+
+            var reader = new MetaReader();
+            var meta = reader.Read(inputFileName);
+            var exporter = new MetaExporter();
+            exporter.ExportToXml(meta, outputFileName);
         }
     }
 }
