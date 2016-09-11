@@ -21,11 +21,6 @@
 */
 
 using RageLib.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
@@ -33,9 +28,22 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
     {
         public byte Value { get; set; }
 
+        public MetaByte_B()
+        { }
+
+        public MetaByte_B(byte value)
+        {
+            this.Value = value;
+        }
+
         public void Read(DataReader reader)
         {
             this.Value = reader.ReadByte();
+        }
+
+        public void Write(DataWriter writer)
+        {
+            writer.Write(this.Value);
         }
     }
 }

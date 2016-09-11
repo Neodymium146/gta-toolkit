@@ -20,17 +20,18 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
+using RageLib.Resources.GTA5.PC.Meta;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RageLib.Data;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
     public class MetaArray : IMetaValue
     {
+        public StructureEntryInfo_GTA5_pc info;
+        public bool IsAlwaysAtZeroOffset = false;
+
         public int BlockIndex { get; set; }
         public int Offset { get; set; }
         public int NumberOfEntries { get; set; }
@@ -40,12 +41,36 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 
         public void Read(DataReader reader)
         {
-            var yyy = reader.ReadUInt32();
-            BlockIndex = (int)(yyy & 0x00000FFF);
-            Offset = (int)((yyy & 0xFFFFF000) >> 12);
-            var pp = reader.ReadUInt32();
-            NumberOfEntries = reader.ReadUInt16();
-            var yy = reader.ReadUInt32();
+            var blockIndexAndOffset = reader.ReadUInt32();
+            this.BlockIndex = (int)(blockIndexAndOffset & 0x00000FFF);
+            this.Offset = (int)((blockIndexAndOffset & 0xFFFFF000) >> 12);
+            var zero_4h = reader.ReadUInt32();
+            if (zero_4h != 0)
+            {
+                throw new Exception("zero_4h should be 0");
+            }
+            var size1 = reader.ReadUInt16();
+            var size2 = reader.ReadUInt16();
+            if (size1 != size2)
+            {
+                throw new Exception("size1 should be size2");
+            }
+            this.NumberOfEntries = size1;
+            var zero_Ch = reader.ReadUInt32();
+            if (zero_Ch != 0)
+            {
+                throw new Exception("zero_Ch should be 0");
+            }
+        }
+
+        public void Write(DataWriter writer)
+        {
+            uint blockIndexAndOffset = (uint)BlockIndex | ((uint)Offset << 12);
+            writer.Write(blockIndexAndOffset);
+            writer.Write((uint)0);
+            writer.Write((ushort)NumberOfEntries);
+            writer.Write((ushort)NumberOfEntries);
+            writer.Write((uint)0);
         }
     }
 }

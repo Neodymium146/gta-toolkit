@@ -25,18 +25,14 @@ using RageLib.GTA5.ResourceWrappers.PC.Meta.Types;
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5;
 using RageLib.Resources.GTA5.PC.Meta;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta
 {
     public class MetaReader
     {
-
         public IMetaValue Read(string fileName)
         {
             using (var fileStream = new FileStream(fileName, FileMode.Open))
@@ -52,10 +48,10 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
             return Parse(resource.ResourceData);
         }
 
-        private IMetaValue Parse(Meta_GTA5_pc meta)
+        public IMetaValue Parse(Meta_GTA5_pc meta)
         {
-            List<uint> blockKeys = new List<uint>();
-            List<List<IMetaValue>> blocks = new List<List<IMetaValue>>();
+            var blockKeys = new List<int>();
+            var blocks = new List<List<IMetaValue>>();
 
             //////////////////////////////////////////////////
             // first step: flat conversion
@@ -63,35 +59,35 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
 
             foreach (var block in meta.DataBlocks)
             {
-                blockKeys.Add(block.StructureKey);
-                switch (block.StructureKey)
+                blockKeys.Add(block.StructureNameHash);
+                switch (block.StructureNameHash)
                 {
                     case 0x00000007:
-                        blocks.Add(ReadBlock(block, () => new MetaGeneric()));
+                        blocks.Add(ReadBlock(block, () => new MetaGeneric())); // has no special type declaration in .meta -> pointer
                         break;
                     case 0x00000010:
-                        blocks.Add(ReadBlock(block, () => new MetaByte_A()));
+                        blocks.Add(ReadBlock(block, () => new MetaByte_A())); // char_array
                         break;
                     case 0x00000011:
-                        blocks.Add(ReadBlock(block, () => new MetaByte_B()));
+                        blocks.Add(ReadBlock(block, () => new MetaByte_B()));  // has no special type declaration in .meta -> string
                         break;
                     case 0x00000013:
-                        blocks.Add(ReadBlock(block, () => new MetaInt16_B()));
+                        blocks.Add(ReadBlock(block, () => new MetaInt16_B())); // probably short_array
                         break;
                     case 0x00000015:
-                        blocks.Add(ReadBlock(block, () => new MetaInt32_B()));
+                        blocks.Add(ReadBlock(block, () => new MetaInt32_B())); // int_array
                         break;
                     case 0x00000021:
-                        blocks.Add(ReadBlock(block, () => new MetaFloat()));
+                        blocks.Add(ReadBlock(block, () => new MetaFloat())); // float_array
                         break;
                     case 0x00000033:
-                        blocks.Add(ReadBlock(block, () => new MetaFloat4_XYZ()));
+                        blocks.Add(ReadBlock(block, () => new MetaFloat4_XYZ())); // vector3_array
                         break;
                     case 0x0000004A:
-                        blocks.Add(ReadBlock(block, () => new MetaInt32_Hash()));
+                        blocks.Add(ReadBlock(block, () => new MetaInt32_Hash())); // probably list of <Item>HASH_OF_SOME_NAME</Item>
                         break;
                     default:
-                        blocks.Add(ReadBlock(block, () => new MetaStructure(meta, GetInfo(meta, block.StructureKey))));
+                        blocks.Add(ReadBlock(block, () => new MetaStructure(meta, GetInfo(meta, block.StructureNameHash)))); // has no special type declaration in .meta -> structure
                         break;
                 }
             }
@@ -115,10 +111,10 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                 if (entry is MetaArray)
                 {
                     var arrayEntry = entry as MetaArray;
-                    arrayEntry.Entries = new List<IMetaValue>();
                     var realBlockIndex = arrayEntry.BlockIndex - 1;
                     if (realBlockIndex >= 0)
                     {
+                        arrayEntry.Entries = new List<IMetaValue>();
                         var realEntryIndex = arrayEntry.Offset / GetSize(meta, blockKeys[realBlockIndex]);
                         for (int i = 0; i < arrayEntry.NumberOfEntries; i++)
                         {
@@ -131,22 +127,32 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                 if (entry is MetaCharPointer)
                 {
                     var charPointerEntry = entry as MetaCharPointer;
-                    string value = "";
-                    for (int i = 0; i < charPointerEntry.Length; i++)
+                    var realBlockIndex = charPointerEntry.DataBlockIndex - 1;
+                    if (realBlockIndex >= 0)
                     {
-                        var x = (MetaByte_A)blocks[charPointerEntry.DataBlockIndex - 1][i + charPointerEntry.DataOffset];
-                        value += (char)x.Value;
+                        string value = "";
+                        for (int i = 0; i < charPointerEntry.StringLength; i++)
+                        {
+                            var x = (MetaByte_A)blocks[realBlockIndex][i + charPointerEntry.DataOffset];
+                            value += (char)x.Value;
+                        }
+                        charPointerEntry.Value = value;
                     }
-                    charPointerEntry.Value = value;
+                }
+                if (entry is MetaDataBlockPointer)
+                {
+                    var dataPointerEntry = entry as MetaDataBlockPointer;
+                    var realBlockIndex = dataPointerEntry.BlockIndex - 1;
+                    if (realBlockIndex >= 0)
+                    {
+                        byte[] b = ToBytes(meta.DataBlocks[realBlockIndex].Data);
+                        dataPointerEntry.Data = b;
+                    }
                 }
                 if (entry is MetaGeneric)
                 {
                     var genericEntry = entry as MetaGeneric;
                     var realBlockIndex = genericEntry.BlockIndex - 1;
-
-                    if (realBlockIndex < 0)
-                    { }
-
                     var realEntryIndex = genericEntry.Offset * 16 / GetSize(meta, blockKeys[realBlockIndex]);
                     var x = blocks[realBlockIndex][realEntryIndex];
                     genericEntry.Value = x;
@@ -163,7 +169,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
             }
 
             //////////////////////////////////////////////////
-            // second step: find root
+            // third step: find root
             //////////////////////////////////////////////////
 
             var rootSet = new HashSet<IMetaValue>();
@@ -178,7 +184,12 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                 }
             }
 
-            return rootSet.First();
+            var res = rootSet.First();
+
+            if (res != blocks[(int)meta.RootBlockIndex - 1][0])
+                throw new System.Exception("wrong root block index");
+
+            return res;
         }
 
         private List<IMetaValue> ReadBlock(DataBlock_GTA5_pc block, CreateMetaValueDelegate CreateMetaValue)
@@ -202,16 +213,16 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
             return result;
         }
 
-        public static StructureInfo_GTA5_pc GetInfo(Meta_GTA5_pc meta, uint structureKey)
+        public static StructureInfo_GTA5_pc GetInfo(Meta_GTA5_pc meta, int structureKey)
         {
             StructureInfo_GTA5_pc info = null;
             foreach (var x in meta.StructureInfos)
-                if (x.StructureKey == structureKey)
+                if (x.StructureNameHash == structureKey)
                     info = x;
             return info;
         }
 
-        public int GetSize(Meta_GTA5_pc meta, uint typeKey)
+        public int GetSize(Meta_GTA5_pc meta, int typeKey)
         {
             switch (typeKey)
             {

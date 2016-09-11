@@ -1,0 +1,126 @@
+﻿<?xml version="1.0"?>
+<MetaInformationXml xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Structure NameHash="0x22DD6F04" Key="0x4C6CDC4F" Unknown="0x00000000" Length="64">
+    <StructureEntry NameHash="0x32A8F2D4" Offset="0" Type="21" TypeHash="0x00000000" Unknown="0x00000000" />
+  </Structure>
+  <Structure NameHash="0x22DD6F04" Key="0xE543866C" Unknown="0x00000000" Length="64">
+    <StructureEntry NameHash="0x38C62F77" Offset="0" Type="5" TypeHash="0x1168CE69" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x97CC848A" Offset="0" Type="5" TypeHash="0x83AF6FB6" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x3A5B9F33" Offset="0" Type="5" TypeHash="0xA926A98C" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x53663957" Offset="0" Type="5" TypeHash="0x0F9CFDEE" Unknown="0x00000000" />
+  </Structure>
+  <Structure NameHash="0x1168CE69" Key="0xAE2E23D1" Unknown="0x00000000" Length="64">
+    <StructureEntry NameHash="0x36C55540" Offset="0" Type="1" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x707975FF" Offset="0" Type="1" TypeHash="0x00000000" Unknown="0x00000000" />    
+    <StructureEntry NameHash="0x96142337" Offset="0" Type="16" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xD4D9059D" Offset="0" Type="16" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x710D0955" Offset="0" Type="16" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x860ACDD8" Offset="0" Type="16" TypeHash="0x00000000" Unknown="0x00000000" />    
+    <StructureEntry NameHash="0xCDFD7789" Offset="0" Type="17" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x7DCCF225" Offset="0" Type="17" TypeHash="0x00000000" Unknown="0x00000000" />    
+    <StructureEntry NameHash="0xA0AB9B78" Offset="0" Type="17" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x3A223898" Offset="0" Type="17" TypeHash="0x00000000" Unknown="0x00000000" />    
+    <StructureEntry NameHash="0x2F07F270" Offset="0" Type="18" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x83E5053E" Offset="0" Type="18" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x86F3BC1E" Offset="0" Type="18" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x2C916F02" Offset="0" Type="18" TypeHash="0x00000000" Unknown="0x00000000" />    
+    <StructureEntry NameHash="0x1972DD39" Offset="0" Type="19" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x1433E9A2" Offset="0" Type="19" TypeHash="0x00000000" Unknown="0x00000000" />    
+    <StructureEntry NameHash="0xABF22E97" Offset="0" Type="19" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xCAD920FA" Offset="0" Type="19" TypeHash="0x00000000" Unknown="0x00000000" />    
+    <StructureEntry NameHash="0x96AA9C22" Offset="0" Type="20" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xBE498F77" Offset="0" Type="20" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xDEA66123" Offset="0" Type="20" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xA7A347FE" Offset="0" Type="20" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x5940A2C4" Offset="0" Type="21" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x7AE8E34B" Offset="0" Type="21" TypeHash="0x00000000" Unknown="0x00000000" />    
+    <StructureEntry NameHash="0x48758F24" Offset="0" Type="21" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x2DCCF53B" Offset="0" Type="21" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x7C6BAA24" Offset="0" Type="33" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xC81C39E6" Offset="0" Type="33" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xC599B2B0" Offset="0" Type="51" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xA2B4F045" Offset="0" Type="51" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xE0B18333" Offset="0" Type="52" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xA7E3D660" Offset="0" Type="52" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x3B8AF0C2" Offset="0" Type="80" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x8FF34AB5" Offset="0" Type="64" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x17525AB1" Offset="0" Type="74" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x10D59C62" Offset="0" Type="74" TypeHash="0x00000000" Unknown="0x00000000" />
+  </Structure>
+  <Structure NameHash="0x83AF6FB6" Key="0x7DCF1E24" Unknown="0x00000000" Length="64">
+    <StructureEntry NameHash="0x2300AF3B" Offset="0" Type="96" TypeHash="0xB564BF35" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x56E94C50" Offset="8" Type="98" TypeHash="0xD3758275" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x43F0EEF4" Offset="16" Type="98" TypeHash="0xD3758275" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xB4B7824B" Offset="24" Type="100" TypeHash="0x58B1199D" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x1B3098A9" Offset="32" Type="100" TypeHash="0x58B1199D" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xA51CF61E" Offset="40" Type="99" TypeHash="0xADE85EB9" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x11045D33" Offset="48" Type="99" TypeHash="0xADE85EB9" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xC66A7EC6" Offset="56" Type="101" TypeHash="0xF4E8DB48" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x53C471C0" Offset="64" Type="101" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x89D91A45" Offset="72" Type="101" TypeHash="0x00000000" Unknown="0x00000000" />
+  </Structure>
+  <Structure NameHash="0xA926A98C" Key="0x22960989" Unknown="0x00000000" Length="64">
+    <StructureEntry NameHash="0xEF099C3A" Offset="0" Type="82" TypeHash="0x00000000" Unknown="0x00000000">
+      <ArrayType Type="17" TypeHash="0x00000000" />
+    </StructureEntry>
+    <StructureEntry NameHash="0x79FE4E42" Offset="8" Type="82" TypeHash="0x00000000" Unknown="0x00000000">
+      <ArrayType Type="19" TypeHash="0x00000000" />
+    </StructureEntry>
+    <StructureEntry NameHash="0x62AFD2A7" Offset="16" Type="82" TypeHash="0x00000000" Unknown="0x00000000">
+      <ArrayType Type="21" TypeHash="0x00000000" />
+    </StructureEntry>
+    <StructureEntry NameHash="0x8FD208FE" Offset="24" Type="82" TypeHash="0x00000000" Unknown="0x00000000">
+      <ArrayType Type="33" TypeHash="0x00000000" />
+    </StructureEntry>
+    <StructureEntry NameHash="0xD094EFE2" Offset="32" Type="82" TypeHash="0x00000000" Unknown="0x00000000">
+      <ArrayType Type="51" TypeHash="0x00000000" />
+    </StructureEntry>
+    <StructureEntry NameHash="0x68B43521" Offset="40" Type="82" TypeHash="0x00000000" Unknown="0x00000000">
+      <ArrayType Type="74" TypeHash="0x00000000" />
+    </StructureEntry>
+    <StructureEntry NameHash="0x3A6E4591" Offset="48" Type="68" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xC9811541" Offset="56" Type="68" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xC8C01542" Offset="64" Type="89" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x2FCAB965" Offset="72" Type="89" TypeHash="0x00000000" Unknown="0x00000000" />
+  </Structure>
+  <Structure NameHash="0x0F9CFDEE" Key="0xDBC8E6E2" Unknown="0x00000000" Length="64">
+    <StructureEntry NameHash="0x6F004ECC" Offset="0" Type="82" TypeHash="0x00000000" Unknown="0x00000000">
+      <ArrayType Type="5" TypeHash="0xA2BEF951" />
+    </StructureEntry>
+    <StructureEntry NameHash="0x8F3E7BA7" Offset="8" Type="82" TypeHash="0x00000000" Unknown="0x00000000">
+      <ArrayType Type="7" TypeHash="0x00000000" />
+    </StructureEntry>
+  </Structure>
+  <Structure NameHash="0xA2BEF951" Key="0x00403547" Unknown="0x00000000" Length="64">
+    <StructureEntry NameHash="0x620795CF" Offset="0" Type="1" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x2518B65F" Offset="4" Type="1" TypeHash="0x00000000" Unknown="0x00000000" />
+  </Structure>
+  <Structure NameHash="0x2D8B6A9C" Key="0xCB600BD9" Unknown="0x00000000" Length="64">
+    <StructureEntry NameHash="0x04792618" Offset="0" Type="1" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0xD302778A" Offset="4" Type="1" TypeHash="0x00000000" Unknown="0x00000000" />
+  </Structure>
+  <Structure NameHash="0xA71A1B09" Key="0x22268C6C" Unknown="0x00000000" Length="64">
+    <StructureEntry NameHash="0x8705BF6F" Offset="0" Type="1" TypeHash="0x00000000" Unknown="0x00000000" />
+    <StructureEntry NameHash="0x981F3DBC" Offset="4" Type="1" TypeHash="0x00000000" Unknown="0x00000000" />
+  </Structure>
+  <Enum Key="0x3949FF8C" NameHash="0xB564BF35">
+    <EnumEntry NameHash="0x82B6ACED" Value="0" />
+    <EnumEntry NameHash="0xB6D45EB0" Value="1" />
+  </Enum>
+  <Enum Key="0xB4B9C38E" NameHash="0xD3758275">
+    <EnumEntry NameHash="0xCDCBFB04" Value="0" />
+    <EnumEntry NameHash="0x244B7640" Value="1" />
+  </Enum>
+  <Enum Key="0x37EF8D3B" NameHash="0x58B1199D">
+    <EnumEntry NameHash="0xEC9BDD31" Value="0" />
+    <EnumEntry NameHash="0xDC2ECBE8" Value="1" />
+  </Enum>
+  <Enum Key="0x6EF1344B" NameHash="0xADE85EB9">
+    <EnumEntry NameHash="0xF3F0428C" Value="0" />
+    <EnumEntry NameHash="0x28DBBD98" Value="1" />
+  </Enum>
+  <Enum Key="0x7B267B55" NameHash="0xF4E8DB48">
+    <EnumEntry NameHash="0x01769F10" Value="0" />
+    <EnumEntry NameHash="0x3AFAC976" Value="1" />
+  </Enum>
+</MetaInformationXml>

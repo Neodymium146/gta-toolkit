@@ -262,15 +262,19 @@
     <Compile Include="ResourceWrappers\PC\Fragments\FragDrawableWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Fragments\FragmentFileWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Fragments\FragTypeWrapper_GTA5_pc.cs" />
+    <Compile Include="ResourceWrappers\PC\Meta\Data\MetaDataReader.cs" />
+    <Compile Include="ResourceWrappers\PC\Meta\Data\MetaDataWriter.cs" />
+    <Compile Include="ResourceWrappers\PC\Meta\MetaWriter.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\MetaXmlExporter.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\MetaReader.cs" />
+    <Compile Include="ResourceWrappers\PC\Meta\MetaXmlImporter.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\IMetaValue.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaArray.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaBoolean.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaByte_A.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaByte_B.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaByte_Enum.cs" />
-    <Compile Include="ResourceWrappers\PC\Meta\Types\MetaChar64.cs" />
+    <Compile Include="ResourceWrappers\PC\Meta\Types\MetaArrayOfChars.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaCharPointer.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaFloat.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaFloat4_XYZ.cs" />
@@ -279,15 +283,16 @@
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaInt16_A.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaInt16_B.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaInt16_Enum.cs" />
-    <Compile Include="ResourceWrappers\PC\Meta\Types\MetaInt24.cs" />
+    <Compile Include="ResourceWrappers\PC\Meta\Types\MetaArrayOfBytes.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaInt32_A.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaInt32_B.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaInt32_Enum1.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaInt32_Enum2.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaInt32_Enum3.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaInt32_Hash.cs" />
-    <Compile Include="ResourceWrappers\PC\Meta\Types\MetaInt64.cs" />
+    <Compile Include="ResourceWrappers\PC\Meta\Types\MetaDataBlockPointer.cs" />
     <Compile Include="ResourceWrappers\PC\Meta\Types\MetaStructure.cs" />
+    <Compile Include="ResourceWrappers\PC\Meta\Definitions\MetaXml.cs" />
     <Compile Include="ResourceWrappers\PC\Particles\ParticlesFileWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Particles\ParticlesWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Textures\TextureDictionaryFile_GTA5_pc.cs" />
@@ -301,7 +306,9 @@
       <Name>RageLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="ResourceWrappers\PC\Meta\Definitions\XmlInfos.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

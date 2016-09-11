@@ -33,14 +33,14 @@ namespace RageLib.Resources.GTA5.PC.Meta
         }
 
         // structure data
-        public uint StructureKey;
-        public uint StructureNameHash;
-        public uint Unknown_8h;
-        public uint Unknown_Ch; // 0x00000000
-        public ulong EntriesPointer;
-        public uint StructureLength;
-        public ushort Unknown_1Ch; // 0x0000
-        public ushort EntriesCount;
+        public int StructureNameHash { get; set; }
+        public int StructureKey { get; set; }
+        public int Unknown_8h { get; set; }
+        public int Unknown_Ch { get; set; } = 0x00000000;
+        public long EntriesPointer { get; private set; }
+        public int StructureLength { get; set; }
+        public short Unknown_1Ch { get; set; } = 0x0000;
+        public short EntriesCount { get; private set; }
 
         // reference data
         public ResourceSimpleArray<StructureEntryInfo_GTA5_pc> Entries;
@@ -51,18 +51,18 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.StructureKey = reader.ReadUInt32();
-            this.StructureNameHash = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.EntriesPointer = reader.ReadUInt64();
-            this.StructureLength = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt16();
-            this.EntriesCount = reader.ReadUInt16();
+            this.StructureNameHash = reader.ReadInt32();
+            this.StructureKey = reader.ReadInt32();
+            this.Unknown_8h = reader.ReadInt32();
+            this.Unknown_Ch = reader.ReadInt32();
+            this.EntriesPointer = reader.ReadInt64();
+            this.StructureLength = reader.ReadInt32();
+            this.Unknown_1Ch = reader.ReadInt16();
+            this.EntriesCount = reader.ReadInt16();
 
             // read reference data
             this.Entries = reader.ReadBlockAt<ResourceSimpleArray<StructureEntryInfo_GTA5_pc>>(
-                this.EntriesPointer, // offset
+                (uint)this.EntriesPointer, // offset
                 this.EntriesCount
             );
         }
@@ -73,12 +73,12 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.EntriesPointer = (ulong)(this.Entries != null ? this.Entries.Position : 0);
-            this.EntriesCount = (ushort)(this.Entries != null ? this.Entries.Count : 0);
+            this.EntriesPointer = this.Entries?.Position ?? 0;
+            this.EntriesCount = (short)(this.Entries?.Count ?? 0);
 
             // write structure data
-            writer.Write(this.StructureKey);
             writer.Write(this.StructureNameHash);
+            writer.Write(this.StructureKey);
             writer.Write(this.Unknown_8h);
             writer.Write(this.Unknown_Ch);
             writer.Write(this.EntriesPointer);

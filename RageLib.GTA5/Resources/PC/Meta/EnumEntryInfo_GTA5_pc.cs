@@ -30,8 +30,8 @@ namespace RageLib.Resources.GTA5.PC.Meta
         }
 
         // structure data
-        public uint EntryNameHash;
-        public int EntryValue;
+        public int EntryNameHash { get; set; }
+        public int EntryValue { get; set; }
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -39,7 +39,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.EntryNameHash = reader.ReadUInt32();
+            this.EntryNameHash = reader.ReadInt32();
             this.EntryValue = reader.ReadInt32();
         }
 

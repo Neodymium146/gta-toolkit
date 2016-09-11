@@ -21,11 +21,6 @@
 */
 
 using RageLib.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
@@ -34,12 +29,36 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
         public float X { get; set; }
         public float Y { get; set; }
         public float Z { get; set; }
+        public float Unk { get; set; }
+
+        public MetaFloat4_XYZ()
+        { }
+
+        public MetaFloat4_XYZ(float x, float y, float z)
+        {
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
+        }
 
         public void Read(DataReader reader)
         {
             this.X = reader.ReadSingle();
             this.Y = reader.ReadSingle();
             this.Z = reader.ReadSingle();
+            this.Unk = reader.ReadSingle();
+            //if (!float.IsNaN(nan))
+            //{
+            //    throw new Exception("nan should be NaN");
+            //}
+        }
+
+        public void Write(DataWriter writer)
+        {
+            writer.Write(this.X);
+            writer.Write(this.Y);
+            writer.Write(this.Z);
+            writer.Write(this.Unk);
         }
     }
 }

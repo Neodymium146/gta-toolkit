@@ -21,21 +21,29 @@
 */
 
 using RageLib.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
     public class MetaInt32_Hash : IMetaValue
     {
-        public uint Value { get; set; }
+        public int Value { get; set; }
+
+        public MetaInt32_Hash()
+        { }
+
+        public MetaInt32_Hash(int value)
+        {
+            this.Value = value;
+        }
 
         public void Read(DataReader reader)
         {
-            this.Value = reader.ReadUInt32();
+            this.Value = reader.ReadInt32();
+        }
+
+        public void Write(DataWriter writer)
+        {
+            writer.Write(this.Value);
         }
     }
 }

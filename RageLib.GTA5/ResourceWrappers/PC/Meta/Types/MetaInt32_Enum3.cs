@@ -21,21 +21,32 @@
 */
 
 using RageLib.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RageLib.Resources.GTA5.PC.Meta;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
     public class MetaInt32_Enum3 : IMetaValue
     {
+        public EnumInfo_GTA5_pc info;
         public uint Value { get; set; }
+
+        public MetaInt32_Enum3()
+        { }
+
+        public MetaInt32_Enum3(EnumInfo_GTA5_pc info, uint value)
+        {
+            this.info = info;
+            this.Value = value;
+        }
 
         public void Read(DataReader reader)
         {
             this.Value = reader.ReadUInt32();
+        }
+
+        public void Write(DataWriter writer)
+        {
+            writer.Write(this.Value);
         }
     }
 }

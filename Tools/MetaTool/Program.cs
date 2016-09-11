@@ -21,14 +21,12 @@
 */
 
 using RageLib.GTA5.ResourceWrappers.PC.Meta;
+using RageLib.GTA5.ResourceWrappers.PC.Meta.Descriptions;
 using RageLib.Hash;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace MetaTool
 {
@@ -48,15 +46,50 @@ namespace MetaTool
 
         public void Run()
         {
+            if (arguments[0].EndsWith(".xml"))
+            {
+                ConvertToMeta();
+            }
+            else
+            {
+                ConvertToXml();
+            }
+        }
+
+        private void ConvertToMeta()
+        {
+            string inputFileName = arguments[0];
+            string outputFileName = inputFileName.Replace(".xml", "");
+
+            var xml = (MetaInformationXml)null;
+            var assembly = Assembly.GetExecutingAssembly();
+            using (Stream xmlStream = assembly.GetManifestResourceStream("MetaTool.XmlInfos.xml"))
+            {
+                var ser = new XmlSerializer(typeof(MetaInformationXml));
+                xml = (MetaInformationXml)ser.Deserialize(xmlStream);
+            }
+
+            var importer = new MetaXmlImporter(xml);
+
+            var imported = importer.Import(inputFileName);
+
+            var writer = new MetaWriter();
+            writer.Write(imported, outputFileName);
+        }
+
+        private void ConvertToXml()
+        {
             string inputFileName = arguments[0];
             string outputFileName = inputFileName + ".xml";
 
             var reader = new MetaReader();
             var meta = reader.Read(inputFileName);
             var exporter = new MetaXmlExporter();
-            exporter.HashMapping = new Dictionary<uint, string>();
+            exporter.HashMapping = new Dictionary<int, string>();
             AddHashForStrings(exporter, "MetaTool.Lists.FileNames.txt");
             AddHashForStrings(exporter, "MetaTool.Lists.StructureNames.txt");
+            AddHashForStrings(exporter, "MetaTool.Lists.StructureFieldNames.txt");
+            AddHashForStrings(exporter, "MetaTool.Lists.EnumNames.txt");
             exporter.Export(meta, outputFileName);
         }
 
@@ -70,9 +103,9 @@ namespace MetaTool
                 {
                     string name = namesReader.ReadLine();
                     uint hash = Jenkins.Hash(name);
-                    if (!exporter.HashMapping.ContainsKey(hash))
+                    if (!exporter.HashMapping.ContainsKey((int)hash))
                     {
-                        exporter.HashMapping.Add(hash, name);
+                        exporter.HashMapping.Add((int)hash, name);
                     }
                 }
             }

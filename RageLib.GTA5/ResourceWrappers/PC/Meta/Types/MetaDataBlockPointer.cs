@@ -21,25 +21,41 @@
 */
 
 using RageLib.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RageLib.Resources.GTA5.PC.Meta;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
-    public class MetaInt24 : IMetaValue
+    public class MetaDataBlockPointer : IMetaValue
     {
-        public byte X1 { get; set; }
-        public byte X2 { get; set; }
-        public byte X3 { get; set; }
+        public readonly StructureEntryInfo_GTA5_pc info;
+
+        public int BlockIndex { get; set; }
+
+        public byte[] Data { get; set; }
+
+        public MetaDataBlockPointer(StructureEntryInfo_GTA5_pc info)
+        {
+            this.info = info;
+        }
+
+        public MetaDataBlockPointer(StructureEntryInfo_GTA5_pc info, byte[] data)
+        {
+            this.info = info;
+            this.Data = data;
+        }
 
         public void Read(DataReader reader)
         {
-            this.X1 = reader.ReadByte();
-            this.X2 = reader.ReadByte();
-            this.X3 = reader.ReadByte();
+            this.BlockIndex = reader.ReadInt32();
+            var unk1 = reader.ReadInt32();
+            if (unk1 != 0)
+                throw new System.Exception("4h should be 0");
+        }
+
+        public void Write(DataWriter writer)
+        {
+            writer.Write(BlockIndex);
+            writer.Write((int)0);
         }
     }
 }

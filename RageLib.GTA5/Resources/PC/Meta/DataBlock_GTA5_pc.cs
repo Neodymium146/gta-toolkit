@@ -33,12 +33,12 @@ namespace RageLib.Resources.GTA5.PC.Meta
         }
 
         // structure data
-        public uint StructureKey;
-        public uint DataLength;
-        public ulong DataPointer;
+        public int StructureNameHash { get; set; }
+        public int DataLength { get; private set; }
+        public long DataPointer { get; private set; }
 
         // reference data
-        public ResourceSimpleArray<byte_r> Data;
+        public ResourceSimpleArray<byte_r> Data { get; set; }
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -46,13 +46,13 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.StructureKey = reader.ReadUInt32();
-            this.DataLength = reader.ReadUInt32();
-            this.DataPointer = reader.ReadUInt64();
+            this.StructureNameHash = reader.ReadInt32();
+            this.DataLength = reader.ReadInt32();
+            this.DataPointer = reader.ReadInt64();
 
             // read reference data
             this.Data = reader.ReadBlockAt<ResourceSimpleArray<byte_r>>(
-                this.DataPointer, // offset
+                (ulong)this.DataPointer, // offset
                 this.DataLength
             );
         }
@@ -63,11 +63,11 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.DataLength = (uint)(this.Data != null ? this.Data.Count : 0);
-            this.DataPointer = (ulong)(this.Data != null ? this.Data.Position : 0);
+            this.DataLength = this.Data?.Count ?? 0;
+            this.DataPointer = this.Data?.Position ?? 0;
 
             // write structure data
-            writer.Write(this.StructureKey);
+            writer.Write(this.StructureNameHash);
             writer.Write(this.DataLength);
             writer.Write(this.DataPointer);
         }

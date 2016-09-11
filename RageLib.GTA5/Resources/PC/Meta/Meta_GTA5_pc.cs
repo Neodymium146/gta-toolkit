@@ -33,29 +33,29 @@ namespace RageLib.Resources.GTA5.PC.Meta
         }
 
         // structure data
-        public uint Unknown_10h; // 0x50524430
-        public ushort Unknown_14h; // 0x0079
-        public byte HasUselessData;
-        public byte Unknown_17h; // 0x00
-        public uint Unknown_18h; // 0x00000000
-        public uint Unknown_1Ch;
-        public ulong StructureInfosPointer;
-        public ulong EnumInfosPointer;
-        public ulong DataBlocksPointer;
-        public ulong NamePointer;
-        public ulong UselessPointer;
-        public ushort StructureInfosCount;
-        public ushort EnumInfosCount;
-        public ushort DataBlocksCount;
-        public ushort Unknown_4Eh; // 0x0000
-        public uint Unknown_50h; // 0x00000000
-        public uint Unknown_54h; // 0x00000000
-        public uint Unknown_58h; // 0x00000000
-        public uint Unknown_5Ch; // 0x00000000
-        public uint Unknown_60h; // 0x00000000
-        public uint Unknown_64h; // 0x00000000
-        public uint Unknown_68h; // 0x00000000
-        public uint Unknown_6Ch; // 0x00000000
+        public int Unknown_10h { get; set; } = 0x50524430;
+        public short Unknown_14h { get; set; } = 0x0079;
+        public byte HasUselessData { get; set; }
+        public byte Unknown_17h { get; set; } = 0x00;
+        public int Unknown_18h { get; set; } = 0x00000000;
+        public int RootBlockIndex { get; set; }
+        public long StructureInfosPointer { get; private set; }
+        public long EnumInfosPointer { get; private set; }
+        public long DataBlocksPointer { get; private set; }
+        public long NamePointer { get; private set; }
+        public long UselessPointer { get; private set; }
+        public short StructureInfosCount { get; private set; }
+        public short EnumInfosCount { get; private set; }
+        public short DataBlocksCount { get; private set; }
+        public short Unknown_4Eh { get; set; } = 0x0000;
+        public int Unknown_50h { get; set; } = 0x00000000;
+        public int Unknown_54h { get; set; } = 0x00000000;
+        public int Unknown_58h { get; set; } = 0x00000000;
+        public int Unknown_5Ch { get; set; } = 0x00000000;
+        public int Unknown_60h { get; set; } = 0x00000000;
+        public int Unknown_64h { get; set; } = 0x00000000;
+        public int Unknown_68h { get; set; } = 0x00000000;
+        public int Unknown_6Ch { get; set; } = 0x00000000;
 
         // reference data
         public ResourceSimpleArray<StructureInfo_GTA5_pc> StructureInfos;
@@ -71,45 +71,45 @@ namespace RageLib.Resources.GTA5.PC.Meta
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt16();
+            this.Unknown_10h = reader.ReadInt32();
+            this.Unknown_14h = reader.ReadInt16();
             this.HasUselessData = reader.ReadByte();
             this.Unknown_17h = reader.ReadByte();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
-            this.StructureInfosPointer = reader.ReadUInt64();
-            this.EnumInfosPointer = reader.ReadUInt64();
-            this.DataBlocksPointer = reader.ReadUInt64();
-            this.NamePointer = reader.ReadUInt64();
-            this.UselessPointer = reader.ReadUInt64();
-            this.StructureInfosCount = reader.ReadUInt16();
-            this.EnumInfosCount = reader.ReadUInt16();
-            this.DataBlocksCount = reader.ReadUInt16();
-            this.Unknown_4Eh = reader.ReadUInt16();
-            this.Unknown_50h = reader.ReadUInt32();
-            this.Unknown_54h = reader.ReadUInt32();
-            this.Unknown_58h = reader.ReadUInt32();
-            this.Unknown_5Ch = reader.ReadUInt32();
-            this.Unknown_60h = reader.ReadUInt32();
-            this.Unknown_64h = reader.ReadUInt32();
-            this.Unknown_68h = reader.ReadUInt32();
-            this.Unknown_6Ch = reader.ReadUInt32();
+            this.Unknown_18h = reader.ReadInt32();
+            this.RootBlockIndex = reader.ReadInt32();
+            this.StructureInfosPointer = reader.ReadInt64();
+            this.EnumInfosPointer = reader.ReadInt64();
+            this.DataBlocksPointer = reader.ReadInt64();
+            this.NamePointer = reader.ReadInt64();
+            this.UselessPointer = reader.ReadInt64();
+            this.StructureInfosCount = reader.ReadInt16();
+            this.EnumInfosCount = reader.ReadInt16();
+            this.DataBlocksCount = reader.ReadInt16();
+            this.Unknown_4Eh = reader.ReadInt16();
+            this.Unknown_50h = reader.ReadInt32();
+            this.Unknown_54h = reader.ReadInt32();
+            this.Unknown_58h = reader.ReadInt32();
+            this.Unknown_5Ch = reader.ReadInt32();
+            this.Unknown_60h = reader.ReadInt32();
+            this.Unknown_64h = reader.ReadInt32();
+            this.Unknown_68h = reader.ReadInt32();
+            this.Unknown_6Ch = reader.ReadInt32();
 
             // read reference data
             this.StructureInfos = reader.ReadBlockAt<ResourceSimpleArray<StructureInfo_GTA5_pc>>(
-                this.StructureInfosPointer, // offset
+                (ulong)this.StructureInfosPointer, // offset
                 this.StructureInfosCount
             );
             this.EnumInfos = reader.ReadBlockAt<ResourceSimpleArray<EnumInfo_GTA5_pc>>(
-                this.EnumInfosPointer, // offset
+                (ulong)this.EnumInfosPointer, // offset
                 this.EnumInfosCount
             );
             this.DataBlocks = reader.ReadBlockAt<ResourceSimpleArray<DataBlock_GTA5_pc>>(
-                this.DataBlocksPointer, // offset
+                (ulong)this.DataBlocksPointer, // offset
                 this.DataBlocksCount
             );
             this.Name = reader.ReadBlockAt<string_r>(
-                this.NamePointer // offset
+                (ulong)this.NamePointer // offset
             );
         }
 
@@ -121,14 +121,14 @@ namespace RageLib.Resources.GTA5.PC.Meta
             base.Write(writer, parameters);
 
             // update structure data
-            this.StructureInfosPointer = (ulong)(this.StructureInfos != null ? this.StructureInfos.Position : 0);
-            this.EnumInfosPointer = (ulong)(this.EnumInfos != null ? this.EnumInfos.Position : 0);
-            this.DataBlocksPointer = (ulong)(this.DataBlocks != null ? this.DataBlocks.Position : 0);
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
+            this.StructureInfosPointer = this.StructureInfos?.Position ?? 0;
+            this.EnumInfosPointer = this.EnumInfos?.Position ?? 0;
+            this.DataBlocksPointer = this.DataBlocks?.Position ?? 0;
+            this.NamePointer = this.Name?.Position ?? 0;
             this.UselessPointer = 0;
-            this.StructureInfosCount = (ushort)(this.StructureInfos != null ? this.StructureInfos.Count : 0);
-            this.EnumInfosCount = (ushort)(this.EnumInfos != null ? this.EnumInfos.Count : 0);
-            this.DataBlocksCount = (ushort)(this.DataBlocks != null ? this.DataBlocks.Count : 0);
+            this.StructureInfosCount = (short)(this.StructureInfos?.Count ?? 0);
+            this.EnumInfosCount = (short)(this.EnumInfos?.Count ?? 0);
+            this.DataBlocksCount = (short)(this.DataBlocks?.Count ?? 0);
 
             // write structure data
             writer.Write(this.Unknown_10h);
@@ -136,7 +136,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
             writer.Write(this.HasUselessData);
             writer.Write(this.Unknown_17h);
             writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
+            writer.Write(this.RootBlockIndex);
             writer.Write(this.StructureInfosPointer);
             writer.Write(this.EnumInfosPointer);
             writer.Write(this.DataBlocksPointer);

@@ -21,12 +21,7 @@
 */
 
 using RageLib.Data;
-using RageLib.Resources.GTA5.PC.Meta;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
@@ -40,11 +35,20 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 
         public void Read(DataReader reader)
         {
-            BlockIndex = reader.ReadInt16();
-            Offset = reader.ReadInt16();
-            var Unk = reader.ReadUInt32();
-            if (Unk != 0)
-            { }
+            this.BlockIndex = reader.ReadUInt16();
+            this.Offset = reader.ReadUInt16();
+            var zero_4h = reader.ReadUInt32();
+            if (zero_4h != 0)
+            {
+                throw new Exception("zero_4h should be 0");
+            }
+        }
+
+        public void Write(DataWriter writer)
+        {
+            writer.Write((ushort)BlockIndex);
+            writer.Write((ushort)Offset);
+            writer.Write((uint)0);
         }
     }
 }

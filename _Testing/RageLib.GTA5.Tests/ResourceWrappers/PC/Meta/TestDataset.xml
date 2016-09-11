@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hash_22DD6F04>
+  <hash_38C62F77>
+    <hash_36C55540 value="false" />
+    <hash_707975FF value="true" />
+    <hash_96142337 value="-128" />
+    <hash_D4D9059D value="-127" />
+    <hash_710D0955 value="126"/>
+    <hash_860ACDD8 value="127"/>
+    <hash_CDFD7789 value="0" />
+    <hash_7DCCF225 value="1" />
+    <hash_A0AB9B78 value="254" />
+    <hash_3A223898 value="255" />
+    <hash_2F07F270 value="-32768" />
+    <hash_83E5053E value="-32767" />
+    <hash_86F3BC1E value="32766" />
+    <hash_2C916F02 value="32767" />
+    <hash_1972DD39 value="0" />
+    <hash_1433E9A2 value="1" />
+    <hash_ABF22E97 value="65534" />
+    <hash_CAD920FA value="65535" />
+    <hash_96AA9C22 value="-2147483648" />
+    <hash_BE498F77 value="-2147483647" />
+    <hash_DEA66123 value="2147483646" />
+    <hash_A7A347FE value="2147483647" />
+    <hash_5940A2C4 value="0" />
+    <hash_7AE8E34B value="1" />
+    <hash_48758F24 value="4294967294" />
+    <hash_2DCCF53B value="4294967295" />
+    <hash_7C6BAA24 value="1.2" />
+    <hash_C81C39E6 value="12.0" />
+    <hash_C599B2B0 x="1.2" y="3.4" z="5.6" />
+    <hash_A2B4F045 x="12.0" y="34.0" z="56.0" />
+    <hash_E0B18333 x="1.2" y="3.4" z="5.6" w="7.8" />
+    <hash_A7E3D660 x="12.0" y="34.0" z="56.0" w="78.0" />
+    <hash_3B8AF0C2>0 1 254 255</hash_3B8AF0C2>
+    <hash_8FF34AB5>A String</hash_8FF34AB5>
+    <hash_17525AB1>hash_F63A8BC0</hash_17525AB1>
+    <hash_10D59C62 />
+  </hash_38C62F77>
+  <hash_97CC848A>
+    <hash_2300AF3B>enum_hash_B6D45EB0</hash_2300AF3B>
+    <hash_56E94C50>enum_hash_244B7640</hash_56E94C50>
+    <hash_43F0EEF4>enum_NONE</hash_43F0EEF4>
+    <hash_B4B7824B>flag_hash_EC9BDD31 flag_hash_DC2ECBE8</hash_B4B7824B>
+    <hash_1B3098A9 />
+    <hash_A51CF61E>flag_hash_F3F0428C flag_hash_28DBBD98</hash_A51CF61E>
+    <hash_11045D33 />
+    <hash_C66A7EC6>flag_hash_01769F10 flag_hash_3AFAC976</hash_C66A7EC6>
+    <hash_53C471C0>flag_index_0 flag_index_1</hash_53C471C0>
+    <hash_89D91A45 />
+  </hash_97CC848A>
+  <hash_3A5B9F33>
+    <hash_EF099C3A content="char_array">
+      0
+      1
+      254
+      255
+    </hash_EF099C3A>
+    <hash_79FE4E42 content="short_array">
+      0
+      1
+      65534
+      65535
+    </hash_79FE4E42>
+    <hash_62AFD2A7 content="int_array">
+      0
+      1
+      4294967294
+      4294967295
+    </hash_62AFD2A7>
+    <hash_8FD208FE content="float_array">
+      0.1
+      0.2
+      1000.0
+      2000.0
+    </hash_8FD208FE>
+    <hash_D094EFE2 content="vector3_array">
+      -50.0 -6.0 -30.0
+      50.0 6.0 30.0
+    </hash_D094EFE2>
+    <hash_68B43521>
+      <Item>hash_CA134811</Item>
+      <Item>hash_1AA9F061</Item>
+      <Item />
+    </hash_68B43521>
+    <hash_3A6E4591>A String</hash_3A6E4591>
+    <hash_C9811541 />
+    <hash_C8C01542>0 1 254 255</hash_C8C01542>
+    <hash_2FCAB965 />
+  </hash_3A5B9F33>
+  <hash_53663957>
+    <hash_6F004ECC>
+      <Item>
+        <hash_620795CF value="false" />
+        <hash_2518B65F value="true" />
+      </Item>
+      <Item>
+        <hash_620795CF value="true" />
+        <hash_2518B65F value="false" />
+      </Item>
+    </hash_6F004ECC>
+    <hash_8F3E7BA7>
+      <Item type="hash_2D8B6A9C">
+        <hash_04792618 value="false" />
+        <hash_D302778A value="true" />
+      </Item>
+      <Item type="hash_A71A1B09">
+        <hash_8705BF6F value="true" />
+        <hash_981F3DBC value="false" />
+      </Item>
+      <Item type="NULL" />
+    </hash_8F3E7BA7>
+  </hash_53663957>
+</hash_22DD6F04>

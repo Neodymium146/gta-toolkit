@@ -21,31 +21,65 @@
 */
 
 using RageLib.Data;
+using RageLib.Resources.GTA5.PC.Meta;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
-    public class MetaChar64 : IMetaValue
+    public class MetaArrayOfChars : IMetaValue
     {
+        public readonly StructureEntryInfo_GTA5_pc info;
+
         public string Value { get; set; }
+
+        public MetaArrayOfChars(StructureEntryInfo_GTA5_pc info)
+        {
+            this.info = info;
+        }
+
+        public MetaArrayOfChars(StructureEntryInfo_GTA5_pc inf, string value)
+        {
+            this.info = inf;
+            this.Value = value;
+        }
 
         public void Read(DataReader reader)
         {
-            var position = reader.Position;
-            for (int i = 0; i < 64; i++)
+            var valueBuilder = new StringBuilder();
+            var valueValid = true;
+            for (int i = 0; i < info.ReferenceKey; i++)
             {
                 char c = (char)reader.ReadByte();
-                if (c == 0x00)
+                if (c == 0)
                 {
-                    break;
+                    valueValid = false;
                 }
-                Value += c;                
+                if (valueValid)
+                {
+                    valueBuilder.Append((char)c);
+                }
+                else
+                {
+                    if (c != 0)
+                    {
+                        throw new Exception("c should be 0");
+                    }
+                }
             }
-            reader.Position = position + 64;
+            this.Value = valueBuilder.ToString();
+        }
+
+        public void Write(DataWriter writer)
+        {
+            for (int i = 0; i < Value.Length; i++)
+            {
+                writer.Write((byte)Value[i]);
+            }
+            for (int i = Value.Length; i < info.ReferenceKey; i++)
+            {
+                writer.Write((byte)0);
+            }
         }
     }
 }

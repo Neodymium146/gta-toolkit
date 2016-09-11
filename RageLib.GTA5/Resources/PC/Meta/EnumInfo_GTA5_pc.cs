@@ -33,11 +33,11 @@ namespace RageLib.Resources.GTA5.PC.Meta
         }
 
         // structure data
-        public uint EnumKey;
-        public uint EnumNameHash;
-        public ulong EntriesPointer;
-        public uint EntriesCount;
-        public uint Unknown_14h; // 0x00000000
+        public int EnumNameHash { get; set; }
+        public int EnumKey { get; set; }
+        public long EntriesPointer { get; private set; }
+        public int EntriesCount { get; private set; }
+        public int Unknown_14h { get; set; } = 0x00000000;
 
         // reference data
         public ResourceSimpleArray<EnumEntryInfo_GTA5_pc> Entries;
@@ -48,15 +48,15 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.EnumKey = reader.ReadUInt32();
-            this.EnumNameHash = reader.ReadUInt32();
-            this.EntriesPointer = reader.ReadUInt64();
-            this.EntriesCount = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
+            this.EnumNameHash = reader.ReadInt32();
+            this.EnumKey = reader.ReadInt32();
+            this.EntriesPointer = reader.ReadInt64();
+            this.EntriesCount = reader.ReadInt32();
+            this.Unknown_14h = reader.ReadInt32();
 
             // read reference data
             this.Entries = reader.ReadBlockAt<ResourceSimpleArray<EnumEntryInfo_GTA5_pc>>(
-                this.EntriesPointer, // offset
+                (ulong)this.EntriesPointer, // offset
                 this.EntriesCount
             );
         }
@@ -67,12 +67,12 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.EntriesPointer = (ulong)(this.Entries != null ? this.Entries.Position : 0);
-            this.EntriesCount = (uint)(this.Entries != null ? this.Entries.Count : 0);
+            this.EntriesPointer = this.Entries?.Position ?? 0;
+            this.EntriesCount = this.Entries?.Count ?? 0;
 
             // write structure data
-            writer.Write(this.EnumKey);
             writer.Write(this.EnumNameHash);
+            writer.Write(this.EnumKey);
             writer.Write(this.EntriesPointer);
             writer.Write(this.EntriesCount);
             writer.Write(this.Unknown_14h);
