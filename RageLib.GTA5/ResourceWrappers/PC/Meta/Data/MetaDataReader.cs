@@ -21,21 +21,13 @@
 */
 
 using RageLib.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
+namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Data
 {
-    public class MetaInt64 : IMetaValue
+    public class MetaDataReader : DataReader
     {
-        public long Value { get; set; }
-
-        public void Read(DataReader reader)
+        public MetaDataReader() : base(null, Endianess.LittleEndian)
         {
-            this.Value = reader.ReadInt64();
         }
     }
 }

@@ -22,10 +22,6 @@
 
 using RageLib.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
@@ -33,19 +29,53 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
     {
         public int DataBlockIndex { get; set; }
         public int DataOffset { get; set; }
-        public int Length { get; set; }
+        public int StringLength { get; set; }
+        public int StringCapacity { get; set; }
 
         // Reference values
         public string Value { get; set; }
 
+        public MetaCharPointer()
+        { }
+
+        public MetaCharPointer(string value)
+        {
+            this.Value = value;
+        }
+
         public void Read(DataReader reader)
         {
-            var yyy = reader.ReadUInt32();
-            DataBlockIndex = (int)(yyy & 0x00000FFF);
-            DataOffset = (int)((yyy & 0xFFFFF000) >> 12);
-            var pp = reader.ReadUInt32();
-            Length = reader.ReadUInt16();
-            var yy = reader.ReadUInt32();
+            var blockIndexAndOffset = reader.ReadUInt32();
+            this.DataBlockIndex = (int)(blockIndexAndOffset & 0x00000FFF);
+            this.DataOffset = (int)((blockIndexAndOffset & 0xFFFFF000) >> 12);
+            var zero_4h = reader.ReadUInt32();
+            if (zero_4h != 0)
+            {
+                throw new Exception("zero_4h should be 0");
+            }
+            var size1 = reader.ReadUInt16();
+            var size2 = reader.ReadUInt16();
+            if ((size1 != 0 || size2 != 0) && (size1 != size2 - 1))
+            {
+                throw new Exception("size1 should be size2");
+            }
+            this.StringLength = size1;
+            this.StringCapacity = size2;
+            var zero_Ch = reader.ReadUInt32();
+            if (zero_Ch != 0)
+            {
+                throw new Exception("zero_Ch should be 0");
+            }
+        }
+
+        public void Write(DataWriter writer)
+        {
+            uint blockIndexAndOffset = (uint)DataBlockIndex | ((uint)DataOffset << 12);
+            writer.Write(blockIndexAndOffset);
+            writer.Write((uint)0);
+            writer.Write((ushort)StringLength);
+            writer.Write((ushort)(StringCapacity));
+            writer.Write((uint)0);
         }
     }
 }

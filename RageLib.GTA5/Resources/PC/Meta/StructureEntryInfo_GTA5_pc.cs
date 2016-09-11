@@ -25,28 +25,28 @@ namespace RageLib.Resources.GTA5.PC.Meta
     public enum StructureEntryDataType : byte
     {
         Boolean = 0x01,
-        Byte_A = 0x10,
-        Byte_B = 0x11,
-        Byte_Enum = 0x60,
-        Int16_A = 0x12,
-        Int16_B = 0x13,
-        Int16_Enum = 0x64,
-        Int24 = 0x50,
-        Int32_A = 0x14,
-        Int32_B = 0x15,
-        Int32_Enum1 = 0x62,
-        Int32_Enum2 = 0x63,
-        Int32_Enum3 = 0x65,
-        Int32_Hash = 0x4A,
-        Float = 0x21,
-        Int64 = 0x59,
-        Float4_XYZ = 0x33,
-        Float4_XYZW = 0x34,
-        Char64 = 0x40,
-        Generic = 0x07,
+        SignedByte = 0x10,
+        UnsignedByte = 0x11, // OCCURS IN ARRAY
+        SignedShort = 0x12,
+        UnsignedShort = 0x13, // OCCURS IN ARRAY
+        SignedInt = 0x14,
+        UnsignedInt = 0x15, // OCCURS IN ARRAY
+        Float = 0x21, // OCCURS IN ARRAY
+        Float_XYZ = 0x33, // OCCURS IN ARRAY
+        Float_XYZW = 0x34,
+        ByteEnum = 0x60, // has enum name hash in info
+        IntEnum = 0x62, // has enum name hash in info
+        ShortFlags = 0x64, // has enum name hash in info     
+        IntFlags1 = 0x63, // has enum name hash in info
+        IntFlags2 = 0x65, // has enum name hash in info (optional?)
+        Hash = 0x4A, // OCCURS IN ARRAY
         Array = 0x52,
+        ArrayOfChars = 0x40, // has length in info
+        ArrayOfBytes = 0x50, // has length in info
+        DataBlockPointer = 0x59,
         CharPointer = 0x44,
-        Structure = 0x05
+        StructurePointer = 0x07, // OCCURS IN ARRAY
+        Structure = 0x05 // has structure name hash in info, OCCURS IN ARRAY
     }
 
     public class StructureEntryInfo_GTA5_pc : ResourceSystemBlock
@@ -57,12 +57,12 @@ namespace RageLib.Resources.GTA5.PC.Meta
         }
 
         // structure data
-        public uint EntryNameHash;
-        public uint DataOffset;
-        public StructureEntryDataType DataType;
-        public byte Unknown_9h;
-        public ushort ReferenceTypeIndex;
-        public uint ReferenceKey;
+        public int EntryNameHash { get; set; }
+        public int DataOffset { get; set; }
+        public StructureEntryDataType DataType { get; set; }
+        public byte Unknown_9h { get; set; }
+        public short ReferenceTypeIndex { get; set; }
+        public int ReferenceKey { get; set; }
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -70,12 +70,12 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.EntryNameHash = reader.ReadUInt32();
-            this.DataOffset = reader.ReadUInt32();
+            this.EntryNameHash = reader.ReadInt32();
+            this.DataOffset = reader.ReadInt32();
             this.DataType = (StructureEntryDataType)reader.ReadByte();
             this.Unknown_9h = reader.ReadByte();
-            this.ReferenceTypeIndex = reader.ReadUInt16();
-            this.ReferenceKey = reader.ReadUInt32();
+            this.ReferenceTypeIndex = reader.ReadInt16();
+            this.ReferenceKey = reader.ReadInt32();
         }
 
         /// <summary>

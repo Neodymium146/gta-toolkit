@@ -21,17 +21,13 @@
 */
 
 using RageLib.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
     public interface IMetaValue
     {
         void Read(DataReader reader);
+        void Write(DataWriter writer);
     }
 
     public delegate IMetaValue CreateMetaValueDelegate();

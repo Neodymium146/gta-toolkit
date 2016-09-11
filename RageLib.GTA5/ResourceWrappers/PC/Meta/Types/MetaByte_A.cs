@@ -21,21 +21,29 @@
 */
 
 using RageLib.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
     public class MetaByte_A : IMetaValue
     {
-        public byte Value { get; set; }
+        public sbyte Value { get; set; }
+
+        public MetaByte_A()
+        { }
+
+        public MetaByte_A(sbyte value)
+        {
+            this.Value = value;
+        }
 
         public void Read(DataReader reader)
         {
-            this.Value = reader.ReadByte();
+            this.Value = unchecked((sbyte)reader.ReadByte());
+        }
+
+        public void Write(DataWriter writer)
+        {
+            writer.Write(unchecked((byte)this.Value));
         }
     }
 }

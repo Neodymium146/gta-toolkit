@@ -21,11 +21,6 @@
 */
 
 using RageLib.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
@@ -36,12 +31,31 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
         public float Z { get; set; }
         public float W { get; set; }
 
+        public MetaFloat4_XYZW()
+        { }
+
+        public MetaFloat4_XYZW(float x, float y, float z, float w)
+        {
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
+            this.W = w;
+        }
+
         public void Read(DataReader reader)
         {
             this.X = reader.ReadSingle();
             this.Y = reader.ReadSingle();
             this.Z = reader.ReadSingle();
             this.W = reader.ReadSingle();
+        }
+
+        public void Write(DataWriter writer)
+        {
+            writer.Write(this.X);
+            writer.Write(this.Y);
+            writer.Write(this.Z);
+            writer.Write(this.W);
         }
     }
 }
