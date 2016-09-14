@@ -168,6 +168,7 @@ assetName
 audioId
 rotation
 normal
+archetypeName
 guid
 position
 InteriorNames
