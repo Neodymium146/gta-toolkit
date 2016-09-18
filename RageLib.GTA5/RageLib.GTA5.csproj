@@ -319,6 +319,7 @@
     <Compile Include="ResourceWrappers\PC\Textures\TextureWrapper_GTA5_pc.cs" />
     <Compile Include="Utilities\ArchiveUtilities.cs" />
     <Compile Include="Utilities\FileUtilities.cs" />
+    <Compile Include="Utilities\MetaUtilities.cs" />
     <Compile Include="Utilities\RebuildUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
