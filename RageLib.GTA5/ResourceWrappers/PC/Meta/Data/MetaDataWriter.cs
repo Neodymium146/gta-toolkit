@@ -94,6 +94,12 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Data
             this.blockIndex = -1;
         }
 
+        public MetaDataWriter(Endianess e) : base(null, e)
+        {
+            this.blocks = new List<MetaDataBlock>();
+            this.blockIndex = -1;
+        }
+
         protected override void WriteToStream(byte[] value, bool ignoreEndianess = true)
         {
             var currentStream = blocks[BlockIndex].Stream;

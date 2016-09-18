@@ -80,7 +80,7 @@ namespace RageLib.Data
         /// Writes data to the underlying stream. This is the only method that directly accesses
         /// the data in the underlying stream.
         /// </summary>
-        protected virtual void WriteToStream(byte[] value, bool ignoreEndianess = true)
+        protected virtual void WriteToStream(byte[] value, bool ignoreEndianess = false)
         {
             if (!ignoreEndianess && (Endianess == Endianess.BigEndian))
             {

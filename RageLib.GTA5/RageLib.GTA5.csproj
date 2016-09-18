@@ -47,6 +47,28 @@
     <Compile Include="Cryptography\GTA5Hash.cs" />
     <Compile Include="Cryptography\Helpers\CryptoIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PSOWrappers\PsoReader.cs" />
+    <Compile Include="PSOWrappers\PsoWriter.cs" />
+    <Compile Include="PSOWrappers\PsoXmlExporter.cs" />
+    <Compile Include="PSOWrappers\PsoXmlImporter.cs" />
+    <Compile Include="PSOWrappers\Types\IPsoValue.cs" />
+    <Compile Include="PSOWrappers\Types\PsoArray.cs" />
+    <Compile Include="PSOWrappers\Types\PsoStructure.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType11.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType14.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType0.cs" />
+    <Compile Include="PSOWrappers\Types\PsoFloat.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType21.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType2.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType5.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType15.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType16.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType6.cs" />
+    <Compile Include="PSOWrappers\Xml\PsoDefinitionXml.cs" />
+    <Compile Include="PSO\PsoFile.cs" />
+    <Compile Include="PSO\PsoDataMappingSection.cs" />
+    <Compile Include="PSO\PsoDefinitionSection.cs" />
+    <Compile Include="PSO\PsoDataSection.cs" />
     <Compile Include="Resources\Common\FileBase64_GTA5_pc.cs" />
     <Compile Include="Resources\Common\PagesInfo_GTA5_pc.cs" />
     <Compile Include="Resources\Common\RAGE_AABB.cs" />
@@ -305,6 +327,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ResourceWrappers\PC\Meta\Definitions\XmlInfos.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PSOWrappers\Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PSOWrappers\Xml\PsoDefinitions.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

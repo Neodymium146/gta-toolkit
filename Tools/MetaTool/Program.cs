@@ -20,9 +20,12 @@
     THE SOFTWARE.
 */
 
+using RageLib.GTA5.PSOWrappers;
+using RageLib.GTA5.PSOWrappers.Xml;
 using RageLib.GTA5.ResourceWrappers.PC.Meta;
 using RageLib.GTA5.ResourceWrappers.PC.Meta.Descriptions;
 using RageLib.Hash;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -46,17 +49,35 @@ namespace MetaTool
 
         public void Run()
         {
-            if (arguments[0].EndsWith(".xml"))
+            if (arguments[0].EndsWith(".ymap.xml") ||
+                arguments[0].EndsWith(".ytyp.xml") ||
+                arguments[0].EndsWith(".ymt.xml"))
             {
-                ConvertToMeta();
+                ConvertToMetaResource();
+            }
+            else if (arguments[0].EndsWith(".ymf.xml"))
+            {
+                ConvertToMetaPso();
+            }
+            else if (arguments[0].EndsWith(".ymap") ||
+                   arguments[0].EndsWith(".ytyp") ||
+                   arguments[0].EndsWith(".ymt"))
+            {
+
+                ConvertResourceToXml();
+            }
+            else if (arguments[0].EndsWith(".ymf"))
+            {
+                ConvertPsoToXml();
             }
             else
             {
-                ConvertToXml();
+                Console.WriteLine("Unsupported file extension.");
+                Console.ReadLine();
             }
         }
 
-        private void ConvertToMeta()
+        private void ConvertToMetaResource()
         {
             string inputFileName = arguments[0];
             string outputFileName = inputFileName.Replace(".xml", "");
@@ -77,7 +98,24 @@ namespace MetaTool
             writer.Write(imported, outputFileName);
         }
 
-        private void ConvertToXml()
+        private void ConvertToMetaPso()
+        {
+            string inputFileName = arguments[0];
+            string outputFileName = inputFileName.Replace(".xml", "");
+
+            var xml = (PsoDefinitionXml)null;
+            var assembly = Assembly.GetExecutingAssembly();
+            using (Stream xmlStream = assembly.GetManifestResourceStream("MetaTool.PsoDefinitions.xml"))
+            {
+                var ser = new XmlSerializer(typeof(PsoDefinitionXml));
+                xml = (PsoDefinitionXml)ser.Deserialize(xmlStream);
+            }
+
+            var imported = new PsoXmlImporter(xml).Import(inputFileName);
+            new PsoWriter().Write(imported, outputFileName);
+        }
+
+        private void ConvertResourceToXml()
         {
             string inputFileName = arguments[0];
             string outputFileName = inputFileName + ".xml";
@@ -93,7 +131,41 @@ namespace MetaTool
             exporter.Export(meta, outputFileName);
         }
 
+        private void ConvertPsoToXml()
+        {
+            string inputFileName = arguments[0];
+            string outputFileName = inputFileName + ".xml";
+
+            var reader = new PsoReader();
+            var meta = reader.Read(inputFileName);
+            var exporter = new PsoXmlExporter();
+            exporter.HashMapping = new Dictionary<int, string>();
+            AddHashForStrings(exporter, "MetaTool.Lists.FileNames.txt");
+            AddHashForStrings(exporter, "MetaTool.Lists.StructureNames.txt");
+            AddHashForStrings(exporter, "MetaTool.Lists.StructureFieldNames.txt");
+            AddHashForStrings(exporter, "MetaTool.Lists.EnumNames.txt");
+            exporter.Export(meta, outputFileName);
+        }
+
         private void AddHashForStrings(MetaXmlExporter exporter, string resourceFileName)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            using (Stream namesStream = assembly.GetManifestResourceStream(resourceFileName))
+            using (StreamReader namesReader = new StreamReader(namesStream))
+            {
+                while (!namesReader.EndOfStream)
+                {
+                    string name = namesReader.ReadLine();
+                    uint hash = Jenkins.Hash(name);
+                    if (!exporter.HashMapping.ContainsKey((int)hash))
+                    {
+                        exporter.HashMapping.Add((int)hash, name);
+                    }
+                }
+            }
+        }
+
+        private void AddHashForStrings(PsoXmlExporter exporter, string resourceFileName)
         {
             var assembly = Assembly.GetExecutingAssembly();
             using (Stream namesStream = assembly.GetManifestResourceStream(resourceFileName))
