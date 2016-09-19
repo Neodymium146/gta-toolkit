@@ -125,9 +125,7 @@ namespace MetaTool
             var exporter = new MetaXmlExporter();
             exporter.HashMapping = new Dictionary<int, string>();
             AddHashForStrings(exporter, "MetaTool.Lists.FileNames.txt");
-            AddHashForStrings(exporter, "MetaTool.Lists.StructureNames.txt");
-            AddHashForStrings(exporter, "MetaTool.Lists.StructureFieldNames.txt");
-            AddHashForStrings(exporter, "MetaTool.Lists.EnumNames.txt");
+            AddHashForStrings(exporter, "MetaTool.Lists.MetaNames.txt");
             exporter.Export(meta, outputFileName);
         }
 
@@ -141,9 +139,7 @@ namespace MetaTool
             var exporter = new PsoXmlExporter();
             exporter.HashMapping = new Dictionary<int, string>();
             AddHashForStrings(exporter, "MetaTool.Lists.FileNames.txt");
-            AddHashForStrings(exporter, "MetaTool.Lists.StructureNames.txt");
-            AddHashForStrings(exporter, "MetaTool.Lists.StructureFieldNames.txt");
-            AddHashForStrings(exporter, "MetaTool.Lists.EnumNames.txt");
+            AddHashForStrings(exporter, "MetaTool.Lists.MetaNames.txt");
             exporter.Export(meta, outputFileName);
         }
 

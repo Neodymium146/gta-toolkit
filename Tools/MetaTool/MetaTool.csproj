@@ -64,11 +64,7 @@
     <EmbeddedResource Include="Lists\FileNames.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Lists\StructureNames.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Lists\EnumNames.txt" />
-    <EmbeddedResource Include="Lists\StructureFieldNames.txt" />
+    <EmbeddedResource Include="Lists\MetaNames.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="XmlInfos.xml" />
