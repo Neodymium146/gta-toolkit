@@ -58,6 +58,8 @@ archetypeName
 archetypes
 areas
 assetName
+assetType
+AT_TXD
 AUDIO_DYNAMIXDATA
 AUDIO_GAMEDATA
 AUDIO_SOUNDDATA
@@ -500,6 +502,7 @@ CGrabHelper__Tunables
 Chances
 changeSetName
 chassis
+CHDTxdAssetBinding
 childName
 children
 CLegIkSolver__Tunables
@@ -565,6 +568,7 @@ CONTENTS_PROPS
 CONTENTS_VEHICLES
 Context
 corners
+CPackFileMetaData
 CPedCompExpressionData
 CPedModelInfo__InitDataList
 CPedModelInfo__PersonalityDataList
@@ -953,6 +957,8 @@ guid
 HANDLING_FILE
 hash
 HDDist
+HDTxd
+HDTxdBindingArray
 Heading
 HeadingLimits
 headLight
@@ -972,9 +978,12 @@ identifier
 Idle
 IdleTransitionBlendOutTime
 IdleTransitions
+ids
 IgnoreMaxInRange
 IgnoreOpenDoorTaskEdgeLerp
 IgnorePavementChecks
+imapDependencies
+imapDependencies_2
 IN_VEHICLE
 includedDataFiles
 includedXmlFiles
@@ -996,12 +1005,14 @@ IntensityVar
 interior
 INTERIOR_PROXY_ORDER_FILE
 InteriorNames
+Interiors
 IPL_FILE
 iRadius
 IsHeadBlendPed
 iSinZ
 IsStreamedGfx
 Item
+itypDependencies_2
 iType
 JUNCTION_TEMPLATES_FILE
 JUNCTION_TEMPLATES_PSO_FILE
@@ -1039,7 +1050,9 @@ LODTYPES_DEPTH_HD
 LODTYPES_DEPTH_SLOD1
 LODTYPES_DEPTH_SLOD2
 mapChangeSetData
+MapDataGroups
 MAPZONES_FILE
+maskID
 MassMultiplier
 MATERIALFX_FILE
 max
@@ -1187,11 +1200,20 @@ PED_METADATA_FILE
 PED_OVERLAY_FILE
 PED_PERSONALITY_FILE
 PedCapsuleName
+pedCompExpressionIndex
+pedCompExpressions
+pedcompID
+pedCompID
 PedComponentClothName
 PedComponentSetName
+pedCompVarIndex
 PedIKSettingsName
 PedLayoutName
 PedPersonalities
+pedPropExpressionIndex
+pedPropExpressions
+pedPropID
+pedPropVarIndex
 Peds
 PedScale
 PEDSTREAM_FILE
@@ -1382,6 +1404,8 @@ Settings
 Sexiness
 SF_HOT_PERSON
 SF_JEER_AT_HOT_PED
+shaderVariableComponents
+shaderVariableHashString
 shadowBlur
 shockingEventAudioRangeOverride
 shockingEventVisualRangeOverride
@@ -1475,6 +1499,7 @@ tailLightCorona
 tailLightMiddleCorona
 tangent
 Target
+targetAsset
 TargetingThreatModifier
 TargetOffset
 TargetRadius
@@ -1498,6 +1523,7 @@ timeCycleModifiers
 timeTillPedLeaves
 top
 TorqueAngularVelocityLimit
+tracks
 TRAILER
 TRAINCONFIGS_FILE
 TRAINTRACK_FILE
