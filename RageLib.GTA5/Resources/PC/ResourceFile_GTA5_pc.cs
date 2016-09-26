@@ -21,7 +21,6 @@
 */
 
 using RageLib.Data;
-using RageLib.Resources.GTA5.PC.Textures;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,6 +30,7 @@ namespace RageLib.Resources.GTA5
 {
     public class ResourceFile_GTA5_pc : IResourceFile
     {
+        protected const int RESOURCE_IDENT = 0x37435352;
         protected const int BASE_SIZE = 0x2000;
 
         public int Version { get; set; }
@@ -175,6 +175,16 @@ namespace RageLib.Resources.GTA5
             deflateStream.Write(GraphicsData, 0, GraphicsData.Length);
             deflateStream.Flush();
             deflateStream.Close();
+        }
+
+        public static bool IsResourceFile(string fileName)
+        {
+            using (var fileStream = new FileStream(fileName, FileMode.Open))
+            {
+                var reader = new DataReader(fileStream);
+                var ident = reader.ReadInt32();
+                return ident == RESOURCE_IDENT;
+            }
         }
     }
 

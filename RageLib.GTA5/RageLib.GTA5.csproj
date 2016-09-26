@@ -51,6 +51,17 @@
     <Compile Include="Cryptography\GTA5Hash.cs" />
     <Compile Include="Cryptography\Helpers\CryptoIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+	<Compile Include="RBFWrappers\RbfXmlExporter.cs" />
+    <Compile Include="RBF\RbfFile.cs" />
+    <Compile Include="RBF\Types\IRbfType.cs" />
+    <Compile Include="RBF\Types\RbfFloat.cs" />
+    <Compile Include="RBF\Types\RbfString.cs" />
+    <Compile Include="RBF\Types\RbfStructure.cs" />
+    <Compile Include="RBF\RbfType.cs" />
+    <Compile Include="RBF\Types\RbfBytes.cs" />
+    <Compile Include="RBF\Types\RbfUint32.cs" />
+    <Compile Include="RBF\Types\RbfBoolean.cs" />
+    <Compile Include="RBF\Types\RbfFloat3.cs" />
     <Compile Include="PSOWrappers\PsoReader.cs" />
     <Compile Include="PSOWrappers\PsoWriter.cs" />
     <Compile Include="PSOWrappers\PsoXmlExporter.cs" />

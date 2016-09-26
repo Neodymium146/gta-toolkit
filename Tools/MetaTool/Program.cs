@@ -22,9 +22,12 @@
 
 using RageLib.GTA5.PSOWrappers;
 using RageLib.GTA5.PSOWrappers.Xml;
+using RageLib.GTA5.RBF;
+using RageLib.GTA5.RBFWrappers;
 using RageLib.GTA5.ResourceWrappers.PC.Meta;
 using RageLib.GTA5.ResourceWrappers.PC.Meta.Descriptions;
 using RageLib.Hash;
+using RageLib.Resources.GTA5;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,22 +52,41 @@ namespace MetaTool
 
         public void Run()
         {
-            if (arguments[0].EndsWith(".ymap.xml") ||
-                arguments[0].EndsWith(".ytyp.xml") ||
-                arguments[0].EndsWith(".ymt.xml"))
+            if (arguments.Length > 0)
             {
-                ConvertToMetaResource();
+                Convert();
+            }
+            else
+            {
+                Console.WriteLine("No input file specified.");
+                Console.ReadLine();
+            }
+        }
+
+        private void Convert()
+        {
+            if (arguments[0].EndsWith(".ymap.xml") ||
+             arguments[0].EndsWith(".ytyp.xml") ||
+             arguments[0].EndsWith(".ymt.xml"))
+            {
+                ConvertXmlToResource();
             }
             else if (arguments[0].EndsWith(".ymf.xml"))
             {
-                ConvertToMetaPso();
+                ConvertXmlToPso();
             }
             else if (arguments[0].EndsWith(".ymap") ||
                    arguments[0].EndsWith(".ytyp") ||
                    arguments[0].EndsWith(".ymt"))
             {
-
-                ConvertResourceToXml();
+                if (ResourceFile_GTA5_pc.IsResourceFile(arguments[0]))
+                {
+                    ConvertResourceToXml();
+                }
+                else 
+                {
+                    ConvertRbfToXml();
+                }                
             }
             else if (arguments[0].EndsWith(".ymf"))
             {
@@ -72,12 +94,12 @@ namespace MetaTool
             }
             else
             {
-                Console.WriteLine("Unsupported file extension.");
+                Console.WriteLine("No supported file name specified.");
                 Console.ReadLine();
             }
         }
 
-        private void ConvertToMetaResource()
+        private void ConvertXmlToResource()
         {
             string inputFileName = arguments[0];
             string outputFileName = inputFileName.Replace(".xml", "");
@@ -98,7 +120,7 @@ namespace MetaTool
             writer.Write(imported, outputFileName);
         }
 
-        private void ConvertToMetaPso()
+        private void ConvertXmlToPso()
         {
             string inputFileName = arguments[0];
             string outputFileName = inputFileName.Replace(".xml", "");
@@ -141,6 +163,15 @@ namespace MetaTool
             AddHashForStrings(exporter, "MetaTool.Lists.FileNames.txt");
             AddHashForStrings(exporter, "MetaTool.Lists.MetaNames.txt");
             exporter.Export(meta, outputFileName);
+        }
+
+        private void ConvertRbfToXml()
+        {
+            string inputFileName = arguments[0];
+            string outputFileName = inputFileName + ".rbf.xml";
+
+            var rbf = new RbfFile().Load(inputFileName);
+            new RbfXmlExporter().Export(rbf, outputFileName);
         }
 
         private void AddHashForStrings(MetaXmlExporter exporter, string resourceFileName)
