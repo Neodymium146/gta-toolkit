@@ -146,8 +146,12 @@ namespace MetaTool
             var meta = reader.Read(inputFileName);
             var exporter = new PsoXmlExporter();
             exporter.HashMapping = new Dictionary<int, string>();
+            AddHashForStrings(exporter, "MetaTool.Lists.PsoTypeNames.txt");
+            AddHashForStrings(exporter, "MetaTool.Lists.PsoFieldNames.txt");
+            AddHashForStrings(exporter, "MetaTool.Lists.PsoEnumValues.txt");
+            AddHashForStrings(exporter, "MetaTool.Lists.PsoCommon.txt");
             AddHashForStrings(exporter, "MetaTool.Lists.FileNames.txt");
-            AddHashForStrings(exporter, "MetaTool.Lists.MetaNames.txt");
+            AddHashForStrings(exporter, "MetaTool.Lists.PsoCollisions.txt");
             exporter.Export(meta, outputFileName);
         }
 
