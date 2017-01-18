@@ -21,29 +21,31 @@
 */
 
 using RageLib.Data;
+using RageLib.GTA5.PSOWrappers.Data;
+using System;
 
 namespace RageLib.GTA5.PSOWrappers.Types
 {
-    public class PsoType15 : IPsoValue
+    public class PsoString7 : IPsoValue
     {
         public int Value { get; set; }
 
-        public PsoType15()
+        public PsoString7()
         { }
 
-        public PsoType15(int value)
+        public PsoString7(int value)
         {
             this.Value = value;
         }
 
-        public void Read(DataReader reader)
+        public void Read(PsoDataReader reader)
         {
-            this.Value = reader.ReadInt32();
+            Value = reader.ReadInt32();          
         }
 
         public void Write(DataWriter writer)
         {
-            writer.Write(this.Value);
+
         }
     }
 }

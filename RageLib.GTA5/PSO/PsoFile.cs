@@ -101,6 +101,12 @@ namespace RageLib.GTA5.PSO
 
 
 
+        public static bool IsPSO(string fileName)
+        {
+            using (var stream = new FileStream(fileName, FileMode.Open))
+                return !IsRBF(stream);
+        }
+
         public static bool IsPSO(Stream stream)
         {
             return !IsRBF(stream);

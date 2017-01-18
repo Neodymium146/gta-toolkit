@@ -20,6 +20,7 @@
     THE SOFTWARE.
 */
 
+using RageLib.GTA5.PSO;
 using RageLib.GTA5.PSOWrappers;
 using RageLib.GTA5.PSOWrappers.Xml;
 using RageLib.GTA5.RBF;
@@ -54,6 +55,8 @@ namespace MetaTool
         {
             if (arguments.Length > 0)
             {
+
+
                 Convert();
             }
             else
@@ -71,10 +74,6 @@ namespace MetaTool
             {
                 ConvertXmlToResource();
             }
-            else if (arguments[0].EndsWith(".ymf.xml"))
-            {
-                ConvertXmlToPso();
-            }
             else if (arguments[0].EndsWith(".ymap") ||
                    arguments[0].EndsWith(".ytyp") ||
                    arguments[0].EndsWith(".ymt"))
@@ -83,10 +82,14 @@ namespace MetaTool
                 {
                     ConvertResourceToXml();
                 }
-                else 
+                else if (PsoFile.IsPSO(arguments[0]))
+                {
+                    ConvertPsoToXml();
+                }
+                else
                 {
                     ConvertRbfToXml();
-                }                
+                }
             }
             else if (arguments[0].EndsWith(".ymf"))
             {
@@ -119,24 +122,7 @@ namespace MetaTool
             var writer = new MetaWriter();
             writer.Write(imported, outputFileName);
         }
-
-        private void ConvertXmlToPso()
-        {
-            string inputFileName = arguments[0];
-            string outputFileName = inputFileName.Replace(".xml", "");
-
-            var xml = (PsoDefinitionXml)null;
-            var assembly = Assembly.GetExecutingAssembly();
-            using (Stream xmlStream = assembly.GetManifestResourceStream("MetaTool.PsoDefinitions.xml"))
-            {
-                var ser = new XmlSerializer(typeof(PsoDefinitionXml));
-                xml = (PsoDefinitionXml)ser.Deserialize(xmlStream);
-            }
-
-            var imported = new PsoXmlImporter(xml).Import(inputFileName);
-            new PsoWriter().Write(imported, outputFileName);
-        }
-
+        
         private void ConvertResourceToXml()
         {
             string inputFileName = arguments[0];
@@ -154,7 +140,7 @@ namespace MetaTool
         private void ConvertPsoToXml()
         {
             string inputFileName = arguments[0];
-            string outputFileName = inputFileName + ".xml";
+            string outputFileName = inputFileName + ".pso.xml";
 
             var reader = new PsoReader();
             var meta = reader.Read(inputFileName);

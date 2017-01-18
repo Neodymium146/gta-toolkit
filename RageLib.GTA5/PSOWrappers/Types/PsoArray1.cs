@@ -22,54 +22,41 @@
 
 using RageLib.Data;
 using RageLib.GTA5.PSO;
-using System;
+using RageLib.GTA5.PSOWrappers.Data;
 using System.Collections.Generic;
 
 namespace RageLib.GTA5.PSOWrappers.Types
 {
-    public class PsoArray : IPsoValue
+    public class PsoArray1 : IPsoValue
     {
-        public PsoStructureEntryInfo psoSection;
-
-        public int BlockIndex { get; set; }
-        public int Offset { get; set; }
-        public int NumberOfEntries { get; set; }
-
-        // Reference values
+        public readonly PsoFile pso;
+        public readonly PsoStructureInfo structureInfo;
+        public readonly PsoStructureEntryInfo entryInfo;
+        public readonly int numberOfEntries;
         public List<IPsoValue> Entries { get; set; }
 
-        public void Read(DataReader reader)
+        public PsoArray1(PsoFile pso, PsoStructureInfo structureInfo, PsoStructureEntryInfo entryInfo, int numberOfEntries)
         {
-            var blockIndexAndOffset = reader.ReadUInt32();
-            this.BlockIndex = (int)(blockIndexAndOffset & 0x00000FFF);
-            this.Offset = (int)((blockIndexAndOffset & 0xFFFFF000) >> 12);
-            var zero_4h = reader.ReadUInt32();
-            if (zero_4h != 0)
+            this.pso = pso;
+            this.structureInfo = structureInfo;
+            this.entryInfo = entryInfo;
+            this.numberOfEntries = numberOfEntries;
+        }
+
+        public void Read(PsoDataReader reader)
+        {
+            Entries = new List<IPsoValue>();
+            for (int i = 0; i < numberOfEntries; i++)
             {
-                throw new Exception("zero_4h should be 0");
-            }
-            var size1 = reader.ReadUInt16();
-            var size2 = reader.ReadUInt16();
-            if (size1 != size2)
-            {
-                throw new Exception("size1 should be size2");
-            }
-            this.NumberOfEntries = size1;
-            var zero_Ch = reader.ReadUInt32();
-            if (zero_Ch != 0)
-            {
-                throw new Exception("zero_Ch should be 0");
+                var entry = PsoTypeBuilder.Make(pso, structureInfo, entryInfo);
+                entry.Read(reader);
+                Entries.Add(entry);
             }
         }
 
         public void Write(DataWriter writer)
         {
-            uint blockIndexAndOffset = (uint)BlockIndex | ((uint)Offset << 12);
-            writer.Write(blockIndexAndOffset);
-            writer.Write((uint)0);
-            writer.Write((ushort)NumberOfEntries);
-            writer.Write((ushort)NumberOfEntries);
-            writer.Write((uint)0);
+
         }
     }
 }

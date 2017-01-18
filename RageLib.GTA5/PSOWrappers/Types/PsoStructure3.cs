@@ -23,66 +23,71 @@
 using RageLib.Data;
 using RageLib.GTA5.PSO;
 using RageLib.GTA5.PSOWrappers.Data;
-using System.Collections.Generic;
+using System;
 
 namespace RageLib.GTA5.PSOWrappers.Types
 {
-    public class PsoStructure : IPsoValue
+    public class PsoStructure3 : IPsoValue
     {
         public readonly PsoFile pso;
         public readonly PsoStructureInfo structureInfo;
-        public readonly PsoElementIndexInfo entryIndexInfo;
         public readonly PsoStructureEntryInfo entryInfo;
-        public Dictionary<int, IPsoValue> Values { get; set; }
+        public PsoStructure Value { get; set; }
 
-        public PsoStructure(PsoFile pso, PsoStructureInfo structureInfo, PsoElementIndexInfo entryIndexInfo, PsoStructureEntryInfo entryInfo)
+        public PsoStructure3(PsoFile pso, PsoStructureInfo structureInfo, PsoStructureEntryInfo entryInfo)
         {
             this.pso = pso;
             this.structureInfo = structureInfo;
-            this.entryIndexInfo = entryIndexInfo;
             this.entryInfo = entryInfo;
-            this.Values = new Dictionary<int, IPsoValue>();
         }
-        
+
         public void Read(PsoDataReader reader)
         {
-            long backupOfPosition = reader.Position;
+            int z1 = reader.ReadInt32();
+            int z2 = reader.ReadInt32();
+            if (z2 != 0)
+                throw new Exception("z2 should be zero");
 
-            this.Values = new Dictionary<int, IPsoValue>();
-            for (int i = 0; i < structureInfo.Entries.Count; i++)
+            int offset = (z1 >> 12) & 0x000FFFFF;
+            int sectionIndex = z1 & 0x00000FFF;
+
+            if (sectionIndex > 0)
             {
-                // skip unnamed entries...
-                var x1 = structureInfo.Entries[i];
-                if (x1.EntryNameHash == 0x100)
-                    continue;
+                var nameHash = pso.DataMappingSection.Entries[sectionIndex - 1].NameHash;
+                var strInfo = (PsoStructureInfo)null;
+                var sectionIdxInfo = (PsoElementIndexInfo)null;
+                for (int k = 0; k < pso.DefinitionSection.Entries.Count; k++)
+                {
+                    if (pso.DefinitionSection.EntriesIdx[k].NameHash == nameHash)
+                    {
+                        strInfo = (PsoStructureInfo)pso.DefinitionSection.Entries[k];
+                        sectionIdxInfo = pso.DefinitionSection.EntriesIdx[k];
+                    }
+                }
 
 
-                reader.Position = backupOfPosition + x1.DataOffset;
-                var value = PsoTypeBuilder.Make(pso, structureInfo, x1);
-                value.Read(reader);
-                Values.Add(x1.EntryNameHash, value);
+                // read reference data...
+                var backupOfSection = reader.CurrentSectionIndex;
+                var backupOfPosition = reader.Position;
+
+                reader.SetSectionIndex(sectionIndex - 1);
+                reader.Position = offset;
+
+                Value = new PsoStructure(pso, strInfo, sectionIdxInfo, null);
+                Value.Read(reader);
+
+                reader.SetSectionIndex(backupOfSection);
+                reader.Position = backupOfPosition;
             }
-
-            reader.Position = backupOfPosition + structureInfo.StructureLength;
+            else
+            {
+                Value = null;
+            }
 
         }
 
         public void Write(DataWriter writer)
         {
-            //long position = writer.Position;
-
-            //writer.Write(new byte[psoSection.StructureLength]);
-            //writer.Position = position;
-
-            //foreach (var entry in psoSection.Entries)
-            //{
-            //    if (entry.EntryNameHash != 0x100)
-            //    {
-            //        writer.Position = position + entry.DataOffset;
-            //        this.Values[entry.EntryNameHash].Write(writer);
-            //    }
-            //}
-            //writer.Position = position + psoSection.StructureLength;
         }
     }
 }

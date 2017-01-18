@@ -25,16 +25,19 @@ using RageLib.GTA5.PSOWrappers.Data;
 
 namespace RageLib.GTA5.PSOWrappers.Types
 {
-    public class PsoType5 : IPsoValue
+    public class PsoFloat4A : IPsoValue
     {
-        public int Value { get; set; }
-
-        public PsoType5()
-        { }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
+        public float W { get; set; }
 
         public void Read(PsoDataReader reader)
         {
-            Value = reader.ReadInt32();
+            X = reader.ReadSingle();
+            Y = reader.ReadSingle();
+            Z = reader.ReadSingle();
+            W = reader.ReadSingle();
         }
 
         public void Write(DataWriter writer)

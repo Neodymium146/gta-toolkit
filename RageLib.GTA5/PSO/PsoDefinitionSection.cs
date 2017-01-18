@@ -36,7 +36,7 @@ namespace RageLib.GTA5.PSO
         public List<PsoElementInfo> Entries;
 
         public void Read(DataReader reader)
-        {            
+        {
             Ident = reader.ReadInt32();
             var Length = reader.ReadInt32();
             this.Count = reader.ReadUInt32();
@@ -80,17 +80,17 @@ namespace RageLib.GTA5.PSO
             var entriesWriter = new DataWriter(entriesStream, Endianess.BigEndian);
             for (int i = 0; i < Entries.Count; i++)
             {
-                EntriesIdx[i].Offset = 12 + 8* Entries.Count + (int)entriesWriter.Position;
+                EntriesIdx[i].Offset = 12 + 8 * Entries.Count + (int)entriesWriter.Position;
                 Entries[i].Write(entriesWriter);
             }
-           
+
 
 
             var indexStream = new MemoryStream();
             var indexWriter = new DataWriter(indexStream, Endianess.BigEndian);
             foreach (var entry in EntriesIdx)
-                entry.Write(indexWriter);         
-          
+                entry.Write(indexWriter);
+
 
 
 
@@ -110,7 +110,7 @@ namespace RageLib.GTA5.PSO
             entriesStream.Read(buf2, 0, buf2.Length);
             writer.Write(buf2);
 
-          
+
         }
     }
 
@@ -146,7 +146,7 @@ namespace RageLib.GTA5.PSO
         public byte Unk { get; set; }
         public int StructureLength { get; set; }
         public uint Unk_Ch { get; set; } = 0x00000000;
-        public List<PsoStructureEntryInfo> Entries { get; set; }
+        public List<PsoStructureEntryInfo> Entries { get; set; } = new List<PsoStructureEntryInfo>();
 
         public override void Read(DataReader reader)
         {
@@ -185,25 +185,25 @@ namespace RageLib.GTA5.PSO
 
     public enum DataType : byte
     {
-        BYTE_00h = 0x00,
+        Boolean = 0x00,
         LONG_01h = 0x01,
-        BYTE_02h = 0x02,
+        Byte = 0x02,
         SHORT_03h = 0x03,
         SHORT_04h = 0x04,
         INT_05h = 0x05,
-        INT_06h = 0x06,
+        Integer = 0x06,
         Float = 0x07,
-        LONG_08h = 0x08,
+        Float2 = 0x08,
         TYPE_09h = 0x09,
-        TYPE_0Ah = 0x0a,
-        INT_0Bh = 0x0b,
+        Float4 = 0x0a,
+        String = 0x0b,
         Structure = 0x0c,
         Array = 0x0d,
-        BYTE_ENUM_VALUE = 0x0e,    
-        SHORT_0Fh = 0x0f,
-        TYPE_10h = 0x10,
+        Enum = 0x0e,
+        Flags = 0x0f,
+        Map = 0x10,
         TYPE_14h = 0x14,
-        TYPE_15h = 0x15,
+        Float3 = 0x15,
         SHORT_1Eh = 0x1e,
         LONG_20h = 0x20
     }
@@ -216,13 +216,25 @@ namespace RageLib.GTA5.PSO
         public short DataOffset;
         public int ReferenceKey; // when array -> entry index with type
 
+        public PsoStructureEntryInfo()
+        { }
+
+        public PsoStructureEntryInfo(int nameHash, DataType type, byte unk5, short dataOffset, int referenceKey)
+        {
+            this.EntryNameHash = nameHash;
+            this.Type = type;
+            this.Unk_5h = unk5;
+            this.DataOffset = dataOffset;
+            this.ReferenceKey = referenceKey;
+        }
+
         public void Read(DataReader reader)
         {
             this.EntryNameHash = reader.ReadInt32();
             this.Type = (DataType)reader.ReadByte();
             this.Unk_5h = reader.ReadByte();
             this.DataOffset = reader.ReadInt16();
-            this.ReferenceKey = reader.ReadInt32();            
+            this.ReferenceKey = reader.ReadInt32();
         }
 
         public void Write(DataWriter writer)
@@ -276,6 +288,15 @@ namespace RageLib.GTA5.PSO
     {
         public int EntryNameHash { get; set; }
         public int EntryKey { get; set; }
+
+        public PsoEnumEntryInfo()
+        { }
+
+        public PsoEnumEntryInfo(int nameHash, int key)
+        {
+            this.EntryNameHash = nameHash;
+            this.EntryKey = key;
+        }
 
         public void Read(DataReader reader)
         {

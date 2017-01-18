@@ -51,7 +51,50 @@
     <Compile Include="Cryptography\GTA5Hash.cs" />
     <Compile Include="Cryptography\Helpers\CryptoIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-	<Compile Include="RBFWrappers\RbfXmlExporter.cs" />
+    <Compile Include="PSOWrappers\Data\PsoDataReader.cs" />
+    <Compile Include="PSOWrappers\PsoReader.cs" />
+    <Compile Include="PSOWrappers\PsoTypeBuilder.cs" />
+    <Compile Include="PSOWrappers\PsoXmlExporter.cs" />
+    <Compile Include="PSOWrappers\Types\IPsoValue.cs" />
+    <Compile Include="PSOWrappers\Types\PsoArray0.cs" />
+    <Compile Include="PSOWrappers\Types\PsoArray1.cs" />
+    <Compile Include="PSOWrappers\Types\PsoArray4.cs" />
+    <Compile Include="PSOWrappers\Types\PsoBoolean.cs" />
+    <Compile Include="PSOWrappers\Types\PsoByte.cs" />
+    <Compile Include="PSOWrappers\Types\PsoEnumByte.cs" />
+    <Compile Include="PSOWrappers\Types\PsoEnumInt.cs" />
+    <Compile Include="PSOWrappers\Types\PsoFlagsByte.cs" />
+    <Compile Include="PSOWrappers\Types\PsoFlagsInt.cs" />
+    <Compile Include="PSOWrappers\Types\PsoFlagsShort.cs" />
+    <Compile Include="PSOWrappers\Types\PsoFloat.cs" />
+    <Compile Include="PSOWrappers\Types\PsoFloat2.cs" />
+    <Compile Include="PSOWrappers\Types\PsoFloat3.cs" />
+    <Compile Include="PSOWrappers\Types\PsoFloat4A.cs" />
+    <Compile Include="PSOWrappers\Types\PsoFloat4B.cs" />
+    <Compile Include="PSOWrappers\Types\PsoIntSigned.cs" />
+    <Compile Include="PSOWrappers\Types\PsoIntUnsigned.cs" />
+    <Compile Include="PSOWrappers\Types\PsoMap.cs" />
+    <Compile Include="PSOWrappers\Types\PsoString0.cs" />
+    <Compile Include="PSOWrappers\Types\PsoString1.cs" />
+    <Compile Include="PSOWrappers\Types\PsoString2.cs" />
+    <Compile Include="PSOWrappers\Types\PsoString3.cs" />
+    <Compile Include="PSOWrappers\Types\PsoString7.cs" />
+    <Compile Include="PSOWrappers\Types\PsoString8.cs" />
+    <Compile Include="PSOWrappers\Types\PsoStructure.cs" />
+    <Compile Include="PSOWrappers\Types\PsoStructure3.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType3.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType32.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType4.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType5.cs" />
+    <Compile Include="PSOWrappers\Types\PsoType9.cs" />
+    <Compile Include="PSOWrappers\Types\PsoXXByte.cs" />
+    <Compile Include="PSOWrappers\Types\PsoXXHalf.cs" />
+    <Compile Include="PSOWrappers\Xml\PsoDefinitionXml.cs" />
+    <Compile Include="PSO\PsoDataMappingSection.cs" />
+    <Compile Include="PSO\PsoDataSection.cs" />
+    <Compile Include="PSO\PsoDefinitionSection.cs" />
+    <Compile Include="PSO\PsoFile.cs" />
+    <Compile Include="RBFWrappers\RbfXmlExporter.cs" />
     <Compile Include="RBF\RbfFile.cs" />
     <Compile Include="RBF\Types\IRbfType.cs" />
     <Compile Include="RBF\Types\RbfFloat.cs" />
@@ -62,28 +105,6 @@
     <Compile Include="RBF\Types\RbfUint32.cs" />
     <Compile Include="RBF\Types\RbfBoolean.cs" />
     <Compile Include="RBF\Types\RbfFloat3.cs" />
-    <Compile Include="PSOWrappers\PsoReader.cs" />
-    <Compile Include="PSOWrappers\PsoWriter.cs" />
-    <Compile Include="PSOWrappers\PsoXmlExporter.cs" />
-    <Compile Include="PSOWrappers\PsoXmlImporter.cs" />
-    <Compile Include="PSOWrappers\Types\IPsoValue.cs" />
-    <Compile Include="PSOWrappers\Types\PsoArray.cs" />
-    <Compile Include="PSOWrappers\Types\PsoStructure.cs" />
-    <Compile Include="PSOWrappers\Types\PsoType11.cs" />
-    <Compile Include="PSOWrappers\Types\PsoType14.cs" />
-    <Compile Include="PSOWrappers\Types\PsoType0.cs" />
-    <Compile Include="PSOWrappers\Types\PsoFloat.cs" />
-    <Compile Include="PSOWrappers\Types\PsoType21.cs" />
-    <Compile Include="PSOWrappers\Types\PsoType2.cs" />
-    <Compile Include="PSOWrappers\Types\PsoType5.cs" />
-    <Compile Include="PSOWrappers\Types\PsoType15.cs" />
-    <Compile Include="PSOWrappers\Types\PsoType16.cs" />
-    <Compile Include="PSOWrappers\Types\PsoType6.cs" />
-    <Compile Include="PSOWrappers\Xml\PsoDefinitionXml.cs" />
-    <Compile Include="PSO\PsoFile.cs" />
-    <Compile Include="PSO\PsoDataMappingSection.cs" />
-    <Compile Include="PSO\PsoDefinitionSection.cs" />
-    <Compile Include="PSO\PsoDataSection.cs" />
     <Compile Include="Resources\Common\FileBase64_GTA5_pc.cs" />
     <Compile Include="Resources\Common\PagesInfo_GTA5_pc.cs" />
     <Compile Include="Resources\Common\RAGE_AABB.cs" />
@@ -346,14 +367,12 @@
   <ItemGroup>
     <EmbeddedResource Include="ResourceWrappers\PC\Meta\Definitions\XmlInfos.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PSOWrappers\Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="PSOWrappers\Xml\PsoDefinitions.xml" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PSOWrappers\Xml\PsoDefinitions.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

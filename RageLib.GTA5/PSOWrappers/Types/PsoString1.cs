@@ -21,17 +21,43 @@
 */
 
 using RageLib.Data;
+using RageLib.GTA5.PSOWrappers.Data;
+using System;
 
 namespace RageLib.GTA5.PSOWrappers.Types
 {
-    public class PsoType0 : IPsoValue
+    public class PsoString1 : IPsoValue
     {
-        public void Read(DataReader reader)
+        public string Value { get; set; }
+
+        public void Read(PsoDataReader reader)
         {
+            int x1 = reader.ReadInt32();
+            int x2 = reader.ReadInt32();
+            if (x2 != 0)
+            {
+                throw new Exception("zero_Ch should be 0");
+            }
+
+            var BlockIndex = (int)(x1 & 0x00000FFF);
+            var Offset = (int)((x1 & 0xFFFFF000) >> 12);
+
+            // read reference data...
+            var backupOfSection = reader.CurrentSectionIndex;
+            var backupOfPosition = reader.Position;
+
+            reader.SetSectionIndex(BlockIndex - 1);
+            reader.Position = Offset;
+
+            Value = reader.ReadString();
+
+            reader.SetSectionIndex(backupOfSection);
+            reader.Position = backupOfPosition;
         }
 
         public void Write(DataWriter writer)
         {
+
         }
     }
 }

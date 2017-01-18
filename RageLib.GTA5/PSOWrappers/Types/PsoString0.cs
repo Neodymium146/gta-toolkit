@@ -21,20 +21,44 @@
 */
 
 using RageLib.Data;
+using RageLib.GTA5.PSOWrappers.Data;
+using System;
 
 namespace RageLib.GTA5.PSOWrappers.Types
 {
-    public class PsoType16 : IPsoValue
+    public class PsoString0 : IPsoValue
     {
-        public PsoType16()
-        { }
+        private readonly int length;
+        public string Value { get; set; }
 
-        public void Read(DataReader reader)
+        public PsoString0(int length)
         {
+            this.length = length;
+        }
+
+        public void Read(PsoDataReader reader)
+        {
+            Value = "";
+            bool isok = true;
+            for (int i = 0; i < length; i++)
+            {
+                char c = (char)reader.ReadByte();
+                if (c == 0)
+                {
+                    isok = false;
+                }
+                else
+                {
+                    if (!isok)
+                        throw new Exception("Unexpected char.");
+                    Value += c;
+                }
+            }
         }
 
         public void Write(DataWriter writer)
         {
+
         }
     }
 }
