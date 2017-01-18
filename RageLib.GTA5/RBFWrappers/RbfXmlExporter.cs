@@ -24,6 +24,7 @@ using RageLib.Data;
 using RageLib.GTA5.RBF;
 using RageLib.GTA5.RBF.Types;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -109,7 +110,7 @@ namespace RageLib.GTA5.RBFWrappers
                 {
                     writer.WriteStartElement(child.Name);
                     var floatChild = (RbfFloat)child;
-                    var s1 = string.Format("{0:0.0###########}", floatChild.Value);
+                    var s1 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", floatChild.Value);
                     writer.WriteAttributeString("value", s1);
                     writer.WriteEndElement();
                 }
@@ -158,9 +159,9 @@ namespace RageLib.GTA5.RBFWrappers
                 {
                     writer.WriteStartElement(child.Name);
                     var floatVectorChild = (RbfFloat3)child;
-                    var s1 = string.Format("{0:0.0###########}", floatVectorChild.X);
-                    var s2 = string.Format("{0:0.0###########}", floatVectorChild.Y);
-                    var s3 = string.Format("{0:0.0###########}", floatVectorChild.Z);
+                    var s1 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", floatVectorChild.X);
+                    var s2 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", floatVectorChild.Y);
+                    var s3 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", floatVectorChild.Z);
                     writer.WriteAttributeString("x", s1);
                     writer.WriteAttributeString("y", s2);
                     writer.WriteAttributeString("z", s3);

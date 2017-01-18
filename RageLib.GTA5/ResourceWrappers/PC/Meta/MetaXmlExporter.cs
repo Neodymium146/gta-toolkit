@@ -23,6 +23,7 @@
 using RageLib.GTA5.ResourceWrappers.PC.Meta.Types;
 using RageLib.Resources.GTA5.PC.Meta;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -300,15 +301,15 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
 
         private void WriteFloatContent(XmlTextWriter writer, MetaFloat floatValue)
         {
-            var s1 = string.Format("{0:0.0###########}", floatValue.Value);
+            var s1 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", floatValue.Value);
             writer.WriteAttributeString("value", s1);
         }
 
         private void WriteFloatXYZContent(XmlTextWriter writer, MetaFloat4_XYZ floatVectorValue)
         {
-            var s1 = string.Format("{0:0.0###########}", floatVectorValue.X);
-            var s2 = string.Format("{0:0.0###########}", floatVectorValue.Y);
-            var s3 = string.Format("{0:0.0###########}", floatVectorValue.Z);
+            var s1 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", floatVectorValue.X);
+            var s2 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", floatVectorValue.Y);
+            var s3 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", floatVectorValue.Z);
             writer.WriteAttributeString("x", s1);
             writer.WriteAttributeString("y", s2);
             writer.WriteAttributeString("z", s3);
@@ -316,10 +317,10 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
 
         private void WriteFloatXYZWContent(XmlTextWriter writer, MetaFloat4_XYZW floatVectorValue)
         {
-            var s1 = string.Format("{0:0.0###########}", floatVectorValue.X);
-            var s2 = string.Format("{0:0.0###########}", floatVectorValue.Y);
-            var s3 = string.Format("{0:0.0###########}", floatVectorValue.Z);
-            var s4 = string.Format("{0:0.0###########}", floatVectorValue.W);
+            var s1 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", floatVectorValue.X);
+            var s2 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", floatVectorValue.Y);
+            var s3 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", floatVectorValue.Z);
+            var s4 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", floatVectorValue.W);
             writer.WriteAttributeString("x", s1);
             writer.WriteAttributeString("y", s2);
             writer.WriteAttributeString("z", s3);
@@ -466,7 +467,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
             StringBuilder b = new StringBuilder();
             foreach (var k in arrayValue.Entries)
             {
-                var s = string.Format("{0:0.0###########}", ((MetaFloat)k).Value);
+                var s = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", ((MetaFloat)k).Value);
                 b.AppendLine(s);
             }
             writer.WriteString(b.ToString());
@@ -479,9 +480,9 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
             StringBuilder b = new StringBuilder();
             foreach (var k in arrayValue.Entries)
             {
-                var s1 = string.Format("{0:0.0###########}", ((MetaFloat4_XYZ)k).X);
-                var s2 = string.Format("{0:0.0###########}", ((MetaFloat4_XYZ)k).Y);
-                var s3 = string.Format("{0:0.0###########}", ((MetaFloat4_XYZ)k).Z);
+                var s1 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", ((MetaFloat4_XYZ)k).X);
+                var s2 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", ((MetaFloat4_XYZ)k).Y);
+                var s3 = string.Format(CultureInfo.InvariantCulture, "{0:0.0###########}", ((MetaFloat4_XYZ)k).Z);
                 b.AppendLine(s1 + " " + s2 + " " + s3);
             }
             writer.WriteString(b.ToString());
