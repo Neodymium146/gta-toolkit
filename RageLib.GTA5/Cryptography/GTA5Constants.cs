@@ -20,6 +20,7 @@
     THE SOFTWARE.
 */
 
+using RageLib.GTA5.Cryptography.Exceptions;
 using RageLib.GTA5.Cryptography.Helpers;
 using RageLib.Helpers;
 using System;
@@ -440,11 +441,31 @@ namespace RageLib.GTA5.Cryptography
         {
             var exeStr = new MemoryStream(exeData);
 
-            PC_AES_KEY = HashSearch.SearchHash(exeStr, GTA5HashConstants.PC_AES_KEY_HASH, 0x20);
+            PC_AES_KEY = HashSearch.SearchHash(exeStr, GTA5HashConstants.PC_AES_KEY_HASH, length: 0x20);
+            if (PC_AES_KEY == null)
+            {
+                throw new KeyNotFoundException("AES key not found.");
+            }
             Console.WriteLine("aes key found");
-            PC_NG_KEYS = HashSearch.SearchHashes(exeStr, GTA5HashConstants.PC_NG_KEY_HASHES, 0x110);
+
+            PC_NG_KEYS = HashSearch.SearchHashes(exeStr, GTA5HashConstants.PC_NG_KEY_HASHES, length: 0x110);
+            for (int i = 0; i < PC_NG_KEYS.Length; i++)
+            {
+                if (PC_NG_KEYS[i] == null)
+                {
+                    throw new KeyNotFoundException("NG key not found.");
+                }
+            }
             Console.WriteLine("ng keys found");
-            var tabs = HashSearch.SearchHashes(exeStr, GTA5HashConstants.PC_NG_DECRYPT_TABLE_HASHES, 0x400);
+
+            var tabs = HashSearch.SearchHashes(exeStr, GTA5HashConstants.PC_NG_DECRYPT_TABLE_HASHES, length: 0x400);
+            for (int i = 0; i < tabs.Length; i++)
+            {
+                if (tabs[i] == null)
+                {
+                    throw new KeyNotFoundException("NG decryption table not found.");
+                }
+            }
             Console.WriteLine("ng decrypt tables found");
 
             // 17 rounds
@@ -461,7 +482,11 @@ namespace RageLib.GTA5.Cryptography
                 }
             }
 
-            PC_LUT = HashSearch.SearchHash(exeStr, GTA5HashConstants.PC_LUT_HASH, 0x100);
+            PC_LUT = HashSearch.SearchHash(exeStr, GTA5HashConstants.PC_LUT_HASH, length: 0x100);
+            if (PC_LUT == null)
+            {
+                throw new KeyNotFoundException("LUT not found.");
+            }
             Console.WriteLine("ng hash LUTs found");
         }
 

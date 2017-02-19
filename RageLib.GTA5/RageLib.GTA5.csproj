@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Archives\RageArchive7.cs" />
     <Compile Include="ArchiveWrappers\RageArchiveWrapper7.cs" />
+    <Compile Include="Cryptography\Exceptions\KeyNotFoundException.cs" />
     <Compile Include="Cryptography\GTA5Constants.cs" />
     <Compile Include="Cryptography\GTA5Encryption.cs" />
     <Compile Include="Cryptography\GTA5Hash.cs" />
