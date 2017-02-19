@@ -63,11 +63,11 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\RageLib.GTA5\RageLib.GTA5.csproj">
+    <ProjectReference Include="..\RageLib.GTA5\RageLib.GTA5.csproj">
       <Project>{569cde34-96f0-44be-bd31-62b6a43c85b8}</Project>
       <Name>RageLib.GTA5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\RageLib\RageLib.csproj">
+    <ProjectReference Include="..\RageLib\RageLib.csproj">
       <Project>{718f3f76-51ae-46cb-b11b-027b9bbc8a0b}</Project>
       <Name>RageLib</Name>
     </ProjectReference>
