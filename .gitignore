@@ -17,3 +17,4 @@ Libraries/DirectXTex/x64/Release/*
 x64/Release/*
 Toolkit.VC.db
 Toolkit.VC.VC.opendb
+*.csproj.user
