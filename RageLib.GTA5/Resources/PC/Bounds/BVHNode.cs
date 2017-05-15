@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,31 +22,34 @@
 
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
-    public class BoundDisc_GTA5_pc : Bound_GTA5_pc
+    public class BVHNode : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 128; }
-        }
+        public override long Length => 0x10;
 
         // structure data
-        public uint Unknown_70h; // 0x00000000
-        public uint Unknown_74h; // 0x00000000
-        public uint Unknown_78h; // 0x00000000
-        public uint Unknown_7Ch; // 0x00000000
+        public ushort MinX;
+        public ushort MinY;
+        public ushort MinZ;
+        public ushort MaxX;
+        public ushort MaxY;
+        public ushort MaxZ;
+        public ushort Unknown_Ch;
+        public ushort Unknown_Eh;
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            base.Read(reader, parameters);
-
             // read structure data
-            this.Unknown_70h = reader.ReadUInt32();
-            this.Unknown_74h = reader.ReadUInt32();
-            this.Unknown_78h = reader.ReadUInt32();
-            this.Unknown_7Ch = reader.ReadUInt32();
+            this.MinX = reader.ReadUInt16();
+            this.MinY = reader.ReadUInt16();
+            this.MinZ = reader.ReadUInt16();
+            this.MaxX = reader.ReadUInt16();
+            this.MaxY = reader.ReadUInt16();
+            this.MaxZ = reader.ReadUInt16();
+            this.Unknown_Ch = reader.ReadUInt16();
+            this.Unknown_Eh = reader.ReadUInt16();
         }
 
         /// <summary>
@@ -54,13 +57,15 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            base.Write(writer, parameters);
-
             // write structure data
-            writer.Write(this.Unknown_70h);
-            writer.Write(this.Unknown_74h);
-            writer.Write(this.Unknown_78h);
-            writer.Write(this.Unknown_7Ch);
+            writer.Write(this.MinX);
+            writer.Write(this.MinY);
+            writer.Write(this.MinZ);
+            writer.Write(this.MaxX);
+            writer.Write(this.MaxY);
+            writer.Write(this.MaxZ);
+            writer.Write(this.Unknown_Ch);
+            writer.Write(this.Unknown_Eh);
         }
     }
 }

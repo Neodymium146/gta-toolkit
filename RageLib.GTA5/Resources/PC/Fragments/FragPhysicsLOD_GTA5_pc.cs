@@ -85,7 +85,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public ResourcePointerArray64<FragTypeChild_GTA5_pc> Children;
         public Archetype_GTA5_pc Archetype1;
         public Archetype_GTA5_pc Archetype2;
-        public Bound_GTA5_pc Bound;
+        public Bound Bound;
         public ResourceSimpleArray<RAGE_Vector4> Unknown_F0h_Data;
         public ResourceSimpleArray<RAGE_Vector4> Unknown_F8h_Data;
         public Unknown_F_002 Unknown_100h_Data;
@@ -167,7 +167,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Archetype2 = reader.ReadBlockAt<Archetype_GTA5_pc>(
                 this.Archetype2Pointer // offset
             );
-            this.Bound = reader.ReadBlockAt<Bound_GTA5_pc>(
+            this.Bound = reader.ReadBlockAt<Bound>(
                 this.BoundPointer // offset
             );
             this.Unknown_F0h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Vector4>>(

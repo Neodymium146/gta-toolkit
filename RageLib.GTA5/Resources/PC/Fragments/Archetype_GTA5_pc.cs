@@ -67,7 +67,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
         // reference data
         public string_r Name;
-        public Bound_GTA5_pc Bound;
+        public Bound Bound;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -110,7 +110,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
             );
-            this.Bound = reader.ReadBlockAt<Bound_GTA5_pc>(
+            this.Bound = reader.ReadBlockAt<Bound>(
                 this.BoundPointer // offset
             );
         }

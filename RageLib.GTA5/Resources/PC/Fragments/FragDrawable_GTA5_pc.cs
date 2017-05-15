@@ -62,7 +62,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_14Ch; // 0x00000000
 
         // reference data
-        public Bound_GTA5_pc Bound;
+        public Bound Bound;
         public ResourceSimpleArray<ulong_r> Unknown_F8h_Data;
         public ResourceSimpleArray<RAGE_Matrix4> Unknown_108h_Data;
         public string_r Name;
@@ -102,7 +102,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_14Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Bound = reader.ReadBlockAt<Bound_GTA5_pc>(
+            this.Bound = reader.ReadBlockAt<Bound>(
                 this.BoundPointer // offset
             );
             this.Unknown_F8h_Data = reader.ReadBlockAt<ResourceSimpleArray<ulong_r>>(

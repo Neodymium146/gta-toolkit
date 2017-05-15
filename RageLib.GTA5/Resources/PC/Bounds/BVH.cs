@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -26,17 +26,14 @@ using System;
 
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
-    public class BVH_GTA5_pc : ResourceSystemBlock
+    public class BVH : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 128; }
-        }
+        public override long Length => 0x80;
 
         // structure data
         public ulong NodesPointer;
         public uint NodesCount;
-        public uint Count2;
+        public uint NodesCapacity;
         public uint Unknown_10h; // 0x00000000
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
@@ -46,10 +43,14 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public RAGE_Vector4 BoundingBoxCenter;
         public RAGE_Vector4 QuantumInverse;
         public RAGE_Vector4 Quantum; // bounding box dimension / 2^16
-        public ResourceSimpleList64<BVHTreeInfo_GTA5_pc> Trees;
+        public ulong TreesPointer;
+        public ushort TreesCount1;
+        public ushort TreesCount2;
+        public uint Unknown_7Ch;
 
         // reference data
-        public ResourceSimpleArray2<BVHNode_GTA5_pc, Unknown_B_003> Nodes;
+        public ResourceSimpleArray<BVHNode> Nodes;
+        public ResourceSimpleArray<BVHTreeInfo> Trees;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -59,7 +60,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             // read structure data
             this.NodesPointer = reader.ReadUInt64();
             this.NodesCount = reader.ReadUInt32();
-            this.Count2 = reader.ReadUInt32();
+            this.NodesCapacity = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
@@ -69,14 +70,20 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.BoundingBoxCenter = reader.ReadBlock<RAGE_Vector4>();
             this.QuantumInverse = reader.ReadBlock<RAGE_Vector4>();
             this.Quantum = reader.ReadBlock<RAGE_Vector4>();
-            this.Trees = reader.ReadBlock<ResourceSimpleList64<BVHTreeInfo_GTA5_pc>>();
+            this.TreesPointer = reader.ReadUInt64();
+            this.TreesCount1 = reader.ReadUInt16();
+            this.TreesCount2 = reader.ReadUInt16();
+            this.Unknown_7Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Nodes = reader.ReadBlockAt<ResourceSimpleArray2<BVHNode_GTA5_pc, Unknown_B_003>>(
+            this.Nodes = reader.ReadBlockAt<ResourceSimpleArray<BVHNode>>(
                 this.NodesPointer, // offset
-                this.NodesCount,
-                this.Count2 - this.NodesCount
+                this.NodesCount
             );
+            this.Trees = reader.ReadBlockAt<ResourceSimpleArray<BVHTreeInfo>>(
+               this.TreesPointer, // offset
+               this.TreesCount1
+           );
         }
 
         /// <summary>
@@ -86,13 +93,16 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         {
             // update structure data
             this.NodesPointer = (ulong)(this.Nodes != null ? this.Nodes.Position : 0);
-            this.NodesCount = (uint)(this.Nodes != null ? this.Nodes.Array1.Count : 0);
-            this.Count2 = (uint)(this.Nodes != null ? this.Nodes.Array1.Count + this.Nodes.Array2.Count : 0);
+            this.NodesCount = (uint)(this.Nodes != null ? this.Nodes.Count : 0);
+            this.NodesCapacity = (uint)(this.Nodes != null ? this.Nodes.Count : 0);
+            this.TreesPointer = (ulong)(this.Trees != null ? this.Trees.Position : 0);
+            this.TreesCount1 = (ushort)(this.Trees != null ? this.Trees.Count : 0);
+            this.TreesCount2 = (ushort)(this.Trees != null ? this.Trees.Count : 0);
 
             // write structure data
             writer.Write(this.NodesPointer);
             writer.Write(this.NodesCount);
-            writer.Write(this.Count2);
+            writer.Write(this.NodesCapacity);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
@@ -102,7 +112,10 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             writer.WriteBlock(this.BoundingBoxCenter);
             writer.WriteBlock(this.QuantumInverse);
             writer.WriteBlock(this.Quantum);
-            writer.WriteBlock(this.Trees);
+            writer.Write(this.TreesPointer);
+            writer.Write(this.TreesCount1);
+            writer.Write(this.TreesCount2);
+            writer.Write(this.Unknown_7Ch);
         }
 
         /// <summary>
@@ -123,8 +136,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 new Tuple<long, IResourceBlock>(0x30, BoundingBoxMax),
                 new Tuple<long, IResourceBlock>(0x40, BoundingBoxCenter),
                 new Tuple<long, IResourceBlock>(0x50, QuantumInverse),
-                new Tuple<long, IResourceBlock>(0x60, Quantum),
-                new Tuple<long, IResourceBlock>(0x70, Trees)
+                new Tuple<long, IResourceBlock>(0x60, Quantum)
             };
         }
     }

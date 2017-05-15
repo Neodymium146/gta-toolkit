@@ -79,7 +79,7 @@ namespace RageLib.Resources
 
         // reference data
         public Unknown_C_002 p1_data;
-        public Bound_GTA5_pc Bound;
+        public Bound Bound;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -133,7 +133,7 @@ namespace RageLib.Resources
             this.p1_data = reader.ReadBlockAt<Unknown_C_002>(
                 this.p1 // offset
             );
-            this.Bound = reader.ReadBlockAt<Bound_GTA5_pc>(
+            this.Bound = reader.ReadBlockAt<Bound>(
                 this.BoundPointer // offset
             );
         }

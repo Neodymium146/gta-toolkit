@@ -46,7 +46,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         // reference data
         public string_r Name;
         public ResourceSimpleArray<LightAttributes_GTA5_pc> LightAttributes;
-        public Bound_GTA5_pc Bound;
+        public Bound Bound;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -73,7 +73,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 this.LightAttributesPointer, // offset
                 this.LightAttributesCount1
             );
-            this.Bound = reader.ReadBlockAt<Bound_GTA5_pc>(
+            this.Bound = reader.ReadBlockAt<Bound>(
                 this.BoundPointer // offset
             );
         }

@@ -1,5 +1,5 @@
-/*
-    Copyright(c) 2016 Neodymium
+﻿/*
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,13 @@
 
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
-    public class BVHNode_GTA5_pc : ResourceSystemBlock
+    public class BoundMaterial : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 16; }
-        }
+        public override long Length => 8;
 
         // structure data
-        public ushort MinX;
-        public ushort MinY;
-        public ushort MinZ;
-        public ushort MaxX;
-        public ushort MaxY;
-        public ushort MaxZ;
-        public ushort Unknown_Ch;
-        public ushort Unknown_Eh;
+        public uint Unknown_0h;
+        public uint Unknown_4h;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -45,14 +36,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.MinX = reader.ReadUInt16();
-            this.MinY = reader.ReadUInt16();
-            this.MinZ = reader.ReadUInt16();
-            this.MaxX = reader.ReadUInt16();
-            this.MaxY = reader.ReadUInt16();
-            this.MaxZ = reader.ReadUInt16();
-            this.Unknown_Ch = reader.ReadUInt16();
-            this.Unknown_Eh = reader.ReadUInt16();
+            this.Unknown_0h = reader.ReadUInt32();
+            this.Unknown_4h = reader.ReadUInt32();
         }
 
         /// <summary>
@@ -61,14 +46,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.MinX);
-            writer.Write(this.MinY);
-            writer.Write(this.MinZ);
-            writer.Write(this.MaxX);
-            writer.Write(this.MaxY);
-            writer.Write(this.MaxZ);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_Eh);
+            writer.Write(this.Unknown_0h);
+            writer.Write(this.Unknown_4h);
         }
     }
 }
