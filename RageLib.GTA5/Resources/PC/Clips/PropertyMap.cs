@@ -25,29 +25,18 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Clips
 {
-    // pgBase
-    // pgBaseRefCounted
-    // crAnimDictionary
-    public class AnimationMap : ResourceSystemBlock
+    public class PropertyMap : ResourceSystemBlock
     {
-        public override long Length => 0x30;
+        public override long Length => 0x10;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
-        public uint Unknown_10h; // 0x00000000
-        public uint Unknown_14h; // 0x00000000
-        public ulong AnimationsPointer;
-        public ushort AnimationEntriesCount;
-        public ushort AnimationEntriesTotalCount;
-        public uint Unknown_24h;
-        public uint Unknown_28h; // 0x00000001
-        public uint Unknown_2Ch; // 0x00000000
+        public ulong PropertyEntriesPointer;
+        public ushort PropertyEntriesCount;
+        public ushort PropertyEntriesTotalCount;
+        public uint Unknown_Ch; // 0x01000000
 
         // reference data
-        public ResourcePointerArray64<AnimationMapEntry> Animations;
+        public ResourcePointerArray64<PropertyMapEntry> Properties;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -55,23 +44,15 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
+            this.PropertyEntriesPointer = reader.ReadUInt64();
+            this.PropertyEntriesCount = reader.ReadUInt16();
+            this.PropertyEntriesTotalCount = reader.ReadUInt16();
             this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.AnimationsPointer = reader.ReadUInt64();
-            this.AnimationEntriesCount = reader.ReadUInt16();
-            this.AnimationEntriesTotalCount = reader.ReadUInt16();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Animations = reader.ReadBlockAt<ResourcePointerArray64<AnimationMapEntry>>(
-                this.AnimationsPointer, // offset
-                this.AnimationEntriesCount
+            this.Properties = reader.ReadBlockAt<ResourcePointerArray64<PropertyMapEntry>>(
+                this.PropertyEntriesPointer, // offset
+                this.PropertyEntriesCount
             );
         }
 
@@ -81,25 +62,25 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.AnimationsPointer = (ulong)(this.Animations != null ? this.Animations.Position : 0);
-            this.AnimationEntriesCount = (ushort)(this.Animations != null ? this.Animations.Count : 0);
-            if (this.Animations != null)
+            this.PropertyEntriesPointer = (ulong)(this.Properties != null ? this.Properties.Position : 0);
+            this.PropertyEntriesCount = (ushort)(this.Properties != null ? this.Properties.Count : 0);
+            if (this.Properties != null)
             {
                 int i = 0;
-                foreach (var x in this.Animations.data_items)
+                foreach (var x in this.Properties.data_items)
                 {
                     if (x != null)
                     {
                         var y = x;
                         do
                         {
-                            if (y.Animation != null)
+                            if (y.Data != null)
                             {
                                 i++;
                             }
-                            if (y.NextEntry != null)
+                            if (y.Next != null)
                             {
-                                y = y.NextEntry;
+                                y = y.Next;
                             }
                             else
                             {
@@ -108,26 +89,18 @@ namespace RageLib.Resources.GTA5.PC.Clips
                         } while (true);
                     }
                 }
-                this.AnimationEntriesTotalCount = (ushort)i;
+                this.PropertyEntriesTotalCount = (ushort)i;
             }
             else
             {
-                this.AnimationEntriesTotalCount = 0;
+                this.PropertyEntriesTotalCount = 0;
             }
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
+            writer.Write(this.PropertyEntriesPointer);
+            writer.Write(this.PropertyEntriesCount);
+            writer.Write(this.PropertyEntriesTotalCount);
             writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.AnimationsPointer);
-            writer.Write(this.AnimationEntriesCount);
-            writer.Write(this.AnimationEntriesTotalCount);
-            writer.Write(this.Unknown_24h);
-            writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
         }
 
         /// <summary>
@@ -136,7 +109,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (Animations != null) list.Add(Animations);
+            if (Properties != null) list.Add(Properties);
             return list.ToArray();
         }
     }

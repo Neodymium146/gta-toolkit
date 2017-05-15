@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,10 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Clips
 {
-    public class ClipAnimations_GTA5_pc : Clip_GTA5_pc
+    // crClipAnimations
+    public class ClipAnimations : Clip
     {
-        public override long Length
-        {
-            get { return 112; }
-        }
+        public override long Length => 0x70;
 
         // structure data
         public ulong AnimationsPointer;
@@ -43,7 +41,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public uint Unknown_6Ch; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<ClipAnimationsEntry_GTA5_pc> Animations;
+        public ResourceSimpleArray<ClipAnimationsEntry> Animations;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -60,7 +58,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
 
-            this.Animations = reader.ReadBlockAt<ResourceSimpleArray<ClipAnimationsEntry_GTA5_pc>>(
+            this.Animations = reader.ReadBlockAt<ResourceSimpleArray<ClipAnimationsEntry>>(
                 this.AnimationsPointer, // offset
                 this.AnimationsCount1
             );
@@ -74,8 +72,8 @@ namespace RageLib.Resources.GTA5.PC.Clips
             base.Write(writer, parameters);
 
             this.AnimationsPointer = (ulong)(this.Animations != null ? this.Animations.Position : 0);
-            //this.p4 = (ulong)(this.p4data != null ? this.p4data.Position : 0);
-            //this.c1 = (ushort)(this.p4data != null ? this.p4data.Count : 0);
+            this.AnimationsCount1 = (ushort)(this.Animations != null ? this.Animations.Count : 0);
+            this.AnimationsCount2 = (ushort)(this.Animations != null ? this.Animations.Count : 0);
 
             writer.Write(this.AnimationsPointer);
             writer.Write(this.AnimationsCount1);

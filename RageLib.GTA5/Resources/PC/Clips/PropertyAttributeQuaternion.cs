@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +22,16 @@
 
 namespace RageLib.Resources.GTA5.PC.Clips
 {
-    public class Unknown_CL_004_type2 : Unknown_CL_004
+    // crPropertyAttributeQuaternion
+    public class PropertyAttributeQuaternion : PropertyAttribute
     {
-        public override long Length
-        {
-            get { return 48; }
-        }
+        public override long Length => 0x30;
 
         // structure data
-        public uint Unknown_10h; // 0x00000000
-        public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h;
-        public uint Unknown_1Ch; // 0x00000000
-        public uint Unknown_20h;
-        public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
+        public float X;
+        public float Y;
+        public float Z;
+        public float W;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -47,14 +41,10 @@ namespace RageLib.Resources.GTA5.PC.Clips
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
+            this.X = reader.ReadSingle();
+            this.Y = reader.ReadSingle();
+            this.Z = reader.ReadSingle();
+            this.W = reader.ReadSingle();
         }
 
         /// <summary>
@@ -65,14 +55,10 @@ namespace RageLib.Resources.GTA5.PC.Clips
             base.Write(writer, parameters);
 
             // write structure data
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
-            writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
-            writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
+            writer.Write(this.X);
+            writer.Write(this.Y);
+            writer.Write(this.Z);
+            writer.Write(this.W);
         }
     }
 }

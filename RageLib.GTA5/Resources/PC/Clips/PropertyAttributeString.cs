@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,37 +25,36 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Clips
 {
-    public class Unknown_CL_001 : ResourceSystemBlock
+    // crPropertyAttributeString
+    public class PropertyAttributeString : PropertyAttribute
     {
-        public override long Length
-        {
-            get { return 16; }
-        }
+        public override long Length => 0x30;
 
         // structure data
-        public ulong p1;
-        public ushort c1;
-        public ushort c2;
-        public uint Unknown_Ch; // 0x01000000
+        public ulong ValuePointer;
+        public ushort ValueLength1;
+        public ushort ValueLength2;
+        public uint Unknown_2Ch; // 0x00000000
 
         // reference data
-        public ResourcePointerArray64<Unknown_CL_002> p1data;
+        public string_r Value;
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.p1 = reader.ReadUInt64();
-            this.c1 = reader.ReadUInt16();
-            this.c2 = reader.ReadUInt16();
-            this.Unknown_Ch = reader.ReadUInt32();
+            this.ValuePointer = reader.ReadUInt64();
+            this.ValueLength1 = reader.ReadUInt16();
+            this.ValueLength2 = reader.ReadUInt16();
+            this.Unknown_2Ch = reader.ReadUInt32();
 
             // read reference data
-            this.p1data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_CL_002>>(
-                this.p1, // offset
-                this.c1
+            this.Value = reader.ReadBlockAt<string_r>(
+                this.ValuePointer // offset
             );
         }
 
@@ -64,15 +63,18 @@ namespace RageLib.Resources.GTA5.PC.Clips
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
-            //this.c1 = (ushort)(this.p1data != null ? this.p1data.Count : 0);
+            this.ValuePointer = (ulong)(this.Value != null ? this.Value.Position : 0);
+            this.ValueLength1 = (ushort)(this.Value != null ? this.Value.Value.Length : 0);
+            this.ValueLength2 = (ushort)(this.Value != null ? this.Value.Value.Length + 1 : 0);
 
             // write structure data
-            writer.Write(this.p1);
-            writer.Write(this.c1);
-            writer.Write(this.c2);
-            writer.Write(this.Unknown_Ch);
+            writer.Write(this.ValuePointer);
+            writer.Write(this.ValueLength1);
+            writer.Write(this.ValueLength2);
+            writer.Write(this.Unknown_2Ch);
         }
 
         /// <summary>
@@ -80,8 +82,8 @@ namespace RageLib.Resources.GTA5.PC.Clips
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
-            if (p1data != null) list.Add(p1data);
+            var list = new List<IResourceBlock>(base.GetReferences());
+            if (Value != null) list.Add(Value);
             return list.ToArray();
         }
     }

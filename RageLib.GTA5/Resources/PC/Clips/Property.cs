@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +22,34 @@
 
 using RageLib.Resources.Common;
 using System.Collections.Generic;
-using System;
 
 namespace RageLib.Resources.GTA5.PC.Clips
 {
-    public class Clip_GTA5_pc : ResourceSystemBlock, IResourceXXSystemBlock
+    // crProperty
+    public class Property : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 112; }
-        }
+        public override long Length => 0x40;
 
         // structure data
         public uint VFT;
         public uint Unknown_4h; // 0x00000001
         public uint Unknown_8h; // 0x00000000
         public uint Unknown_Ch; // 0x00000000
-        public uint Unknown_10h;
+        public uint Unknown_10h; // 0x00000000
         public uint Unknown_14h; // 0x00000000
-        public ulong NamePointer;
-        public uint Unknown_20h; // short, short -> name length (+1)
-        public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x50000000
+        public uint NameHash;
+        public uint Unknown_1Ch; // 0x00000000
+        public ulong AttributesPointer;
+        public ushort AttributesCount1;
+        public ushort AttributesCount2;
         public uint Unknown_2Ch; // 0x00000000
-        public uint Unknown_30h;
+        public uint Unknown_30h; // 0x00000000
         public uint Unknown_34h; // 0x00000000
-        public ulong p2;
-        public ulong p3;
-        public uint Unknown_48h; // 0x00000001
-        public uint Unknown_4Ch; // 0x00000000       
+        public uint Unknown_38h;
+        public uint Unknown_3Ch; // 0x00000000
 
         // reference data
-        public string_r Name;
-        public Unknown_CL_200 p2data;
-        public Unknown_CL_001 p3data;
+        public ResourcePointerArray64<PropertyAttribute> Attributes;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -69,27 +63,21 @@ namespace RageLib.Resources.GTA5.PC.Clips
             this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
-            this.NamePointer = reader.ReadUInt64();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
+            this.NameHash = reader.ReadUInt32();
+            this.Unknown_1Ch = reader.ReadUInt32();
+            this.AttributesPointer = reader.ReadUInt64();
+            this.AttributesCount1 = reader.ReadUInt16();
+            this.AttributesCount2 = reader.ReadUInt16();
             this.Unknown_2Ch = reader.ReadUInt32();
             this.Unknown_30h = reader.ReadUInt32();
             this.Unknown_34h = reader.ReadUInt32();
-            this.p2 = reader.ReadUInt64();
-            this.p3 = reader.ReadUInt64();
-            this.Unknown_48h = reader.ReadUInt32();
-            this.Unknown_4Ch = reader.ReadUInt32();
+            this.Unknown_38h = reader.ReadUInt32();
+            this.Unknown_3Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Name = reader.ReadBlockAt<string_r>(
-                this.NamePointer // offset
-            );
-            this.p2data = reader.ReadBlockAt<Unknown_CL_200>(
-                this.p2 // offset
-            );
-            this.p3data = reader.ReadBlockAt<Unknown_CL_001>(
-                this.p3 // offset
+            this.Attributes = reader.ReadBlockAt<ResourcePointerArray64<PropertyAttribute>>(
+                this.AttributesPointer, // offset
+                this.AttributesCount1
             );
         }
 
@@ -99,9 +87,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
-            this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
-            this.p3 = (ulong)(this.p3data != null ? this.p3data.Position : 0);
+            this.AttributesPointer = (ulong)(this.Attributes != null ? this.Attributes.Position : 0);
+            this.AttributesCount1 = (ushort)(this.Attributes != null ? this.Attributes.Count : 0);
+            this.AttributesCount2 = (ushort)(this.Attributes != null ? this.Attributes.Count : 0);
 
             // write structure data
             writer.Write(this.VFT);
@@ -110,17 +98,16 @@ namespace RageLib.Resources.GTA5.PC.Clips
             writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
-            writer.Write(this.NamePointer);
-            writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
-            writer.Write(this.Unknown_28h);
+            writer.Write(this.NameHash);
+            writer.Write(this.Unknown_1Ch);
+            writer.Write(this.AttributesPointer);
+            writer.Write(this.AttributesCount1);
+            writer.Write(this.AttributesCount2);
             writer.Write(this.Unknown_2Ch);
             writer.Write(this.Unknown_30h);
             writer.Write(this.Unknown_34h);
-            writer.Write(this.p2);
-            writer.Write(this.p3);
-            writer.Write(this.Unknown_48h);
-            writer.Write(this.Unknown_4Ch);
+            writer.Write(this.Unknown_38h);
+            writer.Write(this.Unknown_3Ch);
         }
 
         /// <summary>
@@ -129,24 +116,8 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (Name != null) list.Add(Name);
-            if (p2data != null) list.Add(p2data);
-            if (p3data != null) list.Add(p3data);
+            if (Attributes != null) list.Add(Attributes);
             return list.ToArray();
-        }
-
-        public IResourceSystemBlock GetType(ResourceDataReader reader, params object[] parameters)
-        {
-            reader.Position += 16;
-            var type = reader.ReadByte();
-            reader.Position -= 17;
-
-            switch (type)
-            {
-                case 1: return new ClipAnimation_GTA5_pc();
-                case 2: return new ClipAnimations_GTA5_pc();
-                default: throw new Exception("Unknown type");
-            }
         }
     }
 }

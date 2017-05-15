@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,44 +24,39 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Clips
 {
-    public class Unknown_CL_002 : ResourceSystemBlock
+    // crClipAnimation
+    public class ClipAnimation : Clip
     {
-        public override long Length
-        {
-            get { return 32; }
-        }
+        public override long Length => 0x70;
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h; // 0x00000000
-        public ulong DataPointer;
-        public ulong NextPointer;
-        public uint Unknown_18h; // 0x00000000
-        public uint Unknown_1Ch; // 0x00000000
+        public ulong AnimationPointer;
+        public float Unknown_58h;
+        public float Unknown_5Ch;
+        public float Unknown_60h;
+        public uint Unknown_64h; // 0x00000000
+        public uint Unknown_68h; // 0x00000000
+        public uint Unknown_6Ch; // 0x00000000
 
         // reference data
-        public Unknown_CL_003 Data;
-        public Unknown_CL_002 Next;
+        public Animation Animation;
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.DataPointer = reader.ReadUInt64();
-            this.NextPointer = reader.ReadUInt64();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
+            base.Read(reader, parameters);
+            this.AnimationPointer = reader.ReadUInt64();
+            this.Unknown_58h = reader.ReadSingle();
+            this.Unknown_5Ch = reader.ReadSingle();
+            this.Unknown_60h = reader.ReadSingle();
+            this.Unknown_64h = reader.ReadUInt32();
+            this.Unknown_68h = reader.ReadUInt32();
+            this.Unknown_6Ch = reader.ReadUInt32();
 
-            // read reference data
-            this.Data = reader.ReadBlockAt<Unknown_CL_003>(
-                this.DataPointer // offset
-            );
-            this.Next = reader.ReadBlockAt<Unknown_CL_002>(
-                this.NextPointer // offset
+            this.Animation = reader.ReadBlockAt<Animation>(
+                this.AnimationPointer // offset
             );
         }
 
@@ -70,17 +65,17 @@ namespace RageLib.Resources.GTA5.PC.Clips
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            // update structure data
-            this.DataPointer = (ulong)(this.Data != null ? this.Data.Position : 0);
-            this.NextPointer = (ulong)(this.Next != null ? this.Next.Position : 0);
+            base.Write(writer, parameters);
 
-            // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.DataPointer);
-            writer.Write(this.NextPointer);
-            writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
+            this.AnimationPointer = (ulong)(this.Animation != null ? this.Animation.Position : 0);
+
+            writer.Write(this.AnimationPointer);
+            writer.Write(this.Unknown_58h);
+            writer.Write(this.Unknown_5Ch);
+            writer.Write(this.Unknown_60h);
+            writer.Write(this.Unknown_64h);
+            writer.Write(this.Unknown_68h);
+            writer.Write(this.Unknown_6Ch);
         }
 
         /// <summary>
@@ -89,8 +84,8 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (Data != null) list.Add(Data);
-            if (Next != null) list.Add(Next);
+            list.AddRange(base.GetReferences());
+            if (Animation != null) list.Add(Animation);
             return list.ToArray();
         }
     }

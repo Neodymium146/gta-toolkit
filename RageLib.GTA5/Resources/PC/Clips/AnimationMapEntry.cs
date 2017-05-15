@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -26,16 +26,13 @@ namespace RageLib.Resources.GTA5.PC.Clips
 {
     public class AnimationMapEntry : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 32; }
-        }
+        public override long Length => 0x20;
 
         // structure data
-        public uint Unknown_0h;
+        public uint Hash;
         public uint Unknown_4h; // 0x00000000
-        public ulong p1;
-        public ulong p2;
+        public ulong AnimationPointer;
+        public ulong NextEntryPointer;
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
 
@@ -49,19 +46,19 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
+            this.Hash = reader.ReadUInt32();
             this.Unknown_4h = reader.ReadUInt32();
-            this.p1 = reader.ReadUInt64();
-            this.p2 = reader.ReadUInt64();
+            this.AnimationPointer = reader.ReadUInt64();
+            this.NextEntryPointer = reader.ReadUInt64();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
 
             // read reference data
             this.Animation = reader.ReadBlockAt<Animation>(
-                this.p1 // offset
+                this.AnimationPointer // offset
             );
             this.NextEntry = reader.ReadBlockAt<AnimationMapEntry>(
-                this.p2 // offset
+                this.NextEntryPointer // offset
             );
         }
 
@@ -71,14 +68,14 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.p1 = (ulong)(this.Animation != null ? this.Animation.Position : 0);
-            this.p2 = (ulong)(this.NextEntry != null ? this.NextEntry.Position : 0);
+            this.AnimationPointer = (ulong)(this.Animation != null ? this.Animation.Position : 0);
+            this.NextEntryPointer = (ulong)(this.NextEntry != null ? this.NextEntry.Position : 0);
 
             // write structure data
-            writer.Write(this.Unknown_0h);
+            writer.Write(this.Hash);
             writer.Write(this.Unknown_4h);
-            writer.Write(this.p1);
-            writer.Write(this.p2);
+            writer.Write(this.AnimationPointer);
+            writer.Write(this.NextEntryPointer);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
         }

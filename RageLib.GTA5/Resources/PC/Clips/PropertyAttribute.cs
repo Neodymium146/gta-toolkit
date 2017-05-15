@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,30 +20,26 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.Common;
-using System.Collections.Generic;
+using System;
 
 namespace RageLib.Resources.GTA5.PC.Clips
 {
-    public class Unknown_CL_200 : ResourceSystemBlock
+    // crPropertyAttribute
+    public class PropertyAttribute : ResourceSystemBlock, IResourceXXSystemBlock
     {
-        public override long Length
-        {
-            get { return 32; }
-        }
+        public override long Length => 0x20;
 
         // structure data
-        public ulong p1;
-        public ushort c1;
-        public ushort c2;
+        public uint VFT;
+        public uint Unknown_4h; // 0x00000001
+        public byte Type;
+        public byte Unknown_9h; // 0x00
+        public ushort Unknown_Ah; // 0x0000
         public uint Unknown_Ch; // 0x00000000
-        public uint Unknown_10h;
+        public uint Unknown_10h; // 0x00000000
         public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h; // 0x00000000
+        public uint NameHash;
         public uint Unknown_1Ch; // 0x00000000
-
-        // reference data
-        public ResourcePointerArray64<Unknown_CL_201> p1data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -51,20 +47,16 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.p1 = reader.ReadUInt64();
-            this.c1 = reader.ReadUInt16();
-            this.c2 = reader.ReadUInt16();
+            this.VFT = reader.ReadUInt32();
+            this.Unknown_4h = reader.ReadUInt32();
+            this.Type = reader.ReadByte();
+            this.Unknown_9h = reader.ReadByte();
+            this.Unknown_Ah = reader.ReadUInt16();
             this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
+            this.NameHash = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-
-            // read reference data
-            this.p1data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_CL_201>>(
-                this.p1, // offset
-                this.c1
-            );
         }
 
         /// <summary>
@@ -72,29 +64,36 @@ namespace RageLib.Resources.GTA5.PC.Clips
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            // update structure data
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
-            //this.c1 = (ushort)(this.p1data != null ? this.p1data.Count : 0);
-
             // write structure data
-            writer.Write(this.p1);
-            writer.Write(this.c1);
-            writer.Write(this.c2);
+            writer.Write(this.VFT);
+            writer.Write(this.Unknown_4h);
+            writer.Write(this.Type);
+            writer.Write(this.Unknown_9h);
+            writer.Write(this.Unknown_Ah);
             writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
+            writer.Write(this.NameHash);
             writer.Write(this.Unknown_1Ch);
         }
 
-        /// <summary>
-        /// Returns a list of data blocks which are referenced by this block.
-        /// </summary>
-        public override IResourceBlock[] GetReferences()
+        public IResourceSystemBlock GetType(ResourceDataReader reader, params object[] parameters)
         {
-            var list = new List<IResourceBlock>();
-            if (p1data != null) list.Add(p1data);
-            return list.ToArray();
+            reader.Position += 8;
+            var type = reader.ReadByte();
+            reader.Position -= 9;
+
+            switch (type)
+            {
+                case 1: return new PropertyAttributeFloat();
+                case 2: return new PropertyAttributeInt();
+                case 3: return new PropertyAttributeBool();
+                case 4: return new PropertyAttributeString();
+                case 6: return new PropertyAttributeVector3();
+                case 8: return new PropertyAttributeQuaternion();
+                case 12: return new PropertyAttributeHashString();
+                default: throw new Exception("Unknown attribute type");
+            }
         }
     }
 }

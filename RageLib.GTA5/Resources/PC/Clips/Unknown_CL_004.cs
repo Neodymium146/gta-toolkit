@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,24 +20,25 @@
     THE SOFTWARE.
 */
 
-using System;
-
 namespace RageLib.Resources.GTA5.PC.Clips
 {
-    public class Unknown_CL_004 : ResourceSystemBlock, IResourceXXSystemBlock
+    public class Unknown_CL_004 : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 16; }
-        }
+        public override long Length => 0x30;
 
         // structure data
         public uint VFT;
         public uint Unknown_4h; // 0x00000001
-        public byte type;
-        public byte Unknown_9h;
-        public ushort Unknown_Ah;
-        public uint Unknown_Ch;
+        public uint Unknown_8h;
+        public uint Unknown_Ch; // 0x00000000
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h;
+        public uint Unknown_1Ch; // 0x00000000
+        public uint Unknown_20h;
+        public uint Unknown_24h;
+        public uint Unknown_28h;
+        public uint Unknown_2Ch;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -47,10 +48,16 @@ namespace RageLib.Resources.GTA5.PC.Clips
             // read structure data
             this.VFT = reader.ReadUInt32();
             this.Unknown_4h = reader.ReadUInt32();
-            this.type = reader.ReadByte();
-            this.Unknown_9h = reader.ReadByte();
-            this.Unknown_Ah = reader.ReadUInt16();
+            this.Unknown_8h = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
+            this.Unknown_10h = reader.ReadUInt32();
+            this.Unknown_14h = reader.ReadUInt32();
+            this.Unknown_18h = reader.ReadUInt32();
+            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadUInt32();
+            this.Unknown_24h = reader.ReadUInt32();
+            this.Unknown_28h = reader.ReadUInt32();
+            this.Unknown_2Ch = reader.ReadUInt32();
         }
 
         /// <summary>
@@ -61,28 +68,16 @@ namespace RageLib.Resources.GTA5.PC.Clips
             // write structure data
             writer.Write(this.VFT);
             writer.Write(this.Unknown_4h);
-            writer.Write(this.type);
-            writer.Write(this.Unknown_9h);
-            writer.Write(this.Unknown_Ah);
+            writer.Write(this.Unknown_8h);
             writer.Write(this.Unknown_Ch);
-        }
-
-        public IResourceSystemBlock GetType(ResourceDataReader reader, params object[] parameters)
-        {
-            reader.Position += 8;
-            var type = reader.ReadByte();
-            reader.Position -= 9;
-
-            switch (type)
-            {
-                case 1: return new Unknown_CL_004_type1();
-                case 2: return new Unknown_CL_004_type2();
-                case 3: return new Unknown_CL_004_type3();
-                case 4: return new Unknown_CL_004_type4();
-                case 6: return new Unknown_CL_004_type6();
-                case 8: return new Unknown_CL_004_type8();
-                default: throw new Exception("Unknown type");
-            }
+            writer.Write(this.Unknown_10h);
+            writer.Write(this.Unknown_14h);
+            writer.Write(this.Unknown_18h);
+            writer.Write(this.Unknown_1Ch);
+            writer.Write(this.Unknown_20h);
+            writer.Write(this.Unknown_24h);
+            writer.Write(this.Unknown_28h);
+            writer.Write(this.Unknown_2Ch);
         }
     }
 }
