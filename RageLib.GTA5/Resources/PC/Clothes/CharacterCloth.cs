@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +25,14 @@ using RageLib.Resources.GTA5.PC.Bounds;
 using System;
 using System.Collections.Generic;
 
-namespace RageLib.Resources
+namespace RageLib.Resources.GTA5.PC.Clothes
 {
-    public class Cloth_GTA5_pc : ResourceSystemBlock
+    // pgBase
+    // clothBase (TODO)
+    // characterCloth
+    public class CharacterCloth : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 208; }
-        }
+        public override long Length => 0xD0;
 
         // structure data
         public uint VFT;
@@ -40,7 +40,7 @@ namespace RageLib.Resources
         public uint Unknown_8h; // 0x00000000
         public uint Unknown_Ch; // 0x00000000
         public ResourceSimpleList64<Unknown_C_001> Unknown_10h;
-        public ulong p1;
+        public ulong ControllerPointer;
         public ulong BoundPointer;
         public ResourceSimpleList64<uint_r> Unknown_30h;
         public uint Unknown_40h; // 0x00000000
@@ -78,7 +78,7 @@ namespace RageLib.Resources
         public uint Unknown_CCh; // 0x00000000
 
         // reference data
-        public Unknown_C_002 p1_data;
+        public CharacterClothController Controller;
         public Bound Bound;
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace RageLib.Resources
             this.Unknown_8h = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_001>>();
-            this.p1 = reader.ReadUInt64();
+            this.ControllerPointer = reader.ReadUInt64();
             this.BoundPointer = reader.ReadUInt64();
             this.Unknown_30h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
             this.Unknown_40h = reader.ReadUInt32();
@@ -130,8 +130,8 @@ namespace RageLib.Resources
             this.Unknown_CCh = reader.ReadUInt32();
 
             // read reference data
-            this.p1_data = reader.ReadBlockAt<Unknown_C_002>(
-                this.p1 // offset
+            this.Controller = reader.ReadBlockAt<CharacterClothController>(
+                this.ControllerPointer // offset
             );
             this.Bound = reader.ReadBlockAt<Bound>(
                 this.BoundPointer // offset
@@ -144,7 +144,7 @@ namespace RageLib.Resources
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.p1 = (ulong)(this.p1_data != null ? this.p1_data.Position : 0);
+            this.ControllerPointer = (ulong)(this.Controller != null ? this.Controller.Position : 0);
             this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.Position : 0);
 
             // write structure data
@@ -153,7 +153,7 @@ namespace RageLib.Resources
             writer.Write(this.Unknown_8h);
             writer.Write(this.Unknown_Ch);
             writer.WriteBlock(this.Unknown_10h);
-            writer.Write(this.p1);
+            writer.Write(this.ControllerPointer);
             writer.Write(this.BoundPointer);
             writer.WriteBlock(this.Unknown_30h);
             writer.Write(this.Unknown_40h);
@@ -197,7 +197,7 @@ namespace RageLib.Resources
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (p1_data != null) list.Add(p1_data);
+            if (Controller != null) list.Add(Controller);
             if (Bound != null) list.Add(Bound);
             return list.ToArray();
         }
