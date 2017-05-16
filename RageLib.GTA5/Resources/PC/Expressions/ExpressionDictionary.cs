@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -26,12 +26,11 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Expressions
 {
-    public class ExpressionDictionary_GTA5_pc : FileBase64_GTA5_pc
+    // pgDictionaryBase
+    // pgDictionary<crExpressions>
+    public class ExpressionDictionary : FileBase64_GTA5_pc
     {
-        public override long Length
-        {
-            get { return 64; }
-        }
+        public override long Length => 0x40;
 
         // structure data
         public uint Unknown_10h;
@@ -39,7 +38,7 @@ namespace RageLib.Resources.GTA5.PC.Expressions
         public uint Unknown_18h;
         public uint Unknown_1Ch;
         public ResourceSimpleList64<uint_r> ExpressionNameHashes;
-        public ResourcePointerList64<Expression_GTA5_pc> Expressions;
+        public ResourcePointerList64<Expression> Expressions;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -54,7 +53,7 @@ namespace RageLib.Resources.GTA5.PC.Expressions
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.ExpressionNameHashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
-            this.Expressions = reader.ReadBlock<ResourcePointerList64<Expression_GTA5_pc>>();
+            this.Expressions = reader.ReadBlock<ResourcePointerList64<Expression>>();
         }
 
         /// <summary>

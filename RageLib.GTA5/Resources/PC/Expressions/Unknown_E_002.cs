@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,9 @@
 
 namespace RageLib.Resources.GTA5.PC.Expressions
 {
-    public class Expression_Unk2_GTA5_pc : ResourceSystemBlock
+    public class Unknown_E_002 : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 160; }
-        }
+        public override long Length => 0xA0;
 
         // structure data
         public float Unknown_0h;

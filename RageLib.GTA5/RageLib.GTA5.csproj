@@ -188,10 +188,10 @@
     <Compile Include="Resources\PC\Drawables\Unknown_D_001.cs" />
     <Compile Include="Resources\PC\Drawables\VertexBuffer.cs" />
     <Compile Include="Resources\PC\Drawables\VertexDeclaration.cs" />
-    <Compile Include="Resources\PC\Expressions\ExpressionDictionary_GTA5_pc.cs" />
-    <Compile Include="Resources\PC\Expressions\Expression_GTA5_pc.cs" />
-    <Compile Include="Resources\PC\Expressions\Expression_Unk1_GTA5_pc.cs" />
-    <Compile Include="Resources\PC\Expressions\Expression_Unk2_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Expressions\Expression.cs" />
+    <Compile Include="Resources\PC\Expressions\ExpressionDictionary.cs" />
+    <Compile Include="Resources\PC\Expressions\Unknown_E_001.cs" />
+    <Compile Include="Resources\PC\Expressions\Unknown_E_002.cs" />
     <Compile Include="Resources\PC\Filters\FilterDictionary_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Filters\Filter_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Fragments\Archetype_GTA5_pc.cs" />

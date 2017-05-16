@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -26,12 +26,11 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Expressions
 {
-    public class Expression_GTA5_pc : ResourceSystemBlock
+    // pgBase
+    // crExpressions
+    public class Expression : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 144; }
-        }
+        public override long Length => 0x90;
 
         // structure data
         public uint VFT;
@@ -42,9 +41,9 @@ namespace RageLib.Resources.GTA5.PC.Expressions
         public uint Unknown_14h;
         public uint Unknown_18h;
         public uint Unknown_1Ch;
-        public ResourcePointerList64<Expression_Unk1_GTA5_pc> Unknown_20h;
+        public ResourcePointerList64<Unknown_E_001> Unknown_20h;
         public ResourceSimpleList64<uint_r> Unknown_30h;
-        public ResourceSimpleList64<Expression_Unk2_GTA5_pc> Unknown_40h;
+        public ResourceSimpleList64<Unknown_E_002> Unknown_40h;
         public ResourceSimpleList64<uint_r> Unknown_50h;
         public ulong NamePointer;
         public uint Unknown_68h; // short, short, (name len, name len+1)
@@ -76,9 +75,9 @@ namespace RageLib.Resources.GTA5.PC.Expressions
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadBlock<ResourcePointerList64<Expression_Unk1_GTA5_pc>>();
+            this.Unknown_20h = reader.ReadBlock<ResourcePointerList64<Unknown_E_001>>();
             this.Unknown_30h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
-            this.Unknown_40h = reader.ReadBlock<ResourceSimpleList64<Expression_Unk2_GTA5_pc>>();
+            this.Unknown_40h = reader.ReadBlock<ResourceSimpleList64<Unknown_E_002>>();
             this.Unknown_50h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
             this.NamePointer = reader.ReadUInt64();
             this.Unknown_68h = reader.ReadUInt32();
