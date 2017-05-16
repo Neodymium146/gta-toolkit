@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,11 @@ using System;
 
 namespace RageLib.Resources
 {
-    public class FilterDictionary_GTA5_pc : FileBase64_GTA5_pc
+    // pgDictionaryBase
+    // pgDictionary<crFrameFilter>
+    public class FilterDictionary : FileBase64_GTA5_pc
     {
-        public override long Length
-        {
-            get { return 64; }
-        }
+        public override long Length => 0x40;
 
         // structure data
         public uint Unknown_10h; // 0x00000000
@@ -38,7 +37,7 @@ namespace RageLib.Resources
         public uint Unknown_18h; // 0x00000001
         public uint Unknown_1Ch; // 0x00000000
         public ResourceSimpleList64<uint_r> FilterNameHashes;
-        public ResourcePointerList64<Filter_GTA5_pc> Filters;
+        public ResourcePointerList64<Filter> Filters;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -53,7 +52,7 @@ namespace RageLib.Resources
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.FilterNameHashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
-            this.Filters = reader.ReadBlock<ResourcePointerList64<Filter_GTA5_pc>>();
+            this.Filters = reader.ReadBlock<ResourcePointerList64<Filter>>();
         }
 
         /// <summary>

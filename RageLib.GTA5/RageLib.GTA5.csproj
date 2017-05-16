@@ -192,8 +192,8 @@
     <Compile Include="Resources\PC\Expressions\ExpressionDictionary.cs" />
     <Compile Include="Resources\PC\Expressions\Unknown_E_001.cs" />
     <Compile Include="Resources\PC\Expressions\Unknown_E_002.cs" />
-    <Compile Include="Resources\PC\Filters\FilterDictionary_GTA5_pc.cs" />
-    <Compile Include="Resources\PC\Filters\Filter_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Filters\Filter.cs" />
+    <Compile Include="Resources\PC\Filters\FilterDictionary.cs" />
     <Compile Include="Resources\PC\Fragments\Archetype_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Fragments\FragCloth_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Fragments\FragDrawable_GTA5_pc.cs" />
