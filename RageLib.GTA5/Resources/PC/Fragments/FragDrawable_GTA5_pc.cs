@@ -27,7 +27,7 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class FragDrawable_GTA5_pc : DrawableBase_GTA5_pc
+    public class FragDrawable_GTA5_pc : Drawable
     {
         public override long Length
         {

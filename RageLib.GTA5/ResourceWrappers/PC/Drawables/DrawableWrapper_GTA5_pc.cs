@@ -30,9 +30,9 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
 {
     public class DrawableListWrapper_GTA5_pc : IDrawableList
     {
-        private IList<Drawable_GTA5_pc> list;
+        private IList<GtaDrawable> list;
 
-        public DrawableListWrapper_GTA5_pc(IList<Drawable_GTA5_pc> list)
+        public DrawableListWrapper_GTA5_pc(IList<GtaDrawable> list)
         {
             this.list = list;
         }
@@ -121,7 +121,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
 
     public class DrawableWrapper_GTA5_pc : IDrawable
     {
-        private Drawable_GTA5_pc drawable;
+        private GtaDrawable drawable;
 
         public IShaderGroup ShaderGroup
         {
@@ -142,7 +142,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
             }
         }
 
-        public DrawableWrapper_GTA5_pc(Drawable_GTA5_pc drawable)
+        public DrawableWrapper_GTA5_pc(GtaDrawable drawable)
         {
             this.drawable = drawable;
         }

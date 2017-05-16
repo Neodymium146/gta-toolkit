@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,21 +20,22 @@
     THE SOFTWARE.
 */
 
+using System.Collections.Generic;
+
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
-    public class VertexDeclaration_GTA5_pc : ResourceSystemBlock
+    public class ShaderParameter : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 16; }
-        }
+        public override long Length => 0x10;
 
         // structure data
-        public uint Flags;
-        public ushort Stride;
-        public byte Unknown_6h;
-        public byte Count;
-        public ulong Types;
+        public byte DataType;
+        public byte Unknown_1h;
+        public ushort Unknown_2h;
+        public uint Unknown_4h;
+        public ulong DataPointer;
+
+        public IResourceBlock Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -42,11 +43,13 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Flags = reader.ReadUInt32();
-            this.Stride = reader.ReadUInt16();
-            this.Unknown_6h = reader.ReadByte();
-            this.Count = reader.ReadByte();
-            this.Types = reader.ReadUInt64();
+            this.DataType = reader.ReadByte();
+            this.Unknown_1h = reader.ReadByte();
+            this.Unknown_2h = reader.ReadUInt16();
+            this.Unknown_4h = reader.ReadUInt32();
+            this.DataPointer = reader.ReadUInt64();
+
+            // DONT READ DATA...
         }
 
         /// <summary>
@@ -55,11 +58,23 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.Flags);
-            writer.Write(this.Stride);
-            writer.Write(this.Unknown_6h);
-            writer.Write(this.Count);
-            writer.Write(this.Types);
+            writer.Write(this.DataType);
+            writer.Write(this.Unknown_1h);
+            writer.Write(this.Unknown_2h);
+            writer.Write(this.Unknown_4h);
+            writer.Write(this.DataPointer);
+
+            // DONT WRITE DATA
+        }
+
+        /// <summary>
+        /// Returns a list of data blocks which are referenced by this block.
+        /// </summary>
+        public override IResourceBlock[] GetReferences()
+        {
+            var list = new List<IResourceBlock>(base.GetReferences());
+            if (Data != null) list.Add(Data);
+            return list.ToArray();
         }
     }
 }

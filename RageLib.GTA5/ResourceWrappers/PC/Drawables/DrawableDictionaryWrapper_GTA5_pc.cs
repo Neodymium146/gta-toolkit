@@ -28,9 +28,9 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
 {
     public class DrawableDictionaryWrapper_GTA5_pc : IDrawableDictionary
     {
-        private DrawableDictionary_GTA5_pc drawableDictionary;
+        private GtaDrawableDictionary drawableDictionary;
 
-        public DrawableDictionaryWrapper_GTA5_pc(DrawableDictionary_GTA5_pc drawableDictionary)
+        public DrawableDictionaryWrapper_GTA5_pc(GtaDrawableDictionary drawableDictionary)
         {
             this.drawableDictionary = drawableDictionary;
         }

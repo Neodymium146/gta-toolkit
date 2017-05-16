@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,9 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
-    public class Joints_GTA5_pc : ResourceSystemBlock
+    public class Joints : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 64; }
-        }
+        public override long Length => 0x40;
 
         // structure data
         public uint VFT;
@@ -51,8 +48,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint Unknown_3Ch; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<JointRotationLimit_GTA5_pc> RotationLimits;
-        public ResourceSimpleArray<JointTranslationLimit_GTA5_pc> TranslationLimits;
+        public ResourceSimpleArray<JointRotationLimit> RotationLimits;
+        public ResourceSimpleArray<JointTranslationLimit> TranslationLimits;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -78,11 +75,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_3Ch = reader.ReadUInt32();
 
             // read reference data
-            this.RotationLimits = reader.ReadBlockAt<ResourceSimpleArray<JointRotationLimit_GTA5_pc>>(
+            this.RotationLimits = reader.ReadBlockAt<ResourceSimpleArray<JointRotationLimit>>(
                 this.RotationLimitsPointer, // offset
                 this.RotationLimitsCount
             );
-            this.TranslationLimits = reader.ReadBlockAt<ResourceSimpleArray<JointTranslationLimit_GTA5_pc>>(
+            this.TranslationLimits = reader.ReadBlockAt<ResourceSimpleArray<JointTranslationLimit>>(
                 this.TranslationLimitsPointer, // offset
                 this.TranslationLimitsCount
             );

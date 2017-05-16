@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -21,33 +21,32 @@
 */
 
 using RageLib.Resources.Common;
-using RageLib.Resources.GTA5.PC.Drawables;
 using System.Collections.Generic;
 
-namespace RageLib.Resources.GTA5.PC.Particles
+namespace RageLib.Resources.GTA5.PC.Drawables
 {
-    public class Unknown_P_022 : ResourceSystemBlock
+    // datBase
+    // grmModel
+    public class DrawableModel : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 48; }
-        }
+        public override long Length => 0x30;
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public ulong Unknown_10h_Pointer;
+        public uint VFT;
+        public uint Unknown_4h; // 0x00000001
+        public ulong GeometriesPointer;
+        public ushort GeometriesCount1;
+        public ushort GeometriesCount2;
+        public uint Unknown_14h; // 0x00000000
         public ulong Unknown_18h_Pointer;
-        public uint Unknown_20h;
-        public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
+        public ulong ShaderMappingPointer;
+        public uint Unknown_28h;
+        public uint Unknown_2Ch;
 
         // reference data
-        public string_r Unknown_10h_Data;
-        public Drawable Unknown_18h_Data;
+        public ResourcePointerArray64<DrawableGeometry> Geometries;
+        public ResourceSimpleArray<RAGE_AABB> Unknown_18h_Data;
+        public ResourceSimpleArray<ushort_r> ShaderMapping;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -55,23 +54,29 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
+            this.VFT = reader.ReadUInt32();
             this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h_Pointer = reader.ReadUInt64();
+            this.GeometriesPointer = reader.ReadUInt64();
+            this.GeometriesCount1 = reader.ReadUInt16();
+            this.GeometriesCount2 = reader.ReadUInt16();
+            this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h_Pointer = reader.ReadUInt64();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
+            this.ShaderMappingPointer = reader.ReadUInt64();
             this.Unknown_28h = reader.ReadUInt32();
             this.Unknown_2Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Unknown_10h_Data = reader.ReadBlockAt<string_r>(
-                this.Unknown_10h_Pointer // offset
+            this.Geometries = reader.ReadBlockAt<ResourcePointerArray64<DrawableGeometry>>(
+                this.GeometriesPointer, // offset
+                this.GeometriesCount1
             );
-            this.Unknown_18h_Data = reader.ReadBlockAt<Drawable>(
-                this.Unknown_18h_Pointer // offset
+            this.Unknown_18h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_AABB>>(
+                this.Unknown_18h_Pointer, // offset
+                this.GeometriesCount1 > 1 ? this.GeometriesCount1 + 1 : this.GeometriesCount1
+            );
+            this.ShaderMapping = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+                this.ShaderMappingPointer, // offset
+                this.GeometriesCount1
             );
         }
 
@@ -81,18 +86,20 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.Unknown_10h_Pointer = (ulong)(this.Unknown_10h_Data != null ? this.Unknown_10h_Data.Position : 0);
+            this.GeometriesPointer = (ulong)(this.Geometries != null ? this.Geometries.Position : 0);
+            //	this.GeometriesCount1 = (ushort)(this.Geometries != null ? this.Geometries.Count : 0);
             this.Unknown_18h_Pointer = (ulong)(this.Unknown_18h_Data != null ? this.Unknown_18h_Data.Position : 0);
+            this.ShaderMappingPointer = (ulong)(this.ShaderMapping != null ? this.ShaderMapping.Position : 0);
 
             // write structure data
-            writer.Write(this.Unknown_0h);
+            writer.Write(this.VFT);
             writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h_Pointer);
+            writer.Write(this.GeometriesPointer);
+            writer.Write(this.GeometriesCount1);
+            writer.Write(this.GeometriesCount2);
+            writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h_Pointer);
-            writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
+            writer.Write(this.ShaderMappingPointer);
             writer.Write(this.Unknown_28h);
             writer.Write(this.Unknown_2Ch);
         }
@@ -103,8 +110,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (Unknown_10h_Data != null) list.Add(Unknown_10h_Data);
+            if (Geometries != null) list.Add(Geometries);
             if (Unknown_18h_Data != null) list.Add(Unknown_18h_Data);
+            if (ShaderMapping != null) list.Add(ShaderMapping);
             return list.ToArray();
         }
     }

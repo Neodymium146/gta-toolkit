@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,30 +25,29 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
-    public class DrawableBaseDictionary_GTA5_pc : FileBase64_GTA5_pc
+    // pgDictionaryBase
+    // pgDictionary<gtaDrawable>
+    public class GtaDrawableDictionary : FileBase64_GTA5_pc
     {
-        public override long Length
-        {
-            get { return 64; }
-        }
+        public override long Length => 0x40;
 
         // structure data
-        public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x00000001
+        public uint Unknown_1Ch; // 0x00000000
         public ulong HashesPointer;
         public ushort HashesCount1;
         public ushort HashesCount2;
-        public uint Unknown_2Ch;
+        public uint Unknown_2Ch; // 0x00000000
         public ulong DrawablesPointer;
         public ushort DrawablesCount1;
         public ushort DrawablesCount2;
-        public uint Unknown_3Ch;
+        public uint Unknown_3Ch; // 0x00000000
 
         // reference data
         public ResourceSimpleArray<uint_r> Hashes;
-        public ResourcePointerArray64<DrawableBase_GTA5_pc> Drawables;
+        public ResourcePointerArray64<GtaDrawable> Drawables;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -76,7 +75,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 this.HashesPointer, // offset
                 this.HashesCount1
             );
-            this.Drawables = reader.ReadBlockAt<ResourcePointerArray64<DrawableBase_GTA5_pc>>(
+            this.Drawables = reader.ReadBlockAt<ResourcePointerArray64<GtaDrawable>>(
                 this.DrawablesPointer, // offset
                 this.DrawablesCount1
             );

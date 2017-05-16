@@ -90,7 +90,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_104h; // 0x00000000
         public uint Unknown_108h; // 0x00000000
         public uint Unknown_10Ch; // 0x00000000
-        public ResourceSimpleList64<LightAttributes_GTA5_pc> LightAttributes;
+        public ResourceSimpleList64<LightAttributes> LightAttributes;
         public ulong Unknown_120h_Pointer;
         public uint Unknown_128h; // 0x00000000
         public uint Unknown_12Ch; // 0x00000000
@@ -169,7 +169,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_104h = reader.ReadUInt32();
             this.Unknown_108h = reader.ReadUInt32();
             this.Unknown_10Ch = reader.ReadUInt32();
-            this.LightAttributes = reader.ReadBlock<ResourceSimpleList64<LightAttributes_GTA5_pc>>();
+            this.LightAttributes = reader.ReadBlock<ResourceSimpleList64<LightAttributes>>();
             this.Unknown_120h_Pointer = reader.ReadUInt64();
             this.Unknown_128h = reader.ReadUInt32();
             this.Unknown_12Ch = reader.ReadUInt32();

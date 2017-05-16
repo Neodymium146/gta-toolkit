@@ -30,7 +30,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
 {
     public class ShaderGroupWrapper_GTA5_pc : IShaderGroup
     {
-        private ShaderGroup_GTA5_pc shaderGroup;
+        private ShaderGroup shaderGroup;
 
         public IShaderList Shaders
         {
@@ -51,7 +51,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
             }
         }
 
-        public ShaderGroupWrapper_GTA5_pc(ShaderGroup_GTA5_pc shaderGroup)
+        public ShaderGroupWrapper_GTA5_pc(ShaderGroup shaderGroup)
         {
             this.shaderGroup = shaderGroup;
         }

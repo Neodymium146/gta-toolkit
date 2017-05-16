@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -26,18 +26,15 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 {
     public class Unknown_D_001 : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 16; }
-        }
+        public override long Length => 0x10;
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public ulong Unknown_8h_Pointer;
+        public uint Key;
+        public uint Value;
+        public ulong NextPointer;
 
         // reference data
-        public Unknown_D_001 p1data;
+        public Unknown_D_001 Next;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -45,13 +42,13 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h_Pointer = reader.ReadUInt64();
+            this.Key = reader.ReadUInt32();
+            this.Value = reader.ReadUInt32();
+            this.NextPointer = reader.ReadUInt64();
 
             // read reference data
-            this.p1data = reader.ReadBlockAt<Unknown_D_001>(
-                this.Unknown_8h_Pointer // offset
+            this.Next = reader.ReadBlockAt<Unknown_D_001>(
+                this.NextPointer // offset
             );
         }
 
@@ -61,12 +58,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.Unknown_8h_Pointer = (ulong)(this.p1data != null ? this.p1data.Position : 0);
+            this.NextPointer = (ulong)(this.Next != null ? this.Next.Position : 0);
 
             // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h_Pointer);
+            writer.Write(this.Key);
+            writer.Write(this.Value);
+            writer.Write(this.NextPointer);
         }
 
         /// <summary>
@@ -75,7 +72,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (p1data != null) list.Add(p1data);
+            if (Next != null) list.Add(Next);
             return list.ToArray();
         }
     }
