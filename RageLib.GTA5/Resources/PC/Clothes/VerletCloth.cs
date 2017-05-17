@@ -100,7 +100,9 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public ulong BehaviorPointer;
         public uint Unknown_138h; // 0x00100000
         public uint Unknown_13Ch; // 0x00000000
-        public ResourceSimpleList64<uint_r> Unknown_140h;
+        public ulong Unknown_140h_Pointer;
+        public uint Unknown_148h;
+        public uint Unknown_14Ch; // 0x00000000
         public uint Unknown_150h; // 0x00000000
         public uint Unknown_154h; // 0x00000000
         public uint Unknown_158h;
@@ -117,6 +119,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         // reference data
         public Bound Bound;
         public EnvClothVerletBehavior Behavior;
+        public Unknown_C_007 Unknown_140h_Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -190,7 +193,9 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.BehaviorPointer = reader.ReadUInt64();
             this.Unknown_138h = reader.ReadUInt32();
             this.Unknown_13Ch = reader.ReadUInt32();
-            this.Unknown_140h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_140h_Pointer = reader.ReadUInt64();
+            this.Unknown_148h = reader.ReadUInt32();
+            this.Unknown_14Ch = reader.ReadUInt32();
             this.Unknown_150h = reader.ReadUInt32();
             this.Unknown_154h = reader.ReadUInt32();
             this.Unknown_158h = reader.ReadUInt32();
@@ -211,6 +216,9 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.Behavior = reader.ReadBlockAt<EnvClothVerletBehavior>(
                 this.BehaviorPointer // offset
             );
+            this.Unknown_140h_Data = reader.ReadBlockAt<Unknown_C_007>(
+              this.Unknown_140h_Pointer // offset
+          );
         }
 
         /// <summary>
@@ -219,7 +227,9 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
+            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.Position : 0);
             this.BehaviorPointer = (ulong)(this.Behavior != null ? this.Behavior.Position : 0);
+            this.Unknown_140h_Pointer = (ulong)(this.Unknown_140h_Data != null ? this.Unknown_140h_Data.Position : 0);
 
             // write structure data
             writer.Write(this.VFT);
@@ -288,7 +298,9 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             writer.Write(this.BehaviorPointer);
             writer.Write(this.Unknown_138h);
             writer.Write(this.Unknown_13Ch);
-            writer.WriteBlock(this.Unknown_140h);
+            writer.Write(this.Unknown_140h_Pointer);
+            writer.Write(this.Unknown_148h);
+            writer.Write(this.Unknown_14Ch);
             writer.Write(this.Unknown_150h);
             writer.Write(this.Unknown_154h);
             writer.Write(this.Unknown_158h);
@@ -311,6 +323,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             var list = new List<IResourceBlock>();
             if (Bound != null) list.Add(Bound);
             if (Behavior != null) list.Add(Behavior);
+            if (Unknown_140h_Data != null) list.Add(Unknown_140h_Data);
             return list.ToArray();
         }
 
@@ -320,8 +333,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
                 new Tuple<long, IResourceBlock>(0x70, Unknown_70h),
                 new Tuple<long, IResourceBlock>(0x80, Unknown_80h),
                 new Tuple<long, IResourceBlock>(0x100, Unknown_100h),
-                new Tuple<long, IResourceBlock>(0x110, Unknown_110h),
-                new Tuple<long, IResourceBlock>(0x140, Unknown_140h)
+                new Tuple<long, IResourceBlock>(0x110, Unknown_110h)
             };
         }
     }

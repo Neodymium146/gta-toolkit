@@ -168,6 +168,7 @@
     <Compile Include="Resources\PC\Clothes\Unknown_C_003.cs" />
     <Compile Include="Resources\PC\Clothes\Unknown_C_004.cs" />
     <Compile Include="Resources\PC\Clothes\Unknown_C_006.cs" />
+    <Compile Include="Resources\PC\Clothes\Unknown_C_007.cs" />
     <Compile Include="Resources\PC\Clothes\VerletCloth.cs" />
     <Compile Include="Resources\PC\Drawables\Bone.cs" />
     <Compile Include="Resources\PC\Drawables\Drawable.cs" />
