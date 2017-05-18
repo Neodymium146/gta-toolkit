@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,10 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Nodes
 {
     public class Node : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 40; }
-        }
+        public override long Length => 40;
 
         // structure data
         public uint Unknown_0h; // 0x00000000
