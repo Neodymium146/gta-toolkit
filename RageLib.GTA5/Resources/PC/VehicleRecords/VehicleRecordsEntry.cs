@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,9 @@ namespace RageLib.Resources.GTA5.PC.VehicleRecords
 {
     // this looks exactly like an rrr entry:
     // -> http://www.gtamodding.com/wiki/Carrec
-    public class VehicleRecordsEntry_GTA5_pc : ResourceSystemBlock
+    public class VehicleRecordsEntry : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 32; }
-        }
+        public override long Length => 0x20;
 
         // structure data
         public uint Time;

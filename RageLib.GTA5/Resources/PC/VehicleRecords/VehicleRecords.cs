@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,19 +25,16 @@ using System;
 
 namespace RageLib.Resources.GTA5.PC.VehicleRecords
 {
-    public class VehicleRecords_GTA5_pc : FileBase64_GTA5_pc
+    public class VehicleRecords : FileBase64_GTA5_pc
     {
-        public override long Length
-        {
-            get { return 32; }
-        }
+        public override long Length => 0x20;
 
         // structure data
-        public ResourceSimpleList64<VehicleRecordsEntry_GTA5_pc> Entries;
+        public ResourceSimpleList64<VehicleRecordsEntry> Entries;
 
-        public VehicleRecords_GTA5_pc()
+        public VehicleRecords()
         {
-            this.Entries = new ResourceSimpleList64<VehicleRecordsEntry_GTA5_pc>();
+            this.Entries = new ResourceSimpleList64<VehicleRecordsEntry>();
         }
 
         /// <summary>
@@ -48,7 +45,7 @@ namespace RageLib.Resources.GTA5.PC.VehicleRecords
             base.Read(reader, parameters);
 
             // read structure data
-            this.Entries = reader.ReadBlock<ResourceSimpleList64<VehicleRecordsEntry_GTA5_pc>>();
+            this.Entries = reader.ReadBlock<ResourceSimpleList64<VehicleRecordsEntry>>();
         }
 
         /// <summary>
