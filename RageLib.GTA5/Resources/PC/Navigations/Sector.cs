@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,9 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
-    public class Sector_GTA5_pc : ResourceSystemBlock
+    public class Sector : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 96; }
-        }
+        public override long Length => 0x60;
 
         // structure data
         public float Unknown_0h;
@@ -53,11 +50,11 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public uint Unknown_5Ch; // 0x00000000
 
         // reference data
-        public SectorData_GTA5_pc Data;
-        public Sector_GTA5_pc SubTree1;
-        public Sector_GTA5_pc SubTree2;
-        public Sector_GTA5_pc SubTree3;
-        public Sector_GTA5_pc SubTree4;
+        public SectorData Data;
+        public Sector SubTree1;
+        public Sector SubTree2;
+        public Sector SubTree3;
+        public Sector SubTree4;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -86,19 +83,19 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             this.Unknown_5Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Data = reader.ReadBlockAt<SectorData_GTA5_pc>(
+            this.Data = reader.ReadBlockAt<SectorData>(
                 this.DataPointer // offset
             );
-            this.SubTree1 = reader.ReadBlockAt<Sector_GTA5_pc>(
+            this.SubTree1 = reader.ReadBlockAt<Sector>(
                 this.SubTree1Pointer // offset
             );
-            this.SubTree2 = reader.ReadBlockAt<Sector_GTA5_pc>(
+            this.SubTree2 = reader.ReadBlockAt<Sector>(
                 this.SubTree2Pointer // offset
             );
-            this.SubTree3 = reader.ReadBlockAt<Sector_GTA5_pc>(
+            this.SubTree3 = reader.ReadBlockAt<Sector>(
                 this.SubTree3Pointer // offset
             );
-            this.SubTree4 = reader.ReadBlockAt<Sector_GTA5_pc>(
+            this.SubTree4 = reader.ReadBlockAt<Sector>(
                 this.SubTree4Pointer // offset
             );
         }

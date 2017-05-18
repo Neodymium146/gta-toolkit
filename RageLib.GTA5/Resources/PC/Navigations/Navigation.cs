@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,10 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
-    public class Navigation_GTA5_pc : FileBase64_GTA5_pc
+    // CNavMesh
+    public class Navigation : FileBase64_GTA5_pc
     {
-        public override long Length
-        {
-            get { return 368; }
-        }
+        public override long Length => 0x170;
 
         // structure data
         public uint Unknown_10h;
@@ -68,27 +66,27 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public uint Unknown_9Ch;
         public uint Unknown_A0h;
         public uint Unknown_A4h;
-        public uint Unknown_A8h;
+        public uint Unknown_A8h;  
         public uint Unknown_ACh;
         public uint Unknown_B0h; // 0x00000000
         public uint Unknown_B4h; // 0x00000000
-        public uint Unknown_B8h; // 0x00000000
+        public uint Unknown_B8h; // 0x00000000  
         public uint Unknown_BCh; // 0x00000000
         public uint Unknown_C0h; // 0x00000000
         public uint Unknown_C4h; // 0x00000000
-        public uint Unknown_C8h; // 0x00000000
+        public uint Unknown_C8h; // 0x00000000  
         public uint Unknown_CCh; // 0x00000000
         public uint Unknown_D0h; // 0x00000000
         public uint Unknown_D4h; // 0x00000000
-        public uint Unknown_D8h; // 0x00000000
+        public uint Unknown_D8h; // 0x00000000 
         public uint Unknown_DCh; // 0x00000000
         public uint Unknown_E0h; // 0x00000000
         public uint Unknown_E4h; // 0x00000000
-        public uint Unknown_E8h; // 0x00000000
+        public uint Unknown_E8h; // 0x00000000 
         public uint Unknown_ECh; // 0x00000000
         public uint Unknown_F0h; // 0x00000000
         public uint Unknown_F4h; // 0x00000000
-        public uint Unknown_F8h; // 0x00000000
+        public uint Unknown_F8h; // 0x00000000 
         public uint Unknown_FCh; // 0x00000000
         public uint Unknown_100h; // 0x00000000
         public uint Unknown_104h; // 0x00000000
@@ -120,7 +118,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public IndicesList Indices;
         public AdjPolysList AdjPolys;
         public PolysList Polys;
-        public Sector_GTA5_pc SectorTree;
+        public Sector SectorTree;
         public ResourceSimpleArray<Portal> Portals;
         public ResourceSimpleArray<ushort_r> p8data;
 
@@ -227,7 +225,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             this.Polys = reader.ReadBlockAt<PolysList>(
                 this.p5 // offset
             );
-            this.SectorTree = reader.ReadBlockAt<Sector_GTA5_pc>(
+            this.SectorTree = reader.ReadBlockAt<Sector>(
                 this.SectorTreePointer // offset
             );
             this.Portals = reader.ReadBlockAt<ResourceSimpleArray<Portal>>(

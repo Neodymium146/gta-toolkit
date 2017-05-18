@@ -223,14 +223,14 @@
     <Compile Include="Resources\PC\Navigations\AdjPolysListPart.cs" />
     <Compile Include="Resources\PC\Navigations\IndicesList.cs" />
     <Compile Include="Resources\PC\Navigations\IndicesListPart.cs" />
-    <Compile Include="Resources\PC\Navigations\Navigation_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Navigations\Navigation.cs" />
     <Compile Include="Resources\PC\Navigations\Poly.cs" />
     <Compile Include="Resources\PC\Navigations\PolysList.cs" />
     <Compile Include="Resources\PC\Navigations\PolysListPart.cs" />
     <Compile Include="Resources\PC\Navigations\Portal.cs" />
+    <Compile Include="Resources\PC\Navigations\Sector.cs" />
+    <Compile Include="Resources\PC\Navigations\SectorData.cs" />
     <Compile Include="Resources\PC\Navigations\SectorDataUnk.cs" />
-    <Compile Include="Resources\PC\Navigations\SectorData_GTA5_pc.cs" />
-    <Compile Include="Resources\PC\Navigations\Sector_GTA5_pc.cs" />
     <Compile Include="Resources\PC\Navigations\Vertex.cs" />
     <Compile Include="Resources\PC\Navigations\VerticesList.cs" />
     <Compile Include="Resources\PC\Navigations\VerticesListPart.cs" />

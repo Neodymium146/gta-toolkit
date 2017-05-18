@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,10 @@
 
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
+    // TAdjPoly
     public class AdjPoly : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 8; }
-        }
+        public override long Length => 8;
 
         // structure data
         public uint Unknown_0h;
