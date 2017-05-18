@@ -33,9 +33,9 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
     /// </summary>
     public class TextureListWrapper_GTA5_pc : ITextureList
     {
-        private IList<Texture_GTA5_pc> list;
+        private IList<TextureDX11> list;
 
-        public TextureListWrapper_GTA5_pc(IList<Texture_GTA5_pc> list)
+        public TextureListWrapper_GTA5_pc(IList<TextureDX11> list)
         {
             this.list = list;
         }
@@ -129,7 +129,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
     public class TextureWrapper_GTA5_pc : ITexture
     {
 
-        public Texture_GTA5_pc texture;
+        public TextureDX11 texture;
 
         public string Name
         {
@@ -194,11 +194,11 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
 
         public TextureWrapper_GTA5_pc()
         {
-            this.texture = new Texture_GTA5_pc();
+            this.texture = new TextureDX11();
             this.texture.Data = new TextureData_GTA5_pc();
         }
 
-        public TextureWrapper_GTA5_pc(Texture_GTA5_pc texture)
+        public TextureWrapper_GTA5_pc(TextureDX11 texture)
         {
             this.texture = texture;
         }

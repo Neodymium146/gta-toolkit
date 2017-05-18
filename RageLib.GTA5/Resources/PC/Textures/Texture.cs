@@ -21,28 +21,34 @@
 */
 
 using RageLib.Resources.Common;
-using RageLib.Resources.GTA5.PC.Textures;
 using System.Collections.Generic;
 
-namespace RageLib.Resources.GTA5.PC.Particles
+namespace RageLib.Resources.GTA5.PC.Textures
 {
-    // ptxShaderVarTexture
-    public class ShaderVarTexture : ShaderVar
+    // pgBase
+    // grcTexture
+    public class Texture : ResourceSystemBlock
     {
         public override long Length => 0x40;
 
         // structure data
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public ulong TexturePointer;
+        public uint VFT;
+        public uint Unknown_4h; // 0x00000001
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x00000000
+        public uint Unknown_1Ch; // 0x00000000
+        public uint Unknown_20h; // 0x00000000
+        public uint Unknown_24h; // 0x00000000
         public ulong NamePointer;
-        public uint NameHash;
-        public uint Unknown_3Ch;
+        public uint Unknown_30h;
+        public uint Unknown_34h; // 0x00000000
+        public uint Unknown_38h; // 0x00000000
+        public uint Unknown_3Ch; // 0x00000000
 
         // reference data
-        public TextureDX11 Texture;
         public string_r Name;
 
         /// <summary>
@@ -50,22 +56,24 @@ namespace RageLib.Resources.GTA5.PC.Particles
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            base.Read(reader, parameters);
-
             // read structure data
+            this.VFT = reader.ReadUInt32();
+            this.Unknown_4h = reader.ReadUInt32();
+            this.Unknown_8h = reader.ReadUInt32();
+            this.Unknown_Ch = reader.ReadUInt32();
+            this.Unknown_10h = reader.ReadUInt32();
+            this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
-            this.TexturePointer = reader.ReadUInt64();
             this.NamePointer = reader.ReadUInt64();
-            this.NameHash = reader.ReadUInt32();
+            this.Unknown_30h = reader.ReadUInt32();
+            this.Unknown_34h = reader.ReadUInt32();
+            this.Unknown_38h = reader.ReadUInt32();
             this.Unknown_3Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Texture = reader.ReadBlockAt<TextureDX11>(
-                this.TexturePointer // offset
-            );
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
             );
@@ -76,20 +84,24 @@ namespace RageLib.Resources.GTA5.PC.Particles
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            base.Write(writer, parameters);
-
             // update structure data
-            this.TexturePointer = (ulong)(this.Texture != null ? this.Texture.Position : 0);
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
+            this.NamePointer = (ulong)(this.Name?.Position ?? 0);
 
             // write structure data
+            writer.Write(this.VFT);
+            writer.Write(this.Unknown_4h);
+            writer.Write(this.Unknown_8h);
+            writer.Write(this.Unknown_Ch);
+            writer.Write(this.Unknown_10h);
+            writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
-            writer.Write(this.TexturePointer);
             writer.Write(this.NamePointer);
-            writer.Write(this.NameHash);
+            writer.Write(this.Unknown_30h);
+            writer.Write(this.Unknown_34h);
+            writer.Write(this.Unknown_38h);
             writer.Write(this.Unknown_3Ch);
         }
 
@@ -98,8 +110,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>(base.GetReferences());
-            if (Texture != null) list.Add(Texture);
+            var list = new List<IResourceBlock>();
             if (Name != null) list.Add(Name);
             return list.ToArray();
         }

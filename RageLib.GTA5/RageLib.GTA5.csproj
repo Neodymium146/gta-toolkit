@@ -297,9 +297,9 @@
     <Compile Include="Resources\PC\Particles\Unknown_P_013.cs" />
     <Compile Include="Resources\PC\ResourceFileTypes_GTA5_pc.cs" />
     <Compile Include="Resources\PC\ResourceFile_GTA5_pc.cs" />
-    <Compile Include="Resources\PC\Textures\TextureBase_GTA5_pc.cs" />
-    <Compile Include="Resources\PC\Textures\TextureDictionary_GTA5_pc.cs" />
-    <Compile Include="Resources\PC\Textures\Texture_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\Textures\Texture.cs" />
+    <Compile Include="Resources\PC\Textures\TextureDictionary.cs" />
+    <Compile Include="Resources\PC\Textures\TextureDX11.cs" />
     <Compile Include="Resources\PC\VehicleRecords\VehicleRecordsEntry_GTA5_pc.cs" />
     <Compile Include="Resources\PC\VehicleRecords\VehicleRecords_GTA5_pc.cs" />
     <Compile Include="Resources\PC\WaypointRecords\WaypointRecordEntry_GTA5_pc.cs" />

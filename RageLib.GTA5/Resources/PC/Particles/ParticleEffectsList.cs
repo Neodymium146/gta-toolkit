@@ -51,7 +51,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // reference data
         public string_r Name;
-        public TextureDictionary_GTA5_pc TextureDictionary;
+        public TextureDictionary TextureDictionary;
         public DrawableDictionary DrawableDictionary;
         public ParticleRuleDictionary ParticleRuleDictionary;
         public EffectRuleDictionary EffectRuleDictionary;
@@ -84,7 +84,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
             );
-            this.TextureDictionary = reader.ReadBlockAt<TextureDictionary_GTA5_pc>(
+            this.TextureDictionary = reader.ReadBlockAt<TextureDictionary>(
                 this.TextureDictionaryPointer // offset
             );
             this.DrawableDictionary = reader.ReadBlockAt<DrawableDictionary>(

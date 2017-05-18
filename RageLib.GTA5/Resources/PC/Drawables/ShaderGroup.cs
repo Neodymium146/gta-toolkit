@@ -50,7 +50,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint Unknown_3Ch; // 0x00000000
 
         // reference data
-        public TextureDictionary_GTA5_pc TextureDictionary;
+        public TextureDictionary TextureDictionary;
         public ResourcePointerArray64<ShaderFX> Shaders;
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_3Ch = reader.ReadUInt32();
 
             // read reference data
-            this.TextureDictionary = reader.ReadBlockAt<TextureDictionary_GTA5_pc>(
+            this.TextureDictionary = reader.ReadBlockAt<TextureDictionary>(
                 this.TextureDictionaryPointer // offset
             );
             this.Shaders = reader.ReadBlockAt<ResourcePointerArray64<ShaderFX>>(

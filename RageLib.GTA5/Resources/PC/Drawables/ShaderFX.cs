@@ -181,7 +181,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 {
                     case 0:
                         offset += 0;
-                        p.Data = reader.ReadBlockAt<TextureBase_GTA5_pc>(
+                        p.Data = reader.ReadBlockAt<Texture>(
                             p.DataPointer // offset
                         );
                         break;

@@ -34,7 +34,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
     /// </summary>
     public class TextureDictionaryWrapper_GTA5_pc : ITextureDictionary
     {
-        private TextureDictionary_GTA5_pc textureDictionary;
+        private TextureDictionary textureDictionary;
 
         public ITextureList Textures
         {
@@ -55,7 +55,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
         public TextureDictionaryWrapper_GTA5_pc()
         { }
 
-        public TextureDictionaryWrapper_GTA5_pc(TextureDictionary_GTA5_pc baseClass)
+        public TextureDictionaryWrapper_GTA5_pc(TextureDictionary baseClass)
         {
             this.textureDictionary = baseClass;
         }
@@ -89,7 +89,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
 
                 var bak = textureDictionary.Textures;
                 textureDictionary.TextureNameHashes.Entries = new ResourceSimpleArray<uint_r>();
-                textureDictionary.Textures.Entries = new ResourcePointerArray64<Texture_GTA5_pc>();
+                textureDictionary.Textures.Entries = new ResourcePointerArray64<TextureDX11>();
                 foreach (uint x in theHashList)
                 {
                     textureDictionary.TextureNameHashes.Entries.Add((uint_r)x);
@@ -130,7 +130,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
 
         }
 
-        public TextureDictionary_GTA5_pc GetObject()
+        public TextureDictionary GetObject()
         {
             return textureDictionary;
         }
