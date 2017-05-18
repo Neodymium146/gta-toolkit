@@ -43,12 +43,12 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
 
         public IMetaValue Read(Stream fileStream)
         {
-            var resource = new ResourceFile_GTA5_pc<Meta_GTA5_pc>();
+            var resource = new ResourceFile_GTA5_pc<MetaFile>();
             resource.Load(fileStream);
             return Parse(resource.ResourceData);
         }
 
-        public IMetaValue Parse(Meta_GTA5_pc meta)
+        public IMetaValue Parse(MetaFile meta)
         {
             var blockKeys = new List<int>();
             var blocks = new List<List<IMetaValue>>();
@@ -192,7 +192,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
             return res;
         }
 
-        private List<IMetaValue> ReadBlock(DataBlock_GTA5_pc block, CreateMetaValueDelegate CreateMetaValue)
+        private List<IMetaValue> ReadBlock(DataBlock block, CreateMetaValueDelegate CreateMetaValue)
         {
             var result = new List<IMetaValue>();
             var reader = new DataReader(new MemoryStream(ToBytes(block.Data)));
@@ -213,16 +213,16 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
             return result;
         }
 
-        public static StructureInfo_GTA5_pc GetInfo(Meta_GTA5_pc meta, int structureKey)
+        public static StructureInfo GetInfo(MetaFile meta, int structureKey)
         {
-            StructureInfo_GTA5_pc info = null;
+            StructureInfo info = null;
             foreach (var x in meta.StructureInfos)
                 if (x.StructureNameHash == structureKey)
                     info = x;
             return info;
         }
 
-        public int GetSize(Meta_GTA5_pc meta, int typeKey)
+        public int GetSize(MetaFile meta, int typeKey)
         {
             switch (typeKey)
             {

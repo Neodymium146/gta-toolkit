@@ -31,7 +31,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
     {
         public static MetaStructure MakeDataset()
         {
-            var valueInfo = new StructureInfo_GTA5_pc();
+            var valueInfo = new StructureInfo();
             valueInfo.StructureNameHash = 0x22DD6F04;
 
             var rootStructure = new MetaStructure(null, valueInfo);
@@ -45,7 +45,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
 
         private static MetaStructure MakeStructureWithSimpleData()
         {
-            var structureWithSimpleTypesInfo = new StructureInfo_GTA5_pc();
+            var structureWithSimpleTypesInfo = new StructureInfo();
             var structureWithSimpleTypes = new MetaStructure(null, structureWithSimpleTypesInfo);
             structureWithSimpleTypes.Values = new Dictionary<int, IMetaValue>();
             structureWithSimpleTypes.Values.Add(unchecked((int)0x36C55540), new MetaBoolean(false));
@@ -81,7 +81,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
             structureWithSimpleTypes.Values.Add(unchecked((int)0xE0B18333), new MetaFloat4_XYZW(1.2f, 3.4f, 5.6f, 7.8f));
             structureWithSimpleTypes.Values.Add(unchecked((int)0xA7E3D660), new MetaFloat4_XYZW(12.0f, 34.0f, 56.0f, 78.0f));
             structureWithSimpleTypes.Values.Add(unchecked((int)0x3B8AF0C2), new MetaArrayOfBytes(new byte[] { 0, 1, 254, 255 }));
-            var charinfo = new StructureEntryInfo_GTA5_pc();
+            var charinfo = new StructureEntryInfo();
             charinfo.ReferenceKey = 64;
             structureWithSimpleTypes.Values.Add(unchecked((int)0x8FF34AB5), new MetaArrayOfChars(charinfo, "A String"));
             structureWithSimpleTypes.Values.Add(unchecked((int)0x17525AB1), new MetaInt32_Hash(unchecked((int)0xF63A8BC0)));
@@ -91,7 +91,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
 
         private static MetaStructure MakeStructureWithEnumData()
         {
-            var structureWithEnumsInfo = new StructureInfo_GTA5_pc();
+            var structureWithEnumsInfo = new StructureInfo();
             var structureWithEnums = new MetaStructure(null, structureWithEnumsInfo);
             structureWithEnums.Values = new Dictionary<int, IMetaValue>();
             structureWithEnums.Values.Add(unchecked((int)0x2300AF3B), MakeByteEnum());
@@ -110,12 +110,12 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
         private static MetaByte_Enum MakeByteEnum()
         {
             var byteEnum = new MetaByte_Enum(1);
-            var en1info = new EnumInfo_GTA5_pc();
-            en1info.Entries = new ResourceSimpleArray<EnumEntryInfo_GTA5_pc>();
-            var q1 = new EnumEntryInfo_GTA5_pc();
+            var en1info = new EnumInfo();
+            en1info.Entries = new ResourceSimpleArray<EnumEntryInfo>();
+            var q1 = new EnumEntryInfo();
             q1.EntryValue = 0;
             q1.EntryNameHash = unchecked((int)0x8462C771);
-            var q2 = new EnumEntryInfo_GTA5_pc();
+            var q2 = new EnumEntryInfo();
             q2.EntryValue = 1;
             q2.EntryNameHash = unchecked((int)0xB6D45EB0);
             en1info.Entries.Add(q1);
@@ -138,14 +138,14 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
             return intEnum;
         }
 
-        private static EnumInfo_GTA5_pc MakeIntEnumInfo()
+        private static EnumInfo MakeIntEnumInfo()
         {
-            var intEnumInfo = new EnumInfo_GTA5_pc();
-            intEnumInfo.Entries = new ResourceSimpleArray<EnumEntryInfo_GTA5_pc>();
-            var q1x = new EnumEntryInfo_GTA5_pc();
+            var intEnumInfo = new EnumInfo();
+            intEnumInfo.Entries = new ResourceSimpleArray<EnumEntryInfo>();
+            var q1x = new EnumEntryInfo();
             q1x.EntryValue = 0;
             q1x.EntryNameHash = unchecked((int)0x856716BD);
-            var q2x = new EnumEntryInfo_GTA5_pc();
+            var q2x = new EnumEntryInfo();
             q2x.EntryValue = 1;
             q2x.EntryNameHash = unchecked((int)0x244B7640);
             intEnumInfo.Entries.Add(q1x);
@@ -169,14 +169,14 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
             return shortFlags;
         }
 
-        private static EnumInfo_GTA5_pc MakeShortFlagsInfo()
+        private static EnumInfo MakeShortFlagsInfo()
         {
-            var shortFlagsInfo = new EnumInfo_GTA5_pc();
-            shortFlagsInfo.Entries = new ResourceSimpleArray<EnumEntryInfo_GTA5_pc>();
-            var shortFlag1Info = new EnumEntryInfo_GTA5_pc();
+            var shortFlagsInfo = new EnumInfo();
+            shortFlagsInfo.Entries = new ResourceSimpleArray<EnumEntryInfo>();
+            var shortFlag1Info = new EnumEntryInfo();
             shortFlag1Info.EntryValue = 0;
             shortFlag1Info.EntryNameHash = unchecked((int)0xEC9BDD31);
-            var shortFlag2Info = new EnumEntryInfo_GTA5_pc();
+            var shortFlag2Info = new EnumEntryInfo();
             shortFlag2Info.EntryValue = 1;
             shortFlag2Info.EntryNameHash = unchecked((int)0xDC2ECBE8);
             shortFlagsInfo.Entries.Add(shortFlag1Info);
@@ -200,14 +200,14 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
             return intFlags;
         }
 
-        private static EnumInfo_GTA5_pc MakeIntFlags1Info()
+        private static EnumInfo MakeIntFlags1Info()
         {
-            var intFlagsInfo = new EnumInfo_GTA5_pc();
-            intFlagsInfo.Entries = new ResourceSimpleArray<EnumEntryInfo_GTA5_pc>();
-            var intFlag1Info = new EnumEntryInfo_GTA5_pc();
+            var intFlagsInfo = new EnumInfo();
+            intFlagsInfo.Entries = new ResourceSimpleArray<EnumEntryInfo>();
+            var intFlag1Info = new EnumEntryInfo();
             intFlag1Info.EntryValue = 0;
             intFlag1Info.EntryNameHash = unchecked((int)0xF3F0428C);
-            var intFlag2Info = new EnumEntryInfo_GTA5_pc();
+            var intFlag2Info = new EnumEntryInfo();
             intFlag2Info.EntryValue = 1;
             intFlag2Info.EntryNameHash = unchecked((int)0x28DBBD98);
             intFlagsInfo.Entries.Add(intFlag1Info);
@@ -230,14 +230,14 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
             return new MetaInt32_Enum3(MakeIntFlags2Info(), 0);
         }
 
-        private static EnumInfo_GTA5_pc MakeIntFlags2Info()
+        private static EnumInfo MakeIntFlags2Info()
         {
-            var intFlagsInfo = new EnumInfo_GTA5_pc();
-            intFlagsInfo.Entries = new ResourceSimpleArray<EnumEntryInfo_GTA5_pc>();
-            var int22Flag1Info = new EnumEntryInfo_GTA5_pc();
+            var intFlagsInfo = new EnumInfo();
+            intFlagsInfo.Entries = new ResourceSimpleArray<EnumEntryInfo>();
+            var int22Flag1Info = new EnumEntryInfo();
             int22Flag1Info.EntryValue = 0;
             int22Flag1Info.EntryNameHash = unchecked((int)0x01769F10);
-            var int22Flag2Info = new EnumEntryInfo_GTA5_pc();
+            var int22Flag2Info = new EnumEntryInfo();
             int22Flag2Info.EntryValue = 1;
             int22Flag2Info.EntryNameHash = unchecked((int)0x3AFAC976);
             intFlagsInfo.Entries.Add(int22Flag1Info);
@@ -247,7 +247,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
 
         private static MetaStructure MakeStructureWithSimpleReferencedData()
         {
-            var structureWithSimpleReferenceDataInfo = new StructureInfo_GTA5_pc();
+            var structureWithSimpleReferenceDataInfo = new StructureInfo();
             var structureWithSimpleReferenceData = new MetaStructure(null, structureWithSimpleReferenceDataInfo);
             structureWithSimpleReferenceData.Values = new Dictionary<int, IMetaValue>();
             structureWithSimpleReferenceData.Values.Add(unchecked((int)0xEF099C3A), MakeCharArray());
@@ -266,7 +266,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
         private static MetaArray MakeCharArray()
         {
             var metaArray = new MetaArray();
-            metaArray.info = new StructureEntryInfo_GTA5_pc();
+            metaArray.info = new StructureEntryInfo();
             metaArray.info.DataType = StructureEntryDataType.UnsignedByte;
             metaArray.Entries = new List<IMetaValue>();
             metaArray.Entries.Add(new MetaByte_B(0));
@@ -279,7 +279,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
         private static MetaArray MakeShortArray()
         {
             var metaArray = new MetaArray();
-            metaArray.info = new StructureEntryInfo_GTA5_pc();
+            metaArray.info = new StructureEntryInfo();
             metaArray.info.DataType = StructureEntryDataType.UnsignedShort;
             metaArray.Entries = new List<IMetaValue>();
             metaArray.Entries.Add(new MetaInt16_B(0));
@@ -292,7 +292,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
         private static MetaArray MakeIntArray()
         {
             var metaArray = new MetaArray();
-            metaArray.info = new StructureEntryInfo_GTA5_pc();
+            metaArray.info = new StructureEntryInfo();
             metaArray.info.DataType = StructureEntryDataType.UnsignedInt;
             metaArray.Entries = new List<IMetaValue>();
             metaArray.Entries.Add(new MetaInt32_B(0));
@@ -305,7 +305,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
         private static MetaArray MakeFloatArray()
         {
             var metaArray = new MetaArray();
-            metaArray.info = new StructureEntryInfo_GTA5_pc();
+            metaArray.info = new StructureEntryInfo();
             metaArray.info.DataType = StructureEntryDataType.Float;
             metaArray.Entries = new List<IMetaValue>();
             metaArray.Entries.Add(new MetaFloat(0.1f));
@@ -318,7 +318,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
         private static MetaArray MakeFloatVectorArray()
         {
             var metaArray = new MetaArray();
-            metaArray.info = new StructureEntryInfo_GTA5_pc();
+            metaArray.info = new StructureEntryInfo();
             metaArray.info.DataType = StructureEntryDataType.Float_XYZ;
             metaArray.Entries = new List<IMetaValue>();
             metaArray.Entries.Add(new MetaFloat4_XYZ(-50.00f, -6.00f, -30.00f));
@@ -329,7 +329,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
         private static MetaArray MakeHashArray()
         {
             var metaArray = new MetaArray();
-            metaArray.info = new StructureEntryInfo_GTA5_pc();
+            metaArray.info = new StructureEntryInfo();
             metaArray.info.DataType = StructureEntryDataType.Hash;
             metaArray.Entries = new List<IMetaValue>();
             metaArray.Entries.Add(new MetaInt32_Hash(unchecked((int)0xCA134811)));
@@ -340,7 +340,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
 
         private static MetaStructure MakeStructureWithComplexReferencedData()
         {
-            var structureWithComplexReferenceDataInfo = new StructureInfo_GTA5_pc();
+            var structureWithComplexReferenceDataInfo = new StructureInfo();
             var structureWithComplexReferenceData = new MetaStructure(null, structureWithComplexReferenceDataInfo);
             structureWithComplexReferenceData.Values = new Dictionary<int, IMetaValue>();
             structureWithComplexReferenceData.Values.Add(unchecked((int)0x6F004ECC), MakeStructureArray());
@@ -361,7 +361,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
             substr2.Values.Add(unchecked((int)0x2518B65F), new MetaBoolean(false));
 
             MetaArray structureArray = new MetaArray();
-            structureArray.info = new StructureEntryInfo_GTA5_pc();
+            structureArray.info = new StructureEntryInfo();
             structureArray.info.DataType = StructureEntryDataType.Structure;
             structureArray.Entries = new List<IMetaValue>();
             structureArray.Entries.Add(substr1);
@@ -371,7 +371,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
 
         private static MetaArray MakeStructurePointerArray()
         {
-            var metainf111 = new StructureInfo_GTA5_pc();
+            var metainf111 = new StructureInfo();
             metainf111.StructureNameHash = 0x2D8B6A9C;
             MetaStructure metasubstr1 = new MetaStructure(null, metainf111);
             metasubstr1.Values = new Dictionary<int, IMetaValue>();
@@ -380,7 +380,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
             MetaGeneric pointerValue1 = new MetaGeneric();
             pointerValue1.Value = metasubstr1;
 
-            var metainf222 = new StructureInfo_GTA5_pc();
+            var metainf222 = new StructureInfo();
             metainf222.StructureNameHash = unchecked((int)0xA71A1B09);
             MetaStructure metasubstr2 = new MetaStructure(null, metainf222);
             metasubstr2.Values = new Dictionary<int, IMetaValue>();
@@ -393,7 +393,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
             pointerValue3.Value = null;
 
             MetaArray pointerArray = new MetaArray();
-            pointerArray.info = new StructureEntryInfo_GTA5_pc();
+            pointerArray.info = new StructureEntryInfo();
             pointerArray.info.DataType = StructureEntryDataType.Structure;
             pointerArray.Entries = new List<IMetaValue>();
             pointerArray.Entries.Add(pointerValue1);

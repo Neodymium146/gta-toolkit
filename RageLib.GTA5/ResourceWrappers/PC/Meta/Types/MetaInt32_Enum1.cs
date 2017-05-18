@@ -27,7 +27,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
     public class MetaInt32_Enum1 : IMetaValue
     {
-        public EnumInfo_GTA5_pc info;
+        public EnumInfo info;
         public int Value { get; set; }
 
         public MetaInt32_Enum1()

@@ -27,7 +27,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
     public class MetaArrayOfBytes : IMetaValue
     {
-        public readonly StructureEntryInfo_GTA5_pc info;
+        public readonly StructureEntryInfo info;
 
         public byte[] Value { get; set; }
 
@@ -39,7 +39,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
             this.Value = value;
         }
 
-        public MetaArrayOfBytes(StructureEntryInfo_GTA5_pc info)
+        public MetaArrayOfBytes(StructureEntryInfo info)
         {
             this.info = info;
         }

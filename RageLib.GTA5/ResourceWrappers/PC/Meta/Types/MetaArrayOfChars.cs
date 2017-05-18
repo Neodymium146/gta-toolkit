@@ -29,16 +29,16 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
     public class MetaArrayOfChars : IMetaValue
     {
-        public readonly StructureEntryInfo_GTA5_pc info;
+        public readonly StructureEntryInfo info;
 
         public string Value { get; set; }
 
-        public MetaArrayOfChars(StructureEntryInfo_GTA5_pc info)
+        public MetaArrayOfChars(StructureEntryInfo info)
         {
             this.info = info;
         }
 
-        public MetaArrayOfChars(StructureEntryInfo_GTA5_pc inf, string value)
+        public MetaArrayOfChars(StructureEntryInfo inf, string value)
         {
             this.info = inf;
             this.Value = value;

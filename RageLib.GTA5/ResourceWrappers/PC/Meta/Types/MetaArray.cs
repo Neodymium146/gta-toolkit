@@ -29,7 +29,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
     public class MetaArray : IMetaValue
     {
-        public StructureEntryInfo_GTA5_pc info;
+        public StructureEntryInfo info;
         public bool IsAlwaysAtZeroOffset = false;
 
         public int BlockIndex { get; set; }

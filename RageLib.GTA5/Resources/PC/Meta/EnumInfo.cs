@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,9 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Meta
 {
-    public class EnumInfo_GTA5_pc : ResourceSystemBlock
+    public class EnumInfo : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 24; }
-        }
+        public override long Length => 24;
 
         // structure data
         public int EnumNameHash { get; set; }
@@ -40,7 +37,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public int Unknown_14h { get; set; } = 0x00000000;
 
         // reference data
-        public ResourceSimpleArray<EnumEntryInfo_GTA5_pc> Entries;
+        public ResourceSimpleArray<EnumEntryInfo> Entries;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -55,7 +52,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
             this.Unknown_14h = reader.ReadInt32();
 
             // read reference data
-            this.Entries = reader.ReadBlockAt<ResourceSimpleArray<EnumEntryInfo_GTA5_pc>>(
+            this.Entries = reader.ReadBlockAt<ResourceSimpleArray<EnumEntryInfo>>(
                 (ulong)this.EntriesPointer, // offset
                 this.EntriesCount
             );

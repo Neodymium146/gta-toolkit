@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,10 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Meta
 {
-    public class Meta_GTA5_pc : FileBase64_GTA5_pc
+    // psoResourceData
+    public class MetaFile : FileBase64_GTA5_pc
     {
-        public override long Length
-        {
-            get { return 112; }
-        }
+        public override long Length => 0x70;
 
         // structure data
         public int Unknown_10h { get; set; } = 0x50524430;
@@ -58,9 +56,9 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public int Unknown_6Ch { get; set; } = 0x00000000;
 
         // reference data
-        public ResourceSimpleArray<StructureInfo_GTA5_pc> StructureInfos;
-        public ResourceSimpleArray<EnumInfo_GTA5_pc> EnumInfos;
-        public ResourceSimpleArray<DataBlock_GTA5_pc> DataBlocks;
+        public ResourceSimpleArray<StructureInfo> StructureInfos;
+        public ResourceSimpleArray<EnumInfo> EnumInfos;
+        public ResourceSimpleArray<DataBlock> DataBlocks;
         public string_r Name;
 
         /// <summary>
@@ -96,15 +94,15 @@ namespace RageLib.Resources.GTA5.PC.Meta
             this.Unknown_6Ch = reader.ReadInt32();
 
             // read reference data
-            this.StructureInfos = reader.ReadBlockAt<ResourceSimpleArray<StructureInfo_GTA5_pc>>(
+            this.StructureInfos = reader.ReadBlockAt<ResourceSimpleArray<StructureInfo>>(
                 (ulong)this.StructureInfosPointer, // offset
                 this.StructureInfosCount
             );
-            this.EnumInfos = reader.ReadBlockAt<ResourceSimpleArray<EnumInfo_GTA5_pc>>(
+            this.EnumInfos = reader.ReadBlockAt<ResourceSimpleArray<EnumInfo>>(
                 (ulong)this.EnumInfosPointer, // offset
                 this.EnumInfosCount
             );
-            this.DataBlocks = reader.ReadBlockAt<ResourceSimpleArray<DataBlock_GTA5_pc>>(
+            this.DataBlocks = reader.ReadBlockAt<ResourceSimpleArray<DataBlock>>(
                 (ulong)this.DataBlocksPointer, // offset
                 this.DataBlocksCount
             );

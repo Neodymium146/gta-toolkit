@@ -36,7 +36,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
     public class MetaXmlImporter
     {
         private MetaInformationXml xmlInfos;
-        private ResourceSimpleArray<StructureInfo_GTA5_pc> strList;
+        private ResourceSimpleArray<StructureInfo> strList;
 
         public MetaStructure Import(string xmlFileName)
         {
@@ -82,7 +82,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                         xmlNode = x;
                 }
 
-                StructureEntryInfo_GTA5_pc entryInfo = null;
+                StructureEntryInfo entryInfo = null;
                 foreach (var x in resultStructure.info.Entries)
                     if (x.EntryNameHash == xmlEntry.NameHash)
                         entryInfo = x;
@@ -693,15 +693,15 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
 
         private void MetaBuildStructureInfos(MetaInformationXml xmlInfo)
         {
-            strList = new ResourceSimpleArray<StructureInfo_GTA5_pc>();
+            strList = new ResourceSimpleArray<StructureInfo>();
             foreach (var xmlStructureInfo in xmlInfo.Structures)
             {
-                var structureInfo = new StructureInfo_GTA5_pc();
+                var structureInfo = new StructureInfo();
                 structureInfo.StructureNameHash = xmlStructureInfo.NameHash;
                 structureInfo.StructureKey = xmlStructureInfo.Key;
                 structureInfo.Unknown_8h = xmlStructureInfo.Unknown;
                 structureInfo.StructureLength = xmlStructureInfo.Length;
-                structureInfo.Entries = new ResourceSimpleArray<StructureEntryInfo_GTA5_pc>();
+                structureInfo.Entries = new ResourceSimpleArray<StructureEntryInfo>();
                 foreach (var xmlStructureEntryInfo in xmlStructureInfo.Entries)
                 {
                     var xmlArrayTypeStack = new Stack<MetaStructureArrayTypeXml>();
@@ -715,7 +715,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                     while (xmlArrayTypeStack.Count > 0)
                     {
                         xmlArrayType = xmlArrayTypeStack.Pop();
-                        var arrayStructureEntryInfo = new StructureEntryInfo_GTA5_pc();
+                        var arrayStructureEntryInfo = new StructureEntryInfo();
                         arrayStructureEntryInfo.EntryNameHash = 0x100;
                         arrayStructureEntryInfo.DataOffset = 0;
                         arrayStructureEntryInfo.DataType = (StructureEntryDataType)xmlArrayType.Type;
@@ -732,7 +732,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                         structureInfo.Entries.Add(arrayStructureEntryInfo);
                     }
 
-                    var structureEntryInfo = new StructureEntryInfo_GTA5_pc();
+                    var structureEntryInfo = new StructureEntryInfo();
                     structureEntryInfo.EntryNameHash = xmlStructureEntryInfo.NameHash;
                     structureEntryInfo.DataOffset = xmlStructureEntryInfo.Offset;
                     structureEntryInfo.DataType = (StructureEntryDataType)xmlStructureEntryInfo.Type;

@@ -62,7 +62,7 @@ namespace RageLib.GTA5.Utilities
                     file.Export(stream);
                     stream.Position = 0;
 
-                    var resource = new ResourceFile_GTA5_pc<Meta_GTA5_pc>();
+                    var resource = new ResourceFile_GTA5_pc<MetaFile>();
                     resource.Load(stream);
 
                     var meta = resource.ResourceData;

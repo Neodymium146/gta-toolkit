@@ -27,18 +27,18 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Types
 {
     public class MetaDataBlockPointer : IMetaValue
     {
-        public readonly StructureEntryInfo_GTA5_pc info;
+        public readonly StructureEntryInfo info;
 
         public int BlockIndex { get; set; }
 
         public byte[] Data { get; set; }
 
-        public MetaDataBlockPointer(StructureEntryInfo_GTA5_pc info)
+        public MetaDataBlockPointer(StructureEntryInfo info)
         {
             this.info = info;
         }
 
-        public MetaDataBlockPointer(StructureEntryInfo_GTA5_pc info, byte[] data)
+        public MetaDataBlockPointer(StructureEntryInfo info, byte[] data)
         {
             this.info = info;
             this.Data = data;

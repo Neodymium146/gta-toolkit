@@ -35,7 +35,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
 {
     public class MetaWriter
     {
-        private Meta_GTA5_pc meta;
+        private MetaFile meta;
         private ISet<int> usedStructureKeys = new HashSet<int>();
 
         public void Write(IMetaValue value, string fileName)
@@ -48,13 +48,13 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
 
         public void Write(IMetaValue value, Stream fileStream)
         {
-            var resource = new ResourceFile_GTA5_pc<Meta_GTA5_pc>();
+            var resource = new ResourceFile_GTA5_pc<MetaFile>();
             resource.Version = 2;
             resource.ResourceData = Build(value);
             resource.Save(fileStream);
         }
 
-        public Meta_GTA5_pc Build(IMetaValue value)
+        public MetaFile Build(IMetaValue value)
         {
             MetaInitialize();
             MetaBuildStructuresAndEnums();
@@ -71,10 +71,10 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                 }
             }
 
-            meta.DataBlocks = new ResourceSimpleArray<DataBlock_GTA5_pc>();
+            meta.DataBlocks = new ResourceSimpleArray<DataBlock>();
             foreach (var block in writer.Blocks)
             {
-                var metaDataBlock = new DataBlock_GTA5_pc();
+                var metaDataBlock = new DataBlock();
                 metaDataBlock.StructureNameHash = block.NameHash;
                 metaDataBlock.Data = StreamToResourceBytes(block.Stream);
                 meta.DataBlocks.Add(metaDataBlock);
@@ -108,7 +108,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
 
         private void MetaInitialize()
         {
-            meta = new Meta_GTA5_pc();
+            meta = new MetaFile();
             meta.VFT = 0x405bc808;
             meta.Unknown_4h = 1;
             meta.Unknown_10h = 0x50524430;
@@ -129,15 +129,15 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
 
         private void MetaBuildStructureInfos(MetaInformationXml xmlInfo)
         {
-            meta.StructureInfos = new ResourceSimpleArray<StructureInfo_GTA5_pc>();
+            meta.StructureInfos = new ResourceSimpleArray<StructureInfo>();
             foreach (var xmlStructureInfo in xmlInfo.Structures)
             {
-                var structureInfo = new StructureInfo_GTA5_pc();
+                var structureInfo = new StructureInfo();
                 structureInfo.StructureNameHash = xmlStructureInfo.NameHash;
                 structureInfo.StructureKey = xmlStructureInfo.Key;
                 structureInfo.Unknown_8h = xmlStructureInfo.Unknown;
                 structureInfo.StructureLength = xmlStructureInfo.Length;
-                structureInfo.Entries = new ResourceSimpleArray<StructureEntryInfo_GTA5_pc>();
+                structureInfo.Entries = new ResourceSimpleArray<StructureEntryInfo>();
                 foreach (var xmlStructureEntryInfo in xmlStructureInfo.Entries)
                 {
                     var xmlArrayTypeStack = new Stack<MetaStructureArrayTypeXml>();
@@ -151,7 +151,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                     while (xmlArrayTypeStack.Count > 0)
                     {
                         xmlArrayType = xmlArrayTypeStack.Pop();
-                        var arrayStructureEntryInfo = new StructureEntryInfo_GTA5_pc();
+                        var arrayStructureEntryInfo = new StructureEntryInfo();
                         arrayStructureEntryInfo.EntryNameHash = 0x100;
                         arrayStructureEntryInfo.DataOffset = 0;
                         arrayStructureEntryInfo.DataType = (StructureEntryDataType)xmlArrayType.Type;
@@ -168,7 +168,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                         structureInfo.Entries.Add(arrayStructureEntryInfo);
                     }
 
-                    var structureEntryInfo = new StructureEntryInfo_GTA5_pc();
+                    var structureEntryInfo = new StructureEntryInfo();
                     structureEntryInfo.EntryNameHash = xmlStructureEntryInfo.NameHash;
                     structureEntryInfo.DataOffset = xmlStructureEntryInfo.Offset;
                     structureEntryInfo.DataType = (StructureEntryDataType)xmlStructureEntryInfo.Type;
@@ -191,16 +191,16 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
 
         private void MetaBuildEnumInfos(MetaInformationXml xmlInfo)
         {
-            meta.EnumInfos = new ResourceSimpleArray<EnumInfo_GTA5_pc>();
+            meta.EnumInfos = new ResourceSimpleArray<EnumInfo>();
             foreach (var xmlEnumInfo in xmlInfo.Enums)
             {
-                var enumInfo = new EnumInfo_GTA5_pc();
+                var enumInfo = new EnumInfo();
                 enumInfo.EnumNameHash = xmlEnumInfo.NameHash;
                 enumInfo.EnumKey = xmlEnumInfo.Key;
-                enumInfo.Entries = new ResourceSimpleArray<EnumEntryInfo_GTA5_pc>();
+                enumInfo.Entries = new ResourceSimpleArray<EnumEntryInfo>();
                 foreach (var xmlEnumEntryInfo in xmlEnumInfo.Entries)
                 {
-                    var enumEntryInfo = new EnumEntryInfo_GTA5_pc();
+                    var enumEntryInfo = new EnumEntryInfo();
                     enumEntryInfo.EntryNameHash = xmlEnumEntryInfo.NameHash;
                     enumEntryInfo.EntryValue = xmlEnumEntryInfo.Value;
                     enumInfo.Entries.Add(enumEntryInfo);
