@@ -146,10 +146,10 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             // update structure data
             this.VertexBufferPointer = (ulong)(this.VertexBuffer != null ? this.VertexBuffer.Position : 0);
             this.IndexBufferPointer = (ulong)(this.IndexBuffer != null ? this.IndexBuffer.Position : 0);
-            this.IndicesCount = (uint)(this.IndexBuffer?.Indices?.Count ?? 0);
-            this.VerticesCount = (ushort)(this.VertexBuffer?.VertexCount ?? 0); // assume vertex buffer is aleady updated
+            //this.IndicesCount = (uint)(this.IndexBuffer?.Indices?.Count ?? 0);
+            //this.VerticesCount = (ushort)(this.VertexBuffer?.VertexCount ?? 0); // assume vertex buffer is aleady updated
             this.Unknown_68h_Pointer = (ulong)(this.Unknown_68h_Data != null ? this.Unknown_68h_Data.Position : 0);
-            this.Count1 = (ushort)(this.Unknown_68h_Data?.Length ?? 0);
+            //this.Count1 = (ushort)(this.Unknown_68h_Data?.Length ?? 0);
             //this.VertexStride = (ushort)(this.VertexData != null ? this.VertexData.Count : 0);
             this.VertexDataPointer = (ulong)(this.VertexData != null ? this.VertexData.Position : 0);
 
