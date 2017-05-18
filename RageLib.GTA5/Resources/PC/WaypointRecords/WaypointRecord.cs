@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,9 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.WaypointRecords
 {
-    public class WaypointRecord_GTA5_pc : FileBase64_GTA5_pc
+    public class WaypointRecord : FileBase64_GTA5_pc
     {
-        public override long Length
-        {
-            get { return 48; }
-        }
+        public override long Length => 0x30;
 
         // structure data
         public uint Unknown_10h; // 0x00000000
@@ -42,7 +39,7 @@ namespace RageLib.Resources.GTA5.PC.WaypointRecords
         public uint Unknown_2Ch; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<WaypointRecordEntry_GTA5_pc> Entries;
+        public ResourceSimpleArray<WaypointRecordEntry> Entries;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -61,7 +58,7 @@ namespace RageLib.Resources.GTA5.PC.WaypointRecords
             this.Unknown_2Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Entries = reader.ReadBlockAt<ResourceSimpleArray<WaypointRecordEntry_GTA5_pc>>(
+            this.Entries = reader.ReadBlockAt<ResourceSimpleArray<WaypointRecordEntry>>(
                 this.EntriesPointer, // offset
                 this.EntriesCount
             );
@@ -75,8 +72,8 @@ namespace RageLib.Resources.GTA5.PC.WaypointRecords
             base.Write(writer, parameters);
 
             // update structure data
-            this.EntriesPointer = (ulong)(this.Entries != null ? this.Entries.Position : 0);
-            this.EntriesCount = (uint)(this.Entries != null ? this.Entries.Count : 0);
+            this.EntriesPointer = (ulong)(this.Entries?.Position ?? 0);
+            this.EntriesCount = (uint)(this.Entries?.Count ?? 0);
 
             // write structure data
             writer.Write(this.Unknown_10h);

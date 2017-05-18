@@ -302,8 +302,8 @@
     <Compile Include="Resources\PC\Textures\TextureDX11.cs" />
     <Compile Include="Resources\PC\VehicleRecords\VehicleRecords.cs" />
     <Compile Include="Resources\PC\VehicleRecords\VehicleRecordsEntry.cs" />
-    <Compile Include="Resources\PC\WaypointRecords\WaypointRecordEntry_GTA5_pc.cs" />
-    <Compile Include="Resources\PC\WaypointRecords\WaypointRecord_GTA5_pc.cs" />
+    <Compile Include="Resources\PC\WaypointRecords\WaypointRecord.cs" />
+    <Compile Include="Resources\PC\WaypointRecords\WaypointRecordEntry.cs" />
     <Compile Include="ResourceWrappers\PC\Drawables\DrawableDictionaryFileWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Drawables\DrawableDictionaryWrapper_GTA5_pc.cs" />
     <Compile Include="ResourceWrappers\PC\Drawables\DrawableFileWrapper_GTA5_pc.cs" />
