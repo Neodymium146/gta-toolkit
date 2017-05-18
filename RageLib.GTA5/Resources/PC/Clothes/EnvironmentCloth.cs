@@ -66,7 +66,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
 
         // reference data
         public ClothInstanceTuning InstanceTuning;
-        public FragDrawable_GTA5_pc Drawable;
+        public FragDrawable Drawable;
         public ClothController Controller;
         public ResourceSimpleArray<uint_r> pxxxxx_2data;
 
@@ -110,7 +110,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.InstanceTuning = reader.ReadBlockAt<ClothInstanceTuning>(
                 this.InstanceTuningPointer // offset
             );
-            this.Drawable = reader.ReadBlockAt<FragDrawable_GTA5_pc>(
+            this.Drawable = reader.ReadBlockAt<FragDrawable>(
                 this.DrawablePointer // offset
             );
             this.Controller = reader.ReadBlockAt<ClothController>(

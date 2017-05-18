@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -29,15 +29,21 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     {
         public override long Length
         {
-            get { return 16 + Data.Length; }
+            get { return 32 + Data.Length; }
         }
 
         // structure data
-        public uint Unknown_0h; // 0x56475748
-        public uint Unknown_4h;
-        public uint cnt1;
-        public uint Unknown_Ch;
-        public ResourceSimpleArray<byte_r> Data;
+        public uint Unknown_0h; // 0x00000000
+        public uint Unknown_4h; // 0x00000000
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
+        public byte cnt1;
+        public byte cnt2;
+        public ushort Unknown_12h;
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x00000000
+        public uint Unknown_1Ch; // 0x00000000
+        public ResourceSimpleArray<RAGE_Matrix3> Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -47,11 +53,17 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             // read structure data
             this.Unknown_0h = reader.ReadUInt32();
             this.Unknown_4h = reader.ReadUInt32();
-            this.cnt1 = reader.ReadUInt32();
+            this.Unknown_8h = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
-            this.Data = reader.ReadBlock<ResourceSimpleArray<byte_r>>(
-              cnt1 - 16
-              );
+            this.cnt1 = reader.ReadByte();
+            this.cnt2 = reader.ReadByte();
+            this.Unknown_12h = reader.ReadUInt16();
+            this.Unknown_14h = reader.ReadUInt32();
+            this.Unknown_18h = reader.ReadUInt32();
+            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Data = reader.ReadBlock<ResourceSimpleArray<RAGE_Matrix3>>(
+                cnt1
+                );
         }
 
         /// <summary>
@@ -62,15 +74,21 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             // write structure data
             writer.Write(this.Unknown_0h);
             writer.Write(this.Unknown_4h);
-            writer.Write(this.cnt1);
+            writer.Write(this.Unknown_8h);
             writer.Write(this.Unknown_Ch);
+            writer.Write(this.cnt1);
+            writer.Write(this.cnt2);
+            writer.Write(this.Unknown_12h);
+            writer.Write(this.Unknown_14h);
+            writer.Write(this.Unknown_18h);
+            writer.Write(this.Unknown_1Ch);
             writer.WriteBlock(this.Data);
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(16, Data)
+                new Tuple<long, IResourceBlock>(32, Data)
             };
         }
     }

@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,10 @@
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class Unknown_F_031_type1 : Unknown_F_031
+    // phJoint3DofType
+    public class Joint3DofType : JointType
     {
-        public override long Length
-        {
-            get { return 240; }
-        }
+        public override long Length => 0xF0;
 
         // structure data
         public uint Unknown_20h;
@@ -45,7 +43,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_50h;
         public uint Unknown_54h;
         public uint Unknown_58h;
-        public uint Unknown_5Ch;
+        public uint Unknown_5Ch; // 0x7FC00001
         public uint Unknown_60h;
         public uint Unknown_64h;
         public uint Unknown_68h;
@@ -61,7 +59,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_90h;
         public uint Unknown_94h;
         public uint Unknown_98h;
-        public uint Unknown_9Ch;
+        public uint Unknown_9Ch; // 0x7FC00001
         public uint Unknown_A0h;
         public uint Unknown_A4h;
         public uint Unknown_A8h;

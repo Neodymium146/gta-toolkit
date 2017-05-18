@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,24 +20,26 @@
     THE SOFTWARE.
 */
 
+using RageLib.Resources.Common;
+using System.Collections.Generic;
+
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class Unknown_F_021 : ResourceSystemBlock
+    // pgBase
+    // phArticulatedBodyType
+    public class ArticulatedBodyType : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 112; }
-        }
+        public override long Length => 0xB0;
 
         // structure data
         public uint VFT;
         public uint Unknown_4h; // 0x00000001
         public uint Unknown_8h; // 0x00000000
         public uint Unknown_Ch; // 0x00000000
-        public uint Unknown_10h;
+        public uint Unknown_10h; // 0x00000000
         public uint Unknown_14h;
-        public uint Unknown_18h; // 0x00000000
-        public uint Unknown_1Ch; // 0x00000000
+        public uint Unknown_18h;
+        public uint Unknown_1Ch;
         public uint Unknown_20h;
         public uint Unknown_24h;
         public uint Unknown_28h;
@@ -45,19 +47,39 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_30h;
         public uint Unknown_34h;
         public uint Unknown_38h;
-        public uint Unknown_3Ch; // 0x00000001
+        public uint Unknown_3Ch;
         public uint Unknown_40h;
         public uint Unknown_44h;
         public uint Unknown_48h;
-        public uint Unknown_4Ch; // 0x00000000
+        public uint Unknown_4Ch;
         public uint Unknown_50h;
         public uint Unknown_54h;
         public uint Unknown_58h;
-        public uint Unknown_5Ch; // 0x00000000
+        public uint Unknown_5Ch;
         public uint Unknown_60h;
         public uint Unknown_64h;
-        public uint Unknown_68h;
-        public uint Unknown_6Ch;
+        public uint Unknown_68h; // 0x00000000
+        public uint Unknown_6Ch; // 0x3F800000
+        public uint Unknown_70h; // 0x00000000
+        public uint Unknown_74h; // 0x00000000
+        public ulong JointTypesPointer;
+        public ulong p2;
+        public byte c1;
+        public byte JointTypesCount;
+        public ushort Unknown_8Ah;
+        public uint Unknown_8Ch;
+        public uint Unknown_90h;
+        public uint Unknown_94h;
+        public uint Unknown_98h;
+        public uint Unknown_9Ch;
+        public uint Unknown_A0h; // 0x00000000
+        public uint Unknown_A4h; // 0x00000000
+        public uint Unknown_A8h; // 0x00000000
+        public uint Unknown_ACh; // 0x00000000
+
+        // reference data
+        public ResourcePointerArray64<JointType> JointTypes;
+        public ResourceSimpleArray<RAGE_Vector4> p2data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -93,6 +115,32 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_64h = reader.ReadUInt32();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
+            this.Unknown_70h = reader.ReadUInt32();
+            this.Unknown_74h = reader.ReadUInt32();
+            this.JointTypesPointer = reader.ReadUInt64();
+            this.p2 = reader.ReadUInt64();
+            this.c1 = reader.ReadByte();
+            this.JointTypesCount = reader.ReadByte();
+            this.Unknown_8Ah = reader.ReadUInt16();
+            this.Unknown_8Ch = reader.ReadUInt32();
+            this.Unknown_90h = reader.ReadUInt32();
+            this.Unknown_94h = reader.ReadUInt32();
+            this.Unknown_98h = reader.ReadUInt32();
+            this.Unknown_9Ch = reader.ReadUInt32();
+            this.Unknown_A0h = reader.ReadUInt32();
+            this.Unknown_A4h = reader.ReadUInt32();
+            this.Unknown_A8h = reader.ReadUInt32();
+            this.Unknown_ACh = reader.ReadUInt32();
+
+            // read reference data
+            this.JointTypes = reader.ReadBlockAt<ResourcePointerArray64<JointType>>(
+                this.JointTypesPointer, // offset
+                this.JointTypesCount
+            );
+            this.p2data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Vector4>>(
+                this.p2, // offset
+                this.c1
+            );
         }
 
         /// <summary>
@@ -100,6 +148,12 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            // update structure data
+            this.JointTypesPointer = (ulong)(this.JointTypes != null ? this.JointTypes.Position : 0);
+            this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
+            //this.c1 = (byte)(this.p2data != null ? this.p2data.Count : 0);
+            //this.c2 = (byte)(this.p1data != null ? this.p1data.Count : 0);
+
             // write structure data
             writer.Write(this.VFT);
             writer.Write(this.Unknown_4h);
@@ -129,6 +183,33 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_64h);
             writer.Write(this.Unknown_68h);
             writer.Write(this.Unknown_6Ch);
+            writer.Write(this.Unknown_70h);
+            writer.Write(this.Unknown_74h);
+            writer.Write(this.JointTypesPointer);
+            writer.Write(this.p2);
+            writer.Write(this.c1);
+            writer.Write(this.JointTypesCount);
+            writer.Write(this.Unknown_8Ah);
+            writer.Write(this.Unknown_8Ch);
+            writer.Write(this.Unknown_90h);
+            writer.Write(this.Unknown_94h);
+            writer.Write(this.Unknown_98h);
+            writer.Write(this.Unknown_9Ch);
+            writer.Write(this.Unknown_A0h);
+            writer.Write(this.Unknown_A4h);
+            writer.Write(this.Unknown_A8h);
+            writer.Write(this.Unknown_ACh);
+        }
+
+        /// <summary>
+        /// Returns a list of data blocks which are referenced by this block.
+        /// </summary>
+        public override IResourceBlock[] GetReferences()
+        {
+            var list = new List<IResourceBlock>();
+            if (JointTypes != null) list.Add(JointTypes);
+            if (p2data != null) list.Add(p2data);
+            return list.ToArray();
         }
     }
 }

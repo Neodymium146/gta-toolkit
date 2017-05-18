@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -26,19 +26,21 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class Archetype_GTA5_pc : ResourceSystemBlock
+    // pgBase
+    // phArchetypeBase
+    // phArchetype
+    // phArchetypePhys
+    // phArchetypeDamp
+    public class Archetype : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 224; }
-        }
+        public override long Length => 0xE0;
 
         // structure data
         public float Unknown_0h;
         public uint Unknown_4h; // 0x00000001
         public uint Unknown_8h; // 0x00000000
         public uint Unknown_Ch; // 0x00000000
-        public uint Unknown_10h; // 0x00000002
+        public uint Unknown_10h; // 0x00000002 -> type=phArchetypeDamp
         public uint Unknown_14h; // 0x00000000
         public ulong NamePointer;
         public ulong BoundPointer;

@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +24,15 @@ using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Drawables;
 using System.Collections.Generic;
 using System;
+using RageLib.Resources.GTA5.PC.Clothes;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class FragType_GTA5_pc : FileBase64_GTA5_pc
+    // fragType
+    // gtaFragType
+    public class FragType : FileBase64_GTA5_pc
     {
-        public override long Length
-        {
-            get { return 304; }
-        }
+        public override long Length => 0x130;
 
         // structure data
         public uint Unknown_10h; // 0x00000000
@@ -51,7 +51,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_50h; // 0x00000000
         public uint Unknown_54h; // 0x00000000
         public ulong NamePointer;
-        public ResourcePointerList64<FragCloth_GTA5_pc> Clothes;
+        public ResourcePointerList64<EnvironmentCloth> Clothes;
         public uint Unknown_70h; // 0x00000000
         public uint Unknown_74h; // 0x00000000
         public uint Unknown_78h; // 0x00000000
@@ -67,13 +67,13 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_A0h; // 0x00000000
         public uint Unknown_A4h; // 0x00000000
         public ulong Unknown_A8h_Pointer;
-        public uint Unknown_B0h; // 0x00000000
+        public uint Unknown_B0h;
         public uint Unknown_B4h; // 0x00000000
         public uint Unknown_B8h;
         public uint Unknown_BCh;
         public uint Unknown_C0h;
         public uint Unknown_C4h;
-        public uint Unknown_C8h;
+        public uint Unknown_C8h; // 0xFFFFFFFF
         public uint Unknown_CCh;
         public uint Unknown_D0h;
         public uint Unknown_D4h;
@@ -96,15 +96,15 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_12Ch; // 0x00000000
 
         // reference data
-        public FragDrawable_GTA5_pc Drawable;
-        public ResourcePointerArray64<FragDrawable_GTA5_pc> Unknown_28h_Data;
+        public FragDrawable Drawable;
+        public ResourcePointerArray64<FragDrawable> Unknown_28h_Data;
         public ResourcePointerArray64<string_r> Unknown_30h_Data;
         public string_r Name;
-        public Unknown_F_004 Unknown_A8h_Data;
-        public ResourcePointerArray64<Unknown_F_006> Unknown_E0h_Data;
-        public FragPhysicsLODGroup_GTA5_pc PhysicsLODGroup;
-        public FragDrawable_GTA5_pc Unknown_F8h_Data;
-        public Unknown_F_003 Unknown_120h_Data;
+        public Unknown_F_003 Unknown_A8h_Data;
+        public ResourcePointerArray64<Unknown_F_004> Unknown_E0h_Data;
+        public FragPhysicsLODGroup PhysicsLODGroup;
+        public FragDrawable Unknown_F8h_Data;
+        public Unknown_F_002 Unknown_120h_Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -130,7 +130,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_50h = reader.ReadUInt32();
             this.Unknown_54h = reader.ReadUInt32();
             this.NamePointer = reader.ReadUInt64();
-            this.Clothes = reader.ReadBlock<ResourcePointerList64<FragCloth_GTA5_pc>>();
+            this.Clothes = reader.ReadBlock<ResourcePointerList64<EnvironmentCloth>>();
             this.Unknown_70h = reader.ReadUInt32();
             this.Unknown_74h = reader.ReadUInt32();
             this.Unknown_78h = reader.ReadUInt32();
@@ -175,10 +175,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_12Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Drawable = reader.ReadBlockAt<FragDrawable_GTA5_pc>(
+            this.Drawable = reader.ReadBlockAt<FragDrawable>(
                 this.DrawablePointer // offset
             );
-            this.Unknown_28h_Data = reader.ReadBlockAt<ResourcePointerArray64<FragDrawable_GTA5_pc>>(
+            this.Unknown_28h_Data = reader.ReadBlockAt<ResourcePointerArray64<FragDrawable>>(
                 this.Unknown_28h_Pointer, // offset
                 this.Count0
             );
@@ -189,20 +189,20 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
             );
-            this.Unknown_A8h_Data = reader.ReadBlockAt<Unknown_F_004>(
+            this.Unknown_A8h_Data = reader.ReadBlockAt<Unknown_F_003>(
                 this.Unknown_A8h_Pointer // offset
             );
-            this.Unknown_E0h_Data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_F_006>>(
+            this.Unknown_E0h_Data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_F_004>>(
                 this.Unknown_E0h_Pointer, // offset
                 this.Count3
             );
-            this.PhysicsLODGroup = reader.ReadBlockAt<FragPhysicsLODGroup_GTA5_pc>(
+            this.PhysicsLODGroup = reader.ReadBlockAt<FragPhysicsLODGroup>(
                 this.PhysicsLODGroupPointer // offset
             );
-            this.Unknown_F8h_Data = reader.ReadBlockAt<FragDrawable_GTA5_pc>(
+            this.Unknown_F8h_Data = reader.ReadBlockAt<FragDrawable>(
                 this.Unknown_F8h_Pointer // offset
             );
-            this.Unknown_120h_Data = reader.ReadBlockAt<Unknown_F_003>(
+            this.Unknown_120h_Data = reader.ReadBlockAt<Unknown_F_002>(
                 this.Unknown_120h_Pointer // offset
             );
         }

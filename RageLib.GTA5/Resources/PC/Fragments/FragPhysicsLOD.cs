@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -26,12 +26,11 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class FragPhysicsLOD_GTA5_pc : ResourceSystemBlock
+    // pgBase
+    // fragPhysicsLOD
+    public class FragPhysicsLOD : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 304; }
-        }
+        public override long Length => 0x130;
 
         // structure data
         public uint VFT;
@@ -42,7 +41,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_14h;
         public uint Unknown_18h;
         public uint Unknown_1Ch;
-        public ulong Unknown_20h_Pointer;
+        public ulong ArticulatedBodyTypePointer;
         public ulong Unknown_28h_Pointer;
         public RAGE_Vector4 Unknown_30h;
         public RAGE_Vector4 Unknown_40h;
@@ -78,17 +77,17 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_12Ch; // 0x00000000
 
         // reference data
-        public Unknown_F_030 Unknown_20h_Data;
+        public ArticulatedBodyType ArticulatedBodyType;
         public ResourceSimpleArray<uint_r> Unknown_28h_Data;
-        public ResourcePointerArray64<fragNameStruct_GTA5_pc> GroupNames;
-        public ResourcePointerArray64<FragTypeGroup_GTA5_pc> Groups;
-        public ResourcePointerArray64<FragTypeChild_GTA5_pc> Children;
-        public Archetype_GTA5_pc Archetype1;
-        public Archetype_GTA5_pc Archetype2;
+        public ResourcePointerArray64<fragNameStruct> GroupNames;
+        public ResourcePointerArray64<FragTypeGroup> Groups;
+        public ResourcePointerArray64<FragTypeChild> Children;
+        public Archetype Archetype1;
+        public Archetype Archetype2;
         public Bound Bound;
         public ResourceSimpleArray<RAGE_Vector4> Unknown_F0h_Data;
         public ResourceSimpleArray<RAGE_Vector4> Unknown_F8h_Data;
-        public Unknown_F_002 Unknown_100h_Data;
+        public Unknown_F_001 Unknown_100h_Data;
         public ResourceSimpleArray<byte_r> Unknown_108h_Data;
         public ResourceSimpleArray<byte_r> Unknown_110h_Data;
 
@@ -106,7 +105,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h_Pointer = reader.ReadUInt64();
+            this.ArticulatedBodyTypePointer = reader.ReadUInt64();
             this.Unknown_28h_Pointer = reader.ReadUInt64();
             this.Unknown_30h = reader.ReadBlock<RAGE_Vector4>();
             this.Unknown_40h = reader.ReadBlock<RAGE_Vector4>();
@@ -142,29 +141,29 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_12Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Unknown_20h_Data = reader.ReadBlockAt<Unknown_F_030>(
-                this.Unknown_20h_Pointer // offset
+            this.ArticulatedBodyType = reader.ReadBlockAt<ArticulatedBodyType>(
+                this.ArticulatedBodyTypePointer // offset
             );
             this.Unknown_28h_Data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
                 this.Unknown_28h_Pointer, // offset
                 this.ChildrenCount
             );
-            this.GroupNames = reader.ReadBlockAt<ResourcePointerArray64<fragNameStruct_GTA5_pc>>(
+            this.GroupNames = reader.ReadBlockAt<ResourcePointerArray64<fragNameStruct>>(
                 this.GroupNamesPointer, // offset
                 this.GroupsCount
             );
-            this.Groups = reader.ReadBlockAt<ResourcePointerArray64<FragTypeGroup_GTA5_pc>>(
+            this.Groups = reader.ReadBlockAt<ResourcePointerArray64<FragTypeGroup>>(
                 this.GroupsPointer, // offset
                 this.GroupsCount
             );
-            this.Children = reader.ReadBlockAt<ResourcePointerArray64<FragTypeChild_GTA5_pc>>(
+            this.Children = reader.ReadBlockAt<ResourcePointerArray64<FragTypeChild>>(
                 this.ChildrenPointer, // offset
                 this.ChildrenCount
             );
-            this.Archetype1 = reader.ReadBlockAt<Archetype_GTA5_pc>(
+            this.Archetype1 = reader.ReadBlockAt<Archetype>(
                 this.Archetype1Pointer // offset
             );
-            this.Archetype2 = reader.ReadBlockAt<Archetype_GTA5_pc>(
+            this.Archetype2 = reader.ReadBlockAt<Archetype>(
                 this.Archetype2Pointer // offset
             );
             this.Bound = reader.ReadBlockAt<Bound>(
@@ -178,7 +177,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
                 this.Unknown_F8h_Pointer, // offset
                 this.ChildrenCount
             );
-            this.Unknown_100h_Data = reader.ReadBlockAt<Unknown_F_002>(
+            this.Unknown_100h_Data = reader.ReadBlockAt<Unknown_F_001>(
                 this.Unknown_100h_Pointer // offset
             );
             this.Unknown_108h_Data = reader.ReadBlockAt<ResourceSimpleArray<byte_r>>(
@@ -197,7 +196,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.Unknown_20h_Pointer = (ulong)(this.Unknown_20h_Data != null ? this.Unknown_20h_Data.Position : 0);
+            this.ArticulatedBodyTypePointer = (ulong)(this.ArticulatedBodyType != null ? this.ArticulatedBodyType.Position : 0);
             this.Unknown_28h_Pointer = (ulong)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.Position : 0);
             this.GroupNamesPointer = (ulong)(this.GroupNames != null ? this.GroupNames.Position : 0);
             this.GroupsPointer = (ulong)(this.Groups != null ? this.Groups.Position : 0);
@@ -224,7 +223,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.Write(this.Unknown_20h_Pointer);
+            writer.Write(this.ArticulatedBodyTypePointer);
             writer.Write(this.Unknown_28h_Pointer);
             writer.WriteBlock(this.Unknown_30h);
             writer.WriteBlock(this.Unknown_40h);
@@ -266,7 +265,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (Unknown_20h_Data != null) list.Add(Unknown_20h_Data);
+            if (ArticulatedBodyType != null) list.Add(ArticulatedBodyType);
             if (Unknown_28h_Data != null) list.Add(Unknown_28h_Data);
             if (Groups != null) list.Add(Groups);
             if (Children != null) list.Add(Children);

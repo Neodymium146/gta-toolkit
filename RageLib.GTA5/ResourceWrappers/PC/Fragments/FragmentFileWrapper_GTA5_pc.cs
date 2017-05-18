@@ -33,7 +33,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Fragments
     /// </summary>
     public class FragmentFileWrapper_GTA5_pc : IFragmentFile
     {
-        private FragType_GTA5_pc fragType;
+        private FragType fragType;
 
         /// <summary>
         /// Gets the fragtype.
@@ -45,12 +45,12 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Fragments
 
         public FragmentFileWrapper_GTA5_pc()
         {
-            fragType = new FragType_GTA5_pc();
+            fragType = new FragType();
         }
 
         public void Load(string fileName)
         {
-            var resource = new ResourceFile_GTA5_pc<FragType_GTA5_pc>();
+            var resource = new ResourceFile_GTA5_pc<FragType>();
             resource.Load(fileName);
 
             fragType = resource.ResourceData;
@@ -61,7 +61,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Fragments
             var w = new FragTypeWrapper_GTA5_pc(fragType);
             w.UpdateClass();
 
-            var resource = new ResourceFile_GTA5_pc<FragType_GTA5_pc>();
+            var resource = new ResourceFile_GTA5_pc<FragType>();
             resource.ResourceData = fragType;
             resource.Version = 162;
             resource.Save(fileName);
@@ -69,7 +69,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Fragments
 
         public void Load(Stream stream)
         {
-            var resource = new ResourceFile_GTA5_pc<FragType_GTA5_pc>();
+            var resource = new ResourceFile_GTA5_pc<FragType>();
             resource.Load(stream);
 
             if (resource.Version != 162)
@@ -83,7 +83,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Fragments
             var w = new FragTypeWrapper_GTA5_pc(fragType);
             w.UpdateClass();
 
-            var resource = new ResourceFile_GTA5_pc<FragType_GTA5_pc>();
+            var resource = new ResourceFile_GTA5_pc<FragType>();
             resource.ResourceData = fragType;
             resource.Version = 162;
             resource.Save(stream);

@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,10 @@
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class Unknown_F_031_type0 : Unknown_F_031
+    // phJoint1DofType
+    public class Joint1DofType : JointType
     {
-        public override long Length
-        {
-            get { return 176; }
-        }
+        public override long Length => 0xB0;
 
         // structure data
         public uint Unknown_20h;
@@ -37,7 +35,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_30h;
         public uint Unknown_34h;
         public uint Unknown_38h;
-        public uint Unknown_3Ch;
+        public uint Unknown_3Ch; // 0x00000000
         public uint Unknown_40h;
         public uint Unknown_44h;
         public uint Unknown_48h;
@@ -45,7 +43,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_50h;
         public uint Unknown_54h;
         public uint Unknown_58h;
-        public uint Unknown_5Ch;
+        public uint Unknown_5Ch; // 0x7FC00001
         public uint Unknown_60h;
         public uint Unknown_64h;
         public uint Unknown_68h;
@@ -53,7 +51,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_70h;
         public uint Unknown_74h;
         public uint Unknown_78h;
-        public uint Unknown_7Ch;
+        public uint Unknown_7Ch; // 0x00000000
         public uint Unknown_80h;
         public uint Unknown_84h;
         public uint Unknown_88h;
@@ -61,7 +59,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_90h;
         public uint Unknown_94h;
         public uint Unknown_98h;
-        public uint Unknown_9Ch;
+        public uint Unknown_9Ch; // 0x7FC00001
         public uint Unknown_A0h;
         public uint Unknown_A4h;
         public uint Unknown_A8h; // 0x4CBEBC20

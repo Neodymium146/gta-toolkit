@@ -29,9 +29,9 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Fragments
 {
     public class FragDrawableWrapper_GTA5_pc : IFragDrawable
     {
-        private FragDrawable_GTA5_pc fragDrawable;
+        private FragDrawable fragDrawable;
 
-        public FragDrawableWrapper_GTA5_pc(FragDrawable_GTA5_pc fragDrawable)
+        public FragDrawableWrapper_GTA5_pc(FragDrawable fragDrawable)
         {
             this.fragDrawable = fragDrawable;
         }

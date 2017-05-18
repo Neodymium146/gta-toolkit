@@ -27,7 +27,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Fragments
 {
     public class FragTypeWrapper_GTA5_pc : IFragType
     {
-        private FragType_GTA5_pc fragType;
+        private FragType fragType;
 
         public IFragDrawable Drawable1
         {
@@ -51,7 +51,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Fragments
             }
         }
 
-        public FragTypeWrapper_GTA5_pc(FragType_GTA5_pc fragType)
+        public FragTypeWrapper_GTA5_pc(FragType fragType)
         {
             this.fragType = fragType;
         }

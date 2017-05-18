@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -27,16 +27,14 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class FragDrawable_GTA5_pc : Drawable
+    // fragDrawable
+    public class FragDrawable : Drawable
     {
-        public override long Length
-        {
-            get { return 336; }
-        }
+        public override long Length => 0x150;
 
         // structure data
-        public uint Unknown_A8h;
-        public uint Unknown_ACh;
+        public uint Unknown_A8h; // 0x00000000
+        public uint Unknown_ACh; // 0x00000000
         public RAGE_Matrix4 Unknown_B0h;      
         public ulong BoundPointer;
         public ulong Unknown_F8h_Pointer;
