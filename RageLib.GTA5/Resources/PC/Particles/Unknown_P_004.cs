@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -27,29 +27,16 @@ namespace RageLib.Resources.GTA5.PC.Particles
 {
     public class Unknown_P_004 : ResourceSystemBlock
     {
-        public override long Length
-        {
-            get { return 640; }
-        }
+        public override long Length => 0x40;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public uint Unknown_10h;
-        public uint Unknown_14h; // 0x00000000
-        public Unknown_P_018 emb1;
-        public Unknown_P_018 emb2;
-        public Unknown_P_018 emb3;
-        public Unknown_P_018 emb4;
-        public uint Unknown_258h;
-        public uint Unknown_25Ch; // 0x00000000
-        public ResourcePointerList64<Unknown_P_018> Unknown_260h;
-        public uint Unknown_270h; // 0x00000000
-        public uint Unknown_274h; // 0x00000000
-        public uint Unknown_278h; // 0x00000000
-        public uint Unknown_27Ch; // 0x00000000
+        public ResourceSimpleList64<Unknown_P_002> Unknown_0h;
+        public ResourceSimpleList64<Unknown_P_003> Unknown_10h;
+        public uint Unknown_20h; // 0x00000001
+        public uint Unknown_24h; // 0x00000000
+        public ResourceSimpleList64<Unknown_P_007> Unknown_28h;
+        public uint Unknown_38h; // 0x00000000
+        public uint Unknown_3Ch; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -57,23 +44,13 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.emb1 = reader.ReadBlock<Unknown_P_018>();
-            this.emb2 = reader.ReadBlock<Unknown_P_018>();
-            this.emb3 = reader.ReadBlock<Unknown_P_018>();
-            this.emb4 = reader.ReadBlock<Unknown_P_018>();
-            this.Unknown_258h = reader.ReadUInt32();
-            this.Unknown_25Ch = reader.ReadUInt32();
-            this.Unknown_260h = reader.ReadBlock<ResourcePointerList64<Unknown_P_018>>();
-            this.Unknown_270h = reader.ReadUInt32();
-            this.Unknown_274h = reader.ReadUInt32();
-            this.Unknown_278h = reader.ReadUInt32();
-            this.Unknown_27Ch = reader.ReadUInt32();
+            this.Unknown_0h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_002>>();
+            this.Unknown_10h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_003>>();
+            this.Unknown_20h = reader.ReadUInt32();
+            this.Unknown_24h = reader.ReadUInt32();
+            this.Unknown_28h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_007>>();
+            this.Unknown_38h = reader.ReadUInt32();
+            this.Unknown_3Ch = reader.ReadUInt32();
         }
 
         /// <summary>
@@ -82,33 +59,21 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.WriteBlock(this.emb1);
-            writer.WriteBlock(this.emb2);
-            writer.WriteBlock(this.emb3);
-            writer.WriteBlock(this.emb4);
-            writer.Write(this.Unknown_258h);
-            writer.Write(this.Unknown_25Ch);
-            writer.WriteBlock(this.Unknown_260h);
-            writer.Write(this.Unknown_270h);
-            writer.Write(this.Unknown_274h);
-            writer.Write(this.Unknown_278h);
-            writer.Write(this.Unknown_27Ch);
+            writer.WriteBlock(this.Unknown_0h);
+            writer.WriteBlock(this.Unknown_10h);
+            writer.Write(this.Unknown_20h);
+            writer.Write(this.Unknown_24h);
+            writer.WriteBlock(this.Unknown_28h);
+            writer.Write(this.Unknown_38h);
+            writer.Write(this.Unknown_3Ch);
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(24, emb1),
-                new Tuple<long, IResourceBlock>(168, emb2),
-                new Tuple<long, IResourceBlock>(312, emb3),
-                new Tuple<long, IResourceBlock>(456, emb4),
-                new Tuple<long, IResourceBlock>(0x260, Unknown_260h)
+                new Tuple<long, IResourceBlock>(0, Unknown_0h),
+                new Tuple<long, IResourceBlock>(0x10, Unknown_10h),
+                new Tuple<long, IResourceBlock>(0x28, Unknown_28h)
             };
         }
     }

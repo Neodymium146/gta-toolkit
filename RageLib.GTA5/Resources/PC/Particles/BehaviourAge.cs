@@ -20,29 +20,39 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.Common;
-using System;
-
 namespace RageLib.Resources.GTA5.PC.Particles
 {
-    public class Unknown_P_003 : ResourceSystemBlock
+    // ptxu_Age
+    public class BehaviourAge : Behaviour
     {
-        public override long Length => 24;
+        public override long Length => 0x30;
 
         // structure data
-        public ResourceSimpleList64<Unknown_P_006> Unknown_0h;
-        public uint Unknown_10h;
-        public uint Unknown_14h;
+        public uint Unknown_10h; // 0x00000000
+        public uint Unknown_14h; // 0x00000000
+        public uint Unknown_18h; // 0x00000000
+        public uint Unknown_1Ch; // 0x00000000
+        public uint Unknown_20h; // 0x00000000
+        public uint Unknown_24h; // 0x00000000
+        public uint Unknown_28h; // 0x00000000
+        public uint Unknown_2Ch; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.Unknown_0h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_006>>();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
+            this.Unknown_18h = reader.ReadUInt32();
+            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadUInt32();
+            this.Unknown_24h = reader.ReadUInt32();
+            this.Unknown_28h = reader.ReadUInt32();
+            this.Unknown_2Ch = reader.ReadUInt32();
         }
 
         /// <summary>
@@ -50,17 +60,17 @@ namespace RageLib.Resources.GTA5.PC.Particles
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // write structure data
-            writer.WriteBlock(this.Unknown_0h);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
-        }
-
-        public override Tuple<long, IResourceBlock>[] GetParts()
-        {
-            return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0, Unknown_0h)
-            };
+            writer.Write(this.Unknown_18h);
+            writer.Write(this.Unknown_1Ch);
+            writer.Write(this.Unknown_20h);
+            writer.Write(this.Unknown_24h);
+            writer.Write(this.Unknown_28h);
+            writer.Write(this.Unknown_2Ch);
         }
     }
 }

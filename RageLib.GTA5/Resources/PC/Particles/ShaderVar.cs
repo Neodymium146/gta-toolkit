@@ -20,19 +20,25 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.Common;
 using System;
 
 namespace RageLib.Resources.GTA5.PC.Particles
 {
-    public class Unknown_P_003 : ResourceSystemBlock
+    // datBase
+    // ptxShaderVar
+    public class ShaderVar : ResourceSystemBlock, IResourceXXSystemBlock
     {
         public override long Length => 24;
 
         // structure data
-        public ResourceSimpleList64<Unknown_P_006> Unknown_0h;
+        public uint VFT;
+        public uint Unknown_4h; // 0x00000001
+        public uint Unknown_8h; // 0x00000000
+        public uint Unknown_Ch; // 0x00000000
         public uint Unknown_10h;
-        public uint Unknown_14h;
+        public byte Type;
+        public byte Unknown_15h;
+        public ushort Unknown_16h;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -40,9 +46,14 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_006>>();
+            this.VFT = reader.ReadUInt32();
+            this.Unknown_4h = reader.ReadUInt32();
+            this.Unknown_8h = reader.ReadUInt32();
+            this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
+            this.Type = reader.ReadByte();
+            this.Unknown_15h = reader.ReadByte();
+            this.Unknown_16h = reader.ReadUInt16();
         }
 
         /// <summary>
@@ -51,16 +62,30 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.WriteBlock(this.Unknown_0h);
+            writer.Write(this.VFT);
+            writer.Write(this.Unknown_4h);
+            writer.Write(this.Unknown_8h);
+            writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
+            writer.Write(this.Type);
+            writer.Write(this.Unknown_15h);
+            writer.Write(this.Unknown_16h);
         }
 
-        public override Tuple<long, IResourceBlock>[] GetParts()
+        public IResourceSystemBlock GetType(ResourceDataReader reader, params object[] parameters)
         {
-            return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0, Unknown_0h)
-            };
+            reader.Position += 20;
+            var type = reader.ReadByte();
+            reader.Position -= 21;
+
+            switch (type)
+            {
+                case 2:
+                case 4: return new ShaderVarVector();
+                case 6: return new ShaderVarTexture();
+                case 7: return new ShaderVarKeyframe();
+                default: throw new Exception("Unknown shader var type");
+            }
         }
     }
 }

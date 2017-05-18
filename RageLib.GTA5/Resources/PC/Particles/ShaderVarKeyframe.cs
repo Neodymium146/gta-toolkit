@@ -25,32 +25,43 @@ using System;
 
 namespace RageLib.Resources.GTA5.PC.Particles
 {
-    public class Unknown_P_005 : ResourceSystemBlock
+    // ptxShaderVarKeyframe
+    public class ShaderVarKeyframe : ShaderVar
     {
-        public override long Length => 0x40;
+        public override long Length => 0x50;
 
         // structure data
-        public ResourceSimpleList64<Unknown_P_008> Unknown_0h;
-        public ResourceSimpleList64<Unknown_P_003> Unknown_10h;
-        public uint Unknown_20h; // 0x00000001
+        public uint Unknown_18h;
+        public uint Unknown_1Ch; // 0x00000001
+        public uint Unknown_20h; // 0x00000000
         public uint Unknown_24h; // 0x00000000
-        public ResourceSimpleList64<Unknown_P_010> Unknown_28h;
+        public ResourceSimpleList64<Unknown_P_001> Unknown_28h;
         public uint Unknown_38h; // 0x00000000
         public uint Unknown_3Ch; // 0x00000000
+        public uint Unknown_40h; // 0x00000000
+        public uint Unknown_44h; // 0x00000000
+        public uint Unknown_48h; // 0x00000000
+        public uint Unknown_4Ch; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.Unknown_0h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_008>>();
-            this.Unknown_10h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_003>>();
+            this.Unknown_18h = reader.ReadUInt32();
+            this.Unknown_1Ch = reader.ReadUInt32();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_010>>();
+            this.Unknown_28h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_001>>();
             this.Unknown_38h = reader.ReadUInt32();
             this.Unknown_3Ch = reader.ReadUInt32();
+            this.Unknown_40h = reader.ReadUInt32();
+            this.Unknown_44h = reader.ReadUInt32();
+            this.Unknown_48h = reader.ReadUInt32();
+            this.Unknown_4Ch = reader.ReadUInt32();
         }
 
         /// <summary>
@@ -58,21 +69,25 @@ namespace RageLib.Resources.GTA5.PC.Particles
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // write structure data
-            writer.WriteBlock(this.Unknown_0h);
-            writer.WriteBlock(this.Unknown_10h);
+            writer.Write(this.Unknown_18h);
+            writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
             writer.WriteBlock(this.Unknown_28h);
             writer.Write(this.Unknown_38h);
             writer.Write(this.Unknown_3Ch);
+            writer.Write(this.Unknown_40h);
+            writer.Write(this.Unknown_44h);
+            writer.Write(this.Unknown_48h);
+            writer.Write(this.Unknown_4Ch);
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0, Unknown_0h),
-                new Tuple<long, IResourceBlock>(0x10, Unknown_10h),
                 new Tuple<long, IResourceBlock>(0x28, Unknown_28h)
             };
         }

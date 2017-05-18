@@ -1,5 +1,5 @@
-﻿/*
-    Copyright(c) 2015 Neodymium
+/*
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,31 +20,9 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.GTA5.PC.Particles;
-using RageLib.ResourceWrappers;
-using RageLib.ResourceWrappers.GTA5.PC.Textures;
-using RageLib.ResourceWrappers.Particles;
-
-namespace RageLib.GTA5.ResourceWrappers.PC.Particles
+namespace RageLib.Resources.GTA5.PC.Particles
 {
-    public class ParticlesWrapper_GTA5_pc : IParticles
-    {
-        private ParticleEffectsList particles;
-
-        public ITextureDictionary TextureDictionary
-        {
-            get
-            {
-                if (particles.TextureDictionary != null)
-                    return new TextureDictionaryWrapper_GTA5_pc(particles.TextureDictionary);
-                else
-                    return null;
-            }
-        }
-
-        public ParticlesWrapper_GTA5_pc(ParticleEffectsList particles)
-        {
-            this.particles = particles;
-        }
-    }
+    // ptxDomainCylinder   
+    public class DomainCylinder : Domain
+    { }
 }
