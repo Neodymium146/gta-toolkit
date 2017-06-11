@@ -687,6 +687,7 @@ namespace RageLib.GTA5.ArchiveWrappers
             binaryStream.SetLength(stream.Length);
 
             byte[] buf = new byte[stream.Length];
+            stream.Position = 0;
             stream.Read(buf, 0, buf.Length);
             binaryStream.Write(buf, 0, buf.Length);
         }
@@ -787,6 +788,7 @@ namespace RageLib.GTA5.ArchiveWrappers
 
             // read resource
             var reader = new DataReader(stream);
+            reader.Position = 0;
             var ident = reader.ReadUInt32();
             var version = reader.ReadUInt32();
             var systemFlags = reader.ReadUInt32();
