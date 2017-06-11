@@ -21,7 +21,6 @@
 */
 
 using RageLib.Hash;
-using RageLib.Resources;
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Textures;
 using System;
@@ -40,8 +39,8 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
         {
             get
             {
-                if (textureDictionary.Textures != null)
-                    return new TextureListWrapper_GTA5_pc(textureDictionary.Textures);
+                if (textureDictionary.Textures.Entries != null)
+                    return new TextureListWrapper_GTA5_pc(textureDictionary.Textures.Entries);
                 else
                     return null;
             }
@@ -76,18 +75,18 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
 
             textureDictionary.PagesInfo = null;
 
-            if (textureDictionary.Textures != null)
+            if (textureDictionary.Textures.Entries != null)
             {
 
                 var theHashList = new List<uint>();
-                foreach (var texture in textureDictionary.Textures)
+                foreach (var texture in textureDictionary.Textures.Entries)
                 {
                     uint hash = Jenkins.Hash((string)texture.Name);
                     theHashList.Add(hash);
                 }
                 theHashList.Sort();
 
-                var bak = textureDictionary.Textures;
+                var bak = textureDictionary.Textures.Entries;
                 textureDictionary.TextureNameHashes.Entries = new ResourceSimpleArray<uint_r>();
                 textureDictionary.Textures.Entries = new ResourcePointerArray64<TextureDX11>();
                 foreach (uint x in theHashList)
@@ -97,7 +96,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
                     {
                         uint tx = Jenkins.Hash((string)g.Name);
                         if (tx == x)
-                            textureDictionary.Textures.Add(g);
+                            textureDictionary.Textures.Entries.Add(g);
                     }
                 }
 
@@ -113,7 +112,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
                 //textureDictionary.Textures = new ResourcePointerArray64<Texture_GTA5_pc>();
 
 
-                foreach (var texture in textureDictionary.Textures)
+                foreach (var texture in textureDictionary.Textures.Entries)
                 {
                     (new TextureWrapper_GTA5_pc(texture)).UpdateClass();
                 }
