@@ -20,12 +20,11 @@
     THE SOFTWARE.
 */
 
-using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources.Common
 {
-    public class ResourcePointerList64<T> : ResourceSystemBlock, IList<T> where T : IResourceSystemBlock, new()
+    public class ResourcePointerList64<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
     {
         public override long Length
         {
@@ -66,94 +65,12 @@ namespace RageLib.Resources.Common
             writer.Write(EntriesCapacity);
             writer.Write((uint)0x0000000);
         }
-        
+
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
             if (Entries != null) list.Add(Entries);
             return list.ToArray();
         }
-
-
-
-
-        public int IndexOf(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(int index, T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveAt(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T this[int index]
-        {
-            get
-            {
-                return Entries[index];
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public void Add(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Clear()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Contains(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Count
-        {
-            get { return Entries.Count; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool Remove(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public IResourceBlock CheckForCast(ResourceDataReader reader, params object[] parameters)
-        {
-            throw new NotImplementedException();
-        }
     }
-
 }

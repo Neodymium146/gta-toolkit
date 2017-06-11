@@ -20,36 +20,23 @@
     THE SOFTWARE.
 */
 
-using System;
-using System.Collections.Generic;
-
 namespace RageLib.Resources.Common
 {
-    /// <summary>
-    /// Represents
-    /// </summary>
-    public class ResourcePointerList<T> : ResourceSystemBlock, IList<T> where T : IResourceSystemBlock, new()
+    public class ResourcePointerList<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
     {
-    
         public override long Length
         {
             get { return 8; }
         }
-
-
 
         // structure data
         public uint DataPointer;
         public ushort DataCount1;
         public ushort DataCount2;
 
-
-
         // reference data
         public ResourcePointerArray<T> data_items;
-
-
-
+        
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             this.DataPointer = reader.ReadUInt32();
@@ -74,97 +61,5 @@ namespace RageLib.Resources.Common
             writer.Write(DataCount1);
             writer.Write(DataCount2);
         }
-
-
-
-
-
-        public override IResourceBlock[] GetReferences()
-        {
-            var children = new List<IResourceBlock>();
-
-            if (data_items != null) children.Add(data_items);
-
-            return children.ToArray();
-        }
-
-        public int IndexOf(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert(int index, T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveAt(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T this[int index]
-        {
-            get
-            {
-                return data_items[index];
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public void Add(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Clear()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Contains(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Count
-        {
-            get { return data_items.Count; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool Remove(T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public IResourceBlock CheckForCast(ResourceDataReader reader, params object[] parameters)
-        {
-            throw new NotImplementedException();
-        }
     }
-
 }
