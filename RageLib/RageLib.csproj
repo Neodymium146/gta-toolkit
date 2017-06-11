@@ -79,7 +79,6 @@
     <Compile Include="Resources\ResourceDataReader.cs" />
     <Compile Include="Resources\ResourceDataWriter.cs" />
     <Compile Include="Resources\ResourceHelpers.cs" />
-    <Compile Include="Resources\Common\ResourceSimpleArray2.cs" />
     <Compile Include="ResourceWrappers\Drawables\IDrawable.cs" />
     <Compile Include="ResourceWrappers\Drawables\IDrawableDictionary.cs" />
     <Compile Include="ResourceWrappers\Drawables\IDrawableDictionaryFile.cs" />
