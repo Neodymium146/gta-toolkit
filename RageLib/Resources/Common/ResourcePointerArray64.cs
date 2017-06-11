@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,9 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.Common
 {
+    /// <summary>
+    /// Represents an array of pointers where each points to an object of type T.
+    /// </summary>
     public class ResourcePointerArray64<T> : ResourceSystemBlock, IList<T> where T : IResourceSystemBlock, new()
     {
 
@@ -116,12 +119,12 @@ namespace RageLib.Resources.Common
 
         public int IndexOf(T item)
         {
-            throw new NotImplementedException();
+            return data_items.IndexOf(item);
         }
 
         public void Insert(int index, T item)
         {
-            throw new NotImplementedException();
+            data_items.Insert(index, item);
         }
 
         public void RemoveAt(int index)
@@ -137,7 +140,7 @@ namespace RageLib.Resources.Common
             }
             set
             {
-                throw new NotImplementedException();
+                data_items[index] = value;
             }
         }
 
@@ -148,17 +151,17 @@ namespace RageLib.Resources.Common
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            data_items.Clear();
         }
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            return data_items.Contains(item);
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            data_items.CopyTo(array, arrayIndex);
         }
 
         public int Count
@@ -168,7 +171,7 @@ namespace RageLib.Resources.Common
 
         public bool IsReadOnly
         {
-            get { throw new NotImplementedException(); }
+            get { return false; }
         }
 
         public bool Remove(T item)
@@ -183,11 +186,7 @@ namespace RageLib.Resources.Common
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return data_items.GetEnumerator();
         }
-
-
-
-
     }
 }

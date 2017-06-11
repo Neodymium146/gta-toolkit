@@ -1,5 +1,5 @@
 ﻿/*
-    Copyright(c) 2015 Neodymium
+    Copyright(c) 2017 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -35,30 +35,7 @@ namespace RageLib.Resources.Common
         {
             get { return 4 * data_items.Count; }
         }
-
-
-
-        public int ResSize
-        {
-            get
-            {
-                return data_items.Count;
-            }
-        }
-
-        public int ResCount
-        {
-            get
-            {
-                int i = 0;
-                foreach (var q in data_items)
-                    if (q != null)
-                        i++;
-                return i;
-            }
-        }
-
-
+        
 
 
         // structure data
@@ -124,52 +101,49 @@ namespace RageLib.Resources.Common
 
         public int IndexOf(T item)
         {
-            throw new NotImplementedException();
+            return data_items.IndexOf(item);
         }
 
         public void Insert(int index, T item)
         {
-            throw new NotImplementedException();
+            data_items.Insert(index, item);
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            data_items.RemoveAt(index);
         }
 
         public T this[int index]
         {
             get
             {
-                return this.data_items[index];
+                return data_items[index];
             }
             set
             {
-                throw new NotImplementedException();
+                data_items[index] = value;
             }
         }
 
         public void Add(T item)
         {
-
-            this.data_items.Add(item);
-            this.data_pointers.Add(0);
-
+            data_items.Add(item);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            data_items.Clear();
         }
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            return data_items.Contains(item);
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            data_items.CopyTo(array, arrayIndex);
         }
 
         public int Count
@@ -179,33 +153,22 @@ namespace RageLib.Resources.Common
 
         public bool IsReadOnly
         {
-            get { throw new NotImplementedException(); }
+            get { return false; }
         }
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            return data_items.Remove(item);
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-
-            foreach (T t in data_items)
-            {
-                yield return t;
-            }
-
-
+            return data_items.GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return data_items.GetEnumerator();
         }
-
-
-      
-
-
     }
 }
