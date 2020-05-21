@@ -82,7 +82,7 @@ namespace RageLib.Data
         /// </summary>
         protected virtual void WriteToStream(byte[] value, bool ignoreEndianess = false)
         {
-            if (!ignoreEndianess && (Endianess == Endianess.BigEndian))
+            if (!ignoreEndianess && (!DataUtilities.EndianessMatchesCurrentArchitecture(Endianess)))
             {
                 var buffer = (byte[])value.Clone();
                 Array.Reverse(buffer);
