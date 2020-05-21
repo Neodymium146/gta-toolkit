@@ -23,7 +23,6 @@
 using RageLib.Compression;
 using RageLib.ResourceWrappers;
 using System;
-using System.Windows.Forms;
 
 namespace RageLib.Helpers
 {
@@ -95,7 +94,6 @@ namespace RageLib.Helpers
                     break;
 
                 default:
-                    MessageBox.Show("format not supported!");
                     throw new Exception("unsupported format");
             }
         }
