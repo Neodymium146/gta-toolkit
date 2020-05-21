@@ -57,8 +57,8 @@ namespace RageLib.Resources.GTA5
         public int GraphicsPagesMul16 { get; set; } // 0...1
         public int GraphicsPagesSizeShift { get; set; } // 0..15
 
-        public byte[] SystemData { get; set; }
-        public byte[] GraphicsData { get; set; }
+        public byte[] VirtualData { get; set; }
+        public byte[] PhysicalData { get; set; }
 
         public void Load(string fileName)
         {
@@ -120,12 +120,12 @@ namespace RageLib.Resources.GTA5
                 graphicsBaseSize * GraphicsPagesMul8 * 8 +
                 graphicsBaseSize * GraphicsPagesMul16 * 16;
 
-            SystemData = new byte[systemSize];
-            GraphicsData = new byte[graphicsSize];
+            VirtualData = new byte[systemSize];
+            PhysicalData = new byte[graphicsSize];
 
             var deflateStream = new DeflateStream(stream, CompressionMode.Decompress, true);
-            deflateStream.Read(SystemData, 0, systemSize);
-            deflateStream.Read(GraphicsData, 0, graphicsSize);
+            deflateStream.Read(VirtualData, 0, systemSize);
+            deflateStream.Read(PhysicalData, 0, graphicsSize);
             deflateStream.Close();
         }
 
@@ -171,8 +171,8 @@ namespace RageLib.Resources.GTA5
             writer.Write((uint)graphicsFlags);
 
             var deflateStream = new DeflateStream(stream, CompressionMode.Compress, true);
-            deflateStream.Write(SystemData, 0, SystemData.Length);
-            deflateStream.Write(GraphicsData, 0, GraphicsData.Length);
+            deflateStream.Write(VirtualData, 0, VirtualData.Length);
+            deflateStream.Write(PhysicalData, 0, PhysicalData.Length);
             deflateStream.Flush();
             deflateStream.Close();
         }
@@ -196,8 +196,8 @@ namespace RageLib.Resources.GTA5
         {
             base.Load(stream);
 
-            var systemStream = new MemoryStream(SystemData);
-            var graphicsStream = new MemoryStream(GraphicsData);
+            var systemStream = new MemoryStream(VirtualData);
+            var graphicsStream = new MemoryStream(PhysicalData);
             var resourceStream = new ResourceDataReader(systemStream, graphicsStream);
             resourceStream.Position = 0x50000000;
 
@@ -308,7 +308,7 @@ namespace RageLib.Resources.GTA5
             systemStream.Flush();
             systemStream.Position = 0;
             systemStream.Read(sysBuf, 0, (int)systemStream.Length);
-            SystemData = sysBuf;
+            VirtualData = sysBuf;
 
 
 
@@ -344,7 +344,7 @@ namespace RageLib.Resources.GTA5
             graphicsStream.Flush();
             graphicsStream.Position = 0;
             graphicsStream.Read(gfxBuf, 0, (int)graphicsStream.Length);
-            GraphicsData = gfxBuf;
+            PhysicalData = gfxBuf;
 
             base.Save(stream);
         }        
