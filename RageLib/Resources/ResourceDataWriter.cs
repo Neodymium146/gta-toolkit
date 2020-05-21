@@ -80,7 +80,7 @@ namespace RageLib.Resources
                 systemStream.Position = Position & ~SYSTEM_BASE;
 
                 // handle endianess
-                if (!ignoreEndianess && (!DataUtilities.EndianessMatchesCurrentArchitecture(Endianess)))
+                if (!ignoreEndianess && !EndianessMatchesArchitecture)
                 {
                     var buf = (byte[])value.Clone();
                     Array.Reverse(buf);
@@ -102,7 +102,7 @@ namespace RageLib.Resources
                 graphicsStream.Position = Position & ~GRAPHICS_BASE;
 
                 // handle endianess
-                if (!ignoreEndianess && (!DataUtilities.EndianessMatchesCurrentArchitecture(Endianess)))
+                if (!ignoreEndianess && !EndianessMatchesArchitecture)
                 {
                     var buf = (byte[])value.Clone();
                     Array.Reverse(buf);

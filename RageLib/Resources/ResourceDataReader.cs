@@ -89,7 +89,7 @@ namespace RageLib.Resources
                 systemStream.Read(buffer, 0, count);
 
                 // handle endianess
-                if (!ignoreEndianess && (!DataUtilities.EndianessMatchesCurrentArchitecture(Endianess)))
+                if (!ignoreEndianess && !EndianessMatchesArchitecture)
                 {
                     Array.Reverse(buffer);
                 }
@@ -108,7 +108,7 @@ namespace RageLib.Resources
                 graphicsStream.Read(buffer, 0, count);
 
                 // handle endianess
-                if (!ignoreEndianess && (!DataUtilities.EndianessMatchesCurrentArchitecture(Endianess)))
+                if (!ignoreEndianess && !EndianessMatchesArchitecture)
                 {
                     Array.Reverse(buffer);
                 }
