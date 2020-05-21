@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>RageLib.GTA5</RootNamespace>
+    <AssemblyName>RageLib.GTA5</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
