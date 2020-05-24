@@ -6,7 +6,10 @@ namespace RageLib.Data
     {
         public static bool EndianessMatchesCurrentArchitecture(Endianess endianess)
         {
-            return (endianess == Endianess.LittleEndian && BitConverter.IsLittleEndian) || (endianess == Endianess.BigEndian && !BitConverter.IsLittleEndian);
+            if (BitConverter.IsLittleEndian)
+                return endianess == Endianess.LittleEndian;
+            else
+                return endianess == Endianess.BigEndian;
         }
     }
 }
