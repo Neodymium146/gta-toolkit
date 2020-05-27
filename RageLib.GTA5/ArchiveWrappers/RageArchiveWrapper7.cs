@@ -797,8 +797,8 @@ namespace RageLib.GTA5.ArchiveWrappers
             reader.Position = 0;
             var buffer = reader.ReadBytes((int)stream.Length);
 
-            file.SystemFlags = systemFlags;
-            file.GraphicsFlags = graphicsFlags;
+            file.VirtualFlags = systemFlags;
+            file.PhysicalFlags = graphicsFlags;
             resourceStream.Write(buffer, 0, buffer.Length);
         }
 
@@ -818,14 +818,14 @@ namespace RageLib.GTA5.ArchiveWrappers
         {
             // find version
             // -> http://dageron.com/?page_id=5446&lang=en
-            var version = ((file.GraphicsFlags & 0xF0000000) >> 28) |
-                          ((file.SystemFlags & 0xF0000000) >> 24);
+            var version = ((file.PhysicalFlags & 0xF0000000) >> 28) |
+                          ((file.VirtualFlags & 0xF0000000) >> 24);
 
             var writer = new DataWriter(stream);
             writer.Write((uint)0x07435352);
             writer.Write((uint)version);
-            writer.Write((uint)file.SystemFlags);
-            writer.Write((uint)file.GraphicsFlags);
+            writer.Write((uint)file.VirtualFlags);
+            writer.Write((uint)file.PhysicalFlags);
 
             var resourceStream = new PartialStream(
                    archiveWrapper.archive_.BaseStream,
