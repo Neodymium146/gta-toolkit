@@ -20,25 +20,29 @@
     THE SOFTWARE.
 */
 
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RageLib.GTA5.ResourceWrappers.PC.Meta;
 using RageLib.GTA5.ResourceWrappers.PC.Meta.Descriptions;
 using RageLib.GTA5.ResourceWrappers.PC.Meta.Types;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Xml.Serialization;
 
 namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
 {
-    [TestFixture]
+    [TestClass]
     public class MetaXmlImporterIntegrationTests
     {
         private const string TEST_DATASET = "RageLib.GTA5.Tests.ResourceWrappers.PC.Meta.TestDataset.xml";
         private const string TEST_DATASET_DEFINITIONS = "RageLib.GTA5.Tests.ResourceWrappers.PC.Meta.TestDatasetDefinitions.xml";
 
-        [Test]
+        [TestMethod]
         public void Import_Always_CorrectlyImportsXml()
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
             var def = LoadXmls();
 
             var importer = new MetaXmlImporter(def);
@@ -181,7 +185,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
 
         public void AssertArrayOfBytes(MetaArrayOfBytes expectedArray, MetaArrayOfBytes actualArray)
         {
-            Assert.AreEqual(expectedArray.Value, actualArray.Value);
+            CollectionAssert.AreEqual(expectedArray.Value, actualArray.Value);
         }
 
         public void AssertArrayOfChars(MetaArrayOfChars expectedArray, MetaArrayOfChars actualArray)
@@ -216,7 +220,7 @@ namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
 
         public void AssertDataBlockPointer(MetaDataBlockPointer expectedDataBlockPointer, MetaDataBlockPointer actualDataBlockPointer)
         {
-            Assert.AreEqual(expectedDataBlockPointer.Data, actualDataBlockPointer.Data);
+            CollectionAssert.AreEqual(expectedDataBlockPointer.Data, actualDataBlockPointer.Data);
         }
 
         public void AssertFloat(MetaFloat expectedFloat, MetaFloat actualFloat)
