@@ -32,8 +32,8 @@ namespace RageLib.Resources
         }
 
         // structure data
-        public Vector4 Max;
         public Vector4 Min;
+        public Vector4 Max;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -41,8 +41,8 @@ namespace RageLib.Resources
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Max = reader.ReadVector4();
             this.Min = reader.ReadVector4();
+            this.Max = reader.ReadVector4();
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace RageLib.Resources
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(Max);
             writer.Write(Min);
+            writer.Write(Max);
         }
     }
 }
