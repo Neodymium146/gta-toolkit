@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using System.Text;
 
 namespace RageLib.Data
@@ -193,6 +194,71 @@ namespace RageLib.Data
             }
 
             return Encoding.UTF8.GetString(bytes.ToArray());
+        }
+
+        /// <summary>
+        /// Reads a vector with two single precision floating point values.
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 ReadVector2()
+        {
+            Vector2 v = new Vector2();
+            v.X = ReadSingle();
+            v.Y = ReadSingle();
+            return v;
+        }
+
+        /// <summary>
+        /// Reads a vector with three single precision floating point values.
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 ReadVector3()
+        {
+            Vector3 v = new Vector3();
+            v.X = ReadSingle();
+            v.Y = ReadSingle();
+            v.Z = ReadSingle();
+            return v;
+        }
+
+        /// <summary>
+        /// Reads a vector with four single precision floating point values.
+        /// </summary>
+        /// <returns></returns>
+        public Vector4 ReadVector4()
+        {
+            Vector4 v = new Vector4();
+            v.X = ReadSingle();
+            v.Y = ReadSingle();
+            v.Z = ReadSingle();
+            v.W = ReadSingle();
+            return v;
+        }
+
+        /// <summary>
+        /// Reads a matrix with sixteen single precision floating point values.
+        /// </summary>
+        /// <returns></returns>
+        public Matrix4x4 ReadMatrix4x4()
+        {
+            Matrix4x4 m = new Matrix4x4();
+            m.M11 = ReadSingle();
+            m.M21 = ReadSingle();
+            m.M31 = ReadSingle();
+            m.M41 = ReadSingle();
+            m.M12 = ReadSingle();
+            m.M22 = ReadSingle();
+            m.M32 = ReadSingle();
+            m.M42 = ReadSingle();
+            m.M13 = ReadSingle();
+            m.M23 = ReadSingle();
+            m.M33 = ReadSingle();
+            m.M43 = ReadSingle();
+            m.M14 = ReadSingle();
+            m.M24 = ReadSingle();
+            m.M34 = ReadSingle();
+            m.M44 = ReadSingle();
+            return m;
         }
     }
 }
