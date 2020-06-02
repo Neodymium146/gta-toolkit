@@ -20,6 +20,8 @@
     THE SOFTWARE.
 */
 
+using System.Numerics;
+
 namespace RageLib.Resources
 {
     public class RAGE_Matrix3 : ResourceSystemBlock
@@ -30,18 +32,9 @@ namespace RageLib.Resources
         }
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
+        public Vector4 Row1;
+        public Vector4 Row2;
+        public Vector4 Row3;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -49,18 +42,9 @@ namespace RageLib.Resources
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
+            this.Row1 = reader.ReadVector4();
+            this.Row2 = reader.ReadVector4();
+            this.Row3 = reader.ReadVector4();
         }
 
         /// <summary>
@@ -69,18 +53,9 @@ namespace RageLib.Resources
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
-            writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
-            writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
+            writer.Write(this.Row1);
+            writer.Write(this.Row2);
+            writer.Write(this.Row3);
         }
     }
 }
