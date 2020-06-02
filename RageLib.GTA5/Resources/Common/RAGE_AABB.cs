@@ -20,6 +20,8 @@
     THE SOFTWARE.
 */
 
+using System.Numerics;
+
 namespace RageLib.Resources
 {
     public class RAGE_AABB : ResourceSystemBlock
@@ -30,8 +32,8 @@ namespace RageLib.Resources
         }
 
         // structure data
-        public RAGE_Vector4 AABB_Max;
-        public RAGE_Vector4 AABB_Min;
+        public Vector4 Max;
+        public Vector4 Min;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -39,8 +41,8 @@ namespace RageLib.Resources
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.AABB_Max = reader.ReadBlock<RAGE_Vector4>();
-            this.AABB_Min = reader.ReadBlock<RAGE_Vector4>();
+            this.Max = reader.ReadVector4();
+            this.Min = reader.ReadVector4();
         }
 
         /// <summary>
@@ -49,8 +51,8 @@ namespace RageLib.Resources
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.WriteBlock(AABB_Max);
-            writer.WriteBlock(AABB_Min);
+            writer.Write(Max);
+            writer.Write(Min);
         }
     }
 }
