@@ -26,17 +26,28 @@ namespace RageLib.Resources
     {
         public override long Length
         {
-            get { return 20; }
+            get { return 16 + (8 * VirtualPagesCount) + (8 * PhysicalPagesCount); }
         }
 
         // structure data
         public uint Unknown_0h;
         public uint Unknown_4h;
-        public byte SystemPagesCount;
-        public byte GraphicsPagesCount;
+        public byte VirtualPagesCount;
+        public byte PhysicalPagesCount;
         public ushort Unknown_Ah;
         public uint Unknown_Ch;
-        public uint Unknown_10h;
+        public ulong[] VirtualPagesPointers;
+        public ulong[] PhysicalPagesPointers;
+
+        public PagesInfo_GTA5_pc()
+        {
+        }
+
+        public PagesInfo_GTA5_pc(byte virtualPagesCount, byte physicalPagesCount)
+        {
+            VirtualPagesCount = virtualPagesCount;
+            PhysicalPagesCount = physicalPagesCount;
+        }
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -46,11 +57,24 @@ namespace RageLib.Resources
             // read structure data
             this.Unknown_0h = reader.ReadUInt32();
             this.Unknown_4h = reader.ReadUInt32();
-            this.SystemPagesCount = reader.ReadByte();
-            this.GraphicsPagesCount = reader.ReadByte();
+            this.VirtualPagesCount = reader.ReadByte();
+            this.PhysicalPagesCount = reader.ReadByte();
             this.Unknown_Ah = reader.ReadUInt16();
             this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
+
+            if (VirtualPagesCount > 0)
+            {
+                this.VirtualPagesPointers = new ulong[VirtualPagesCount];
+                for (int i = 0; i < VirtualPagesCount; i++)
+                    this.VirtualPagesPointers[i] = reader.ReadUInt64();
+            }
+
+            if (PhysicalPagesCount > 0)
+            {
+                this.PhysicalPagesPointers = new ulong[PhysicalPagesCount];
+                for (int i = 0; i < PhysicalPagesCount; i++)
+                    this.PhysicalPagesPointers[i] = reader.ReadUInt64();
+            }
         }
 
         /// <summary>
@@ -61,11 +85,32 @@ namespace RageLib.Resources
             // write structure data
             writer.Write(this.Unknown_0h);
             writer.Write(this.Unknown_4h);
-            writer.Write(this.SystemPagesCount);
-            writer.Write(this.GraphicsPagesCount);
+            writer.Write(this.VirtualPagesCount);
+            writer.Write(this.PhysicalPagesCount);
             writer.Write(this.Unknown_Ah);
             writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h);
+
+            if (VirtualPagesCount > 0)
+            {
+                //if (VirtualPagesPointers != null && VirtualPagesPointers.Length == VirtualPagesCount)
+                //    writer.WriteUlongs(VirtualPagesPointers);
+                //else
+                //{
+                var pad = 8 * VirtualPagesCount;
+                writer.Write(new byte[pad]);
+                //}
+            }
+
+            if (PhysicalPagesCount > 0)
+            {
+                //if (PhysicalPagesPointers != null && PhysicalPagesPointers.Length == PhysicalPagesCount)
+                //    writer.WriteUlongs(PhysicalPagesPointers);
+                //else
+                //{
+                var pad = 8 * PhysicalPagesCount;
+                writer.Write(new byte[pad]);
+                //}
+            }
         }
     }
 }

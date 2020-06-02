@@ -225,10 +225,10 @@ namespace RageLib.Resources.GTA5
 
 
 
-            fileBase.PagesInfo.SystemPagesCount = 0;
+            fileBase.PagesInfo.VirtualPagesCount = 0;
             if (systemPageCount > 0)
-                fileBase.PagesInfo.SystemPagesCount = 1;
-            fileBase.PagesInfo.GraphicsPagesCount = (byte)graphicsPageCount;
+                fileBase.PagesInfo.VirtualPagesCount = 1;
+            fileBase.PagesInfo.PhysicalPagesCount = (byte)graphicsPageCount;
 
 
 
