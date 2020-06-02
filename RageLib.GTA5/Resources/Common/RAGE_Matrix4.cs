@@ -20,6 +20,8 @@
     THE SOFTWARE.
 */
 
+using System.Numerics;
+
 namespace RageLib.Resources
 {
     public class RAGE_Matrix4 : ResourceSystemBlock
@@ -30,22 +32,7 @@ namespace RageLib.Resources
         }
 
         // structure data
-        public float m11;
-        public float m12;
-        public float m13;
-        public float m14;
-        public float m21;
-        public float m22;
-        public float m23;
-        public float m24;
-        public float m31;
-        public float m32;
-        public float m33;
-        public float m34;
-        public float m41;
-        public float m42;
-        public float m43;
-        public float m44;
+        public Matrix4x4 Value;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -53,22 +40,7 @@ namespace RageLib.Resources
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.m11 = reader.ReadSingle();
-            this.m12 = reader.ReadSingle();
-            this.m13 = reader.ReadSingle();
-            this.m14 = reader.ReadSingle();
-            this.m21 = reader.ReadSingle();
-            this.m22 = reader.ReadSingle();
-            this.m23 = reader.ReadSingle();
-            this.m24 = reader.ReadSingle();
-            this.m31 = reader.ReadSingle();
-            this.m32 = reader.ReadSingle();
-            this.m33 = reader.ReadSingle();
-            this.m34 = reader.ReadSingle();
-            this.m41 = reader.ReadSingle();
-            this.m42 = reader.ReadSingle();
-            this.m43 = reader.ReadSingle();
-            this.m44 = reader.ReadSingle();
+            this.Value = reader.ReadMatrix4x4();
         }
 
         /// <summary>
@@ -77,22 +49,19 @@ namespace RageLib.Resources
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.m11);
-            writer.Write(this.m12);
-            writer.Write(this.m13);
-            writer.Write(this.m14);
-            writer.Write(this.m21);
-            writer.Write(this.m22);
-            writer.Write(this.m23);
-            writer.Write(this.m24);
-            writer.Write(this.m31);
-            writer.Write(this.m32);
-            writer.Write(this.m33);
-            writer.Write(this.m34);
-            writer.Write(this.m41);
-            writer.Write(this.m42);
-            writer.Write(this.m43);
-            writer.Write(this.m44);
+            writer.Write(this.Value);
+        }
+
+        public static explicit operator Matrix4x4(RAGE_Matrix4 value)
+        {
+            return value.Value;
+        }
+
+        public static explicit operator RAGE_Matrix4(Matrix4x4 value)
+        {
+            var x = new RAGE_Matrix4();
+            x.Value = value;
+            return x;
         }
     }
 }
