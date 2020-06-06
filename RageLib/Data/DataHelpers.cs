@@ -2,7 +2,7 @@
 
 namespace RageLib.Data
 {
-    public static class DataUtilities
+    public static class DataHelpers
     {
         public static bool EndianessMatchesCurrentArchitecture(Endianess endianess)
         {
