@@ -222,6 +222,18 @@ namespace RageLib.Data
         }
 
         /// <summary>
+        /// Writes a quaternion with four single precision floating point values
+        /// </summary>
+        /// <param name="value"></param>
+        public void Write(Quaternion value)
+        {
+            Write(value.X);
+            Write(value.Y);
+            Write(value.Z);
+            Write(value.W);
+        }
+
+        /// <summary>
         /// Writes a matrix with sixteen single precision floating point values
         /// </summary>
         /// <param name="value"></param>

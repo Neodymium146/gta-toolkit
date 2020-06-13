@@ -236,6 +236,20 @@ namespace RageLib.Data
         }
 
         /// <summary>
+        /// Reads a quaternion with four single precision floating point values.
+        /// </summary>
+        /// <returns></returns>
+        public Quaternion ReadQuaternion()
+        {
+            Quaternion q = new Quaternion();
+            q.X = ReadSingle();
+            q.Y = ReadSingle();
+            q.Z = ReadSingle();
+            q.W = ReadSingle();
+            return q;
+        }
+
+        /// <summary>
         /// Reads a matrix with sixteen single precision floating point values.
         /// </summary>
         /// <returns></returns>
