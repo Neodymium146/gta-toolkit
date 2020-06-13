@@ -27,12 +27,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 {
     // rmcDrawableBase
     // rmcDrawable
-    public class Drawable : FileBase64_GTA5_pc
+    public class Drawable : DrawableBase
     {
         public override long Length => 0xA8;
 
         // structure data
-        public ulong ShaderGroupPointer;
         public ulong SkeletonPointer;
         public RAGE_Vector3 BoundingCenter;
         public float BoundingSphereRadius;
@@ -56,7 +55,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public ulong DrawableModelsXPointer;
 
         // reference data
-        public ShaderGroup ShaderGroup;
         public SkeletonData Skeleton;
         public ResourcePointerList64<DrawableModel> DrawableModelsHigh;
         public ResourcePointerList64<DrawableModel> DrawableModelsMedium;
@@ -73,7 +71,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Read(reader, parameters);
 
             // read structure data
-            this.ShaderGroupPointer = reader.ReadUInt64();
             this.SkeletonPointer = reader.ReadUInt64();
             this.BoundingCenter = reader.ReadBlock<RAGE_Vector3>();
             this.BoundingSphereRadius = reader.ReadSingle();
@@ -97,9 +94,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.DrawableModelsXPointer = reader.ReadUInt64();
 
             // read reference data
-            this.ShaderGroup = reader.ReadBlockAt<ShaderGroup>(
-                this.ShaderGroupPointer // offset
-            );
             this.Skeleton = reader.ReadBlockAt<SkeletonData>(
                 this.SkeletonPointer // offset
             );
@@ -131,7 +125,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.ShaderGroupPointer = (ulong)(this.ShaderGroup != null ? this.ShaderGroup.Position : 0);
             this.SkeletonPointer = (ulong)(this.Skeleton != null ? this.Skeleton.Position : 0);
             this.DrawableModelsHighPointer = (ulong)(this.DrawableModelsHigh != null ? this.DrawableModelsHigh.Position : 0);
             this.DrawableModelsMediumPointer = (ulong)(this.DrawableModelsMedium != null ? this.DrawableModelsMedium.Position : 0);
@@ -141,7 +134,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.DrawableModelsXPointer = (ulong)(this.DrawableModelsX != null ? this.DrawableModelsX.Position : 0);
 
             // write structure data
-            writer.Write(this.ShaderGroupPointer);
             writer.Write(this.SkeletonPointer);
             writer.WriteBlock(this.BoundingCenter);
             writer.Write(this.BoundingSphereRadius);
@@ -171,7 +163,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>(base.GetReferences());
-            if (ShaderGroup != null) list.Add(ShaderGroup);
             if (Skeleton != null) list.Add(Skeleton);
             if (DrawableModelsHigh != null) list.Add(DrawableModelsHigh);
             if (DrawableModelsMedium != null) list.Add(DrawableModelsMedium);
