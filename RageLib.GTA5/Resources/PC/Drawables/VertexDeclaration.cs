@@ -20,6 +20,8 @@
     THE SOFTWARE.
 */
 
+using System;
+
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
     public class VertexDeclaration : ResourceSystemBlock
@@ -27,10 +29,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override long Length => 0x10;
 
         // structure data
-        public uint Flags;
+        public VertexDeclarationMask Mask;
+        public ushort Unknown_2h;
         public ushort Stride;
         public byte Unknown_6h;
-        public byte Count;
+        public byte ComponentsCount;
         public ulong Types;
 
         /// <summary>
@@ -39,10 +42,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Flags = reader.ReadUInt32();
+            this.Mask = (VertexDeclarationMask)reader.ReadUInt16();
+            this.Unknown_2h = reader.ReadUInt16();
             this.Stride = reader.ReadUInt16();
             this.Unknown_6h = reader.ReadByte();
-            this.Count = reader.ReadByte();
+            this.ComponentsCount = reader.ReadByte();
             this.Types = reader.ReadUInt64();
         }
 
@@ -52,11 +56,55 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.Flags);
+            writer.Write((ushort)this.Mask);
+            writer.Write(this.Unknown_2h);
             writer.Write(this.Stride);
             writer.Write(this.Unknown_6h);
-            writer.Write(this.Count);
+            writer.Write(this.ComponentsCount);
             writer.Write(this.Types);
         }
+    }
+
+    [Flags]
+    public enum VertexDeclarationMask : ushort
+    {
+        None = 0x0,
+        Position = 0x1,
+        BlendWeights = 0x2,
+        BlendIndices = 0x4,
+        Normal = 0x8,
+        Color0 = 0x10,
+        Color1 = 0x20,
+        TexCoord0 = 0x40,
+        TexCoord1 = 0x80,
+        TexCoord2 = 0x100,
+        TexCoord3 = 0x200,
+        TexCoord4 = 0x400,
+        TexCoord5 = 0x800,
+        TexCoord6 = 0x1000,
+        TexCoord7 = 0x2000,
+        Tangent = 0x4000,
+        Binormal = 0x8000,
+    }
+
+    // FVFType - D3DDECLTYPE
+    public enum VertexDeclarationTypes : byte // actually a nibble
+    {
+        Nothing = 0,
+        Float16_2 = 1,
+        Float = 2,
+        Float16_4 = 3,
+        FloatUnk = 4,
+        Float2 = 5,
+        Float3 = 6,
+        Float4 = 7,
+        UByte4 = 8,
+        Color = 9,
+        Dec3N = 10,
+        Unk1 = 11,
+        Unk2 = 12,
+        Unk3 = 13,
+        Unk4 = 14,
+        Unk5 = 15,
     }
 }

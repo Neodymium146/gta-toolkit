@@ -182,264 +182,28 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
     public class VertexData_GTA5_pc : ResourceSystemBlock
     {
+        public override long Length => Data != null ? Data.Length : 0;
 
+        // structure data
+        public byte[] Data;
 
-        private int length = 0;
-        public override long Length
-        {
-            get
-            {
-                return this.length;
-            }
-        }
-
-
-
-        public int cnt;
-        private VertexDeclaration info;
-        public object[] VertexData;
-        private uint[] Types;
-
-
-
-
+        /// <summary>
+        /// Reads the data-block from a stream.
+        /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             int stride = Convert.ToInt32(parameters[0]);
             int count = Convert.ToInt32(parameters[1]);
-            var info = (VertexDeclaration)parameters[2];
-            this.cnt = count;
-            this.info = info;
 
-
-
-            bool[] IsUsed = new bool[16];
-            for (int i = 0; i < 16; i++)
-                IsUsed[i] = ((info.Flags >> i) & 0x1) == 1;
-
-            Types = new uint[16];
-            for (int i = 0; i < 16; i++)
-                Types[i] = (uint)((info.Types >> (int)(4 * i)) & 0xF);
-
-
-
-            VertexData = new object[16];
-            for (int i = 0; i < 16; i++)
-            {
-                if (IsUsed[i])
-                {
-                    switch (Types[i])
-                    {
-                        case 0: VertexData[i] = new ushort[1 * count]; break;
-                        case 1: VertexData[i] = new ushort[2 * count]; break;
-                        case 2: VertexData[i] = new ushort[3 * count]; break;
-                        case 3: VertexData[i] = new ushort[4 * count]; break;
-                        case 4: VertexData[i] = new float[1 * count]; break;
-                        case 5: VertexData[i] = new float[2 * count]; break;
-                        case 6: VertexData[i] = new float[3 * count]; break;
-                        case 7: VertexData[i] = new float[4 * count]; break;
-                        case 8: VertexData[i] = new uint[count]; break;
-                        case 9: VertexData[i] = new uint[count]; break;
-                        case 10: VertexData[i] = new uint[count]; break;
-                        default:
-                            throw new Exception();
-                    }
-                }
-            }
-
-
-
-            long pos = reader.Position;
-
-            // read...
-            for (int i = 0; i < count; i++)
-            {
-
-                for (int k = 0; k < 16; k++)
-                {
-                    if (IsUsed[k])
-                    {
-                        switch (Types[k])
-                        {
-                            // float16
-                            case 0:
-                                {
-                                    var buf = VertexData[k] as ushort[];
-                                    buf[i * 1 + 0] = reader.ReadUInt16();
-                                    break;
-                                }
-                            case 1:
-                                {
-                                    var buf = VertexData[k] as ushort[];
-                                    buf[i * 2 + 0] = reader.ReadUInt16();
-                                    buf[i * 2 + 1] = reader.ReadUInt16();
-                                    break;
-                                }
-                            case 2:
-                                {
-                                    var buf = VertexData[k] as ushort[];
-                                    buf[i * 3 + 0] = reader.ReadUInt16();
-                                    buf[i * 3 + 1] = reader.ReadUInt16();
-                                    buf[i * 3 + 2] = reader.ReadUInt16();
-                                    break;
-                                }
-                            case 3:
-                                {
-                                    var buf = VertexData[k] as ushort[];
-                                    buf[i * 4 + 0] = reader.ReadUInt16();
-                                    buf[i * 4 + 1] = reader.ReadUInt16();
-                                    buf[i * 4 + 2] = reader.ReadUInt16();
-                                    buf[i * 4 + 3] = reader.ReadUInt16();
-                                    break;
-                                }
-
-                            // float32
-                            case 4:
-                                {
-                                    var buf = VertexData[k] as float[];
-                                    buf[i * 1 + 0] = reader.ReadSingle();
-                                    break;
-                                }
-                            case 5:
-                                {
-                                    var buf = VertexData[k] as float[];
-                                    buf[i * 2 + 0] = reader.ReadSingle();
-                                    buf[i * 2 + 1] = reader.ReadSingle();
-                                    break;
-                                }
-                            case 6:
-                                {
-                                    var buf = VertexData[k] as float[];
-                                    buf[i * 3 + 0] = reader.ReadSingle();
-                                    buf[i * 3 + 1] = reader.ReadSingle();
-                                    buf[i * 3 + 2] = reader.ReadSingle();
-                                    break;
-                                }
-                            case 7:
-                                {
-                                    var buf = VertexData[k] as float[];
-                                    buf[i * 4 + 0] = reader.ReadSingle();
-                                    buf[i * 4 + 1] = reader.ReadSingle();
-                                    buf[i * 4 + 2] = reader.ReadSingle();
-                                    buf[i * 4 + 3] = reader.ReadSingle();
-                                    break;
-                                }
-
-                            case 8:
-                            case 9:
-                            case 10:
-                                {
-                                    var buf = VertexData[k] as uint[];
-                                    buf[i * 1 + 0] = reader.ReadUInt32();
-                                    break;
-                                }
-
-                            default:
-                                throw new Exception();
-                        }
-                    }
-                }
-
-            }
-
-            this.length = stride * count;
+            Data = reader.ReadBytes(count * stride);
         }
 
+        /// <summary>
+        /// Writes the data-block to a stream.
+        /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-
-            // write...
-            for (int i = 0; i < cnt; i++)
-            {
-
-                for (int k = 0; k < 16; k++)
-                {
-                    if (VertexData[k] != null)
-                    {
-                        switch (Types[k])
-                        {
-                            // float16
-                            case 0:
-                                {
-                                    var buf = VertexData[k] as ushort[];
-                                    writer.Write(buf[i * 1 + 0]);
-                                    break;
-                                }
-                            case 1:
-                                {
-                                    var buf = VertexData[k] as ushort[];
-                                    writer.Write(buf[i * 2 + 0]);
-                                    writer.Write(buf[i * 2 + 1]);
-                                    break;
-                                }
-                            case 2:
-                                {
-                                    var buf = VertexData[k] as ushort[];
-                                    writer.Write(buf[i * 3 + 0]);
-                                    writer.Write(buf[i * 3 + 1]);
-                                    writer.Write(buf[i * 3 + 2]);
-                                    break;
-                                }
-                            case 3:
-                                {
-                                    var buf = VertexData[k] as ushort[];
-                                    writer.Write(buf[i * 4 + 0]);
-                                    writer.Write(buf[i * 4 + 1]);
-                                    writer.Write(buf[i * 4 + 2]);
-                                    writer.Write(buf[i * 4 + 3]);
-                                    break;
-                                }
-
-                            // float32
-                            case 4:
-                                {
-                                    var buf = VertexData[k] as float[];
-                                    writer.Write(buf[i * 1 + 0]);
-                                    break;
-                                }
-                            case 5:
-                                {
-                                    var buf = VertexData[k] as float[];
-                                    writer.Write(buf[i * 2 + 0]);
-                                    writer.Write(buf[i * 2 + 1]);
-                                    break;
-                                }
-                            case 6:
-                                {
-                                    var buf = VertexData[k] as float[];
-                                    writer.Write(buf[i * 3 + 0]);
-                                    writer.Write(buf[i * 3 + 1]);
-                                    writer.Write(buf[i * 3 + 2]);
-                                    break;
-                                }
-                            case 7:
-                                {
-                                    var buf = VertexData[k] as float[];
-                                    writer.Write(buf[i * 4 + 0]);
-                                    writer.Write(buf[i * 4 + 1]);
-                                    writer.Write(buf[i * 4 + 2]);
-                                    writer.Write(buf[i * 4 + 3]);
-                                    break;
-                                }
-
-                            case 8:
-                            case 9:
-                            case 10:
-                                {
-                                    var buf = VertexData[k] as uint[];
-                                    writer.Write(buf[i * 1 + 0]);
-                                    break;
-                                }
-
-                            default:
-                                throw new Exception();
-                        }
-                    }
-                }
-
-            }
-
+            writer.Write(Data);
         }
-
     }
 }
