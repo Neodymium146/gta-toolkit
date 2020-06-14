@@ -22,33 +22,34 @@
 
 using RageLib.Resources.Common;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
-    // rmcDrawableBase
     // rmcDrawable
+    // rmcLodGroup
     public class Drawable : DrawableBase
     {
         public override long Length => 0xA8;
 
         // structure data
         public ulong SkeletonPointer;
-        public RAGE_Vector3 BoundingCenter;
+        public Vector3 BoundingCenter; // start of rmcLodGroup
         public float BoundingSphereRadius;
-        public RAGE_Vector4 BoundingBoxMin;
-        public RAGE_Vector4 BoundingBoxMax;
+        public Vector4 BoundingBoxMin;
+        public Vector4 BoundingBoxMax;
         public ulong DrawableModelsHighPointer;
         public ulong DrawableModelsMediumPointer;
         public ulong DrawableModelsLowPointer;
         public ulong DrawableModelsVeryLowPointer;
-        public float Unknown_70h;
-        public float Unknown_74h;
-        public float Unknown_78h;
-        public float Unknown_7Ch;
-        public uint Unknown_80h;
-        public uint Unknown_84h;
-        public uint Unknown_88h;
-        public uint Unknown_8Ch;
+        public float LodDistanceHigh;
+        public float LodDistanceMedium;
+        public float LodDistanceLow;
+        public float LodDistanceVeryLow;
+        public uint DrawBucketMaskHigh;
+        public uint DrawBucketMaskMedium;
+        public uint DrawBucketMaskLow;
+        public uint DrawBucketMaskVeryLow; // end of rmcLodGroup
         public ulong JointsPointer;
         public uint Unknown_98h;
         public uint Unknown_9Ch; // 0x00000000
@@ -72,22 +73,22 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
             // read structure data
             this.SkeletonPointer = reader.ReadUInt64();
-            this.BoundingCenter = reader.ReadBlock<RAGE_Vector3>();
+            this.BoundingCenter = reader.ReadVector3();
             this.BoundingSphereRadius = reader.ReadSingle();
-            this.BoundingBoxMin = reader.ReadBlock<RAGE_Vector4>();
-            this.BoundingBoxMax = reader.ReadBlock<RAGE_Vector4>();
+            this.BoundingBoxMin = reader.ReadVector4();
+            this.BoundingBoxMax = reader.ReadVector4();
             this.DrawableModelsHighPointer = reader.ReadUInt64();
             this.DrawableModelsMediumPointer = reader.ReadUInt64();
             this.DrawableModelsLowPointer = reader.ReadUInt64();
             this.DrawableModelsVeryLowPointer = reader.ReadUInt64();
-            this.Unknown_70h = reader.ReadSingle();
-            this.Unknown_74h = reader.ReadSingle();
-            this.Unknown_78h = reader.ReadSingle();
-            this.Unknown_7Ch = reader.ReadSingle();
-            this.Unknown_80h = reader.ReadUInt32();
-            this.Unknown_84h = reader.ReadUInt32();
-            this.Unknown_88h = reader.ReadUInt32();
-            this.Unknown_8Ch = reader.ReadUInt32();
+            this.LodDistanceHigh = reader.ReadSingle();
+            this.LodDistanceMedium = reader.ReadSingle();
+            this.LodDistanceLow = reader.ReadSingle();
+            this.LodDistanceVeryLow = reader.ReadSingle();
+            this.DrawBucketMaskHigh = reader.ReadUInt32();
+            this.DrawBucketMaskMedium = reader.ReadUInt32();
+            this.DrawBucketMaskLow = reader.ReadUInt32();
+            this.DrawBucketMaskVeryLow = reader.ReadUInt32();
             this.JointsPointer = reader.ReadUInt64();
             this.Unknown_98h = reader.ReadUInt32();
             this.Unknown_9Ch = reader.ReadUInt32();
@@ -135,22 +136,22 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
             // write structure data
             writer.Write(this.SkeletonPointer);
-            writer.WriteBlock(this.BoundingCenter);
+            writer.Write(this.BoundingCenter);
             writer.Write(this.BoundingSphereRadius);
-            writer.WriteBlock(this.BoundingBoxMin);
-            writer.WriteBlock(this.BoundingBoxMax);
+            writer.Write(this.BoundingBoxMin);
+            writer.Write(this.BoundingBoxMax);
             writer.Write(this.DrawableModelsHighPointer);
             writer.Write(this.DrawableModelsMediumPointer);
             writer.Write(this.DrawableModelsLowPointer);
             writer.Write(this.DrawableModelsVeryLowPointer);
-            writer.Write(this.Unknown_70h);
-            writer.Write(this.Unknown_74h);
-            writer.Write(this.Unknown_78h);
-            writer.Write(this.Unknown_7Ch);
-            writer.Write(this.Unknown_80h);
-            writer.Write(this.Unknown_84h);
-            writer.Write(this.Unknown_88h);
-            writer.Write(this.Unknown_8Ch);
+            writer.Write(this.LodDistanceHigh);
+            writer.Write(this.LodDistanceMedium);
+            writer.Write(this.LodDistanceLow);
+            writer.Write(this.LodDistanceVeryLow);
+            writer.Write(this.DrawBucketMaskHigh);
+            writer.Write(this.DrawBucketMaskMedium);
+            writer.Write(this.DrawBucketMaskLow);
+            writer.Write(this.DrawBucketMaskVeryLow);
             writer.Write(this.JointsPointer);
             writer.Write(this.Unknown_98h);
             writer.Write(this.Unknown_9Ch);
