@@ -64,8 +64,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
 
             // structure
 
-            textureDictionary.VFT = 0x40570fd0;
-            textureDictionary.Unknown_4h = 0x00000001;
+            textureDictionary.VFT = 0x0140570fd0;
             textureDictionary.Unknown_10h = 0x00000000;
             textureDictionary.Unknown_14h = 0x00000000;
             textureDictionary.Unknown_18h = 0x00000001;

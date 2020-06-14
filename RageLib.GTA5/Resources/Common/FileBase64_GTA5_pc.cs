@@ -24,16 +24,12 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources
 {
-    public class FileBase64_GTA5_pc : ResourceSystemBlock
+    // pgBase
+    public class FileBase64_GTA5_pc : DatBase64_GTA5_pc
     {
-        public override long Length
-        {
-            get { return 16; }
-        }
+        public override long Length => 0x10;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h;
         public ulong PagesInfoPointer;
 
         // reference data
@@ -44,9 +40,9 @@ namespace RageLib.Resources
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
             this.PagesInfoPointer = reader.ReadUInt64();
 
             // read reference data
@@ -60,12 +56,12 @@ namespace RageLib.Resources
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
             this.PagesInfoPointer = (ulong)(this.PagesInfo != null ? this.PagesInfo.Position : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
             writer.Write(this.PagesInfoPointer);
         }
 
