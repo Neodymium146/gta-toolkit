@@ -39,7 +39,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
         {
             get
             {
-                return new DrawableListWrapper_GTA5_pc(drawableDictionary.Drawables);
+                return new DrawableListWrapper_GTA5_pc(drawableDictionary.Drawables.Entries);
             }
 
             set
@@ -50,7 +50,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
 
         public uint GetHash(int index)
         {
-            return (uint)drawableDictionary.Hashes[index];
+            return (uint)drawableDictionary.Hashes.Entries[index];
         }
     }
 }

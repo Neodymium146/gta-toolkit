@@ -21,7 +21,7 @@
 */
 
 using RageLib.Resources.Common;
-using System.Collections.Generic;
+using System;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
@@ -36,18 +36,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000001
         public uint Unknown_1Ch; // 0x00000000
-        public ulong HashesPointer;
-        public ushort HashesCount1;
-        public ushort HashesCount2;
-        public uint Unknown_2Ch; // 0x00000000
-        public ulong DrawablesPointer;
-        public ushort DrawablesCount1;
-        public ushort DrawablesCount2;
-        public uint Unknown_3Ch; // 0x00000000
-
-        // reference data
-        public ResourceSimpleArray<uint_r> Hashes;
-        public ResourcePointerArray64<GtaDrawable> Drawables;
+        public ResourceSimpleList64<uint_r> Hashes;
+        public ResourcePointerList64<GtaDrawable> Drawables;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -61,24 +51,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.HashesPointer = reader.ReadUInt64();
-            this.HashesCount1 = reader.ReadUInt16();
-            this.HashesCount2 = reader.ReadUInt16();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.DrawablesPointer = reader.ReadUInt64();
-            this.DrawablesCount1 = reader.ReadUInt16();
-            this.DrawablesCount2 = reader.ReadUInt16();
-            this.Unknown_3Ch = reader.ReadUInt32();
-
-            // read reference data
-            this.Hashes = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
-                this.HashesPointer, // offset
-                this.HashesCount1
-            );
-            this.Drawables = reader.ReadBlockAt<ResourcePointerArray64<GtaDrawable>>(
-                this.DrawablesPointer, // offset
-                this.DrawablesCount1
-            );
+            this.Hashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Drawables = reader.ReadBlock<ResourcePointerList64<GtaDrawable>>();
         }
 
         /// <summary>
@@ -88,38 +62,21 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             base.Write(writer, parameters);
 
-            // update structure data
-            this.HashesPointer = (ulong)(this.Hashes != null ? this.Hashes.Position : 0);
-            //	this.HashesCount1 = (ushort)(this.Hashes != null ? this.Hashes.Count : 0);
-            //   this.HashesCount2 = (ushort)(this.Hashes != null ? this.Hashes.Count : 0);
-            this.DrawablesPointer = (ulong)(this.Drawables != null ? this.Drawables.Position : 0);
-            //	this.DrawablesCount1 = (ushort)(this.Drawables != null ? this.Drawables.Count : 0);
-            //   this.DrawablesCount2 = (ushort)(this.Drawables != null ? this.Drawables.Count : 0);
-
             // write structure data
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.Write(this.HashesPointer);
-            writer.Write(this.HashesCount1);
-            writer.Write(this.HashesCount2);
-            writer.Write(this.Unknown_2Ch);
-            writer.Write(this.DrawablesPointer);
-            writer.Write(this.DrawablesCount1);
-            writer.Write(this.DrawablesCount2);
-            writer.Write(this.Unknown_3Ch);
+            writer.WriteBlock(this.Hashes);
+            writer.WriteBlock(this.Drawables);
         }
 
-        /// <summary>
-        /// Returns a list of data blocks which are referenced by this block.
-        /// </summary>
-        public override IResourceBlock[] GetReferences()
+        public override Tuple<long, IResourceBlock>[] GetParts()
         {
-            var list = new List<IResourceBlock>(base.GetReferences());
-            if (Hashes != null) list.Add(Hashes);
-            if (Drawables != null) list.Add(Drawables);
-            return list.ToArray();
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x20, Hashes),
+                new Tuple<long, IResourceBlock>(0x30, Drawables)
+            };
         }
     }
 }
