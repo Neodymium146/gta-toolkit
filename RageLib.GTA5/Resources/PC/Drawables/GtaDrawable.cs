@@ -22,6 +22,7 @@
 
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Bounds;
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
@@ -33,17 +34,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         // structure data
         public ulong NamePointer;
-        public ulong LightAttributesPointer;
-        public ushort LightAttributesCount1;
-        public ushort LightAttributesCount2;
-        public uint Unknown_BCh; // 0x00000000
-        public uint Unknown_C0h; // 0x00000000
-        public uint Unknown_C4h; // 0x00000000
+        public ResourceSimpleList64<LightAttributes> LightAttributes;
+        public ulong Unknown_C0h; // 0x0000000000000000
         public ulong BoundPointer;
 
         // reference data
         public string_r Name;
-        public ResourceSimpleArray<LightAttributes> LightAttributes;
         public Bound Bound;
 
         /// <summary>
@@ -55,21 +51,13 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
             // read structure data
             this.NamePointer = reader.ReadUInt64();
-            this.LightAttributesPointer = reader.ReadUInt64();
-            this.LightAttributesCount1 = reader.ReadUInt16();
-            this.LightAttributesCount2 = reader.ReadUInt16();
-            this.Unknown_BCh = reader.ReadUInt32();
-            this.Unknown_C0h = reader.ReadUInt32();
-            this.Unknown_C4h = reader.ReadUInt32();
+            this.LightAttributes = reader.ReadBlock<ResourceSimpleList64<LightAttributes>>();
+            this.Unknown_C0h = reader.ReadUInt64();
             this.BoundPointer = reader.ReadUInt64();
 
             // read reference data
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
-            );
-            this.LightAttributes = reader.ReadBlockAt<ResourceSimpleArray<LightAttributes>>(
-                this.LightAttributesPointer, // offset
-                this.LightAttributesCount1
             );
             this.Bound = reader.ReadBlockAt<Bound>(
                 this.BoundPointer // offset
@@ -85,17 +73,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
             // update structure data
             this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
-            this.LightAttributesPointer = (ulong)(this.LightAttributes != null ? this.LightAttributes.Position : 0);
             this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.Position : 0);
 
             // write structure data
             writer.Write(this.NamePointer);
-            writer.Write(this.LightAttributesPointer);
-            writer.Write(this.LightAttributesCount1);
-            writer.Write(this.LightAttributesCount2);
-            writer.Write(this.Unknown_BCh);
+            writer.WriteBlock(this.LightAttributes);
             writer.Write(this.Unknown_C0h);
-            writer.Write(this.Unknown_C4h);
             writer.Write(this.BoundPointer);
         }
 
@@ -109,6 +92,13 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             if (LightAttributes != null) list.Add(LightAttributes);
             if (Bound != null) list.Add(Bound);
             return list.ToArray();
+        }
+
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0xB0, LightAttributes)
+            };
         }
     }
 }
