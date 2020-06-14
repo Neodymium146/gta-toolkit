@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // rmcDrawableBase
     public class DrawableBase : FileBase64_GTA5_pc
     {
-        public override long Length => 0x8;
+        public override long Length => 0x18;
 
         // structure data
         public ulong ShaderGroupPointer;
