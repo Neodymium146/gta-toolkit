@@ -22,24 +22,20 @@
 
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Textures;
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
     // datBase
     // grmShaderGroup
-    public class ShaderGroup : ResourceSystemBlock
+    public class ShaderGroup : DatBase64_GTA5_pc
     {
         public override long Length => 0x40;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
         public ulong TextureDictionaryPointer;
-        public ulong ShadersPointer;
-        public ushort ShadersCount1;
-        public ushort ShadersCount2;
-        public uint Unknown_1Ch; // 0x00000000
+        public ResourcePointerList64<ShaderFX> Shaders;
         public uint Unknown_20h; // 0x00000000
         public uint Unknown_24h; // 0x00000000
         public uint Unknown_28h; // 0x00000000
@@ -51,21 +47,17 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         // reference data
         public TextureDictionary TextureDictionary;
-        public ResourcePointerArray64<ShaderFX> Shaders;
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
             this.TextureDictionaryPointer = reader.ReadUInt64();
-            this.ShadersPointer = reader.ReadUInt64();
-            this.ShadersCount1 = reader.ReadUInt16();
-            this.ShadersCount2 = reader.ReadUInt16();
-            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Shaders = reader.ReadBlock<ResourcePointerList64<ShaderFX>>();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
             this.Unknown_28h = reader.ReadUInt32();
@@ -79,10 +71,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.TextureDictionary = reader.ReadBlockAt<TextureDictionary>(
                 this.TextureDictionaryPointer // offset
             );
-            this.Shaders = reader.ReadBlockAt<ResourcePointerArray64<ShaderFX>>(
-                this.ShadersPointer, // offset
-                this.ShadersCount1
-            );
         }
 
         /// <summary>
@@ -90,20 +78,14 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
             this.TextureDictionaryPointer = (ulong)(this.TextureDictionary != null ? this.TextureDictionary.Position : 0);
-            this.ShadersPointer = (ulong)(this.Shaders != null ? this.Shaders.Position : 0);
-            //this.ShadersCount1 = (ushort)(this.Shaders != null ? this.Shaders.Count : 0);
-            //this.ShadersCount2 = (ushort)(this.Shaders != null ? this.Shaders.Count : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
             writer.Write(this.TextureDictionaryPointer);
-            writer.Write(this.ShadersPointer);
-            writer.Write(this.ShadersCount1);
-            writer.Write(this.ShadersCount2);
-            writer.Write(this.Unknown_1Ch);
+            writer.WriteBlock(this.Shaders);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
@@ -121,8 +103,14 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             var list = new List<IResourceBlock>();
             if (TextureDictionary != null) list.Add(TextureDictionary);
-            if (Shaders != null) list.Add(Shaders);
             return list.ToArray();
+        }
+
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x10, Shaders)
+            };
         }
     }
 }
