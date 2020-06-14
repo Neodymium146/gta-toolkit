@@ -29,12 +29,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override long Length => 0x10;
 
         // structure data
-        public VertexDeclarationMask Mask;
+        public VertexDeclarationFlags Flags;
         public ushort Unknown_2h;
         public ushort Stride;
         public byte Unknown_6h;
         public byte ComponentsCount;
-        public ulong Types;
+        public VertexDeclarationTypes Types;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -42,12 +42,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Mask = (VertexDeclarationMask)reader.ReadUInt16();
+            this.Flags = (VertexDeclarationFlags)reader.ReadUInt16();
             this.Unknown_2h = reader.ReadUInt16();
             this.Stride = reader.ReadUInt16();
             this.Unknown_6h = reader.ReadByte();
             this.ComponentsCount = reader.ReadByte();
-            this.Types = reader.ReadUInt64();
+            this.Types = (VertexDeclarationTypes)reader.ReadUInt64();
         }
 
         /// <summary>
@@ -56,17 +56,17 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write((ushort)this.Mask);
+            writer.Write((ushort)this.Flags);
             writer.Write(this.Unknown_2h);
             writer.Write(this.Stride);
             writer.Write(this.Unknown_6h);
             writer.Write(this.ComponentsCount);
-            writer.Write(this.Types);
+            writer.Write((ulong)this.Types);
         }
     }
 
     [Flags]
-    public enum VertexDeclarationMask : ushort
+    public enum VertexDeclarationFlags : ushort
     {
         None = 0x0,
         Position = 0x1,
@@ -87,8 +87,31 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         Binormal = 0x8000,
     }
 
+    public enum VertexDeclarationTypes : ulong
+    {
+        /// <summary>
+        /// Used in most of GTA5 drawables
+        /// </summary>
+        GTA5_1 = 0x7755555555996996,
+        
+        /// <summary>
+        /// Used in GTA5 cloth drawables
+        /// </summary>
+        GTA5_2 = 0x030000000199A006,
+
+        /// <summary>
+        /// Used in GTA5 cloth drawables
+        /// </summary>
+        GTA5_3 = 0x0300000001996006,
+
+        /// <summary>
+        /// Used in GTA5 vehicle glass windows drawables
+        /// </summary>
+        GTA5_4 = 0x7655555555996996,
+    }
+
     // FVFType - D3DDECLTYPE
-    public enum VertexDeclarationTypes : byte // actually a nibble
+    public enum VertexComponentTypes : byte // actually a nibble
     {
         Nothing = 0,
         Float16_2 = 1,
