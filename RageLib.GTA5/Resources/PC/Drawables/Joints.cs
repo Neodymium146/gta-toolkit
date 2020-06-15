@@ -25,15 +25,13 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
-    public class Joints : ResourceSystemBlock
+    // pgBase
+    // crJointData
+    public class Joints : FileBase64_GTA5_pc
     {
         public override long Length => 0x40;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
         public ulong RotationLimitsPointer;
         public ulong TranslationLimitsPointer;
         public uint Unknown_20h; // 0x00000000
@@ -56,11 +54,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.RotationLimitsPointer = reader.ReadUInt64();
             this.TranslationLimitsPointer = reader.ReadUInt64();
             this.Unknown_20h = reader.ReadUInt32();
@@ -90,6 +86,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
             this.RotationLimitsPointer = (ulong)(this.RotationLimits != null ? this.RotationLimits.Position : 0);
             this.TranslationLimitsPointer = (ulong)(this.TranslationLimits != null ? this.TranslationLimits.Position : 0);
@@ -97,10 +95,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.TranslationLimitsCount = (ushort)(this.TranslationLimits != null ? this.TranslationLimits.Count : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.RotationLimitsPointer);
             writer.Write(this.TranslationLimitsPointer);
             writer.Write(this.Unknown_20h);

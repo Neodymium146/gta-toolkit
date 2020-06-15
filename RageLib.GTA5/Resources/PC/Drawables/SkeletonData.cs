@@ -25,16 +25,13 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
+    // pgBase
     // crSkeletonData
-    public class SkeletonData : ResourceSystemBlock
+    public class SkeletonData : FileBase64_GTA5_pc
     {
         public override long Length => 0x70;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
         public ulong BoneMapPointer;
         public ushort BoneMapCapacity;
         public ushort BoneMapCount;
@@ -70,11 +67,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.BoneMapPointer = reader.ReadUInt64();
             this.BoneMapCapacity = reader.ReadUInt16();
             this.BoneMapCount = reader.ReadUInt16();
@@ -129,6 +124,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
             this.BoneMapPointer = (ulong)(this.BoneMap != null ? this.BoneMap.Position : 0);
             this.BoneMapCapacity = (ushort)(this.BoneMap?.Count ?? 0);
@@ -169,10 +166,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.ChildrenIndicesCount = (ushort)(this.ChildrenIndices != null ? this.ChildrenIndices.Count : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.BoneMapPointer);
             writer.Write(this.BoneMapCapacity);
             writer.Write(this.BoneMapCount);
