@@ -51,11 +51,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // reference data
         public string_r Name;
-        public TextureDictionary TextureDictionary;
-        public DrawableDictionary DrawableDictionary;
-        public ParticleRuleDictionary ParticleRuleDictionary;
-        public EffectRuleDictionary EffectRuleDictionary;
-        public EmitterRuleDictionary EmitterRuleDictionary;
+        public PgDictionary64<TextureDX11> TextureDictionary;
+        public PgDictionary64<Drawable> DrawableDictionary;
+        public PgDictionary64<ParticleRule> ParticleRuleDictionary;
+        public PgDictionary64<EffectRule> EffectRuleDictionary;
+        public PgDictionary64<EmitterRule> EmitterRuleDictionary;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -84,19 +84,19 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
             );
-            this.TextureDictionary = reader.ReadBlockAt<TextureDictionary>(
+            this.TextureDictionary = reader.ReadBlockAt<PgDictionary64<TextureDX11>>(
                 this.TextureDictionaryPointer // offset
             );
-            this.DrawableDictionary = reader.ReadBlockAt<DrawableDictionary>(
+            this.DrawableDictionary = reader.ReadBlockAt< PgDictionary64<Drawable>>(
                 this.DrawableDictionaryPointer // offset
             );
-            this.ParticleRuleDictionary = reader.ReadBlockAt<ParticleRuleDictionary>(
+            this.ParticleRuleDictionary = reader.ReadBlockAt< PgDictionary64<ParticleRule>>(
                 this.ParticleRuleDictionaryPointer // offset
             );
-            this.EffectRuleDictionary = reader.ReadBlockAt<EffectRuleDictionary>(
+            this.EffectRuleDictionary = reader.ReadBlockAt< PgDictionary64<EffectRule>>(
                 this.EmitterRuleDictionaryPointer // offset
             );
-            this.EmitterRuleDictionary = reader.ReadBlockAt<EmitterRuleDictionary>(
+            this.EmitterRuleDictionary = reader.ReadBlockAt< PgDictionary64<EmitterRule>>(
                 this.EffectRuleDictionaryPointer // offset
             );
         }
