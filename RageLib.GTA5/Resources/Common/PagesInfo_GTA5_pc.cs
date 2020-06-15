@@ -26,7 +26,7 @@ namespace RageLib.Resources
     {
         public override long Length
         {
-            get { return 16 + (8 * VirtualPagesCount) + (8 * PhysicalPagesCount); }
+            get { return 16 + (8 * (VirtualPagesCount + PhysicalPagesCount)); }
         }
 
         // structure data
@@ -39,9 +39,7 @@ namespace RageLib.Resources
         public ulong[] VirtualPagesPointers;
         public ulong[] PhysicalPagesPointers;
 
-        public PagesInfo_GTA5_pc()
-        {
-        }
+        public PagesInfo_GTA5_pc() : this(64, 64) { }
 
         public PagesInfo_GTA5_pc(byte virtualPagesCount, byte physicalPagesCount)
         {
