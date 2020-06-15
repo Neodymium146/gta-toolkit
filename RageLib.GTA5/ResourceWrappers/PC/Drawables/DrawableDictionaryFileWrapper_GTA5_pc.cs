@@ -20,6 +20,7 @@
     THE SOFTWARE.
 */
 
+using RageLib.Resources;
 using RageLib.Resources.GTA5;
 using RageLib.Resources.GTA5.PC.Drawables;
 using RageLib.ResourceWrappers.Drawables;
@@ -30,7 +31,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
 {
     public class DrawableDictionaryFileWrapper_GTA5_pc : IDrawableDictionaryFile
     {
-        private GtaDrawableDictionary drawableDictionary;
+        private PgDictionary64<GtaDrawable> drawableDictionary;
 
         public IDrawableDictionary DrawableDictionary
         {
@@ -42,7 +43,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
 
         public void Load(Stream stream)
         {
-            var resource = new ResourceFile_GTA5_pc<GtaDrawableDictionary>();
+            var resource = new ResourceFile_GTA5_pc<PgDictionary64<GtaDrawable>>();
             resource.Load(stream);
 
             drawableDictionary = resource.ResourceData;
@@ -50,7 +51,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
 
         public void Load(string fileName)
         {
-            var resource = new ResourceFile_GTA5_pc<GtaDrawableDictionary>();
+            var resource = new ResourceFile_GTA5_pc<PgDictionary64<GtaDrawable>>();
             resource.Load(fileName);
 
             drawableDictionary = resource.ResourceData;
@@ -58,7 +59,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
 
         public void Save(Stream stream)
         {
-            var resource = new ResourceFile_GTA5_pc<GtaDrawableDictionary>();
+            var resource = new ResourceFile_GTA5_pc<PgDictionary64<GtaDrawable>>();
             resource.ResourceData = drawableDictionary;
             resource.Version = 165;
             resource.Save(stream);
@@ -66,7 +67,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Drawables
 
         public void Save(string fileName)
         {
-            var resource = new ResourceFile_GTA5_pc<GtaDrawableDictionary>();
+            var resource = new ResourceFile_GTA5_pc<PgDictionary64<GtaDrawable>>();
             resource.ResourceData = drawableDictionary;
             resource.Version = 165;
             resource.Save(fileName);
