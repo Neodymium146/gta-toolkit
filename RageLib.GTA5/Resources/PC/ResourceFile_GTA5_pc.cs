@@ -28,6 +28,22 @@ using System.IO.Compression;
 
 namespace RageLib.Resources.GTA5
 {
+    // datResourceInfo
+    public struct ResourceInfo
+    {
+        public ResourceChunkFlags VirtualFlags { get; set; }
+        public ResourceChunkFlags PhysicalFlags { get; set; }
+    }
+
+    // datResourceFileHeader
+    public struct ResourceFileHeader
+    {
+        public int Id;
+        public int Version;
+        public ResourceInfo ResourceInfo;
+    }
+
+    // TODO: refactor everywhere to include ResourceFileHeader
     public class ResourceFile_GTA5_pc : IResourceFile
     {
         protected const int RESOURCE_IDENT = 0x37435352;

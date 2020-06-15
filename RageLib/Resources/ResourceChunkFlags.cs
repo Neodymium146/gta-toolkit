@@ -13,13 +13,6 @@ namespace RageLib.Resources
         public ulong Size { get; set; }
     }
 
-    // datResourceInfo
-    public struct ResourceInfo
-    {
-        public ResourceChunkFlags VirtualFlags { get; set; }
-        public ResourceChunkFlags PhysicalFlags { get; set; }
-    }
-
     public struct ResourceChunkFlags
     {
         public uint Value { get; set; }
