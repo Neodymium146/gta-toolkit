@@ -28,13 +28,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // datBase
     // grcVertexBuffer
     // grcVertexBufferD3D11
-    public class VertexBuffer : ResourceSystemBlock
+    public class VertexBuffer : DatBase64_GTA5_pc
     {
         public override long Length => 0x80;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
         public ushort VertexStride;
         public ushort Unknown_Ah;
         public uint Unknown_Ch; // 0x00000000
@@ -74,9 +72,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
             this.VertexStride = reader.ReadUInt16();
             this.Unknown_Ah = reader.ReadUInt16();
             this.Unknown_Ch = reader.ReadUInt32();
@@ -129,14 +127,14 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
             this.DataPointer1 = (ulong)(this.Data1 != null ? this.Data1.Position : 0);
             this.DataPointer2 = (ulong)(this.Data2 != null ? this.Data2.Position : 0);
             this.InfoPointer = (ulong)(this.Info != null ? this.Info.Position : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
             writer.Write(this.VertexStride);
             writer.Write(this.Unknown_Ah);
             writer.Write(this.Unknown_Ch);

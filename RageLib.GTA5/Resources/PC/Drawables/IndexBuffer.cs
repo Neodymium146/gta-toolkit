@@ -28,13 +28,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // datBase
     // grcIndexBuffer
     // grcIndexBufferD3D11
-    public class IndexBuffer : ResourceSystemBlock
+    public class IndexBuffer : DatBase64_GTA5_pc
     {
         public override long Length => 0x60;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
         public uint IndicesCount;
         public uint Unknown_Ch; // 0x00000000
         public ulong IndicesPointer;
@@ -65,9 +63,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
             this.IndicesCount = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
             this.IndicesPointer = reader.ReadUInt64();
@@ -102,13 +100,13 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
             this.IndicesCount = (uint)(this.Indices != null ? this.Indices.Count : 0);
             this.IndicesPointer = (ulong)(this.Indices != null ? this.Indices.Position : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
             writer.Write(this.IndicesCount);
             writer.Write(this.Unknown_Ch);
             writer.Write(this.IndicesPointer);
