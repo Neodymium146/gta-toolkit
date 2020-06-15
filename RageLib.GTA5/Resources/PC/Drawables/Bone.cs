@@ -27,6 +27,7 @@ using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
+    // crBoneData
     public class Bone : ResourceSystemBlock
     {
         public override long Length => 0x50;
@@ -41,7 +42,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public ushort ParentIndex;
         public uint Unknown_34h; // 0x00000000
         public ulong NamePointer;
-        public EBoneFlags Flags;
+        public BoneFlags Flags;
         public ushort Index;
         public ushort Tag;
         public ushort Unknown_46h;
@@ -66,7 +67,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.ParentIndex = reader.ReadUInt16();
             this.Unknown_34h = reader.ReadUInt32();
             this.NamePointer = reader.ReadUInt64();
-            this.Flags = (EBoneFlags)reader.ReadUInt16();
+            this.Flags = (BoneFlags)reader.ReadUInt16();
             this.Index = reader.ReadUInt16();
             this.Tag = reader.ReadUInt16();
             this.Unknown_46h = reader.ReadUInt16();
@@ -117,7 +118,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     }
 
     [Flags]
-    public enum EBoneFlags : ushort
+    public enum BoneFlags : ushort
     {
         None = 0,
         RotX = 0x1,
