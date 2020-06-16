@@ -31,15 +31,11 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // phArchetype
     // phArchetypePhys
     // phArchetypeDamp
-    public class Archetype : ResourceSystemBlock
+    public class Archetype : FileBase64_GTA5_pc
     {
         public override long Length => 0xE0;
 
         // structure data
-        public float Unknown_0h;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
         public uint Unknown_10h; // 0x00000002 -> type=phArchetypeDamp
         public uint Unknown_14h; // 0x00000000
         public ulong NamePointer;
@@ -76,11 +72,9 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.Unknown_0h = reader.ReadSingle();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.NamePointer = reader.ReadUInt64();
@@ -122,15 +116,13 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
             this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
             this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.Position : 0);
 
             // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.NamePointer);
