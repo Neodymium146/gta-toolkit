@@ -88,6 +88,28 @@ namespace RageLib.Resources.Common
             if (Data != null) list.Add(Data);
             return list.ToArray();
         }
+
+        public ushort GetBucketIndex(int hash)
+        {
+            if (hash < 11) return 11;
+            else if (hash < 29) return 29;
+            else if (hash < 59) return 59;
+            else if (hash < 107) return 107;
+            else if (hash < 191) return 191;
+            else if (hash < 331) return 331;
+            else if (hash < 563) return 563;
+            else if (hash < 953) return 953;
+            else if (hash < 1609) return 1609;
+            else if (hash < 2729) return 2729;
+            else if (hash < 4621) return 4621;
+            else if (hash < 7841) return 7841;
+            else if (hash < 13297) return 13297;
+            else if (hash < 22571) return 22571;
+            else if (hash < 38351) return 38351;
+            else if (hash < 65167) return 65167;
+            else if (hash < 65521) return 65521;
+            else return 0;
+        }
     }
 
     public class AtHashMapEntry32 : ResourceSystemBlock
