@@ -10,7 +10,7 @@ namespace RageLib.Resources.Common
 
         // structure data
         public ulong Pointer;
-        public ushort Capacity;
+        public ushort BucketsCount;
         public ushort Count;
         public ushort Unknown_Ch;
         public byte Unknown_Eh;
@@ -23,7 +23,7 @@ namespace RageLib.Resources.Common
         {
             // read structure data
             this.Pointer = reader.ReadUInt64();
-            this.Capacity = reader.ReadUInt16();
+            this.BucketsCount = reader.ReadUInt16();
             this.Count = reader.ReadUInt16();
             this.Unknown_Ch = reader.ReadUInt16();
             this.Unknown_Eh = reader.ReadByte();
@@ -32,7 +32,7 @@ namespace RageLib.Resources.Common
             // read reference data
             this.Data = reader.ReadBlockAt<ResourcePointerArray64<AtHashMapEntry32>>(
                 this.Pointer, // offset
-                this.Capacity
+                this.BucketsCount
             );
         }
 
@@ -40,7 +40,6 @@ namespace RageLib.Resources.Common
         {
             // update structure data
             this.Pointer = (ulong)(this.Data != null ? this.Data.Position : 0);
-            this.Capacity = (ushort)(this.Data?.Count ?? 0);
             if (this.Data != null)
             {
                 int i = 0;
@@ -69,10 +68,11 @@ namespace RageLib.Resources.Common
             {
                 this.Count = 0;
             }
+            this.BucketsCount = (ushort)(this.Data != null ? GetBucketsCount(Count) : 0);
 
             // write structure data
             writer.Write(this.Pointer);
-            writer.Write(this.Capacity);
+            writer.Write(this.BucketsCount);
             writer.Write(this.Count);
             writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_Eh);
@@ -89,25 +89,25 @@ namespace RageLib.Resources.Common
             return list.ToArray();
         }
 
-        public ushort GetBucketIndex(int hash)
+        public ushort GetBucketsCount(uint hashesCount)
         {
-            if (hash < 11) return 11;
-            else if (hash < 29) return 29;
-            else if (hash < 59) return 59;
-            else if (hash < 107) return 107;
-            else if (hash < 191) return 191;
-            else if (hash < 331) return 331;
-            else if (hash < 563) return 563;
-            else if (hash < 953) return 953;
-            else if (hash < 1609) return 1609;
-            else if (hash < 2729) return 2729;
-            else if (hash < 4621) return 4621;
-            else if (hash < 7841) return 7841;
-            else if (hash < 13297) return 13297;
-            else if (hash < 22571) return 22571;
-            else if (hash < 38351) return 38351;
-            else if (hash < 65167) return 65167;
-            else if (hash < 65521) return 65521;
+            if (hashesCount < 11) return 11;
+            else if (hashesCount < 29) return 29;
+            else if (hashesCount < 59) return 59;
+            else if (hashesCount < 107) return 107;
+            else if (hashesCount < 191) return 191;
+            else if (hashesCount < 331) return 331;
+            else if (hashesCount < 563) return 563;
+            else if (hashesCount < 953) return 953;
+            else if (hashesCount < 1609) return 1609;
+            else if (hashesCount < 2729) return 2729;
+            else if (hashesCount < 4621) return 4621;
+            else if (hashesCount < 7841) return 7841;
+            else if (hashesCount < 13297) return 13297;
+            else if (hashesCount < 22571) return 22571;
+            else if (hashesCount < 38351) return 38351;
+            else if (hashesCount < 65167) return 65167;
+            else if (hashesCount < 65521) return 65521;
             else return 0;
         }
     }
