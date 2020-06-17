@@ -26,7 +26,7 @@ using System;
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
     // pgArray<Matrix34> array
-    public class Unknown_F_001 : ResourceSystemBlock
+    public class Unknown_F_001 : DatBase64_GTA5_pc
     {
         public override long Length
         {
@@ -34,11 +34,9 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         }
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
         public uint Unknown_8h; // 0x00000000
         public uint Unknown_Ch; // 0x00000000
-        public uint cnt;
+        public uint Count;
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
@@ -49,17 +47,17 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
             this.Unknown_8h = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
-            this.cnt = reader.ReadUInt32();
+            this.Count = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.Data = reader.ReadBlock<ResourceSimpleArray<RAGE_Matrix4>>(
-              cnt
+              Count
               );
         }
 
@@ -68,12 +66,12 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
             writer.Write(this.Unknown_8h);
             writer.Write(this.Unknown_Ch);
-            writer.Write(this.cnt);
+            writer.Write(this.Count);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
