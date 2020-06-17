@@ -33,7 +33,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override long Length => 0x70;
 
         // structure data
-        public AtHashMap32 BoneMap;
+        public AtHashMap<uint_r> BoneMap;
         public ulong BonesPointer;
         public ulong TransformationsInvertedPointer;
         public ulong TransformationsPointer;
@@ -67,7 +67,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Read(reader, parameters);
 
             // read structure data
-            this.BoneMap = reader.ReadBlock<AtHashMap32>();
+            this.BoneMap = reader.ReadBlock<AtHashMap<uint_r>>();
             this.BonesPointer = reader.ReadUInt64();
             this.TransformationsInvertedPointer = reader.ReadUInt64();
             this.TransformationsPointer = reader.ReadUInt64();

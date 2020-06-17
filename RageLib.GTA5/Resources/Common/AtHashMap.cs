@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace RageLib.Resources.Common
 {
     // atHashMap
-    public class AtHashMap32 : ResourceSystemBlock
+    public class AtHashMap<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
     {
         public override long Length => 0x10;
 
@@ -17,7 +17,7 @@ namespace RageLib.Resources.Common
         public byte Initialized;
 
         // reference data
-        public ResourcePointerArray64<AtHashMapEntry32> Data;
+        public ResourcePointerArray64<AtHashMapEntry<T>> Data;
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
@@ -30,7 +30,7 @@ namespace RageLib.Resources.Common
             this.Initialized = reader.ReadByte();
 
             // read reference data
-            this.Data = reader.ReadBlockAt<ResourcePointerArray64<AtHashMapEntry32>>(
+            this.Data = reader.ReadBlockAt<ResourcePointerArray64<AtHashMapEntry<T>>>(
                 this.Pointer, // offset
                 this.BucketsCount
             );
@@ -112,17 +112,17 @@ namespace RageLib.Resources.Common
         }
     }
 
-    public class AtHashMapEntry32 : ResourceSystemBlock
+    public class AtHashMapEntry<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
     {
-        public override long Length => 0x10;
+        public override long Length => 0xC + (Data != null ? Data.Length : 0);
 
         // structure data
         public uint Hash;
-        public uint Data;
+        public T Data;
         public ulong NextPointer;
 
         // reference data
-        public AtHashMapEntry32 Next;
+        public AtHashMapEntry<T> Next;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -131,11 +131,11 @@ namespace RageLib.Resources.Common
         {
             // read structure data
             this.Hash = reader.ReadUInt32();
-            this.Data = reader.ReadUInt32();
+            this.Data = reader.ReadBlock<T>();
             this.NextPointer = reader.ReadUInt64();
 
             // read reference data
-            this.Next = reader.ReadBlockAt<AtHashMapEntry32>(
+            this.Next = reader.ReadBlockAt<AtHashMapEntry<T>>(
                 this.NextPointer // offset
             );
         }
@@ -150,7 +150,7 @@ namespace RageLib.Resources.Common
 
             // write structure data
             writer.Write(this.Hash);
-            writer.Write(this.Data);
+            writer.WriteBlock(this.Data);
             writer.Write(this.NextPointer);
         }
 
