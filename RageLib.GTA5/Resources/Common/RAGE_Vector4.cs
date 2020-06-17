@@ -24,6 +24,7 @@ using System.Numerics;
 
 namespace RageLib.Resources
 {
+    // Vec4
     public class RAGE_Vector4 : ResourceSystemBlock
     {
         public override long Length
