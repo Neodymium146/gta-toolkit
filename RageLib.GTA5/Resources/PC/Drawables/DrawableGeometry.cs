@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // grmGeometryQB
     public class DrawableGeometry : DatBase64_GTA5_pc
     {
-        public override long Length => 0x98;
+        public override long Length => 0xA0;
 
         // structure data
         public uint Unknown_8h; // 0x00000000
@@ -67,6 +67,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint Unknown_8Ch; // 0x00000000
         public uint Unknown_90h; // 0x00000000
         public uint Unknown_94h; // 0x00000000
+        public uint Unknown_98h; // 0x00000000
+        public uint Unknown_9Ch; // 0x00000000
 
         // reference data
         public VertexBuffer VertexBuffer;
@@ -116,6 +118,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_8Ch = reader.ReadUInt32();
             this.Unknown_90h = reader.ReadUInt32();
             this.Unknown_94h = reader.ReadUInt32();
+            this.Unknown_98h = reader.ReadUInt32();
+            this.Unknown_9Ch = reader.ReadUInt32();
 
             // read reference data
             this.VertexBuffer = reader.ReadBlockAt<VertexBuffer>(
@@ -188,6 +192,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Unknown_8Ch);
             writer.Write(this.Unknown_90h);
             writer.Write(this.Unknown_94h);
+            writer.Write(this.Unknown_98h);
+            writer.Write(this.Unknown_9Ch);
         }
 
         /// <summary>
