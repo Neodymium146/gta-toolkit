@@ -100,7 +100,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public ResourcePointerArray64<FragDrawable> Unknown_28h_Data;
         public ResourcePointerArray64<string_r> Unknown_30h_Data;
         public string_r Name;
-        public Unknown_F_003 Unknown_A8h_Data;
+        public MatrixSet Unknown_A8h_Data;
         public ResourcePointerArray64<Unknown_F_004> Unknown_E0h_Data;
         public FragPhysicsLODGroup PhysicsLODGroup;
         public FragDrawable Unknown_F8h_Data;
@@ -189,7 +189,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
             );
-            this.Unknown_A8h_Data = reader.ReadBlockAt<Unknown_F_003>(
+            this.Unknown_A8h_Data = reader.ReadBlockAt<MatrixSet>(
                 this.Unknown_A8h_Pointer // offset
             );
             this.Unknown_E0h_Data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_F_004>>(

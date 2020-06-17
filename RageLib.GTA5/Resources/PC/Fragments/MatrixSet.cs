@@ -25,7 +25,8 @@ using System;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class Unknown_F_003 : ResourceSystemBlock
+    // grmMatrixSet
+    public class MatrixSet : ResourceSystemBlock
     {
         public override long Length
         {
