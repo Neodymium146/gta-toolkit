@@ -33,13 +33,14 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         // structure data
         public ulong ParametersPointer;
-        public uint Unknown_8h;
+        public uint ShaderHash;
         public uint Unknown_Ch; // 0x00000000
         public byte ParameterCount;
-        public byte Unknown_11h;
+        public byte DrawBucket;
         public ushort Unknown_12h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
+        public ushort ParametersSize; // Header + Data size
+        public ushort ParametersTotalSize; // Header + Data + Hashes(aligned to 16) + 32 size
+        public uint SpsHash;
         public uint Unknown_1Ch; // 0x00000000
         public uint Unknown_20h;
         public ushort Unknown_24h;
@@ -60,13 +61,14 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             // read structure data
             this.ParametersPointer = reader.ReadUInt64();
-            this.Unknown_8h = reader.ReadUInt32();
+            this.ShaderHash = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
             this.ParameterCount = reader.ReadByte();
-            this.Unknown_11h = reader.ReadByte();
+            this.DrawBucket = reader.ReadByte();
             this.Unknown_12h = reader.ReadUInt16();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
+            this.ParametersSize = reader.ReadUInt16();
+            this.ParametersTotalSize = reader.ReadUInt16();
+            this.SpsHash = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt16();
@@ -105,13 +107,14 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
             // write structure data
             writer.Write(this.ParametersPointer);
-            writer.Write(this.Unknown_8h);
+            writer.Write(this.ShaderHash);
             writer.Write(this.Unknown_Ch);
             writer.Write(this.ParameterCount);
-            writer.Write(this.Unknown_11h);
+            writer.Write(this.DrawBucket);
             writer.Write(this.Unknown_12h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
+            writer.Write(this.ParametersSize);
+            writer.Write(this.ParametersTotalSize);
+            writer.Write(this.SpsHash);
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
@@ -141,25 +144,44 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             get
             {
-                long offset = 0;
-                foreach (var x in Parameters)
-                {
-                    offset += 16;
-                }
+                return BaseSize + (BaseSize * 4);
+            }
+        }
+
+        public long BaseSize
+        {
+            get
+            {
+                long size = 0;
 
                 foreach (var x in Parameters)
                 {
-                    offset += 16 * x.DataType;
+                    // Size of Parameters definitions
+                    size += 16;
+
+                    // Size of Parameters data
+                    size += 16 * x.DataType;
                 }
 
-                offset += Parameters.Count * 4;
+                // Size of Parameters Hashes (aligned to 16)
+                var hashesSize = Parameters.Count * 4;
+                hashesSize += (16 - (hashesSize % 16)) % 16;
 
-                return offset;
+                size += hashesSize;
+
+                // Extra 32 bytes
+                size += 32;
+
+                return size;
             }
         }
 
         public List<ShaderParameter> Parameters = new List<ShaderParameter>();
+        // Skip Data among Parameters and Hashes, as each parameter has its own pointer to read its own data
         public List<uint> Hashes = new List<uint>();
+        // Hashes alignment pad
+        // Extra 32 bytes 
+        // Extra 4 * ParametersTotalSize bytes
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
@@ -223,6 +245,14 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 Hashes.Add(reader.ReadUInt32());
             }
 
+            // Read hashes alignment pad
+            //reader.Position += (16 - (reader.Position % 16)) % 16;
+
+            // Read extra 32 bytes
+            //reader.Position += 32;
+
+            // Read extra 4 * ParametersTotalSize bytes
+            //reader.Position += 4 * Length;
         }
 
         public override void Write(ResourceDataWriter writer, params object[] parameters)
@@ -249,6 +279,16 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             // write hashes
             foreach (var h in Hashes)
                 writer.Write(h);
+
+            // Write hashes alignment pad
+            var pad = (16 - (writer.Position % 16)) % 16;
+            writer.Write(new byte[pad]);
+
+            // Write extra 32 bytes
+            writer.Write(new byte[32]);
+
+            // Write extra 4 * ParametersTotalSize bytes
+            writer.Write(new byte[4 * BaseSize]);
         }
 
 
