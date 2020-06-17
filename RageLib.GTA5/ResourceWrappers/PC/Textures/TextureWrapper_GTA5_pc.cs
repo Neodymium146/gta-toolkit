@@ -300,10 +300,8 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
         public void UpdateClass()
         {
 
-            texture.VFT = 0x40619638;
-            texture.Unknown_4h = 0x00000001;
-            texture.Unknown_8h = 0x00000000;
-            texture.Unknown_Ch = 0x00000000;
+            texture.VFT = 0x0000000140619638;
+            texture.PagesInfoPointer = 0x0000000000000000;
             texture.Unknown_10h = 0x00000000;
             texture.Unknown_14h = 0x00000000;
             texture.Unknown_18h = 0x00000000;
