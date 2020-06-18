@@ -43,7 +43,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint Unknown_4Ch; // 0x00000000
         public uint Unknown_50h;
         public uint Unknown_54h;
-        public uint Unknown_58h;
+        public uint DataCRC;
         public ushort Unknown_5Ch; // 0x0001
         public ushort BonesCount;
         public ushort ChildrenIndicesCount;
@@ -77,7 +77,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_4Ch = reader.ReadUInt32();
             this.Unknown_50h = reader.ReadUInt32();
             this.Unknown_54h = reader.ReadUInt32();
-            this.Unknown_58h = reader.ReadUInt32();
+            this.DataCRC = reader.ReadUInt32();
             this.Unknown_5Ch = reader.ReadUInt16();
             this.BonesCount = reader.ReadUInt16();
             this.ChildrenIndicesCount = reader.ReadUInt16();
@@ -136,7 +136,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Unknown_4Ch);
             writer.Write(this.Unknown_50h);
             writer.Write(this.Unknown_54h);
-            writer.Write(this.Unknown_58h);
+            writer.Write(this.DataCRC);
             writer.Write(this.Unknown_5Ch);
             writer.Write(this.BonesCount);
             writer.Write(this.ChildrenIndicesCount);
