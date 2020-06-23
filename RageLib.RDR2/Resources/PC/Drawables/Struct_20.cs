@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
-    public class Struct_18 : ResourceSystemBlock
+    public class Struct_20 : ResourceSystemBlock
     {
-        public override long Length => 0x40;
+        public override long Length => 0xF0;
 
         // structure data
         
@@ -19,7 +19,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            
+
 
             // read reference data
         }

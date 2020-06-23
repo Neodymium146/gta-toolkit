@@ -1,59 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using RageLib.Resources.Common;
+using System;
+using System.Collections.Generic;
 
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
-    public class Struct_03 : ResourceSystemBlock
-    {
+	// ShaderGroup
+	// VFT = 0x0000000140912C88
+	public class Struct_03 : DatBase64
+	{
 		public override long Length => 0x40;
 
 		// structure data
-		public ulong VFT;                   // 0x0000000140912C88
-		public ulong Struct_18_Pointer;
-		public ulong Struct_04_Pointer;
-		public ushort Unknown_18h;          // 0x0001
-		public ushort Unknown_1Ah;          // 0x0001
-		public uint Unknown_1Ch;            // 0x00000000
+		public ulong TextureDictionaryPointer;
+		public ResourcePointerList64<Struct_20> Unknown_10h;
 		public ulong Unknown_20h;           // 0x0000000000000000
 		public ulong Unknown_28h;           // 0x0000000000000000
 		public ulong Unknown_30h;           // 0x0000000000000000
 		public ulong Unknown_38h;           // 0x0000000000000000
 
 		// reference data
-		public Struct_18 Struct_18_Data;
-		public Struct_04 Struct_04_Data;
+		public PgDictionary64<Struct_16> TextureDictionary;
 
 		public override void Read(ResourceDataReader reader, params object[] parameters)
-        {
+		{
+			base.Read(reader, parameters);
+
 			// read structure data
-			this.VFT = reader.ReadUInt64();
-			this.Struct_18_Pointer = reader.ReadUInt64();
-			this.Struct_04_Pointer = reader.ReadUInt64();
-			this.Unknown_18h = reader.ReadUInt16();
-			this.Unknown_1Ah = reader.ReadUInt16();
-			this.Unknown_1Ch = reader.ReadUInt32();
+			this.TextureDictionaryPointer = reader.ReadUInt64();
+			this.Unknown_10h = reader.ReadBlock<ResourcePointerList64<Struct_20>>();
 			this.Unknown_20h = reader.ReadUInt64();
 			this.Unknown_28h = reader.ReadUInt64();
 			this.Unknown_30h = reader.ReadUInt64();
 			this.Unknown_38h = reader.ReadUInt64();
 
 			// read reference data
-			this.Struct_18_Data = reader.ReadBlockAt<Struct_18>(this.Struct_18_Pointer);
-			this.Struct_04_Data = reader.ReadBlockAt<Struct_04>(this.Struct_04_Pointer);
+			this.TextureDictionary = reader.ReadBlockAt<PgDictionary64<Struct_16>>(this.TextureDictionaryPointer);
 		}
 
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
+		public override void Write(ResourceDataWriter writer, params object[] parameters)
+		{
+			base.Write(writer, parameters);
+
 			// update structure data
-			this.Struct_18_Pointer = (ulong)(this.Struct_18_Data != null ? this.Struct_18_Data.Position : 0);
-			this.Struct_04_Pointer = (ulong)(this.Struct_04_Data != null ? this.Struct_04_Data.Position : 0);
+			this.TextureDictionaryPointer = (ulong)(this.TextureDictionary != null ? this.TextureDictionary.Position : 0);
 
 			// write structure data
-			writer.Write(this.VFT);
-			writer.Write(this.Struct_18_Pointer);
-			writer.Write(this.Struct_04_Pointer);
-			writer.Write(this.Unknown_18h);
-			writer.Write(this.Unknown_1Ah);
-			writer.Write(this.Unknown_1Ch);
+			writer.Write(this.TextureDictionaryPointer);
+			writer.WriteBlock(this.Unknown_10h);
 			writer.Write(this.Unknown_20h);
 			writer.Write(this.Unknown_28h);
 			writer.Write(this.Unknown_30h);
@@ -63,9 +56,15 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 		public override IResourceBlock[] GetReferences()
 		{
 			var list = new List<IResourceBlock>(base.GetReferences());
-			if (Struct_18_Data != null) list.Add(Struct_18_Data);
-			if (Struct_04_Data != null) list.Add(Struct_04_Data);
+			if (TextureDictionary != null) list.Add(TextureDictionary);
 			return list.ToArray();
+		}
+
+		public override Tuple<long, IResourceBlock>[] GetParts()
+		{
+			return new Tuple<long, IResourceBlock>[] {
+				new Tuple<long, IResourceBlock>(0x10, Unknown_10h)
+			};
 		}
 	}
 }

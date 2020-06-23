@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
+	// some Texture struct
     public class Struct_13 : ResourceSystemBlock
     {
 		public override long Length => 0x50;
@@ -20,7 +21,8 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 		public ushort Unknown_1Ch;
 		public ushort Unknown_1Eh;
 		public ushort Unknown_20h;
-		public uint Unknown_24h;
+		public ushort Unknown_22h;
+		public ushort Unknown_24h;
 		public ushort Unknown_26h;
 		public ulong NamePointer;
 		public ulong Unknown_30h;   // 0x0000000000000000
