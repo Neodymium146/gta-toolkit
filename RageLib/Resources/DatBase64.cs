@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RageLib.Resources
 {
     // datBase
-    public class DatBase64_GTA5_pc : ResourceSystemBlock
+    public class DatBase64 : ResourceSystemBlock
     {
         public override long Length => 0x8;
 
@@ -31,14 +31,5 @@ namespace RageLib.Resources
             // write structure data
             writer.Write(this.VFT);
         }
-    }
-
-    // TODO: enum all known VFT
-    public enum KnownVFT : ulong
-    {
-        fragType = 0x0000000140573148,
-        fragDrawable = 0x0000000140606be8,
-        fragPhysicsLODGroup = 0x00000001406056d0,
-        fragPhysicsLOD = 0x00000001406056f8,
     }
 }

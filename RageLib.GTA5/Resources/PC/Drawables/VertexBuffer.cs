@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // datBase
     // grcVertexBuffer
     // grcVertexBufferD3D11
-    public class VertexBuffer : DatBase64_GTA5_pc
+    public class VertexBuffer : DatBase64
     {
         public override long Length => 0x80;
 

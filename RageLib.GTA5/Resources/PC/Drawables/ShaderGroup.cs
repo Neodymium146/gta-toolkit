@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 {
     // datBase
     // grmShaderGroup
-    public class ShaderGroup : DatBase64_GTA5_pc
+    public class ShaderGroup : DatBase64
     {
         public override long Length => 0x40;
 

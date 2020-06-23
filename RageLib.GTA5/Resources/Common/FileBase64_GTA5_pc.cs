@@ -25,7 +25,7 @@ using System.Collections.Generic;
 namespace RageLib.Resources
 {
     // pgBase
-    public class FileBase64_GTA5_pc : DatBase64_GTA5_pc
+    public class FileBase64_GTA5_pc : DatBase64
     {
         public override long Length => 0x10;
 
