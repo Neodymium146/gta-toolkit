@@ -20,7 +20,7 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources;
+using RageLib.Resources.Common;
 using RageLib.Resources.GTA5;
 using RageLib.Resources.GTA5.PC.Drawables;
 using RageLib.ResourceWrappers.Drawables;
