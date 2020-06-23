@@ -3,8 +3,8 @@ using System.Numerics;
 
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
-    public class Struct_00 : PgBase64
-	{	
+	public class Struct_00 : PgBase64
+	{
 		public override long Length => 0x50;
 
 		// structure data

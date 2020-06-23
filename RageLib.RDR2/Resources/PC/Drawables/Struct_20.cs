@@ -11,7 +11,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
         public override long Length => 0xF0;
 
         // structure data
-        
+
 
         // reference data
 

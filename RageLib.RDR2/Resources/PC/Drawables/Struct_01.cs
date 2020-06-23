@@ -36,13 +36,13 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 		public override void Read(ResourceDataReader reader, params object[] parameters)
 		{
 			// read structure data
-			
+
 		}
 
 		public override void Write(ResourceDataWriter writer, params object[] parameters)
 		{
 			// write structure data
-			
+
 		}
 	}
 }

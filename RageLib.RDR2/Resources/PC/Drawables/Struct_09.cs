@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
 	// DrawableModel
-    public class Struct_09 : ResourceSystemBlock
-    {
-        public override long Length => 0x40;
+	public class Struct_09 : ResourceSystemBlock
+	{
+		public override long Length => 0x40;
 
 		// structure data
 		public uint Unknown_00h;
 		public uint Unknown_04h;
 		public ulong Struct_10_Pointer;
 		public ulong Struct_11_Pointer;
-		public ulong Unknown_18h;		// 0x0000000000000000
+		public ulong Unknown_18h;       // 0x0000000000000000
 		public ulong Struct_12_Pointer;
-		public ulong Unknown_28h;		// 0x0000000000000000
-		public ulong Unknown_30h;		// 0x0000000000000000
+		public ulong Unknown_28h;       // 0x0000000000000000
+		public ulong Unknown_30h;       // 0x0000000000000000
 		public ushort Unknown_38h;
 		public ushort Unknown_3Ah;
 		public ushort Unknown_3Ch;
@@ -32,7 +32,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 
 
 		public override void Read(ResourceDataReader reader, params object[] parameters)
-        {
+		{
 			// read structure data
 			this.Unknown_00h = reader.ReadUInt32();
 			this.Unknown_04h = reader.ReadUInt32();
@@ -54,12 +54,12 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 			this.Struct_12_Data = reader.ReadBlockAt<Struct_12>(this.Struct_12_Pointer);
 		}
 
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
+		public override void Write(ResourceDataWriter writer, params object[] parameters)
+		{
+			// write structure data
 
 
-            // write reference data
-        }
-    }
+			// write reference data
+		}
+	}
 }

@@ -11,7 +11,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
         public override long Length => 0x40;
 
         // structure data
-        
+
 
         // reference data
 
@@ -19,7 +19,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            
+
 
             // read reference data
         }
