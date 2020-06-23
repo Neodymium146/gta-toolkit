@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Textures
 {
     // pgBase
     // grcTexture
-    public class Texture : FileBase64_GTA5_pc
+    public class Texture : PgBase64
     {
         public override long Length => 0x40;
 

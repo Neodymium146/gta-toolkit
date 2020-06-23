@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2017 Neodymium
+    Copyright(c) 2015 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,30 +20,20 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.Common;
-using System;
+using System.Collections.Generic;
 
-namespace RageLib.Resources.GTA5.PC.Textures
+namespace RageLib.Resources
 {
-    // pgDictionaryBase
-    // pgDictionary<grcTexture>
-    public class TextureDictionary : PgBase64
+    // pgBase
+    public class PgBase64 : DatBase64
     {
-        public override long Length => 0x40;
+        public override long Length => 0x10;
 
         // structure data
-        public uint Unknown_10h; // 0x00000000
-        public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h; // 0x00000001
-        public uint Unknown_1Ch; // 0x00000000
-        public ResourceSimpleList64<uint_r> TextureNameHashes;
-        public ResourcePointerList64<TextureDX11> Textures;
+        public ulong PagesInfoPointer;
 
-        public TextureDictionary()
-        {
-            this.TextureNameHashes = new ResourceSimpleList64<uint_r>();
-            this.Textures = new ResourcePointerList64<TextureDX11>();
-        }
+        // reference data
+        public PagesInfo PagesInfo;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -53,12 +43,12 @@ namespace RageLib.Resources.GTA5.PC.Textures
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
-            this.TextureNameHashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
-            this.Textures = reader.ReadBlock<ResourcePointerList64<TextureDX11>>();
+            this.PagesInfoPointer = reader.ReadUInt64();
+
+            // read reference data
+            this.PagesInfo = reader.ReadBlockAt<PagesInfo>(
+                this.PagesInfoPointer // offset
+            );
         }
 
         /// <summary>
@@ -68,21 +58,21 @@ namespace RageLib.Resources.GTA5.PC.Textures
         {
             base.Write(writer, parameters);
 
+            // update structure data
+            this.PagesInfoPointer = (ulong)(this.PagesInfo != null ? this.PagesInfo.Position : 0);
+
             // write structure data
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
-            writer.WriteBlock(this.TextureNameHashes);
-            writer.WriteBlock(this.Textures);
+            writer.Write(this.PagesInfoPointer);
         }
 
-        public override Tuple<long, IResourceBlock>[] GetParts()
+        /// <summary>
+        /// Returns a list of data blocks which are referenced by this block.
+        /// </summary>
+        public override IResourceBlock[] GetReferences()
         {
-            return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x20, TextureNameHashes),
-                new Tuple<long, IResourceBlock>(0x30, Textures)
-            };
+            var list = new List<IResourceBlock>();
+            if (PagesInfo != null) list.Add(PagesInfo);
+            return list.ToArray();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
 {
     // pgBaseRefCounted
     // crClipDictionary
-    public class ClipDictionary : FileBase64_GTA5_pc
+    public class ClipDictionary : PgBase64
     {
         public override long Length => 0x40;
 

@@ -25,7 +25,7 @@ using System;
 
 namespace RageLib.Resources.GTA5.PC.VehicleRecords
 {
-    public class VehicleRecords : FileBase64_GTA5_pc
+    public class VehicleRecords : PgBase64
     {
         public override long Length => 0x20;
 

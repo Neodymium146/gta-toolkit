@@ -25,7 +25,7 @@ using System;
 
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
-    public class BoundDictionary : FileBase64_GTA5_pc
+    public class BoundDictionary : PgBase64
     {
         public override long Length => 0x40;
 

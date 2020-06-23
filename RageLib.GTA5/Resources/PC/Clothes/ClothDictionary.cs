@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
     // pgBase
     // pgDictionaryBase
     // pgDictionary<characterCloth>
-    public class ClothDictionary : FileBase64_GTA5_pc
+    public class ClothDictionary : PgBase64
     {
         public override long Length => 0x40;
 

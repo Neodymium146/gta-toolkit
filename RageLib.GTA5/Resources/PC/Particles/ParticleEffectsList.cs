@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
 {
     // pgBase
     // ptxFxList
-    public class ParticleEffectsList : FileBase64_GTA5_pc
+    public class ParticleEffectsList : PgBase64
     {
         public override long Length => 0x60;
 

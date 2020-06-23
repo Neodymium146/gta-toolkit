@@ -138,10 +138,10 @@ namespace RageLib.Resources.GTA5
         public override void Save(Stream stream)
         {
             var resBlock = (IResourceBlock)ResourceData;
-            var fileBase = (FileBase64_GTA5_pc)resBlock;
+            var fileBase = (PgBase64)resBlock;
 
             // Create a temp datResourceMap
-            fileBase.PagesInfo = new PagesInfo_GTA5_pc(64, 64);
+            fileBase.PagesInfo = new PagesInfo(64, 64);
 
             ResourceHelpers.GetBlocks(ResourceData, out IList<IResourceBlock> systemBlocks, out IList<IResourceBlock> graphicBlocks);
 

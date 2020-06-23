@@ -25,7 +25,7 @@ using System.Collections.Generic;
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
     // rmcDrawableBase
-    public class DrawableBase : FileBase64_GTA5_pc
+    public class DrawableBase : PgBase64
     {
         public override long Length => 0x18;
 

@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 {
     // fragType
     // gtaFragType
-    public class FragType : FileBase64_GTA5_pc
+    public class FragType : PgBase64
     {
         public override long Length => 0x130;
 

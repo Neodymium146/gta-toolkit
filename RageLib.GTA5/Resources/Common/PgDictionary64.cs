@@ -6,7 +6,7 @@ namespace RageLib.Resources
     // pgBase
     // pgDictionaryBase
     // pgDictionary<T>
-    public class PgDictionary64<T> : FileBase64_GTA5_pc where T : IResourceSystemBlock, new()
+    public class PgDictionary64<T> : PgBase64 where T : IResourceSystemBlock, new()
     {
         public override long Length => 0x40;
 

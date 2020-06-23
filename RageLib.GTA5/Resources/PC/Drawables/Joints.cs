@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 {
     // pgBase
     // crJointData
-    public class Joints : FileBase64_GTA5_pc
+    public class Joints : PgBase64
     {
         public override long Length => 0x40;
 

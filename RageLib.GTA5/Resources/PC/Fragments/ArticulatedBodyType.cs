@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 {
     // pgBase
     // phArticulatedBodyType
-    public class ArticulatedBodyType : FileBase64_GTA5_pc
+    public class ArticulatedBodyType : PgBase64
     {
         public override long Length => 0xB0;
 
