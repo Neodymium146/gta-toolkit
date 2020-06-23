@@ -6,24 +6,19 @@ using System.Threading.Tasks;
 
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
-    public class Struct_17 : ResourceSystemBlock
+    public class Struct_07 : ResourceSystemBlock
     {
-        public override long Length => 0x40;
+        public override long Length => 0x20;
 
         // structure data
-        public ulong VFT;                   // 0x0000000140912400
+        public uint Unknown_00h;
+        public uint Unknown_04h;
         public uint Unknown_08h;
         public uint Unknown_0Ch;
         public uint Unknown_10h;
         public uint Unknown_14h;
-        public ulong Unknown_18h_Pointer;
-        public ulong Unknown_20h;           // 0x0000000000000000
-        public ulong Unknown_28h;           // 0x0000000000000000
-        public ulong Unknown_30h_Pointer;
-        public ulong Unknown_38h_Pointer;
-
-        // reference data
-        public Struct_15 Unknown_30h_Data;
+        public uint Unknown_18h;
+        public uint Unknown_1Ch;
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
