@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
 {
     public class Sequence : ResourceSystemBlock
     {
-        public override long Length
+        public override long BlockLength
         {
             get { return 32 + Data.Length; }
         }

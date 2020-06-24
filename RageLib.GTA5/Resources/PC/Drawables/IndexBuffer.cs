@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // grcIndexBufferD3D11
     public class IndexBuffer : DatBase64
     {
-        public override long Length => 0x60;
+        public override long BlockLength => 0x60;
 
         // structure data
         public uint IndicesCount;
@@ -104,7 +104,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
             // update structure data
             this.IndicesCount = (uint)(this.Indices != null ? this.Indices.Count : 0);
-            this.IndicesPointer = (ulong)(this.Indices != null ? this.Indices.Position : 0);
+            this.IndicesPointer = (ulong)(this.Indices != null ? this.Indices.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.IndicesCount);

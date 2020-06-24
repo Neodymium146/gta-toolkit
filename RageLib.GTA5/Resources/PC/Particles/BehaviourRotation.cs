@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxu_Rotation
     public class BehaviourRotation : Behaviour
     {
-        public override long Length => 0x280;
+        public override long BlockLength => 0x280;
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;

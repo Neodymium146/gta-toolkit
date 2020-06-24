@@ -31,7 +31,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // grmShaderGroup
     public class ShaderGroup : DatBase64
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public ulong TextureDictionaryPointer;
@@ -81,7 +81,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.TextureDictionaryPointer = (ulong)(this.TextureDictionary != null ? this.TextureDictionary.Position : 0);
+            this.TextureDictionaryPointer = (ulong)(this.TextureDictionary != null ? this.TextureDictionary.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.TextureDictionaryPointer);

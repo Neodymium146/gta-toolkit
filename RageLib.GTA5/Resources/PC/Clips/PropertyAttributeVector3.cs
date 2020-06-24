@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crPropertyAttributeVector3
     public class PropertyAttributeVector3 : PropertyAttribute
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public float X;

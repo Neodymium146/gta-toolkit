@@ -31,7 +31,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
     // phVerletCloth
     public class VerletCloth : ResourceSystemBlock
     {
-        public override long Length => 0x180;
+        public override long BlockLength => 0x180;
 
         // structure data
         public uint VFT;
@@ -227,9 +227,9 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.Position : 0);
-            this.BehaviorPointer = (ulong)(this.Behavior != null ? this.Behavior.Position : 0);
-            this.Unknown_140h_Pointer = (ulong)(this.Unknown_140h_Data != null ? this.Unknown_140h_Data.Position : 0);
+            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.BlockPosition : 0);
+            this.BehaviorPointer = (ulong)(this.Behavior != null ? this.Behavior.BlockPosition : 0);
+            this.Unknown_140h_Pointer = (ulong)(this.Unknown_140h_Data != null ? this.Unknown_140h_Data.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.VFT);

@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // grmModel
     public class DrawableModel : DatBase64
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public ResourcePointerList64<DrawableGeometry> Geometries;
@@ -78,8 +78,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.GeometriesBoundsPointer = (ulong)(this.GeometriesBounds != null ? this.GeometriesBounds.Position : 0);
-            this.ShaderMappingPointer = (ulong)(this.ShaderMapping != null ? this.ShaderMapping.Position : 0);
+            this.GeometriesBoundsPointer = (ulong)(this.GeometriesBounds != null ? this.GeometriesBounds.BlockPosition : 0);
+            this.ShaderMappingPointer = (ulong)(this.ShaderMapping != null ? this.ShaderMapping.BlockPosition : 0);
 
             // write structure data
             writer.WriteBlock(this.Geometries);

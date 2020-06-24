@@ -26,7 +26,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
 {
     public class Sector : ResourceSystemBlock
     {
-        public override long Length => 0x60;
+        public override long BlockLength => 0x60;
 
         // structure data
         public float Unknown_0h;
@@ -106,11 +106,11 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.DataPointer = (ulong)(this.Data != null ? this.Data.Position : 0);
-            this.SubTree1Pointer = (ulong)(this.SubTree1 != null ? this.SubTree1.Position : 0);
-            this.SubTree2Pointer = (ulong)(this.SubTree2 != null ? this.SubTree2.Position : 0);
-            this.SubTree3Pointer = (ulong)(this.SubTree3 != null ? this.SubTree3.Position : 0);
-            this.SubTree4Pointer = (ulong)(this.SubTree4 != null ? this.SubTree4.Position : 0);
+            this.DataPointer = (ulong)(this.Data != null ? this.Data.BlockPosition : 0);
+            this.SubTree1Pointer = (ulong)(this.SubTree1 != null ? this.SubTree1.BlockPosition : 0);
+            this.SubTree2Pointer = (ulong)(this.SubTree2 != null ? this.SubTree2.BlockPosition : 0);
+            this.SubTree3Pointer = (ulong)(this.SubTree3 != null ? this.SubTree3.BlockPosition : 0);
+            this.SubTree4Pointer = (ulong)(this.SubTree4 != null ? this.SubTree4.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_0h);

@@ -8,7 +8,7 @@ namespace RageLib.Resources.Common
     // pgDictionary<T>
     public class PgDictionary64<T> : PgBase64 where T : IResourceSystemBlock, new()
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public ulong ParentPointer; // 0x0000000000000000

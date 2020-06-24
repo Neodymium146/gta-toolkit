@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxDomain
     public class Domain : ResourceSystemBlock, IResourceXXSystemBlock
     {
-        public override long Length => 0x280;
+        public override long BlockLength => 0x280;
 
         // structure data
         public uint VFT;

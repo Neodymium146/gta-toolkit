@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxShaderVarKeyframe
     public class ShaderVarKeyframe : ShaderVar
     {
-        public override long Length => 0x50;
+        public override long BlockLength => 0x50;
 
         // structure data
         public uint Unknown_18h;

@@ -9,7 +9,7 @@ namespace RageLib.Resources
     // datBase
     public class DatBase64 : ResourceSystemBlock
     {
-        public override long Length => 0x8;
+        public override long BlockLength => 0x8;
 
         // structure data
         public ulong VFT;

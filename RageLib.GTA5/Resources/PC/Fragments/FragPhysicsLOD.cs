@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // fragPhysicsLOD
     public class FragPhysicsLOD : PgBase64
     {
-        public override long Length => 0x130;
+        public override long BlockLength => 0x130;
 
         // structure data
         public uint Unknown_10h; // 0x00000000
@@ -192,19 +192,19 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Write(writer, parameters);
 
             // update structure data
-            this.ArticulatedBodyTypePointer = (ulong)(this.ArticulatedBodyType != null ? this.ArticulatedBodyType.Position : 0);
-            this.Unknown_28h_Pointer = (ulong)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.Position : 0);
-            this.GroupNamesPointer = (ulong)(this.GroupNames != null ? this.GroupNames.Position : 0);
-            this.GroupsPointer = (ulong)(this.Groups != null ? this.Groups.Position : 0);
-            this.ChildrenPointer = (ulong)(this.Children != null ? this.Children.Position : 0);
-            this.Archetype1Pointer = (ulong)(this.Archetype1 != null ? this.Archetype1.Position : 0);
-            this.Archetype2Pointer = (ulong)(this.Archetype2 != null ? this.Archetype2.Position : 0);
-            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.Position : 0);
-            this.Unknown_F0h_Pointer = (ulong)(this.Unknown_F0h_Data != null ? this.Unknown_F0h_Data.Position : 0);
-            this.Unknown_F8h_Pointer = (ulong)(this.Unknown_F8h_Data != null ? this.Unknown_F8h_Data.Position : 0);
-            this.Unknown_100h_Pointer = (ulong)(this.Unknown_100h_Data != null ? this.Unknown_100h_Data.Position : 0);
-            this.Unknown_108h_Pointer = (ulong)(this.Unknown_108h_Data != null ? this.Unknown_108h_Data.Position : 0);
-            this.Unknown_110h_Pointer = (ulong)(this.Unknown_110h_Data != null ? this.Unknown_110h_Data.Position : 0);
+            this.ArticulatedBodyTypePointer = (ulong)(this.ArticulatedBodyType != null ? this.ArticulatedBodyType.BlockPosition : 0);
+            this.Unknown_28h_Pointer = (ulong)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.BlockPosition : 0);
+            this.GroupNamesPointer = (ulong)(this.GroupNames != null ? this.GroupNames.BlockPosition : 0);
+            this.GroupsPointer = (ulong)(this.Groups != null ? this.Groups.BlockPosition : 0);
+            this.ChildrenPointer = (ulong)(this.Children != null ? this.Children.BlockPosition : 0);
+            this.Archetype1Pointer = (ulong)(this.Archetype1 != null ? this.Archetype1.BlockPosition : 0);
+            this.Archetype2Pointer = (ulong)(this.Archetype2 != null ? this.Archetype2.BlockPosition : 0);
+            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.BlockPosition : 0);
+            this.Unknown_F0h_Pointer = (ulong)(this.Unknown_F0h_Data != null ? this.Unknown_F0h_Data.BlockPosition : 0);
+            this.Unknown_F8h_Pointer = (ulong)(this.Unknown_F8h_Data != null ? this.Unknown_F8h_Data.BlockPosition : 0);
+            this.Unknown_100h_Pointer = (ulong)(this.Unknown_100h_Data != null ? this.Unknown_100h_Data.BlockPosition : 0);
+            this.Unknown_108h_Pointer = (ulong)(this.Unknown_108h_Data != null ? this.Unknown_108h_Data.BlockPosition : 0);
+            this.Unknown_110h_Pointer = (ulong)(this.Unknown_110h_Data != null ? this.Unknown_110h_Data.BlockPosition : 0);
             //this.vvv1 = (byte)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Count : 0);
             //this.vvv2 = (byte)(this.pxxxxx_3data != null ? this.pxxxxx_3data.Count : 0);
             //this.GroupsCount = (byte)(this.Groups != null ? this.Groups.Count : 0);

@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxd_Model
     public class BehaviourModel : Behaviour
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public uint Unknown_10h; // 0x00000000

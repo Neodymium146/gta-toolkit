@@ -132,7 +132,7 @@ namespace RageLib.Resources
                 foreach (var block in blocks)
                     if (block is T)
                     {
-                        Position += block.Length;
+                        Position += block.BlockLength;
 
                         // since a resource block of the same type
                         // has been found at the same address, return it
@@ -162,7 +162,7 @@ namespace RageLib.Resources
 
             var classPosition = Position;            
             result.Read(this, parameters);
-            result.Position = classPosition;
+            result.BlockPosition = classPosition;
             return (T)result;
         }
 

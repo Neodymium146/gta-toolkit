@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crProperty
     public class Property : ResourceSystemBlock
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public uint VFT;
@@ -87,7 +87,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.AttributesPointer = (ulong)(this.Attributes != null ? this.Attributes.Position : 0);
+            this.AttributesPointer = (ulong)(this.Attributes != null ? this.Attributes.BlockPosition : 0);
             this.AttributesCount1 = (ushort)(this.Attributes != null ? this.Attributes.Count : 0);
             this.AttributesCount2 = (ushort)(this.Attributes != null ? this.Attributes.Count : 0);
 

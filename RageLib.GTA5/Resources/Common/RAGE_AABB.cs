@@ -27,7 +27,7 @@ namespace RageLib.Resources
     // spdAABB
     public class RAGE_AABB : ResourceSystemBlock
     {
-        public override long Length
+        public override long BlockLength
         {
             get { return 32; }
         }

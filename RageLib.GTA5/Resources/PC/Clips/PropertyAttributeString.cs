@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crPropertyAttributeString
     public class PropertyAttributeString : PropertyAttribute
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public ulong ValuePointer;
@@ -66,7 +66,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
             base.Write(writer, parameters);
 
             // update structure data
-            this.ValuePointer = (ulong)(this.Value != null ? this.Value.Position : 0);
+            this.ValuePointer = (ulong)(this.Value != null ? this.Value.BlockPosition : 0);
             this.ValueLength1 = (ushort)(this.Value != null ? this.Value.Value.Length : 0);
             this.ValueLength2 = (ushort)(this.Value != null ? this.Value.Value.Length + 1 : 0);
 

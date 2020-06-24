@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
 {
     public class VerticesListPart : ResourceSystemBlock
     {
-        public override long Length => 0x10;
+        public override long BlockLength => 0x10;
 
         // structure data
         public ulong VerticesPointer;
@@ -60,7 +60,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.VerticesPointer = (ulong)(this.Vertices != null ? this.Vertices.Position : 0);
+            this.VerticesPointer = (ulong)(this.Vertices != null ? this.Vertices.BlockPosition : 0);
             this.VerticesCount = (uint)(this.Vertices != null ? this.Vertices.Count : 0);
 
             // write structure data

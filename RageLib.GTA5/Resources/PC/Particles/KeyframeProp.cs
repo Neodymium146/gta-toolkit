@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxKeyframeProp
     public class KeyframeProp : ResourceSystemBlock
     {
-        public override long Length => 0x90;
+        public override long BlockLength => 0x90;
 
         // structure data
         public uint VFT;

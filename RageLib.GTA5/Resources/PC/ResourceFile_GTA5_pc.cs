@@ -173,13 +173,13 @@ namespace RageLib.Resources.GTA5
             resourceWriter.Position = 0x50000000;
             foreach (var block in systemBlocks)
             {
-                resourceWriter.Position = block.Position;
+                resourceWriter.Position = block.BlockPosition;
 
                 var pos_before = resourceWriter.Position;
                 block.Write(resourceWriter);
                 var pos_after = resourceWriter.Position;
 
-                if ((pos_after - pos_before) != block.Length)
+                if ((pos_after - pos_before) != block.BlockLength)
                 {
                     throw new Exception("error in system length");
                 }
@@ -188,13 +188,13 @@ namespace RageLib.Resources.GTA5
             resourceWriter.Position = 0x60000000;
             foreach (var block in graphicBlocks)
             {
-                resourceWriter.Position = block.Position;
+                resourceWriter.Position = block.BlockPosition;
 
                 var pos_before = resourceWriter.Position;
                 block.Write(resourceWriter);
                 var pos_after = resourceWriter.Position;
 
-                if ((pos_after - pos_before) != block.Length)
+                if ((pos_after - pos_before) != block.BlockLength)
                 {
                     throw new Exception("error in graphics length");
                 }

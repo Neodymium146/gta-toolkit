@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxu_FogVolume
     public class BehaviourFogVolume : Behaviour
     {
-        public override long Length => 0x430;
+        public override long BlockLength => 0x430;
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;

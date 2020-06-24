@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
     // psoResourceData
     public class MetaFile : PgBase64
     {
-        public override long Length => 0x70;
+        public override long BlockLength => 0x70;
 
         // structure data
         public int Unknown_10h { get; set; } = 0x50524430;
@@ -119,10 +119,10 @@ namespace RageLib.Resources.GTA5.PC.Meta
             base.Write(writer, parameters);
 
             // update structure data
-            this.StructureInfosPointer = this.StructureInfos?.Position ?? 0;
-            this.EnumInfosPointer = this.EnumInfos?.Position ?? 0;
-            this.DataBlocksPointer = this.DataBlocks?.Position ?? 0;
-            this.NamePointer = this.Name?.Position ?? 0;
+            this.StructureInfosPointer = this.StructureInfos?.BlockPosition ?? 0;
+            this.EnumInfosPointer = this.EnumInfos?.BlockPosition ?? 0;
+            this.DataBlocksPointer = this.DataBlocks?.BlockPosition ?? 0;
+            this.NamePointer = this.Name?.BlockPosition ?? 0;
             this.UselessPointer = 0;
             this.StructureInfosCount = (short)(this.StructureInfos?.Count ?? 0);
             this.EnumInfosCount = (short)(this.EnumInfos?.Count ?? 0);

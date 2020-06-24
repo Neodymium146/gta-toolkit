@@ -115,7 +115,7 @@ namespace RageLib.Resources
                 {
                     list.Add(blocks[i]);
                 }
-                list.Sort((a, b) => b.Length.CompareTo(a.Length));
+                list.Sort((a, b) => b.BlockLength.CompareTo(a.BlockLength));
                 foreach (var bb in list)
                 {
                     var ln = BlockList.AddLast(bb);
@@ -125,7 +125,7 @@ namespace RageLib.Resources
             private LinkedListNode<IResourceBlock> FindBestBlock(long maxSize)
             {
                 var n = BlockList.First;
-                while ((n != null) && (n.Value.Length > maxSize))
+                while ((n != null) && (n.Value.BlockLength > maxSize))
                 {
                     n = n.Next;
                 }
@@ -210,7 +210,7 @@ namespace RageLib.Resources
             foreach (var block in blocks)
             {
                 // Get size of all blocks padded
-                var blockLength = block.Length;
+                var blockLength = block.BlockLength;
                 totalBlockSize += blockLength;
                 totalBlockSize += Pad(totalBlockSize);
 
@@ -282,7 +282,7 @@ namespace RageLib.Resources
 
                         // Get the biggest block
                         block = blockset.TakeBestBlock(long.MaxValue);
-                        var blockLength = block?.Length ?? 0;
+                        var blockLength = block?.BlockLength ?? 0;
                         
                         // Get the smallest page which can contain the block
                         while (blockLength <= (currentPageSize >> 1))
@@ -301,9 +301,9 @@ namespace RageLib.Resources
                     }
 
                     //add this block to the current page.
-                    block.Position = basePosition + currentPosition;
+                    block.BlockPosition = basePosition + currentPosition;
                     var opos = currentPosition;
-                    currentPosition += block.Length;
+                    currentPosition += block.BlockLength;
                     currentPosition += Pad(currentPosition);
                     var usedspace = currentPosition - opos;
                     currentPageSpace -= usedspace;

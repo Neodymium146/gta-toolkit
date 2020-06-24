@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // rmcDrawable
     public class Drawable : DrawableBase
     {
-        public override long Length => 0xA8;
+        public override long BlockLength => 0xA8;
 
         // structure data
         public ulong SkeletonPointer;
@@ -79,9 +79,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.SkeletonPointer = (ulong)(this.Skeleton != null ? this.Skeleton.Position : 0);
-            this.JointsPointer = (ulong)(this.Joints != null ? this.Joints.Position : 0);
-            this.DrawableModelsXPointer = (ulong)(this.DrawableModelsX != null ? this.DrawableModelsX.Position : 0);
+            this.SkeletonPointer = (ulong)(this.Skeleton != null ? this.Skeleton.BlockPosition : 0);
+            this.JointsPointer = (ulong)(this.Joints != null ? this.Joints.BlockPosition : 0);
+            this.DrawableModelsXPointer = (ulong)(this.DrawableModelsX != null ? this.DrawableModelsX.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.SkeletonPointer);

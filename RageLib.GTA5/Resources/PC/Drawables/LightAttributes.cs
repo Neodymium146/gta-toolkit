@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // CLightAttr
     public class LightAttributes : ResourceSystemBlock
     {
-        public override long Length => 0xA8;
+        public override long BlockLength => 0xA8;
 
         // structure data
         public uint Unknown_0h; // 0x00000000

@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 {
     public class BVH : ResourceSystemBlock
     {
-        public override long Length => 0x80;
+        public override long BlockLength => 0x80;
 
         // structure data
         public ulong NodesPointer;
@@ -92,10 +92,10 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.NodesPointer = (ulong)(this.Nodes != null ? this.Nodes.Position : 0);
+            this.NodesPointer = (ulong)(this.Nodes != null ? this.Nodes.BlockPosition : 0);
             this.NodesCount = (uint)(this.Nodes != null ? this.Nodes.Count : 0);
             this.NodesCapacity = (uint)(this.Nodes != null ? this.Nodes.Count : 0);
-            this.TreesPointer = (ulong)(this.Trees != null ? this.Trees.Position : 0);
+            this.TreesPointer = (ulong)(this.Trees != null ? this.Trees.BlockPosition : 0);
             this.TreesCount1 = (ushort)(this.Trees != null ? this.Trees.Count : 0);
             this.TreesCount2 = (ushort)(this.Trees != null ? this.Trees.Count : 0);
 

@@ -25,7 +25,7 @@ namespace RageLib.Resources
     // datResourceMap ?
     public class PagesInfo : ResourceSystemBlock
     {
-        public override long Length
+        public override long BlockLength
         {
             get { return 16 + (8 * (VirtualPagesCount + PhysicalPagesCount)); }
         }

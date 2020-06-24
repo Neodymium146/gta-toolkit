@@ -32,7 +32,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
     // characterCloth
     public class CharacterCloth : ResourceSystemBlock
     {
-        public override long Length => 0xD0;
+        public override long BlockLength => 0xD0;
 
         // structure data
         public uint VFT;
@@ -144,8 +144,8 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.ControllerPointer = (ulong)(this.Controller != null ? this.Controller.Position : 0);
-            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.Position : 0);
+            this.ControllerPointer = (ulong)(this.Controller != null ? this.Controller.BlockPosition : 0);
+            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.VFT);

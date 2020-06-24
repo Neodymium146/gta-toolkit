@@ -26,7 +26,7 @@ namespace RageLib.Resources.Common
 {
     public class ResourceSimpleList64<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
     {
-        public override long Length
+        public override long BlockLength
         {
             get { return 16; }
         }
@@ -63,7 +63,7 @@ namespace RageLib.Resources.Common
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.EntriesPointer = (ulong)(this.Entries != null ? this.Entries.Position : 0);
+            this.EntriesPointer = (ulong)(this.Entries != null ? this.Entries.BlockPosition : 0);
             this.EntriesCount = (ushort)(this.Entries != null ? this.Entries.Count : 0);
             this.EntriesCapacity = (ushort)(this.Entries != null ? this.Entries.Count : 0);
 

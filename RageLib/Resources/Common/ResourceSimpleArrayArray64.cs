@@ -33,13 +33,13 @@ namespace RageLib.Resources.Common
         /// <summary>
         /// Gets the length of the data block.
         /// </summary>
-        public override long Length
+        public override long BlockLength
         {
             get
             {
                 long len = 8 * Data.Count;
                 foreach (var f in Data)
-                    len += f.Length;
+                    len += f.BlockLength;
                 return len;
             }
         }
@@ -96,7 +96,7 @@ namespace RageLib.Resources.Common
 
             ptr_list = new List<ulong>();
             foreach (var x in Data)
-                ptr_list.Add((ulong)x.Position);
+                ptr_list.Add((ulong)x.BlockPosition);
 
             foreach (var x in ptr_list)
                 writer.Write(x);
@@ -126,7 +126,7 @@ namespace RageLib.Resources.Common
                 foreach (var f in Data)
                 {
                     children.Add(new Tuple<long, IResourceBlock>(len, f));
-                    len += f.Length;
+                    len += f.BlockLength;
                 }
             }
       

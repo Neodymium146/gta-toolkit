@@ -28,9 +28,9 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // pgArray<Matrix34> array
     public class Unknown_F_001 : DatBase64
     {
-        public override long Length
+        public override long BlockLength
         {
-            get { return 32 + Data.Length; }
+            get { return 32 + Data.BlockLength; }
         }
 
         // structure data

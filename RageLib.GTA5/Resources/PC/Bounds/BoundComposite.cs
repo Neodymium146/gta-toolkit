@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
     // phBoundComposite
     public class BoundComposite : Bound
     {
-        public override long Length => 0xB0;
+        public override long BlockLength => 0xB0;
 
         // structure data
         public ulong ChildrenPointer;
@@ -108,15 +108,15 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             base.Write(writer, parameters);
 
             // update structure data
-            this.ChildrenPointer = (ulong)(this.Children != null ? this.Children.Position : 0);
-            this.ChildTransformations1Pointer = (ulong)(this.ChildTransformations1 != null ? this.ChildTransformations1.Position : 0);
-            this.ChildTransformations2Pointer = (ulong)(this.ChildTransformations2 != null ? this.ChildTransformations2.Position : 0);
-            this.ChildBoundingBoxesPointer = (ulong)(this.ChildBoundingBoxes != null ? this.ChildBoundingBoxes.Position : 0);
-            this.ChildFlags1Pointer = (ulong)(this.ChildFlags1 != null ? this.ChildFlags1.Position : 0);
-            this.ChildFlags2Pointer = (ulong)(this.ChildFlags2 != null ? this.ChildFlags2.Position : 0);
+            this.ChildrenPointer = (ulong)(this.Children != null ? this.Children.BlockPosition : 0);
+            this.ChildTransformations1Pointer = (ulong)(this.ChildTransformations1 != null ? this.ChildTransformations1.BlockPosition : 0);
+            this.ChildTransformations2Pointer = (ulong)(this.ChildTransformations2 != null ? this.ChildTransformations2.BlockPosition : 0);
+            this.ChildBoundingBoxesPointer = (ulong)(this.ChildBoundingBoxes != null ? this.ChildBoundingBoxes.BlockPosition : 0);
+            this.ChildFlags1Pointer = (ulong)(this.ChildFlags1 != null ? this.ChildFlags1.BlockPosition : 0);
+            this.ChildFlags2Pointer = (ulong)(this.ChildFlags2 != null ? this.ChildFlags2.BlockPosition : 0);
             this.ChildrenCount1 = (ushort)(this.Children != null ? this.Children.Count : 0);
             this.ChildrenCount2 = (ushort)(this.Children != null ? this.Children.Count : 0);
-            this.BVHPointer = (ulong)(this.BVH != null ? this.BVH.Position : 0);
+            this.BVHPointer = (ulong)(this.BVH != null ? this.BVH.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.ChildrenPointer);

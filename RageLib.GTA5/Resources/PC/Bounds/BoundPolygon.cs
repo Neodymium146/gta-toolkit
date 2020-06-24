@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 {
     public class BoundPolygon : ResourceSystemBlock
     {
-        public override long Length => 0x10;
+        public override long BlockLength => 0x10;
 
         // structure data
         public uint Unknown_0h;

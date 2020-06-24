@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxu_Wind
     public class BehaviourWind : Behaviour
     {
-        public override long Length => 0xF0;
+        public override long BlockLength => 0xF0;
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;

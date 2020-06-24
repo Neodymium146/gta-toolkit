@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
     // phBoundGeometry
     public class BoundGeometry : BoundPolyhedron
     {
-        public override long Length => 0x130;
+        public override long BlockLength => 0x130;
 
         // structure data
         public ulong MaterialsPointer;
@@ -100,9 +100,9 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             base.Write(writer, parameters);
 
             // update structure data
-            this.MaterialsPointer = (ulong)(this.Materials != null ? this.Materials.Position : 0);
-            this.MaterialColoursPointer = (ulong)(this.MaterialColours != null ? this.MaterialColours.Position : 0);
-            this.PolygonMaterialIndicesPointer = (ulong)(this.PolygonMaterialIndices != null ? this.PolygonMaterialIndices.Position : 0);
+            this.MaterialsPointer = (ulong)(this.Materials != null ? this.Materials.BlockPosition : 0);
+            this.MaterialColoursPointer = (ulong)(this.MaterialColours != null ? this.MaterialColours.BlockPosition : 0);
+            this.PolygonMaterialIndicesPointer = (ulong)(this.PolygonMaterialIndices != null ? this.PolygonMaterialIndices.BlockPosition : 0);
             this.MaterialsCount = (byte)(this.Materials != null ? this.Materials.Count : 0);
             this.MaterialColoursCount = (byte)(this.MaterialColours != null ? this.MaterialColours.Count : 0);
 

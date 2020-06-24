@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxEventEmitter
     public class EventEmitter : ResourceSystemBlock
     {
-        public override long Length => 0x70;
+        public override long BlockLength => 0x70;
 
         // structure data
         public uint VFT;
@@ -117,11 +117,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
-            this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
-            this.p3 = (ulong)(this.p3data != null ? this.p3data.Position : 0);
-            this.p4 = (ulong)(this.EmitterRule != null ? this.EmitterRule.Position : 0);
-            this.p5 = (ulong)(this.ParticleRule != null ? this.ParticleRule.Position : 0);
+            this.p1 = (ulong)(this.p1data != null ? this.p1data.BlockPosition : 0);
+            this.p2 = (ulong)(this.p2data != null ? this.p2data.BlockPosition : 0);
+            this.p3 = (ulong)(this.p3data != null ? this.p3data.BlockPosition : 0);
+            this.p4 = (ulong)(this.EmitterRule != null ? this.EmitterRule.BlockPosition : 0);
+            this.p5 = (ulong)(this.ParticleRule != null ? this.ParticleRule.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.VFT);

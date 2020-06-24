@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxEffectSpawner
     public class EffectSpawner : ResourceSystemBlock
     {
-        public override long Length => 0x70;
+        public override long BlockLength => 0x70;
 
         // structure data
         public uint VFT;
@@ -111,8 +111,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.EmitterRulePointer = (ulong)(this.EmitterRule != null ? this.EmitterRule.Position : 0);
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
+            this.EmitterRulePointer = (ulong)(this.EmitterRule != null ? this.EmitterRule.BlockPosition : 0);
+            this.p1 = (ulong)(this.p1data != null ? this.p1data.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.VFT);

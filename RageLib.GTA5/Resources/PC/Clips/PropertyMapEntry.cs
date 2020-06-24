@@ -26,7 +26,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
 {
     public class PropertyMapEntry : ResourceSystemBlock
     {
-        public override long Length => 0x20;
+        public override long BlockLength => 0x20;
 
         // structure data
         public uint DataNameHash;
@@ -68,8 +68,8 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.DataPointer = (ulong)(this.Data != null ? this.Data.Position : 0);
-            this.NextPointer = (ulong)(this.Next != null ? this.Next.Position : 0);
+            this.DataPointer = (ulong)(this.Data != null ? this.Data.BlockPosition : 0);
+            this.NextPointer = (ulong)(this.Next != null ? this.Next.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.DataNameHash);

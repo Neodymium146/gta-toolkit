@@ -9,7 +9,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
     // VFT = 0x00000001409100B0
     public class Struct_16 : DatBase64
     {
-        public override long Length => 0xB0;
+        public override long BlockLength => 0xB0;
 
         // structure data
         public uint Unknown_08h;

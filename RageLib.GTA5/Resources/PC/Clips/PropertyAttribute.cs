@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crPropertyAttribute
     public class PropertyAttribute : ResourceSystemBlock, IResourceXXSystemBlock
     {
-        public override long Length => 0x20;
+        public override long BlockLength => 0x20;
 
         // structure data
         public uint VFT;

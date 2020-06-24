@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
     // occurrences: 13969
     public class Portal : ResourceSystemBlock
     {
-        public override long Length => 28;
+        public override long BlockLength => 28;
 
         // structure data
         public uint Unknown_0h;

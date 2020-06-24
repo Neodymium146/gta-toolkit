@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // phJointType
     public class JointType : PgBase64, IResourceXXSystemBlock
     {
-        public override long Length => 0x20;
+        public override long BlockLength => 0x20;
 
         // structure data
         public uint Unknown_10h; // 0x00000000

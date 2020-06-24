@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
 {
     public class PolysListPart : ResourceSystemBlock
     {
-        public override long Length => 0x10;
+        public override long BlockLength => 0x10;
 
         // structure data
         public ulong PolysPointer;
@@ -60,7 +60,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.PolysPointer = (ulong)(this.Polys != null ? this.Polys.Position : 0);
+            this.PolysPointer = (ulong)(this.Polys != null ? this.Polys.BlockPosition : 0);
             this.PolysCount = (uint)(this.Polys != null ? this.Polys.Count : 0);
 
             // write structure data

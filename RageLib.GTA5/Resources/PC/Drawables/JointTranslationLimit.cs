@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 {
     public class JointTranslationLimit : ResourceSystemBlock
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public uint Unknown_0h; // 0x00000000

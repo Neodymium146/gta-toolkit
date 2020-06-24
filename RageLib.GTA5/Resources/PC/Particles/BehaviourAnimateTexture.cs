@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxu_AnimateTexture
     public class BehaviourAnimateTexture : Behaviour
     {
-        public override long Length => 0xD0;
+        public override long BlockLength => 0xD0;
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;

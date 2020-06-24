@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxu_Attractor
     public class BehaviourAttractor : Behaviour
     {
-        public override long Length => 0xC0;
+        public override long BlockLength => 0xC0;
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;

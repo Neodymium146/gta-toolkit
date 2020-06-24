@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // phArticulatedBodyType
     public class ArticulatedBodyType : PgBase64
     {
-        public override long Length => 0xB0;
+        public override long BlockLength => 0xB0;
 
         // structure data
         public uint Unknown_10h; // 0x00000000
@@ -145,8 +145,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Write(writer, parameters);
 
             // update structure data
-            this.JointTypesPointer = (ulong)(this.JointTypes != null ? this.JointTypes.Position : 0);
-            this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
+            this.JointTypesPointer = (ulong)(this.JointTypes != null ? this.JointTypes.BlockPosition : 0);
+            this.p2 = (ulong)(this.p2data != null ? this.p2data.BlockPosition : 0);
             //this.c1 = (byte)(this.p2data != null ? this.p2data.Count : 0);
             //this.c2 = (byte)(this.p1data != null ? this.p1data.Count : 0);
 

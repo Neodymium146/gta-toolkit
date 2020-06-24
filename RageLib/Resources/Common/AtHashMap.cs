@@ -6,7 +6,7 @@ namespace RageLib.Resources.Common
     // atHashMap
     public class AtHashMap<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
     {
-        public override long Length => 0x10;
+        public override long BlockLength => 0x10;
 
         // structure data
         public ulong Pointer;
@@ -39,7 +39,7 @@ namespace RageLib.Resources.Common
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.Pointer = (ulong)(this.Data != null ? this.Data.Position : 0);
+            this.Pointer = (ulong)(this.Data != null ? this.Data.BlockPosition : 0);
             if (this.Data != null)
             {
                 int i = 0;
@@ -114,7 +114,7 @@ namespace RageLib.Resources.Common
 
     public class AtHashMapEntry<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
     {
-        public override long Length => 0xC + (Data != null ? Data.Length : 0);
+        public override long BlockLength => 0xC + (Data != null ? Data.BlockLength : 0);
 
         // structure data
         public uint Hash;
@@ -146,7 +146,7 @@ namespace RageLib.Resources.Common
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.NextPointer = (ulong)(this.Next != null ? this.Next.Position : 0);
+            this.NextPointer = (ulong)(this.Next != null ? this.Next.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Hash);

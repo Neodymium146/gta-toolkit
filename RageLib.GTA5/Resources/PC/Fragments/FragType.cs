@@ -32,7 +32,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // gtaFragType
     public class FragType : PgBase64
     {
-        public override long Length => 0x130;
+        public override long BlockLength => 0x130;
 
         // structure data
         public uint Unknown_10h; // 0x00000000
@@ -215,19 +215,19 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Write(writer, parameters);
 
             // update structure data
-            this.DrawablePointer = (ulong)(this.Drawable != null ? this.Drawable.Position : 0);
-            this.Unknown_28h_Pointer = (ulong)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.Position : 0);
-            this.Unknown_30h_Pointer = (ulong)(this.Unknown_30h_Data != null ? this.Unknown_30h_Data.Position : 0);
+            this.DrawablePointer = (ulong)(this.Drawable != null ? this.Drawable.BlockPosition : 0);
+            this.Unknown_28h_Pointer = (ulong)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.BlockPosition : 0);
+            this.Unknown_30h_Pointer = (ulong)(this.Unknown_30h_Data != null ? this.Unknown_30h_Data.BlockPosition : 0);
             //this.cc00 = (uint)(this.pxxxxx_0data != null ? this.pxxxxx_0data.Count : 0);
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
             //this.cnt1 = (ushort)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Count : 0);
-            this.Unknown_A8h_Pointer = (ulong)(this.Unknown_A8h_Data != null ? this.Unknown_A8h_Data.Position : 0);
+            this.Unknown_A8h_Pointer = (ulong)(this.Unknown_A8h_Data != null ? this.Unknown_A8h_Data.BlockPosition : 0);
             //this.anotherCount = (byte)(this.pxxxxx_3data != null ? this.pxxxxx_3data.Count : 0);
-            this.Unknown_E0h_Pointer = (ulong)(this.Unknown_E0h_Data != null ? this.Unknown_E0h_Data.Position : 0);
-            this.PhysicsLODGroupPointer = (ulong)(this.PhysicsLODGroup != null ? this.PhysicsLODGroup.Position : 0);
-            this.Unknown_F8h_Pointer = (ulong)(this.Unknown_F8h_Data != null ? this.Unknown_F8h_Data.Position : 0);
+            this.Unknown_E0h_Pointer = (ulong)(this.Unknown_E0h_Data != null ? this.Unknown_E0h_Data.BlockPosition : 0);
+            this.PhysicsLODGroupPointer = (ulong)(this.PhysicsLODGroup != null ? this.PhysicsLODGroup.BlockPosition : 0);
+            this.Unknown_F8h_Pointer = (ulong)(this.Unknown_F8h_Data != null ? this.Unknown_F8h_Data.BlockPosition : 0);
             //this.cntxx51a = (ushort)(this.pxxxxx_5data != null ? this.pxxxxx_5data.Count : 0);
-            this.Unknown_120h_Pointer = (ulong)(this.Unknown_120h_Data != null ? this.Unknown_120h_Data.Position : 0);
+            this.Unknown_120h_Pointer = (ulong)(this.Unknown_120h_Data != null ? this.Unknown_120h_Data.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_10h);

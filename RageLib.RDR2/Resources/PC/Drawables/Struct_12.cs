@@ -8,7 +8,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 {
     public class Struct_12 : ResourceSystemBlock
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
 

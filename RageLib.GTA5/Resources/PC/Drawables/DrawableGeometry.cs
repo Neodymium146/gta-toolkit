@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // grmGeometryQB
     public class DrawableGeometry : DatBase64
     {
-        public override long Length => 0xA0;
+        public override long BlockLength => 0xA0;
 
         // structure data
         public uint Unknown_8h; // 0x00000000
@@ -148,14 +148,14 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.VertexBufferPointer = (ulong)(this.VertexBuffer != null ? this.VertexBuffer.Position : 0);
-            this.IndexBufferPointer = (ulong)(this.IndexBuffer != null ? this.IndexBuffer.Position : 0);
+            this.VertexBufferPointer = (ulong)(this.VertexBuffer != null ? this.VertexBuffer.BlockPosition : 0);
+            this.IndexBufferPointer = (ulong)(this.IndexBuffer != null ? this.IndexBuffer.BlockPosition : 0);
             //this.IndicesCount = (uint)(this.IndexBuffer?.Indices?.Count ?? 0);
             //this.VerticesCount = (ushort)(this.VertexBuffer?.VertexCount ?? 0); // assume vertex buffer is aleady updated
-            this.BonesIdPointer = (ulong)(this.BonesId != null ? this.BonesId.Position : 0);
+            this.BonesIdPointer = (ulong)(this.BonesId != null ? this.BonesId.BlockPosition : 0);
             //this.Count1 = (ushort)(this.Unknown_68h_Data?.Length ?? 0);
             //this.VertexStride = (ushort)(this.VertexData != null ? this.VertexData.Count : 0);
-            this.VertexDataPointer = (ulong)(this.VertexData != null ? this.VertexData.Position : 0);
+            this.VertexDataPointer = (ulong)(this.VertexData != null ? this.VertexData.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_8h);

@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // fragPhysicsLODGroup
     public class FragPhysicsLODGroup : PgBase64
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public ulong PhysicsLOD1Pointer;
@@ -76,9 +76,9 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Write(writer, parameters);
 
             // update structure data
-            this.PhysicsLOD1Pointer = (ulong)(this.PhysicsLOD1 != null ? this.PhysicsLOD1.Position : 0);
-            this.PhysicsLOD2Pointer = (ulong)(this.PhysicsLOD2 != null ? this.PhysicsLOD2.Position : 0);
-            this.PhysicsLOD3Pointer = (ulong)(this.PhysicsLOD3 != null ? this.PhysicsLOD3.Position : 0);
+            this.PhysicsLOD1Pointer = (ulong)(this.PhysicsLOD1 != null ? this.PhysicsLOD1.BlockPosition : 0);
+            this.PhysicsLOD2Pointer = (ulong)(this.PhysicsLOD2 != null ? this.PhysicsLOD2.BlockPosition : 0);
+            this.PhysicsLOD3Pointer = (ulong)(this.PhysicsLOD3 != null ? this.PhysicsLOD3.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.PhysicsLOD1Pointer);

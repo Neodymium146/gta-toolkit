@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // fragDrawable
     public class FragDrawable : Drawable
     {
-        public override long Length => 0x150;
+        public override long BlockLength => 0x150;
 
         // structure data
         public uint Unknown_A8h; // 0x00000000
@@ -124,12 +124,12 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Write(writer, parameters);
 
             // update structure data
-            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.Position : 0);
-            this.Unknown_F8h_Pointer = (ulong)(this.Unknown_F8h_Data != null ? this.Unknown_F8h_Data.Position : 0);
+            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.BlockPosition : 0);
+            this.Unknown_F8h_Pointer = (ulong)(this.Unknown_F8h_Data != null ? this.Unknown_F8h_Data.BlockPosition : 0);
             //this.c1qqq = (ushort)(this.pxx2data != null ? this.pxx2data.Count : 0);
             //this.c2qqq = (ushort)(this.pxx3data != null ? this.pxx3data.Count : 0);
-            this.Unknown_108h_Pointer = (ulong)(this.Unknown_108h_Data != null ? this.Unknown_108h_Data.Position : 0);
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
+            this.Unknown_108h_Pointer = (ulong)(this.Unknown_108h_Data != null ? this.Unknown_108h_Data.BlockPosition : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_A8h);

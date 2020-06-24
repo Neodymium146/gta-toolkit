@@ -33,7 +33,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // phArchetypeDamp
     public class Archetype : PgBase64
     {
-        public override long Length => 0xE0;
+        public override long BlockLength => 0xE0;
 
         // structure data
         public uint Unknown_10h; // 0x00000002 -> type=phArchetypeDamp
@@ -119,8 +119,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Write(writer, parameters);
 
             // update structure data
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
-            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.Position : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
+            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_10h);

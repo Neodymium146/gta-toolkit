@@ -26,7 +26,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // evtSet
     public class EvtSet : DatBase64
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public uint Unknown_8h; // 0x00000000

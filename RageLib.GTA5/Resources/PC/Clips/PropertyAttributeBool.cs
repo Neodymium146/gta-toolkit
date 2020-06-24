@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crPropertyAttributeBool
     public class PropertyAttributeBool : PropertyAttribute
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public uint Value;

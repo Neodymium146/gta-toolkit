@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
     // CNavMeshCompressedVertex
     public class Vertex : ResourceSystemBlock
     {
-        public override long Length => 6;
+        public override long BlockLength => 6;
 
         // structure data
         public ushort Unknown_0h;

@@ -27,7 +27,7 @@ namespace RageLib.Resources
     // Mat34V
     public class RAGE_Matrix3 : ResourceSystemBlock
     {
-        public override long Length
+        public override long BlockLength
         {
             get { return 48; }
         }

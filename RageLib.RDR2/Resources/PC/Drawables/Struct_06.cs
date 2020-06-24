@@ -9,7 +9,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 {
     public class Struct_06 : ResourceSystemBlock
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public ulong VFT;                   // 0x0000000140912C58

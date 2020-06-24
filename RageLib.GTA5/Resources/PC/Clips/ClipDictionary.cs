@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crClipDictionary
     public class ClipDictionary : PgBase64
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public uint Unknown_10h; // 0x00000000
@@ -86,8 +86,8 @@ namespace RageLib.Resources.GTA5.PC.Clips
             base.Write(writer, parameters);
 
             // update structure data
-            this.AnimationsPointer = (ulong)(this.Animations != null ? this.Animations.Position : 0);
-            this.ClipsPointer = (ulong)(this.Clips != null ? this.Clips.Position : 0);
+            this.AnimationsPointer = (ulong)(this.Animations != null ? this.Animations.BlockPosition : 0);
+            this.ClipsPointer = (ulong)(this.Clips != null ? this.Clips.BlockPosition : 0);
             this.ClipEntriesCount = (ushort)(this.Clips != null ? this.Clips.Count : 0);
             if (this.Clips != null)
             {

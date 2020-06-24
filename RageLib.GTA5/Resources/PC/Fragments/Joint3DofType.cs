@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // phJoint3DofType
     public class Joint3DofType : JointType
     {
-        public override long Length => 0xF0;
+        public override long BlockLength => 0xF0;
 
         // structure data
         public uint Unknown_20h;

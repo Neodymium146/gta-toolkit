@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 {
     public class ShaderFX : ResourceSystemBlock
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public ulong ParametersPointer;
@@ -101,7 +101,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.ParametersPointer = (ulong)(this.ParametersList != null ? this.ParametersList.Position : 0);
+            this.ParametersPointer = (ulong)(this.ParametersList != null ? this.ParametersList.BlockPosition : 0);
             //this.ParametersPointer = (ulong)(this.Parameters != null ? this.Parameters.Position : 0);
             //this.ParameterCount = (byte)(this.Parameters != null ? this.Parameters.Count : 0);
 
@@ -140,7 +140,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     public class ShaderParametersBlock_GTA5_pc : ResourceSystemBlock
     {
 
-        public override long Length
+        public override long BlockLength
         {
             get
             {
@@ -260,7 +260,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             // update pointers...
             foreach (var f in Parameters)
                 if (f.Data != null)
-                    f.DataPointer = (ulong)f.Data.Position;
+                    f.DataPointer = (ulong)f.Data.BlockPosition;
                 else
                     f.DataPointer = 0;
 

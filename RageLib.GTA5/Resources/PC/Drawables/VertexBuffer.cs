@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // grcVertexBufferD3D11
     public class VertexBuffer : DatBase64
     {
-        public override long Length => 0x80;
+        public override long BlockLength => 0x80;
 
         // structure data
         public ushort VertexStride;
@@ -130,9 +130,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.DataPointer1 = (ulong)(this.Data1 != null ? this.Data1.Position : 0);
-            this.DataPointer2 = (ulong)(this.Data2 != null ? this.Data2.Position : 0);
-            this.InfoPointer = (ulong)(this.Info != null ? this.Info.Position : 0);
+            this.DataPointer1 = (ulong)(this.Data1 != null ? this.Data1.BlockPosition : 0);
+            this.DataPointer2 = (ulong)(this.Data2 != null ? this.Data2.BlockPosition : 0);
+            this.InfoPointer = (ulong)(this.Info != null ? this.Info.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.VertexStride);
@@ -180,7 +180,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
     public class VertexData_GTA5_pc : ResourceSystemBlock
     {
-        public override long Length => Data != null ? Data.Length : 0;
+        public override long BlockLength => Data != null ? Data.Length : 0;
 
         // structure data
         public byte[] Data;

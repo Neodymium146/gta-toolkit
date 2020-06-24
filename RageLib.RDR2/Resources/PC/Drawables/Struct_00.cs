@@ -10,7 +10,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 	// gtaDrawable
 	public class Struct_00 : PgBase64
 	{
-		public override long Length => 0xD0;
+		public override long BlockLength => 0xD0;
 
 		// structure data
 		public ulong ShaderGroupPointer;
@@ -69,7 +69,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 			base.Write(writer, parameters);
 
 			// update structure data
-			this.ShaderGroupPointer = (ulong)(this.ShaderGroup != null ? this.ShaderGroup.Position : 0);
+			this.ShaderGroupPointer = (ulong)(this.ShaderGroup != null ? this.ShaderGroup.BlockPosition : 0);
 
 			// write structure data
 			writer.Write(this.ShaderGroupPointer);

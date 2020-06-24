@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxu_DecalPool
     public class BehaviourDecalPool : Behaviour
     {
-        public override long Length => 0x50;
+        public override long BlockLength => 0x50;
 
         // structure data
         public uint Unknown_10h; // 0x00000000

@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
 {
     public class EnumInfo : ResourceSystemBlock
     {
-        public override long Length => 24;
+        public override long BlockLength => 24;
 
         // structure data
         public int EnumNameHash { get; set; }
@@ -64,7 +64,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.EntriesPointer = this.Entries?.Position ?? 0;
+            this.EntriesPointer = this.Entries?.BlockPosition ?? 0;
             this.EntriesCount = this.Entries?.Count ?? 0;
 
             // write structure data

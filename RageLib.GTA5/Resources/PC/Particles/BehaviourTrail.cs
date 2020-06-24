@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxd_Trail
     public class BehaviourTrail : Behaviour
     {
-        public override long Length => 0xF0;
+        public override long BlockLength => 0xF0;
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;

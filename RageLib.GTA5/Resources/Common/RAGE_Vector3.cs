@@ -27,7 +27,7 @@ namespace RageLib.Resources
     // Vec3V
     public class RAGE_Vector3 : ResourceSystemBlock
     {
-        public override long Length
+        public override long BlockLength
         {
             get { return 12; }
         }

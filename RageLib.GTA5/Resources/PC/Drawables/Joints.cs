@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // crJointData
     public class Joints : PgBase64
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public ulong RotationLimitsPointer;
@@ -89,8 +89,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.RotationLimitsPointer = (ulong)(this.RotationLimits != null ? this.RotationLimits.Position : 0);
-            this.TranslationLimitsPointer = (ulong)(this.TranslationLimits != null ? this.TranslationLimits.Position : 0);
+            this.RotationLimitsPointer = (ulong)(this.RotationLimits != null ? this.RotationLimits.BlockPosition : 0);
+            this.TranslationLimitsPointer = (ulong)(this.TranslationLimits != null ? this.TranslationLimits.BlockPosition : 0);
             this.RotationLimitsCount = (ushort)(this.RotationLimits != null ? this.RotationLimits.Count : 0);
             this.TranslationLimitsCount = (ushort)(this.TranslationLimits != null ? this.TranslationLimits.Count : 0);
 

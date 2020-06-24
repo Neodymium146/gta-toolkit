@@ -29,7 +29,7 @@ namespace RageLib.Resources
     // pgDictionary<crFrameFilter>
     public class FilterDictionary : PgBase64
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public uint Unknown_10h; // 0x00000000

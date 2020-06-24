@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Textures
     // grcTextureDX11
     public class TextureDX11 : Texture
     {
-        public override long Length => 0x90;
+        public override long BlockLength => 0x90;
 
         // structure data
         public uint Unknown_40h;
@@ -109,7 +109,7 @@ namespace RageLib.Resources.GTA5.PC.Textures
         {
             base.Write(writer, parameters);
 
-            this.DataPointer = (ulong)this.Data.Position;
+            this.DataPointer = (ulong)this.Data.BlockPosition;
 
             // write structure data
             writer.Write(this.Unknown_40h);
@@ -150,7 +150,7 @@ namespace RageLib.Resources.GTA5.PC.Textures
 
     public class TextureData_GTA5_pc : ResourceGraphicsBlock
     {
-        public override long Length
+        public override long BlockLength
         {
             get
             {

@@ -24,7 +24,7 @@ namespace RageLib.Resources.Common
 {
     public class float_r : ResourceSystemBlock
     {
-        public override long Length
+        public override long BlockLength
         {
             get { return 4; }
         }

@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // rmcDrawableBase
     public class DrawableBase : PgBase64
     {
-        public override long Length => 0x18;
+        public override long BlockLength => 0x18;
 
         // structure data
         public ulong ShaderGroupPointer;
@@ -59,7 +59,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.ShaderGroupPointer = (ulong)(this.ShaderGroup != null ? this.ShaderGroup.Position : 0);
+            this.ShaderGroupPointer = (ulong)(this.ShaderGroup != null ? this.ShaderGroup.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.ShaderGroupPointer);

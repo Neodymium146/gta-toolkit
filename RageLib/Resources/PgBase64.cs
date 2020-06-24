@@ -27,7 +27,7 @@ namespace RageLib.Resources
     // pgBase
     public class PgBase64 : DatBase64
     {
-        public override long Length => 0x10;
+        public override long BlockLength => 0x10;
 
         // structure data
         public ulong PagesInfoPointer;
@@ -59,7 +59,7 @@ namespace RageLib.Resources
             base.Write(writer, parameters);
 
             // update structure data
-            this.PagesInfoPointer = (ulong)(this.PagesInfo != null ? this.PagesInfo.Position : 0);
+            this.PagesInfoPointer = (ulong)(this.PagesInfo != null ? this.PagesInfo.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.PagesInfoPointer);

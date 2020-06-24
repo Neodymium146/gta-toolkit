@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Textures
     // grcTexture
     public class Texture : PgBase64
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public uint Unknown_10h; // 0x00000000
@@ -81,7 +81,7 @@ namespace RageLib.Resources.GTA5.PC.Textures
             base.Write(writer, parameters);
 
             // update structure data
-            this.NamePointer = (ulong)(this.Name?.Position ?? 0);
+            this.NamePointer = (ulong)(this.Name?.BlockPosition ?? 0);
 
             // write structure data
             writer.Write(this.Unknown_10h);

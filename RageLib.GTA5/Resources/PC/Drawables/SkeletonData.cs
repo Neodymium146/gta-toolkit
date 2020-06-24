@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // crSkeletonData
     public class SkeletonData : PgBase64
     {
-        public override long Length => 0x70;
+        public override long BlockLength => 0x70;
 
         // structure data
         public AtHashMap<uint_r> BoneMap;
@@ -117,11 +117,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.BonesPointer = (ulong)(this.Bones != null ? this.Bones.Position : 0);
-            this.TransformationsInvertedPointer = (ulong)(this.TransformationsInverted != null ? this.TransformationsInverted.Position : 0);
-            this.TransformationsPointer = (ulong)(this.Transformations != null ? this.Transformations.Position : 0);
-            this.ParentIndicesPointer = (ulong)(this.ParentIndices != null ? this.ParentIndices.Position : 0);
-            this.ChildrenIndicesPointer = (ulong)(this.ChildrenIndices != null ? this.ChildrenIndices.Position : 0);
+            this.BonesPointer = (ulong)(this.Bones != null ? this.Bones.BlockPosition : 0);
+            this.TransformationsInvertedPointer = (ulong)(this.TransformationsInverted != null ? this.TransformationsInverted.BlockPosition : 0);
+            this.TransformationsPointer = (ulong)(this.Transformations != null ? this.Transformations.BlockPosition : 0);
+            this.ParentIndicesPointer = (ulong)(this.ParentIndices != null ? this.ParentIndices.BlockPosition : 0);
+            this.ChildrenIndicesPointer = (ulong)(this.ChildrenIndices != null ? this.ChildrenIndices.BlockPosition : 0);
             this.BonesCount = (ushort)(this.Bones?.Count ?? 0);
             this.ChildrenIndicesCount = (ushort)(this.ChildrenIndices != null ? this.ChildrenIndices.Count : 0);
 

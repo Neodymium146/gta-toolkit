@@ -32,12 +32,12 @@ namespace RageLib.Resources
         /// <summary>
         /// Gets or sets the position of the data block.
         /// </summary>
-        long Position { get; set; }
+        long BlockPosition { get; set; }
 
         /// <summary>
         /// Gets the length of the data block.
         /// </summary>
-        long Length { get; }
+        long BlockLength { get; }
 
         /// <summary>
         /// Reads the data block.

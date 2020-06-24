@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // crBoneData
     public class Bone : ResourceSystemBlock
     {
-        public override long Length => 0x50;
+        public override long BlockLength => 0x50;
 
         // structure data
         public Quaternion Rotation;
@@ -86,7 +86,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Rotation);

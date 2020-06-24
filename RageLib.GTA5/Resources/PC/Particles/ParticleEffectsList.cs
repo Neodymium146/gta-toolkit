@@ -31,7 +31,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxFxList
     public class ParticleEffectsList : PgBase64
     {
-        public override long Length => 0x60;
+        public override long BlockLength => 0x60;
 
         // structure data
         public ulong NamePointer;
@@ -109,12 +109,12 @@ namespace RageLib.Resources.GTA5.PC.Particles
             base.Write(writer, parameters);
 
             // update structure data
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
-            this.TextureDictionaryPointer = (ulong)(this.TextureDictionary != null ? this.TextureDictionary.Position : 0);
-            this.DrawableDictionaryPointer = (ulong)(this.DrawableDictionary != null ? this.DrawableDictionary.Position : 0);
-            this.ParticleRuleDictionaryPointer = (ulong)(this.ParticleRuleDictionary != null ? this.ParticleRuleDictionary.Position : 0);
-            this.EmitterRuleDictionaryPointer = (ulong)(this.EffectRuleDictionary != null ? this.EffectRuleDictionary.Position : 0);
-            this.EffectRuleDictionaryPointer = (ulong)(this.EmitterRuleDictionary != null ? this.EmitterRuleDictionary.Position : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
+            this.TextureDictionaryPointer = (ulong)(this.TextureDictionary != null ? this.TextureDictionary.BlockPosition : 0);
+            this.DrawableDictionaryPointer = (ulong)(this.DrawableDictionary != null ? this.DrawableDictionary.BlockPosition : 0);
+            this.ParticleRuleDictionaryPointer = (ulong)(this.ParticleRuleDictionary != null ? this.ParticleRuleDictionary.BlockPosition : 0);
+            this.EmitterRuleDictionaryPointer = (ulong)(this.EffectRuleDictionary != null ? this.EffectRuleDictionary.BlockPosition : 0);
+            this.EffectRuleDictionaryPointer = (ulong)(this.EmitterRuleDictionary != null ? this.EmitterRuleDictionary.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.NamePointer);

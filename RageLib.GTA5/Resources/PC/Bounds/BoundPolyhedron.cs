@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
     // phBoundPolyhedron
     public class BoundPolyhedron : Bound
     {
-        public override long Length => 0xF0;
+        public override long BlockLength => 0xF0;
 
         // structure data
         public uint Unknown_70h;
@@ -137,13 +137,13 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             base.Write(writer, parameters);
 
             // update structure data
-            this.Unknown_78h_Pointer = (ulong)(this.Unknown_78h_Data != null ? this.Unknown_78h_Data.Position : 0);
+            this.Unknown_78h_Pointer = (ulong)(this.Unknown_78h_Data != null ? this.Unknown_78h_Data.BlockPosition : 0);
             this.VerticesCount1 = (uint)(this.Vertices != null ? this.Vertices.Count : 0);
-            this.PolygonsPointer = (ulong)(this.Polygons != null ? this.Polygons.Position : 0);
-            this.VerticesPointer = (ulong)(this.Vertices != null ? this.Vertices.Position : 0);
-            this.Unknown_B8h_Pointer = (ulong)(this.Unknown_B8h_Data != null ? this.Unknown_B8h_Data.Position : 0);
-            this.Unknown_C0h_Pointer = (ulong)(this.Unknown_C0h_Data != null ? this.Unknown_C0h_Data.Position : 0);
-            this.Unknown_C8h_Pointer = (ulong)(this.Unknown_C8h_Data != null ? this.Unknown_C8h_Data.Position : 0);
+            this.PolygonsPointer = (ulong)(this.Polygons != null ? this.Polygons.BlockPosition : 0);
+            this.VerticesPointer = (ulong)(this.Vertices != null ? this.Vertices.BlockPosition : 0);
+            this.Unknown_B8h_Pointer = (ulong)(this.Unknown_B8h_Data != null ? this.Unknown_B8h_Data.BlockPosition : 0);
+            this.Unknown_C0h_Pointer = (ulong)(this.Unknown_C0h_Data != null ? this.Unknown_C0h_Data.BlockPosition : 0);
+            this.Unknown_C8h_Pointer = (ulong)(this.Unknown_C8h_Data != null ? this.Unknown_C8h_Data.BlockPosition : 0);
             this.VerticesCount2 = (uint)(this.Vertices != null ? this.Vertices.Count : 0);
             this.PolygonsCount = (uint)(this.Polygons != null ? this.Polygons.Count : 0);
 

@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
 {
     public class Tags : ResourceSystemBlock
     {
-        public override long Length => 0x20;
+        public override long BlockLength => 0x20;
 
         // structure data
         public ulong TagListPointer;
@@ -70,7 +70,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.TagListPointer = (ulong)(this.TagList != null ? this.TagList.Position : 0);
+            this.TagListPointer = (ulong)(this.TagList != null ? this.TagList.BlockPosition : 0);
             this.TagsCount1 = (ushort)(this.TagList != null ? this.TagList.Count : 0);
             this.TagsCount2 = (ushort)(this.TagList != null ? this.TagList.Count : 0);
 

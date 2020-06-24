@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // fragTypeChild
     public class FragTypeChild : DatBase64
     {
-        public override long Length => 0x100;
+        public override long BlockLength => 0x100;
 
         // structure data
         public uint Unknown_8h;
@@ -184,9 +184,9 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Write(writer, parameters);
 
             // update structure data
-            this.Drawable1Pointer = (ulong)(this.Drawable1 != null ? this.Drawable1.Position : 0);
-            this.Drawable2Pointer = (ulong)(this.Drawable2 != null ? this.Drawable2.Position : 0);
-            this.EvtSetPointer = (ulong)(this.EvtSet != null ? this.EvtSet.Position : 0);
+            this.Drawable1Pointer = (ulong)(this.Drawable1 != null ? this.Drawable1.BlockPosition : 0);
+            this.Drawable2Pointer = (ulong)(this.Drawable2 != null ? this.Drawable2.BlockPosition : 0);
+            this.EvtSetPointer = (ulong)(this.EvtSet != null ? this.EvtSet.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_8h);

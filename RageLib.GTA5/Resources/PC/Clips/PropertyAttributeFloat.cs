@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crPropertyAttributeFloat
     public class PropertyAttributeFloat : PropertyAttribute
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public float Value;
