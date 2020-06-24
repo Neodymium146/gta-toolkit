@@ -26,7 +26,7 @@ using System.Collections.Generic;
 namespace RageLib.Resources.GTA5.PC.Meta
 {
     // psoResourceData
-    public class MetaFile : FileBase64_GTA5_pc
+    public class MetaFile : PgBase64
     {
         public override long Length => 0x70;
 

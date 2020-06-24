@@ -26,7 +26,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 {
     // phBoundBase
     // phBound
-    public class Bound : FileBase64_GTA5_pc, IResourceXXSystemBlock
+    public class Bound : PgBase64, IResourceXXSystemBlock
     {
         public override long Length => 0x70;
 

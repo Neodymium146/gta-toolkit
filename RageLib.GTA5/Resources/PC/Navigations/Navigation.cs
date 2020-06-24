@@ -26,7 +26,7 @@ using System.Collections.Generic;
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
     // CNavMesh
-    public class Navigation : FileBase64_GTA5_pc
+    public class Navigation : PgBase64
     {
         public override long Length => 0x170;
 

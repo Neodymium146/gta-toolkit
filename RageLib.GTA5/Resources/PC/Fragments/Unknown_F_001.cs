@@ -26,7 +26,7 @@ using System;
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
     // pgArray<Matrix34> array
-    public class Unknown_F_001 : DatBase64_GTA5_pc
+    public class Unknown_F_001 : DatBase64
     {
         public override long Length
         {

@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Nodes
 {
-    public class NodesFile : FileBase64_GTA5_pc
+    public class NodesFile : PgBase64
     {
         public override long Length => 0x70;
 

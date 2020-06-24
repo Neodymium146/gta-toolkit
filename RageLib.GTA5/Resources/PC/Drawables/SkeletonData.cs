@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 {
     // pgBase
     // crSkeletonData
-    public class SkeletonData : FileBase64_GTA5_pc
+    public class SkeletonData : PgBase64
     {
         public override long Length => 0x70;
 

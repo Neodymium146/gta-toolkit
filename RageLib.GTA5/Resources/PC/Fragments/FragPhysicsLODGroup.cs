@@ -26,7 +26,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 {
     // pgBase
     // fragPhysicsLODGroup
-    public class FragPhysicsLODGroup : FileBase64_GTA5_pc
+    public class FragPhysicsLODGroup : PgBase64
     {
         public override long Length => 0x30;
 

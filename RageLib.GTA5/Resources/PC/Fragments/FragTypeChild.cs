@@ -26,7 +26,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 {
     // datBase
     // fragTypeChild
-    public class FragTypeChild : DatBase64_GTA5_pc
+    public class FragTypeChild : DatBase64
     {
         public override long Length => 0x100;
 

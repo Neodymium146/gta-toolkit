@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.WaypointRecords
 {
-    public class WaypointRecord : FileBase64_GTA5_pc
+    public class WaypointRecord : PgBase64
     {
         public override long Length => 0x30;
 

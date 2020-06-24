@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // datBase
     // grmGeometry
     // grmGeometryQB
-    public class DrawableGeometry : DatBase64_GTA5_pc
+    public class DrawableGeometry : DatBase64
     {
         public override long Length => 0xA0;
 

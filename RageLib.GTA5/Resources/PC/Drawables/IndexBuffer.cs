@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     // datBase
     // grcIndexBuffer
     // grcIndexBufferD3D11
-    public class IndexBuffer : DatBase64_GTA5_pc
+    public class IndexBuffer : DatBase64
     {
         public override long Length => 0x60;
 

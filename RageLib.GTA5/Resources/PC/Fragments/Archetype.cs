@@ -31,7 +31,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // phArchetype
     // phArchetypePhys
     // phArchetypeDamp
-    public class Archetype : FileBase64_GTA5_pc
+    public class Archetype : PgBase64
     {
         public override long Length => 0xE0;
 

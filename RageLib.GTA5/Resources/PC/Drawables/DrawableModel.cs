@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 {
     // datBase
     // grmModel
-    public class DrawableModel : DatBase64_GTA5_pc
+    public class DrawableModel : DatBase64
     {
         public override long Length => 0x30;
 
