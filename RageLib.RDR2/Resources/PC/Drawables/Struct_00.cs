@@ -1,29 +1,59 @@
-﻿using System.Collections.Generic;
+﻿using RageLib.Resources.Common;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
+	// pgBase
+	// rmcDrawableBase
+	// rmcDrawable
+	// gtaDrawable
 	public class Struct_00 : PgBase64
 	{
-		public override long Length => 0x50;
+		public override long Length => 0xD0;
 
 		// structure data
-		public ulong Struct_03_Pointer;
-		public ulong Unknown_18h;           // 0x0000000000000000
+		public ulong ShaderGroupPointer;
+		public ulong Unknown_18h;					// 0x0000000000000000
 		public Vector3 BoundingCenter;
 		public float BoundingSphereRadius;
 		public Vector4 BoundingBoxMin;
 		public Vector4 BoundingBoxMax;
+		public ulong DrawableModelsHighPointer;
+		public ulong DrawableModelsMediumPointer;
+		public ulong DrawableModelsLowPointer;
+		public ulong DrawableModelsVeryLowPointer;
+		public float LodDistanceHigh;               // 0x461C3800 = 9998
+		public float LodDistanceMedium;             // 0x461C3800 = 9998
+		public float LodDistanceLow;                // 0x461C3800 = 9998
+		public float LodDistanceVeryLow;            // 0x461C3800 = 9998
+		public uint DrawBucketMaskHigh;             // 0xFF010000
+		public uint DrawBucketMaskMedium;           // 0x00000000
+		public uint DrawBucketMaskLow;              // 0x00000000
+		public uint DrawBucketMaskVeryLow;          // 0x00000000
+		public ulong Unknown_40h;                   // 0x0000000000000000
+		public ulong Unknown_48h;                   // 0x0000000000000000
+		public ulong Unknown_50h;                   // 0x0000000000000000
+		public ulong NamePointer;
+		public ulong Unknown_60h;                   // 0x0000000000000000
+		public ulong Unknown_68h;                   // 0x0000000000000000
+		public ulong Unknown_70h_Pointer;
+		public ulong Unknown_78h;                   // 0x0000000000000000
 
 		// reference data
-		public Struct_03 Struct_03_Data;
+		public ShaderGroup ShaderGroup;
+		public ResourcePointerList64<Struct_09> DrawableModelsHigh;
+		public ResourcePointerList64<Struct_09> DrawableModelsMedium;
+		public ResourcePointerList64<Struct_09> DrawableModelsLow;
+		public ResourcePointerList64<Struct_09> DrawableModelsVeryLow;
+		public string_r Name;
 
 		public override void Read(ResourceDataReader reader, params object[] parameters)
 		{
 			base.Read(reader, parameters);
 
 			// read structure data
-			this.Struct_03_Pointer = reader.ReadUInt64();
+			this.ShaderGroupPointer = reader.ReadUInt64();
 			this.Unknown_18h = reader.ReadUInt64();
 			this.BoundingCenter = reader.ReadVector3();
 			this.BoundingSphereRadius = reader.ReadSingle();
@@ -31,7 +61,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 			this.BoundingBoxMax = reader.ReadVector4();
 
 			// read reference data
-			this.Struct_03_Data = reader.ReadBlockAt<Struct_03>(this.Struct_03_Pointer);
+			this.ShaderGroup = reader.ReadBlockAt<ShaderGroup>(this.ShaderGroupPointer);
 		}
 
 		public override void Write(ResourceDataWriter writer, params object[] parameters)
@@ -39,10 +69,10 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 			base.Write(writer, parameters);
 
 			// update structure data
-			this.Struct_03_Pointer = (ulong)(this.Struct_03_Data != null ? this.Struct_03_Data.Position : 0);
+			this.ShaderGroupPointer = (ulong)(this.ShaderGroup != null ? this.ShaderGroup.Position : 0);
 
 			// write structure data
-			writer.Write(this.Struct_03_Pointer);
+			writer.Write(this.ShaderGroupPointer);
 			writer.Write(this.Unknown_18h);
 			writer.Write(this.BoundingCenter);
 			writer.Write(this.BoundingSphereRadius);
@@ -53,7 +83,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 		public override IResourceBlock[] GetReferences()
 		{
 			var list = new List<IResourceBlock>(base.GetReferences());
-			if (Struct_03_Data != null) list.Add(Struct_03_Data);
+			if (ShaderGroup != null) list.Add(ShaderGroup);
 			return list.ToArray();
 		}
 	}

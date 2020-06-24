@@ -6,13 +6,13 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 {
 	// ShaderGroup
 	// VFT = 0x0000000140912C88
-	public class Struct_03 : DatBase64
+	public class ShaderGroup : DatBase64
 	{
 		public override long Length => 0x40;
 
 		// structure data
 		public ulong TextureDictionaryPointer;
-		public ResourcePointerList64<Struct_20> Unknown_10h;
+		public ResourcePointerList64<Struct_20> Shaders;
 		public ulong Unknown_20h;           // 0x0000000000000000
 		public ulong Unknown_28h;           // 0x0000000000000000
 		public ulong Unknown_30h;           // 0x0000000000000000
@@ -27,7 +27,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 
 			// read structure data
 			this.TextureDictionaryPointer = reader.ReadUInt64();
-			this.Unknown_10h = reader.ReadBlock<ResourcePointerList64<Struct_20>>();
+			this.Shaders = reader.ReadBlock<ResourcePointerList64<Struct_20>>();
 			this.Unknown_20h = reader.ReadUInt64();
 			this.Unknown_28h = reader.ReadUInt64();
 			this.Unknown_30h = reader.ReadUInt64();
@@ -46,7 +46,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 
 			// write structure data
 			writer.Write(this.TextureDictionaryPointer);
-			writer.WriteBlock(this.Unknown_10h);
+			writer.WriteBlock(this.Shaders);
 			writer.Write(this.Unknown_20h);
 			writer.Write(this.Unknown_28h);
 			writer.Write(this.Unknown_30h);
@@ -63,7 +63,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 		public override Tuple<long, IResourceBlock>[] GetParts()
 		{
 			return new Tuple<long, IResourceBlock>[] {
-				new Tuple<long, IResourceBlock>(0x10, Unknown_10h)
+				new Tuple<long, IResourceBlock>(0x10, Shaders)
 			};
 		}
 	}
