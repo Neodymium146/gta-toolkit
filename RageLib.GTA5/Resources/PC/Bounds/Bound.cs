@@ -34,21 +34,18 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public byte Type;
         public byte Unknown_11h;
         public ushort Unknown_12h;
-        public float BoundingSphereRadius;
+        public float RadiusAroundCentroid;
         public uint Unknown_18h;
         public uint Unknown_1Ch;
         public RAGE_Vector3 BoundingBoxMax;
-        public float Unknown_2Ch;
+        public float Margin;
         public RAGE_Vector3 BoundingBoxMin;
-        public uint Unknown_3Ch;
-        public RAGE_Vector3 BoundingBoxCenter;
-        public uint Unknown_4Ch;
-        public RAGE_Vector3 Center;
-        public uint Unknown_5Ch;
-        public float Unknown_60h;
-        public float Unknown_64h;
-        public float Unknown_68h;
-        public uint Unknown_6Ch;
+        public uint RefCount;
+        public RAGE_Vector3 CentroidOffset;
+        public uint MaterialId0;
+        public RAGE_Vector3 CGOffset;
+        public uint MaterialId1;
+        public RAGE_Vector4 VolumeDistribution;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -61,21 +58,18 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Type = reader.ReadByte();
             this.Unknown_11h = reader.ReadByte();
             this.Unknown_12h = reader.ReadUInt16();
-            this.BoundingSphereRadius = reader.ReadSingle();
+            this.RadiusAroundCentroid = reader.ReadSingle();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.BoundingBoxMax = reader.ReadBlock<RAGE_Vector3>();
-            this.Unknown_2Ch = reader.ReadSingle();
+            this.Margin = reader.ReadSingle();
             this.BoundingBoxMin = reader.ReadBlock<RAGE_Vector3>();
-            this.Unknown_3Ch = reader.ReadUInt32();
-            this.BoundingBoxCenter = reader.ReadBlock<RAGE_Vector3>();
-            this.Unknown_4Ch = reader.ReadUInt32();
-            this.Center = reader.ReadBlock<RAGE_Vector3>();
-            this.Unknown_5Ch = reader.ReadUInt32();
-            this.Unknown_60h = reader.ReadSingle();
-            this.Unknown_64h = reader.ReadSingle();
-            this.Unknown_68h = reader.ReadSingle();
-            this.Unknown_6Ch = reader.ReadUInt32();
+            this.RefCount = reader.ReadUInt32();
+            this.CentroidOffset = reader.ReadBlock<RAGE_Vector3>();
+            this.MaterialId0 = reader.ReadUInt32();
+            this.CGOffset = reader.ReadBlock<RAGE_Vector3>();
+            this.MaterialId1 = reader.ReadUInt32();
+            this.VolumeDistribution = reader.ReadBlock<RAGE_Vector4>();
         }
 
         /// <summary>
@@ -89,21 +83,18 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             writer.Write(this.Type);
             writer.Write(this.Unknown_11h);
             writer.Write(this.Unknown_12h);
-            writer.Write(this.BoundingSphereRadius);
+            writer.Write(this.RadiusAroundCentroid);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
             writer.WriteBlock(this.BoundingBoxMax);
-            writer.Write(this.Unknown_2Ch);
+            writer.Write(this.Margin);
             writer.WriteBlock(this.BoundingBoxMin);
-            writer.Write(this.Unknown_3Ch);
-            writer.WriteBlock(this.BoundingBoxCenter);
-            writer.Write(this.Unknown_4Ch);
-            writer.WriteBlock(this.Center);
-            writer.Write(this.Unknown_5Ch);
-            writer.Write(this.Unknown_60h);
-            writer.Write(this.Unknown_64h);
-            writer.Write(this.Unknown_68h);
-            writer.Write(this.Unknown_6Ch);
+            writer.Write(this.RefCount);
+            writer.WriteBlock(this.CentroidOffset);
+            writer.Write(this.MaterialId0);
+            writer.WriteBlock(this.CGOffset);
+            writer.Write(this.MaterialId1);
+            writer.WriteBlock(this.VolumeDistribution);
         }
 
         public IResourceSystemBlock GetType(ResourceDataReader reader, params object[] parameters)
