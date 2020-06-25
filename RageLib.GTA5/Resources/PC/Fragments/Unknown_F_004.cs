@@ -22,7 +22,6 @@
 
 using RageLib.Resources.GTA5.PC.Drawables;
 using System;
-using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
@@ -31,11 +30,11 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public override long BlockLength => 0x70;
 
         // structure data
-        public Vector3 Unknown_0h;
+        public RAGE_Vector3 Unknown_0h;
         public uint NaN_Ch; // 0x7F800001
-        public Vector3 Unknown_10h;
+        public RAGE_Vector3 Unknown_10h;
         public uint NaN_1Ch; // 0x7F800001
-        public Vector3 Unknown_20h;
+        public RAGE_Vector3 Unknown_20h;
         public uint NaN_2Ch; // 0x7F800001
         public float Unknown_30h;
         public float Unknown_34h;
@@ -47,7 +46,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public ushort Unknown_56h;
         public float Unknown_58h;
         public float Unknown_5Ch;
-        public Vector3 Unknown_60h;
+        public RAGE_Vector3 Unknown_60h;
         public uint NaN_6Ch; // 0x7F800001
 
         /// <summary>
@@ -56,11 +55,11 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadVector3();
+            this.Unknown_0h = reader.ReadBlock<RAGE_Vector3>();
             this.NaN_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadVector3();
+            this.Unknown_10h = reader.ReadBlock<RAGE_Vector3>();
             this.NaN_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadVector3();
+            this.Unknown_20h = reader.ReadBlock<RAGE_Vector3>();
             this.NaN_2Ch = reader.ReadUInt32();
             this.Unknown_30h = reader.ReadSingle();
             this.Unknown_34h = reader.ReadSingle();
@@ -72,7 +71,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_56h = reader.ReadUInt16();
             this.Unknown_58h = reader.ReadSingle();
             this.Unknown_5Ch = reader.ReadSingle();
-            this.Unknown_60h = reader.ReadVector3();
+            this.Unknown_60h = reader.ReadBlock<RAGE_Vector3>();
             this.NaN_6Ch = reader.ReadUInt32();
         }
 
@@ -82,11 +81,11 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.Unknown_0h);
+            writer.WriteBlock(this.Unknown_0h);
             writer.Write(this.NaN_Ch);
-            writer.Write(this.Unknown_10h);
+            writer.WriteBlock(this.Unknown_10h);
             writer.Write(this.NaN_1Ch);
-            writer.Write(this.Unknown_20h);
+            writer.WriteBlock(this.Unknown_20h);
             writer.Write(this.NaN_2Ch);
             writer.Write(this.Unknown_30h);
             writer.Write(this.Unknown_34h);
@@ -98,7 +97,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_56h);
             writer.Write(this.Unknown_58h);
             writer.Write(this.Unknown_5Ch);
-            writer.Write(this.Unknown_60h);
+            writer.WriteBlock(this.Unknown_60h);
             writer.Write(this.NaN_6Ch);
         }
 
