@@ -46,7 +46,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint Unknown_3Ch; // 0x00000000
 
         // reference data
-        public TextureDictionary TextureDictionary;
+        public PgDictionary64<TextureDX11> TextureDictionary;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -68,7 +68,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_3Ch = reader.ReadUInt32();
 
             // read reference data
-            this.TextureDictionary = reader.ReadBlockAt<TextureDictionary>(
+            this.TextureDictionary = reader.ReadBlockAt<PgDictionary64<TextureDX11>>(
                 this.TextureDictionaryPointer // offset
             );
         }
