@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 {
     public class fragNameStruct : ResourceSystemBlock
     {
-        public override long BlockLength => 0x20;
+        public override long BlockLength => 0x28;
 
         // structure data
         public uint Unknown_0h;
@@ -35,6 +35,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_14h;
         public uint Unknown_18h;
         public uint Unknown_1Ch;
+        public uint Unknown_20h;
+        public uint Unknown_24h;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -50,6 +52,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadUInt32();
+            this.Unknown_24h = reader.ReadUInt32();
         }
 
         /// <summary>
@@ -66,6 +70,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
+            writer.Write(this.Unknown_20h);
+            writer.Write(this.Unknown_24h);
         }
     }
 }

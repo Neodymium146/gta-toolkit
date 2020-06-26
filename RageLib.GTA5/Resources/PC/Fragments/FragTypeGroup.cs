@@ -33,39 +33,43 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_4h; // 0x00000000
         public uint Unknown_8h; // 0x00000000
         public uint Unknown_Ch; // 0x00000000
-        public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
-        public uint Unknown_30h;
-        public uint Unknown_34h;
-        public uint Unknown_38h;
-        public uint Unknown_3Ch;
-        public uint Unknown_40h;
-        public uint Unknown_44h;
-        public uint Unknown_48h; // 0x00000000
-        public uint Unknown_4Ch;
-        public uint Unknown_50h;
-        public uint Unknown_54h;
-        public uint Unknown_58h;
-        public uint Unknown_5Ch;
-        public uint Unknown_60h;
-        public uint Unknown_64h;
-        public uint Unknown_68h;
-        public uint Unknown_6Ch;
-        public uint Unknown_70h;
-        public uint Unknown_74h;
-        public uint Unknown_78h;
-        public uint Unknown_7Ch; // 0x00000000
+        public float Unknown_10h;
+        public float Unknown_14h;
+        public float Unknown_18h;
+        public float Unknown_1Ch;
+        public float Unknown_20h;
+        public float Unknown_24h;
+        public float Unknown_28h;
+        public float Unknown_2Ch;
+        public float Unknown_30h;
+        public float Unknown_34h;
+        public float Unknown_38h;
+        public float Unknown_3Ch;
+        public float Unknown_40h;
+        public float Unknown_44h;
+        public float Unknown_48h; // 0x00000000
+        public byte Unknown_4Ch;
+        public byte ParentIndex;
+        public byte Index;
+        public byte Unknown_4Fh;
+        public byte Unknown_50h;
+        public byte Unknown_51h;
+        public byte Unknown_52h;
+        public byte Unknown_53h;
+        public float Unknown_54h;
+        public float Unknown_58h;
+        public float Unknown_5Ch;
+        public float Unknown_60h;
+        public float Unknown_64h;
+        public float Unknown_68h;
+        public float Unknown_6Ch;
+        public float Unknown_70h;
+        public float Unknown_74h;
+        public float Unknown_78h;
+        public float Unknown_7Ch; // 0x00000000
         public fragNameStruct Name;
-        public uint Unknown_A0h;
-        public uint Unknown_A4h;
-        public uint Unknown_A8h;
-        public uint Unknown_ACh; // 0x00000000
+        public float Unknown_A8h;
+        public float Unknown_ACh; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -77,39 +81,43 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_4h = reader.ReadUInt32();
             this.Unknown_8h = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.Unknown_30h = reader.ReadUInt32();
-            this.Unknown_34h = reader.ReadUInt32();
-            this.Unknown_38h = reader.ReadUInt32();
-            this.Unknown_3Ch = reader.ReadUInt32();
-            this.Unknown_40h = reader.ReadUInt32();
-            this.Unknown_44h = reader.ReadUInt32();
-            this.Unknown_48h = reader.ReadUInt32();
-            this.Unknown_4Ch = reader.ReadUInt32();
-            this.Unknown_50h = reader.ReadUInt32();
-            this.Unknown_54h = reader.ReadUInt32();
-            this.Unknown_58h = reader.ReadUInt32();
-            this.Unknown_5Ch = reader.ReadUInt32();
-            this.Unknown_60h = reader.ReadUInt32();
-            this.Unknown_64h = reader.ReadUInt32();
-            this.Unknown_68h = reader.ReadUInt32();
-            this.Unknown_6Ch = reader.ReadUInt32();
-            this.Unknown_70h = reader.ReadUInt32();
-            this.Unknown_74h = reader.ReadUInt32();
-            this.Unknown_78h = reader.ReadUInt32();
-            this.Unknown_7Ch = reader.ReadUInt32();
+            this.Unknown_10h = reader.ReadSingle();
+            this.Unknown_14h = reader.ReadSingle();
+            this.Unknown_18h = reader.ReadSingle();
+            this.Unknown_1Ch = reader.ReadSingle();
+            this.Unknown_20h = reader.ReadSingle();
+            this.Unknown_24h = reader.ReadSingle();
+            this.Unknown_28h = reader.ReadSingle();
+            this.Unknown_2Ch = reader.ReadSingle();
+            this.Unknown_30h = reader.ReadSingle();
+            this.Unknown_34h = reader.ReadSingle();
+            this.Unknown_38h = reader.ReadSingle();
+            this.Unknown_3Ch = reader.ReadSingle();
+            this.Unknown_40h = reader.ReadSingle();
+            this.Unknown_44h = reader.ReadSingle();
+            this.Unknown_48h = reader.ReadSingle();
+            this.Unknown_4Ch = reader.ReadByte();
+            this.ParentIndex = reader.ReadByte();
+            this.Index = reader.ReadByte();
+            this.Unknown_4Fh = reader.ReadByte();
+            this.Unknown_50h = reader.ReadByte();
+            this.Unknown_51h = reader.ReadByte();
+            this.Unknown_52h = reader.ReadByte();
+            this.Unknown_53h = reader.ReadByte();
+            this.Unknown_54h = reader.ReadSingle();
+            this.Unknown_58h = reader.ReadSingle();
+            this.Unknown_5Ch = reader.ReadSingle();
+            this.Unknown_60h = reader.ReadSingle();
+            this.Unknown_64h = reader.ReadSingle();
+            this.Unknown_68h = reader.ReadSingle();
+            this.Unknown_6Ch = reader.ReadSingle();
+            this.Unknown_70h = reader.ReadSingle();
+            this.Unknown_74h = reader.ReadSingle();
+            this.Unknown_78h = reader.ReadSingle();
+            this.Unknown_7Ch = reader.ReadSingle();
             this.Name = reader.ReadBlock<fragNameStruct>();
-            this.Unknown_A0h = reader.ReadUInt32();
-            this.Unknown_A4h = reader.ReadUInt32();
-            this.Unknown_A8h = reader.ReadUInt32();
-            this.Unknown_ACh = reader.ReadUInt32();
+            this.Unknown_A8h = reader.ReadSingle();
+            this.Unknown_ACh = reader.ReadSingle();
         }
 
         /// <summary>
@@ -138,7 +146,13 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_44h);
             writer.Write(this.Unknown_48h);
             writer.Write(this.Unknown_4Ch);
+            writer.Write(this.ParentIndex);
+            writer.Write(this.Index);
+            writer.Write(this.Unknown_4Fh);
             writer.Write(this.Unknown_50h);
+            writer.Write(this.Unknown_51h);
+            writer.Write(this.Unknown_52h);
+            writer.Write(this.Unknown_53h);
             writer.Write(this.Unknown_54h);
             writer.Write(this.Unknown_58h);
             writer.Write(this.Unknown_5Ch);
@@ -151,8 +165,6 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_78h);
             writer.Write(this.Unknown_7Ch);
             writer.WriteBlock(this.Name);
-            writer.Write(this.Unknown_A0h);
-            writer.Write(this.Unknown_A4h);
             writer.Write(this.Unknown_A8h);
             writer.Write(this.Unknown_ACh);
         }
