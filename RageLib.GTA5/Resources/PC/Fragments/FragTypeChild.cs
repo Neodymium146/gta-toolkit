@@ -31,9 +31,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public override long BlockLength => 0x100;
 
         // structure data
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public uint Unknown_10h;
+        public float PristineMass;
+        public float DamagedMass;
+        public ushort GroupIndex;
+        public ushort BoneId;
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
@@ -104,9 +105,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
+            this.PristineMass = reader.ReadSingle();
+            this.DamagedMass = reader.ReadSingle();
+            this.GroupIndex = reader.ReadUInt16();
+            this.BoneId = reader.ReadUInt16();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
@@ -189,9 +191,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.EvtSetPointer = (ulong)(this.EvtSet != null ? this.EvtSet.BlockPosition : 0);
 
             // write structure data
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h);
+            writer.Write(this.PristineMass);
+            writer.Write(this.DamagedMass);
+            writer.Write(this.GroupIndex);
+            writer.Write(this.BoneId);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
