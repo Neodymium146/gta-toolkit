@@ -67,10 +67,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public byte ChildrenCount;
         public byte Count3;
         public byte Unknown_11Fh; // 0x00
-        public uint Unknown_120h; // 0x00000000
-        public uint Unknown_124h; // 0x00000000
-        public uint Unknown_128h; // 0x00000000
-        public uint Unknown_12Ch; // 0x00000000
+        public ulong Unknown_120h; // 0x0000000000000000
+        public ulong Unknown_128h; // 0x0000000000000000
 
         // reference data
         public ArticulatedBodyType ArticulatedBodyType;
@@ -129,10 +127,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.ChildrenCount = reader.ReadByte();
             this.Count3 = reader.ReadByte();
             this.Unknown_11Fh = reader.ReadByte();
-            this.Unknown_120h = reader.ReadUInt32();
-            this.Unknown_124h = reader.ReadUInt32();
-            this.Unknown_128h = reader.ReadUInt32();
-            this.Unknown_12Ch = reader.ReadUInt32();
+            this.Unknown_120h = reader.ReadUInt64();
+            this.Unknown_128h = reader.ReadUInt64();
 
             // read reference data
             this.ArticulatedBodyType = reader.ReadBlockAt<ArticulatedBodyType>(
@@ -246,9 +242,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Count3);
             writer.Write(this.Unknown_11Fh);
             writer.Write(this.Unknown_120h);
-            writer.Write(this.Unknown_124h);
             writer.Write(this.Unknown_128h);
-            writer.Write(this.Unknown_12Ch);
         }
 
         /// <summary>

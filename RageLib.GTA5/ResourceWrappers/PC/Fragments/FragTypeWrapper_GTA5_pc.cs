@@ -44,8 +44,8 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Fragments
         {
             get
             {
-                if (fragType.Unknown_F8h_Data != null)
-                    return new FragDrawableWrapper_GTA5_pc(fragType.Unknown_F8h_Data);
+                if (fragType.ClothDrawable != null)
+                    return new FragDrawableWrapper_GTA5_pc(fragType.ClothDrawable);
                 else
                     return null;
             }

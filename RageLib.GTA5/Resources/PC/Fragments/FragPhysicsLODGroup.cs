@@ -34,8 +34,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public ulong PhysicsLOD1Pointer;
         public ulong PhysicsLOD2Pointer;
         public ulong PhysicsLOD3Pointer;
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
+        public ulong Unknown_28h; // 0x0000000000000000
 
         // reference data
         public FragPhysicsLOD PhysicsLOD1;
@@ -53,8 +52,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.PhysicsLOD1Pointer = reader.ReadUInt64();
             this.PhysicsLOD2Pointer = reader.ReadUInt64();
             this.PhysicsLOD3Pointer = reader.ReadUInt64();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
+            this.Unknown_28h = reader.ReadUInt64();
 
             // read reference data
             this.PhysicsLOD1 = reader.ReadBlockAt<FragPhysicsLOD>(
@@ -85,7 +83,6 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.PhysicsLOD2Pointer);
             writer.Write(this.PhysicsLOD3Pointer);
             writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
         }
 
         /// <summary>
