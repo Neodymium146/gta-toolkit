@@ -120,10 +120,13 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
-            return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x60, Unknown_F8h_Data),
-                new Tuple<long, IResourceBlock>(0x70, Unknown_108h_Data),
-            };
+            var list = new List<Tuple<long, IResourceBlock>>(base.GetParts());
+            
+            list.AddRange(new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0xF8, Unknown_F8h_Data),
+                new Tuple<long, IResourceBlock>(0x108, Unknown_108h_Data),
+            });
+            return list.ToArray();
         }
     }
 }
