@@ -75,7 +75,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         // reference data
         public ArticulatedBodyType ArticulatedBodyType;
         public ResourceSimpleArray<uint_r> Unknown_28h_Data;
-        public ResourcePointerArray64<fragNameStruct> GroupNames;
+        public FragTypeGroupNames GroupNames;
         public ResourcePointerArray64<FragTypeGroup> Groups;
         public ResourcePointerArray64<FragTypeChild> Children;
         public Archetype Archetype1;
@@ -142,7 +142,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
                 this.Unknown_28h_Pointer, // offset
                 this.ChildrenCount
             );
-            this.GroupNames = reader.ReadBlockAt<ResourcePointerArray64<fragNameStruct>>(
+            this.GroupNames = reader.ReadBlockAt<FragTypeGroupNames>(
                 this.GroupNamesPointer, // offset
                 this.GroupsCount
             );
