@@ -25,9 +25,9 @@ using System.Text;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
-    public class fragNameStruct : ResourceSystemBlock
+    public class FragGroupName : ResourceSystemBlock
     {
-        public override long BlockLength => 0x28;
+        public override long BlockLength => 0x20;
 
         // structure data
         //public uint Unknown_0h;
@@ -38,8 +38,6 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         //public uint Unknown_14h;
         //public uint Unknown_18h;
         //public uint Unknown_1Ch;
-        //public uint Unknown_20h;
-        //public uint Unknown_24h;
 
         private byte[] Data;
 
@@ -54,7 +52,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
                 if (string.IsNullOrEmpty(value))
                     return;
 
-                string name = value.Length > 40 ? value.Substring(0, 40) : value.PadRight(40, '\0');
+                string name = value.Length > 0x20 ? value.Substring(0, 0x20) : value.PadRight(0x20, '\0');
                 Data = Encoding.ASCII.GetBytes(name);
             }
         }
@@ -65,7 +63,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Data = reader.ReadBytes(40);
+            this.Data = reader.ReadBytes(0x20);
         }
 
         /// <summary>

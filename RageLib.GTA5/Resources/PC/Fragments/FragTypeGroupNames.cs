@@ -12,7 +12,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public override long BlockLength => GroupNames.BlockLength + 8;
 
         // structure data
-        public ResourcePointerArray64<fragNameStruct> GroupNames;
+        public ResourcePointerArray64<FragGroupName> GroupNames;
         public ulong Unknown_VFT;
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
@@ -20,7 +20,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             int cnt = Convert.ToInt32(parameters[0]);
 
             // read structure data
-            GroupNames = reader.ReadBlock<ResourcePointerArray64<fragNameStruct>>(cnt);
+            GroupNames = reader.ReadBlock<ResourcePointerArray64<FragGroupName>>(cnt);
             Unknown_VFT = reader.ReadUInt64();
         }
 

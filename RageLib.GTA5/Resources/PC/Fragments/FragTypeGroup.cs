@@ -67,7 +67,9 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public float Unknown_74h;
         public float Unknown_78h;
         public float Unknown_7Ch; // 0x00000000
-        public fragNameStruct Name;
+        public FragGroupName Name;
+        public float Unknown_A0h;
+        public float Unknown_A4h;
         public float Unknown_A8h;
         public float Unknown_ACh; // 0x00000000
 
@@ -115,7 +117,9 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_74h = reader.ReadSingle();
             this.Unknown_78h = reader.ReadSingle();
             this.Unknown_7Ch = reader.ReadSingle();
-            this.Name = reader.ReadBlock<fragNameStruct>();
+            this.Name = reader.ReadBlock<FragGroupName>();
+            this.Unknown_A0h = reader.ReadSingle();
+            this.Unknown_A4h = reader.ReadSingle();
             this.Unknown_A8h = reader.ReadSingle();
             this.Unknown_ACh = reader.ReadSingle();
         }
@@ -165,6 +169,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_78h);
             writer.Write(this.Unknown_7Ch);
             writer.WriteBlock(this.Name);
+            writer.Write(this.Unknown_A0h);
+            writer.Write(this.Unknown_A4h);
             writer.Write(this.Unknown_A8h);
             writer.Write(this.Unknown_ACh);
         }
