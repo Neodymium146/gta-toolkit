@@ -68,7 +68,10 @@ namespace RageLib.Resources.Common
             {
                 this.Count = 0;
             }
-            this.BucketsCount = (ushort)(this.Data != null ? GetBucketsCount(Count) : 0);
+            // Assets exported using Zmodeler seems to have a wrong BucketsCount value
+            // TODO:    Rebuild the buckets array on writing
+
+            //this.BucketsCount = (ushort)(this.Data != null ? GetBucketsCount(Count) : 0);
 
             // write structure data
             writer.Write(this.Pointer);
