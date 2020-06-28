@@ -30,5 +30,12 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.WriteBlock(GroupNames);
             writer.Write(Unknown_VFT);
         }
+
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x0, GroupNames)
+            };
+        }
     }
 }
