@@ -163,5 +163,12 @@ namespace RageLib.Resources.Common
             if (Next != null) list.Add(Next);
             return list.ToArray();
         }
+
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x4, Data)
+            };
+        }
     }
 }
