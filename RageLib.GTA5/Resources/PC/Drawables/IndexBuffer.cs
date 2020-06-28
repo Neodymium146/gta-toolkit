@@ -36,24 +36,15 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint IndicesCount;
         public uint Unknown_Ch; // 0x00000000
         public ulong IndicesPointer;
-        public uint Unknown_18h; // 0x00000000
-        public uint Unknown_1Ch; // 0x00000000
-        public uint Unknown_20h; // 0x00000000
-        public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
-        public uint Unknown_30h; // 0x00000000
-        public uint Unknown_34h; // 0x00000000
-        public uint Unknown_38h; // 0x00000000
-        public uint Unknown_3Ch; // 0x00000000
-        public uint Unknown_40h; // 0x00000000
-        public uint Unknown_44h; // 0x00000000
-        public uint Unknown_48h; // 0x00000000
-        public uint Unknown_4Ch; // 0x00000000
-        public uint Unknown_50h; // 0x00000000
-        public uint Unknown_54h; // 0x00000000
-        public uint Unknown_58h; // 0x00000000
-        public uint Unknown_5Ch; // 0x00000000
+        public ulong Unknown_18h; // 0x0000000000000000
+        public ulong Unknown_20h; // 0x0000000000000000
+        public ulong Unknown_28h; // 0x0000000000000000
+        public ulong Unknown_30h; // 0x0000000000000000
+        public ulong Unknown_38h; // 0x0000000000000000
+        public ulong Unknown_40h; // 0x0000000000000000
+        public ulong Unknown_48h; // 0x0000000000000000
+        public ulong Unknown_50h; // 0x0000000000000000
+        public ulong Unknown_58h; // 0x0000000000000000
 
         // reference data
         public ResourceSimpleArray<ushort_r> Indices;
@@ -69,24 +60,15 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.IndicesCount = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
             this.IndicesPointer = reader.ReadUInt64();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.Unknown_30h = reader.ReadUInt32();
-            this.Unknown_34h = reader.ReadUInt32();
-            this.Unknown_38h = reader.ReadUInt32();
-            this.Unknown_3Ch = reader.ReadUInt32();
-            this.Unknown_40h = reader.ReadUInt32();
-            this.Unknown_44h = reader.ReadUInt32();
-            this.Unknown_48h = reader.ReadUInt32();
-            this.Unknown_4Ch = reader.ReadUInt32();
-            this.Unknown_50h = reader.ReadUInt32();
-            this.Unknown_54h = reader.ReadUInt32();
-            this.Unknown_58h = reader.ReadUInt32();
-            this.Unknown_5Ch = reader.ReadUInt32();
+            this.Unknown_18h = reader.ReadUInt64();
+            this.Unknown_20h = reader.ReadUInt64();
+            this.Unknown_28h = reader.ReadUInt64();
+            this.Unknown_30h = reader.ReadUInt64();
+            this.Unknown_38h = reader.ReadUInt64();
+            this.Unknown_40h = reader.ReadUInt64();
+            this.Unknown_48h = reader.ReadUInt64();
+            this.Unknown_50h = reader.ReadUInt64();
+            this.Unknown_58h = reader.ReadUInt64();
 
             // read reference data
             this.Indices = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
@@ -111,23 +93,14 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Unknown_Ch);
             writer.Write(this.IndicesPointer);
             writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
             writer.Write(this.Unknown_30h);
-            writer.Write(this.Unknown_34h);
             writer.Write(this.Unknown_38h);
-            writer.Write(this.Unknown_3Ch);
             writer.Write(this.Unknown_40h);
-            writer.Write(this.Unknown_44h);
             writer.Write(this.Unknown_48h);
-            writer.Write(this.Unknown_4Ch);
             writer.Write(this.Unknown_50h);
-            writer.Write(this.Unknown_54h);
             writer.Write(this.Unknown_58h);
-            writer.Write(this.Unknown_5Ch);
         }
 
         /// <summary>
