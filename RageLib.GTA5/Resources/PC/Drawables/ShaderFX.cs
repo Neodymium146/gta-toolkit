@@ -176,9 +176,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             }
         }
 
-        public List<ShaderParameter> Parameters = new List<ShaderParameter>();
-        // Skip Data among Parameters and Hashes, as each parameter has its own pointer to read its own data
-        public List<uint> Hashes = new List<uint>();
+        public ResourceSimpleArray<ShaderParameter> Parameters;
+        public ResourceSimpleArray<ResourceSimpleArray<RAGE_Vector4>> Data;
+        public ResourceSimpleArray<uint_r> Hashes;
         // Hashes alignment pad
         // Extra 32 bytes 
         // Extra 4 * ParametersTotalSize bytes
@@ -187,13 +187,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             int cnt = Convert.ToInt32(parameters[0]);
 
-            Parameters = new List<ShaderParameter>();
-            for (int i = 0; i < cnt; i++)
-            {
-                Parameters.Add(reader.ReadBlock<ShaderParameter>());
-            }
-
-            int offset = 0;
+            Parameters = reader.ReadBlock<ResourceSimpleArray<ShaderParameter>>(cnt);
+            Data = new ResourceSimpleArray<ResourceSimpleArray<RAGE_Vector4>>();
+            int dataBlockSize = 0;
             for (int i = 0; i < cnt; i++)
             {
                 var p = Parameters[i];
@@ -202,17 +198,13 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 switch (p.DataType)
                 {
                     case 0:
-                        offset += 0;
-                        p.Data = reader.ReadBlockAt<Texture>(
-                            p.DataPointer // offset
-                        );
+                        dataBlockSize += 0;
+                        p.Data = reader.ReadBlockAt<Texture>(p.DataPointer);
                         break;
-                    case 1:
-                        offset += 16;
-                        p.Data = reader.ReadBlockAt<RAGE_Vector4>(
-                            p.DataPointer // offset
-                        );
-                        break;
+                    //case 1:
+                    //    dataBlockSize += 16;
+                    //    p.Data = reader.ReadBlockAt<RAGE_Vector4>(p.DataPointer);
+                    //    break;
                     //case 2:
                     //    offset += 32;
                     //    p.Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Vector4>>(
@@ -229,21 +221,18 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                     //    break;
 
                     default:
-                        offset += 16 * p.DataType;
-                        p.Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Vector4>>(
-                             p.DataPointer, // offset
-                              p.DataType
-                         );
+                        dataBlockSize += 16 * p.DataType;
+                        var data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Vector4>>(p.DataPointer, p.DataType);
+                        p.Data = data;
+                        Data.Add(data);
                         break;
                 }
             }
 
-            reader.Position += offset;
-            Hashes = new List<uint>();
-            for (int i = 0; i < cnt; i++)
-            {
-                Hashes.Add(reader.ReadUInt32());
-            }
+            // Skip Data among Parameters and Hashes which we have already read
+            reader.Position += dataBlockSize;
+
+            Hashes = reader.ReadBlock<ResourceSimpleArray<uint_r>>(cnt);
 
             // Read hashes alignment pad
             //reader.Position += (16 - (reader.Position % 16)) % 16;
@@ -252,7 +241,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             //reader.Position += 32;
 
             // Read extra 4 * ParametersTotalSize bytes
-            //reader.Position += 4 * Length;
+            //reader.Position += 4 * BaseSize;
         }
 
         public override void Write(ResourceDataWriter writer, params object[] parameters)
@@ -267,7 +256,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
             // write parameter infos
             foreach (var f in Parameters)
-                writer.WriteBlock(f);
+                writer.WriteBlock(f); 
+            //writer.WriteBlock(Parameters);
 
             // write vector data
             foreach (var f in Parameters)
@@ -278,7 +268,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
             // write hashes
             foreach (var h in Hashes)
-                writer.Write(h);
+                writer.WriteBlock(h); 
+            //writer.WriteBlock(Hashes);
 
             // Write hashes alignment pad
             var pad = (16 - (writer.Position % 16)) % 16;
@@ -310,20 +301,22 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             var list = new List<Tuple<long, IResourceBlock>>();
             list.AddRange(base.GetParts());
+            list.Add(new Tuple<long, IResourceBlock>(0x0, Parameters));
 
-            long offset = 0;
-            foreach (var x in Parameters)
-            {
-                list.Add(new Tuple<long, IResourceBlock>(offset, x));
-                offset += 16;
-            }
+            long offset = Parameters.Count * 16;
+            //foreach (var x in Parameters)
+            //{
+            //    list.Add(new Tuple<long, IResourceBlock>(offset, x));
+            //    offset += 16;
+            //}
 
+            list.Add(new Tuple<long, IResourceBlock>(offset, Data));
             foreach (var x in Parameters)
             {
                 if (x.DataType != 0)
-                    list.Add(new Tuple<long, IResourceBlock>(offset, x.Data));
-                offset += 16 * x.DataType;
+                    offset += 16 * x.DataType;
             }
+            list.Add(new Tuple<long, IResourceBlock>(offset, Hashes));
 
             return list.ToArray();
         }
