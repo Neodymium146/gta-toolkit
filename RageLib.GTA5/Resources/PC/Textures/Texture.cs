@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Textures
     // grcTexture
     public class Texture : PgBase64
     {
-        public override long BlockLength => 0x40;
+        public override long BlockLength => 0x50;
 
         // structure data
         public uint Unknown_10h; // 0x00000000
@@ -43,6 +43,10 @@ namespace RageLib.Resources.GTA5.PC.Textures
         public uint Unknown_34h; // 0x00000000
         public uint Unknown_38h; // 0x00000000
         public uint Unknown_3Ch; // 0x00000000
+        public uint Unknown_40h;
+        public uint Unknown_44h; // 0x00000000
+        public uint Unknown_48h;
+        public uint Unknown_4Ch; // 0x00000000
 
         // reference data
         public string_r Name;
@@ -66,6 +70,11 @@ namespace RageLib.Resources.GTA5.PC.Textures
             this.Unknown_34h = reader.ReadUInt32();
             this.Unknown_38h = reader.ReadUInt32();
             this.Unknown_3Ch = reader.ReadUInt32();
+            this.Unknown_40h = reader.ReadUInt32();
+            this.Unknown_44h = reader.ReadUInt32();
+            this.Unknown_48h = reader.ReadUInt32();
+            this.Unknown_4Ch = reader.ReadUInt32();
+
 
             // read reference data
             this.Name = reader.ReadBlockAt<string_r>(
@@ -95,6 +104,10 @@ namespace RageLib.Resources.GTA5.PC.Textures
             writer.Write(this.Unknown_34h);
             writer.Write(this.Unknown_38h);
             writer.Write(this.Unknown_3Ch);
+            writer.Write(this.Unknown_40h);
+            writer.Write(this.Unknown_44h);
+            writer.Write(this.Unknown_48h);
+            writer.Write(this.Unknown_4Ch);
         }
 
         /// <summary>

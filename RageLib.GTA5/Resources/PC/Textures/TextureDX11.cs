@@ -32,10 +32,6 @@ namespace RageLib.Resources.GTA5.PC.Textures
         public override long BlockLength => 0x90;
 
         // structure data
-        public uint Unknown_40h;
-        public uint Unknown_44h; // 0x00000000
-        public uint Unknown_48h;
-        public uint Unknown_4Ch; // 0x00000000
         public ushort Width;
         public ushort Height;
         public ushort Unknown_54h; // 0x0001
@@ -67,10 +63,6 @@ namespace RageLib.Resources.GTA5.PC.Textures
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_40h = reader.ReadUInt32();
-            this.Unknown_44h = reader.ReadUInt32();
-            this.Unknown_48h = reader.ReadUInt32();
-            this.Unknown_4Ch = reader.ReadUInt32();
             this.Width = reader.ReadUInt16();
             this.Height = reader.ReadUInt16();
             this.Unknown_54h = reader.ReadUInt16();
@@ -112,10 +104,6 @@ namespace RageLib.Resources.GTA5.PC.Textures
             this.DataPointer = (ulong)this.Data.BlockPosition;
 
             // write structure data
-            writer.Write(this.Unknown_40h);
-            writer.Write(this.Unknown_44h);
-            writer.Write(this.Unknown_48h);
-            writer.Write(this.Unknown_4Ch);
             writer.Write(this.Width);
             writer.Write(this.Height);
             writer.Write(this.Unknown_54h);
