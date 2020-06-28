@@ -89,7 +89,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             var list = new List<IResourceBlock>(base.GetReferences());
             if (Name != null) list.Add(Name);
-            if (LightAttributes != null) list.Add(LightAttributes);
             if (Bound != null) list.Add(Bound);
             return list.ToArray();
         }
