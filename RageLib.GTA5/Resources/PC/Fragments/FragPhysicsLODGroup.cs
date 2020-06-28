@@ -90,7 +90,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (PhysicsLOD1 != null) list.Add(PhysicsLOD1);
             if (PhysicsLOD2 != null) list.Add(PhysicsLOD2);
             if (PhysicsLOD3 != null) list.Add(PhysicsLOD3);

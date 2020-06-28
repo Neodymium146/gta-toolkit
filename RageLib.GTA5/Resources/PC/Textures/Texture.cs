@@ -102,7 +102,7 @@ namespace RageLib.Resources.GTA5.PC.Textures
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (Name != null) list.Add(Name);
             return list.ToArray();
         }

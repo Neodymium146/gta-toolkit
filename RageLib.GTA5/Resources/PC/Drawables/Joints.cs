@@ -114,7 +114,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (RotationLimits != null) list.Add(RotationLimits);
             if (TranslationLimits != null) list.Add(TranslationLimits);
             return list.ToArray();

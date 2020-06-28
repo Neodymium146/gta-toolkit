@@ -151,7 +151,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (BoneMap != null) list.Add(BoneMap);
             if (Bones != null) list.Add(Bones);
             if (TransformationsInverted != null) list.Add(TransformationsInverted);

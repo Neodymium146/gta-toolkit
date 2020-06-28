@@ -156,7 +156,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (Name != null) list.Add(Name);
             if (Bound != null) list.Add(Bound);
             return list.ToArray();
