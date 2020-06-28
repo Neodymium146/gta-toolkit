@@ -31,11 +31,14 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(Unknown_VFT);
         }
 
-        public override Tuple<long, IResourceBlock>[] GetParts()
-        {
-            return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x0, GroupNames)
-            };
-        }
+        // Don't add parts on purpose as group names position is assigned first to FragTypeGroup, then the reference here gets updated
+        // TODO:   Use a new helper structure to keep a reference to a block
+
+        //public override Tuple<long, IResourceBlock>[] GetParts()
+        //{
+        //    return new Tuple<long, IResourceBlock>[] {
+        //        new Tuple<long, IResourceBlock>(0x0, GroupNames)
+        //    };
+        //}
     }
 }
