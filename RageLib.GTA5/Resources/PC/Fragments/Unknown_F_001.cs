@@ -26,20 +26,17 @@ using System;
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
     // pgArray<Matrix34> array
-    public class Unknown_F_001 : DatBase64
+    public class Unknown_F_001 : PgBase64
     {
         public override long BlockLength
         {
-            get { return 32 + Data.BlockLength; }
+            get { return 0x20 + Data.BlockLength; }
         }
 
         // structure data
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
         public uint Count;
         public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h; // 0x00000000
-        public uint Unknown_1Ch; // 0x00000000
+        public ulong Unknown_18h; // 0x0000000000000000
         public ResourceSimpleArray<RAGE_Matrix4> Data;
 
         /// <summary>
@@ -50,12 +47,9 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.Count = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Unknown_18h = reader.ReadUInt64();
             this.Data = reader.ReadBlock<ResourceSimpleArray<RAGE_Matrix4>>(
               Count
               );
@@ -69,12 +63,9 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Write(writer, parameters);
 
             // write structure data
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.Count);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
             writer.WriteBlock(this.Data);
         }
 
