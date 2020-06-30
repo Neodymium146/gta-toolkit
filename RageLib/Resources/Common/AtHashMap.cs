@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.Common
 {
+    // TODO: Implement IDictionary<uint, T>
     // atHashMap
     public class AtHashMap<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
     {
@@ -60,6 +61,12 @@ namespace RageLib.Resources.Common
             return list.ToArray();
         }
 
+        // Don't use it for now
+        //public override void Update()
+        //{
+        //    Resize(GetEntries());
+        //}
+
         private ushort GetBucketsCount(uint hashesCount)
         {
             if (hashesCount < 11) return 11;
@@ -82,9 +89,8 @@ namespace RageLib.Resources.Common
             else return 0;
         }
 
-        public override void Update()
+        public void Resize(List<KeyValuePair<uint, T>> entries)
         {
-            List<KeyValuePair<uint, T>> entries = GetEntries();
             Count = (ushort)entries.Count;
             BucketsCount = GetBucketsCount((uint)entries.Count);
 
@@ -120,7 +126,6 @@ namespace RageLib.Resources.Common
                 }
             }
         }
-
         private List<KeyValuePair<uint, T>> GetEntries()
         {
             var entries = new List<KeyValuePair<uint, T>>();

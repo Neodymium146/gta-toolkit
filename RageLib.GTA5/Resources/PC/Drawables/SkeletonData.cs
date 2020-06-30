@@ -168,5 +168,49 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             });
             return list.ToArray();
         }
+
+        public override void Update()
+        {
+            UpdateBoneIds();
+            UpdateBoneMap();
+        }
+
+        private void UpdateBoneIds()
+        {
+            if (Bones == null)
+                return;
+
+            foreach (var bone in Bones)
+            {
+                // id of root bone seems to always be 0 
+                if (bone.ParentIndex == ushort.MaxValue)
+                {
+                    bone.BoneId = 0;
+                    continue;
+                }
+
+                string name = bone.Name?.Value;
+
+                if (string.IsNullOrEmpty(name))
+                    bone.BoneId = 0;
+                else
+                    bone.BoneId = Enum.TryParse(name, false, out PedBoneId id) ? (ushort)id : Bone.CalculateBoneIdFromName(name);
+            }
+        }
+
+        private void UpdateBoneMap()
+        {
+            if (Bones == null)
+                return;
+
+            List<KeyValuePair<uint, uint_r>> bonesIndexId = new List<KeyValuePair<uint, uint_r>>();
+
+            foreach (var bone in Bones)
+                bonesIndexId.Add(new KeyValuePair<uint, uint_r>(bone.BoneId, (uint_r)bone.Index));
+
+            BoneMap = new AtHashMap<uint_r>();
+
+            BoneMap.Resize(bonesIndexId);
+        }
     }
 }
