@@ -64,6 +64,11 @@ namespace RageLib.Resources
         /// Returns a list of data blocks that are referenced by this block.
         /// </summary>
         IResourceBlock[] GetReferences();
+
+        /// <summary>
+        /// Updates the data block.
+        /// </summary>
+        void Update();
     }
 
     public interface IResourceXXSystemBlock : IResourceSystemBlock

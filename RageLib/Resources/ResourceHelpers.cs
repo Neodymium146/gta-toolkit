@@ -149,6 +149,36 @@ namespace RageLib.Resources
             return ((ALIGN_SIZE - (p % ALIGN_SIZE)) % ALIGN_SIZE);
         }
 
+        public static void UpdateBlocks(IResourceBlock rootBlock)
+        {
+            var processed = new HashSet<IResourceBlock>();
+
+            void UpdateChildren(IResourceBlock block)
+            {
+                if (block is IResourceSystemBlock sblock)
+                {
+                    if (processed.Add(block))
+                    {
+                        var references = sblock.GetReferences();
+                        foreach (var reference in references)
+                        {
+                            UpdateChildren(reference);
+                        }
+
+                        var parts = sblock.GetParts();
+                        foreach (var part in parts)
+                        {
+                            UpdateChildren(part.Item2);
+                        }
+
+                        sblock.Update();
+                    }
+                }
+            }
+
+            UpdateChildren(rootBlock);
+        }
+
         public static void GetBlocks(IResourceBlock rootBlock, out IList<IResourceBlock> sys, out IList<IResourceBlock> gfx)
         {
             var systemBlocks = new HashSet<IResourceBlock>();

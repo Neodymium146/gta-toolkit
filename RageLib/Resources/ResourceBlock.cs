@@ -69,6 +69,11 @@ namespace RageLib.Resources
         public abstract void Write(ResourceDataWriter writer, params object[] parameters);
 
         /// <summary>
+        /// Updates the data block.
+        /// </summary>
+        public virtual void Update() { }
+
+        /// <summary>
         /// Returns a list of data blocks that are part of this block.
         /// </summary>
         public virtual Tuple<long, IResourceBlock>[] GetParts()

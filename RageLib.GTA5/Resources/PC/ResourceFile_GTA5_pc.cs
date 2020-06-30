@@ -143,6 +143,8 @@ namespace RageLib.Resources.GTA5
             // Create a temp datResourceMap
             fileBase.PagesInfo = new PagesInfo(64, 64);
 
+            ResourceHelpers.UpdateBlocks(ResourceData);
+
             ResourceHelpers.GetBlocks(ResourceData, out IList<IResourceBlock> systemBlocks, out IList<IResourceBlock> graphicBlocks);
 
             ResourceHelpers.AssignPositions(systemBlocks, 0x50000000, out ResourceChunkFlags virtualPageFlags, 0);
