@@ -9,7 +9,7 @@ namespace RageLib.Resources.Common
         public override long BlockLength => 0x10;
 
         // structure data
-        public ulong Pointer;
+        public ulong BucketsPointer;
         public ushort BucketsCount;
         public ushort Count;
         public ushort Unknown_Ch;
@@ -17,12 +17,12 @@ namespace RageLib.Resources.Common
         public byte Initialized;
 
         // reference data
-        public ResourcePointerArray64<AtHashMapEntry<T>> Data;
+        public ResourcePointerArray64<AtHashMapEntry<T>> Buckets;
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Pointer = reader.ReadUInt64();
+            this.BucketsPointer = reader.ReadUInt64();
             this.BucketsCount = reader.ReadUInt16();
             this.Count = reader.ReadUInt16();
             this.Unknown_Ch = reader.ReadUInt16();
@@ -30,8 +30,8 @@ namespace RageLib.Resources.Common
             this.Initialized = reader.ReadByte();
 
             // read reference data
-            this.Data = reader.ReadBlockAt<ResourcePointerArray64<AtHashMapEntry<T>>>(
-                this.Pointer, // offset
+            this.Buckets = reader.ReadBlockAt<ResourcePointerArray64<AtHashMapEntry<T>>>(
+                this.BucketsPointer, // offset
                 this.BucketsCount
             );
         }
@@ -39,42 +39,10 @@ namespace RageLib.Resources.Common
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.Pointer = (ulong)(this.Data != null ? this.Data.BlockPosition : 0);
-            if (this.Data != null)
-            {
-                int i = 0;
-                foreach (var x in this.Data.data_items)
-                {
-                    if (x != null)
-                    {
-                        var y = x;
-                        do
-                        {
-                            i++;
-                            if (y.Next != null)
-                            {
-                                y = y.Next;
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        } while (true);
-                    }
-                }
-                this.Count = (ushort)i;
-            }
-            else
-            {
-                this.Count = 0;
-            }
-            // Assets exported using Zmodeler seems to have a wrong BucketsCount value
-            // TODO:    Rebuild the buckets array on writing
-
-            //this.BucketsCount = (ushort)(this.Data != null ? GetBucketsCount(Count) : 0);
+            this.BucketsPointer = (ulong)(this.Buckets != null ? this.Buckets.BlockPosition : 0);
 
             // write structure data
-            writer.Write(this.Pointer);
+            writer.Write(this.BucketsPointer);
             writer.Write(this.BucketsCount);
             writer.Write(this.Count);
             writer.Write(this.Unknown_Ch);
@@ -88,11 +56,11 @@ namespace RageLib.Resources.Common
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (Data != null) list.Add(Data);
+            if (Buckets != null) list.Add(Buckets);
             return list.ToArray();
         }
 
-        public ushort GetBucketsCount(uint hashesCount)
+        private ushort GetBucketsCount(uint hashesCount)
         {
             if (hashesCount < 11) return 11;
             else if (hashesCount < 29) return 29;
@@ -112,6 +80,72 @@ namespace RageLib.Resources.Common
             else if (hashesCount < 65167) return 65167;
             else if (hashesCount < 65521) return 65521;
             else return 0;
+        }
+
+        public override void Update()
+        {
+            List<KeyValuePair<uint, T>> entries = GetEntries();
+            Count = (ushort)entries.Count;
+            BucketsCount = GetBucketsCount((uint)entries.Count);
+
+            Buckets = new ResourcePointerArray64<AtHashMapEntry<T>>();
+
+            for (int i = 0; i < BucketsCount; i++)
+                Buckets.Add(null);
+
+            foreach (var entry in entries)
+            {
+                var bucket = entry.Key % BucketsCount;
+
+                var item = new AtHashMapEntry<T>()
+                {
+                    Hash = entry.Key,
+                    Data = entry.Value,
+                    Next = null,
+                    NextPointer = 0,
+                };
+
+                if (Buckets[(int)bucket] == null)
+                {
+                    Buckets[(int)bucket] = item;
+                }
+                else
+                {
+                    var current = Buckets[(int)bucket];
+
+                    while (current.Next != null)
+                        current = current.Next;
+
+                    current.Next = item;
+                }
+            }
+        }
+
+        private List<KeyValuePair<uint, T>> GetEntries()
+        {
+            var entries = new List<KeyValuePair<uint, T>>();
+
+            if (Buckets == null)
+                return entries;
+
+            foreach (var bucket in Buckets)
+            {
+                if (bucket == null)
+                    continue;
+
+                var entry = bucket;
+
+                do
+                {
+                    if (entry.Data != null)
+                        entries.Add(new KeyValuePair<uint, T>(entry.Hash, entry.Data));
+
+                    entry = entry.Next;
+
+                } while (entry != null);
+            }
+
+            return entries;
         }
     }
 
