@@ -208,9 +208,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             foreach (var bone in Bones)
                 bonesIndexId.Add(new KeyValuePair<uint, uint_r>(bone.BoneId, (uint_r)bone.Index));
 
-            BoneMap = new AtHashMap<uint_r>();
-
-            BoneMap.Resize(bonesIndexId);
+            BoneMap = new AtHashMap<uint_r>(bonesIndexId);
         }
     }
 }

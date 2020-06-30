@@ -67,6 +67,16 @@ namespace RageLib.Resources.Common
         //    Resize(GetEntries());
         //}
 
+        public AtHashMap()
+        {
+
+        }
+
+        public AtHashMap(ICollection<KeyValuePair<uint, T>> items)
+        {
+            Resize(items);
+        }
+
         private ushort GetBucketsCount(uint hashesCount)
         {
             if (hashesCount < 11) return 11;
@@ -89,7 +99,7 @@ namespace RageLib.Resources.Common
             else return 0;
         }
 
-        public void Resize(List<KeyValuePair<uint, T>> entries)
+        private void Resize(ICollection<KeyValuePair<uint, T>> entries)
         {
             Count = (ushort)entries.Count;
             BucketsCount = GetBucketsCount((uint)entries.Count);
@@ -100,32 +110,38 @@ namespace RageLib.Resources.Common
                 Buckets.Add(null);
 
             foreach (var entry in entries)
+                Add(entry);
+
+            Initialized = 1;
+        }
+
+        public void Add(KeyValuePair<uint, T> item)
+        {
+            var entry = new AtHashMapEntry<T>()
             {
-                var bucket = entry.Key % BucketsCount;
+                Hash = item.Key,
+                Data = item.Value,
+                Next = null,
+                NextPointer = 0,
+            };
 
-                var item = new AtHashMapEntry<T>()
-                {
-                    Hash = entry.Key,
-                    Data = entry.Value,
-                    Next = null,
-                    NextPointer = 0,
-                };
+            var bucket = (int)(entry.Hash % BucketsCount);
 
-                if (Buckets[(int)bucket] == null)
-                {
-                    Buckets[(int)bucket] = item;
-                }
-                else
-                {
-                    var current = Buckets[(int)bucket];
+            if (Buckets[bucket] == null)
+            {
+                Buckets[bucket] = entry;
+            }
+            else
+            {
+                var current = Buckets[bucket];
 
-                    while (current.Next != null)
-                        current = current.Next;
+                while (current.Next != null)
+                    current = current.Next;
 
-                    current.Next = item;
-                }
+                current.Next = entry;
             }
         }
+
         private List<KeyValuePair<uint, T>> GetEntries()
         {
             var entries = new List<KeyValuePair<uint, T>>();
