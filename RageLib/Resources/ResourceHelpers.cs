@@ -225,11 +225,12 @@ namespace RageLib.Resources
             gfx = new List<IResourceBlock>(graphicBlocks);
         }
 
-        public static void AssignPositions(IList<IResourceBlock> blocks, uint basePosition, out ResourceChunkFlags pageFlags, uint usedPages)
+        public static void AssignPositions(IList<IResourceBlock> blocks, uint basePosition, out ResourceChunkFlags flags, uint usedPages)
         {
+            flags = new ResourceChunkFlags();
+
             if (blocks.Count <= 0)
             {
-                pageFlags = new ResourceChunkFlags();
                 return;
             }
 
@@ -258,7 +259,6 @@ namespace RageLib.Resources
             }
 
             var pageSizeMult = 1;
-            int pageCount;
             long currentPosition;
 
             var sys = (basePosition == 0x50000000);
@@ -272,9 +272,8 @@ namespace RageLib.Resources
                 var currentPageStart = 0L;
                 var currentPageSpace = startPageSize;
                 var currentRemainder = totalBlockSize;
-                pageCount = 1;
                 var pageCounts = new uint[9];
-                var pageCountIndex = 0;
+                var bucketIndex = 0;
                 var targetPageSize = Math.Max(65536 * pageSizeMult, startPageSize >> (sys ? 5 : 2));
                 var minPageSize = Math.Max(512 * pageSizeMult, Math.Min(targetPageSize, startPageSize) >> 4);
                 var baseShift = 0u;
@@ -287,16 +286,19 @@ namespace RageLib.Resources
                     if (baseShift >= 0xF) break;
                 }
 
+                flags = new ResourceChunkFlags(pageCounts, baseShift);
+
                 var baseSizeMax = baseSize << 8;
                 var baseSizeMaxTest = startPageSize;
                 
                 while (baseSizeMaxTest < baseSizeMax)
                 {
-                    pageCountIndex++;
+                    bucketIndex++;
                     baseSizeMaxTest *= 2;
                 }
 
-                pageCounts[pageCountIndex] = 1;
+                if (!flags.TryAddChunk(bucketIndex))
+                    break;
 
                 while (blockset.Count > 0)
                 {
@@ -318,16 +320,18 @@ namespace RageLib.Resources
                         while (blockLength <= (currentPageSize >> 1))
                         {
                             if (currentPageSize <= minPageSize) break;
-                            if (pageCountIndex >= 8) break;
+                            if (bucketIndex >= 8) break;
                             if ((currentPageSize <= targetPageSize) && (currentRemainder >= (currentPageSize - minPageSize))) break;
 
                             currentPageSize = currentPageSize >> 1;
-                            pageCountIndex++;
+                            bucketIndex++;
                         }
 
                         currentPageSpace = currentPageSize;
-                        pageCounts[pageCountIndex]++;
-                        pageCount++;
+
+                        // Try adding another chunk to this bucket
+                        if (!flags.TryAddChunk(bucketIndex))
+                            break;
                     }
 
                     //add this block to the current page.
@@ -340,12 +344,10 @@ namespace RageLib.Resources
                     currentRemainder -= usedspace;
                 }
 
-                pageFlags = new ResourceChunkFlags(pageCounts, baseShift);
-
                 startPageSize *= 2;
                 pageSizeMult *= 2;
             }
-            while ((pageCount != pageFlags.Count) || (pageFlags.Size < currentPosition) || (pageFlags.Count + usedPages > 128));
+            while ((flags.Size < totalBlockSize) || (flags.Count + usedPages > 128));
 
         }
     }
