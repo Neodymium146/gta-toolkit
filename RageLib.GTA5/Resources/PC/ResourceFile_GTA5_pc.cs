@@ -155,8 +155,8 @@ namespace RageLib.Resources.GTA5
             fileBase.PagesInfo.PhysicalPagesCount = (byte)physicalPageFlags.Count;
 
             // Add version to the flags
-            virtualPageFlags = virtualPageFlags.Value + ((((uint)Version >> 4) & 0xF) << 28);
-            physicalPageFlags = physicalPageFlags.Value + ((((uint)Version >> 0) & 0xF) << 28);
+            virtualPageFlags += ((((uint)Version >> 4) & 0xF) << 28);
+            physicalPageFlags += ((((uint)Version >> 0) & 0xF) << 28);
 
             ResourceInfo = new ResourceInfo()
             {
