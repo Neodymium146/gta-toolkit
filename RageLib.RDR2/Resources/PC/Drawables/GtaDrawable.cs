@@ -8,7 +8,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 	// rmcDrawableBase
 	// rmcDrawable
 	// gtaDrawable
-	public class Struct_00 : PgBase64
+	public class GtaDrawable : PgBase64
 	{
 		public override long BlockLength => 0xD0;
 
@@ -42,10 +42,10 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 
 		// reference data
 		public ShaderGroup ShaderGroup;
-		public ResourcePointerList64<Struct_09> DrawableModelsHigh;
-		public ResourcePointerList64<Struct_09> DrawableModelsMedium;
-		public ResourcePointerList64<Struct_09> DrawableModelsLow;
-		public ResourcePointerList64<Struct_09> DrawableModelsVeryLow;
+		public ResourcePointerList64<DrawableModel> DrawableModelsHigh;
+		public ResourcePointerList64<DrawableModel> DrawableModelsMedium;
+		public ResourcePointerList64<DrawableModel> DrawableModelsLow;
+		public ResourcePointerList64<DrawableModel> DrawableModelsVeryLow;
 		public string_r Name;
 
 		public override void Read(ResourceDataReader reader, params object[] parameters)

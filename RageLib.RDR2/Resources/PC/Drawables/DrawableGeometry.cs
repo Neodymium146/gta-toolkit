@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
-    public class Struct_19 : ResourceSystemBlock
+    // grmGeometry
+    // VFT - 0x0000000140912C48
+    public class DrawableGeometry : DatBase64
     {
         public override long BlockLength => 0x40;
 
         // structure data
-        public ulong VFT;                   // 0x0000000140912C48
         public ulong Unknown_08h_Pointer;
         public ulong Unknown_10h_Pointer;
         public ulong Unknown_18h;           // 0x0000000000000000
@@ -24,12 +25,14 @@ namespace RageLib.Resources.RDR2.PC.Drawables
         public ulong Unknown_38h;			// 0x0000000000000000
 
         // reference data
-        public Struct_17 Unknown_08h_Data;
-        public Struct_14 Unknown_10h_Data;
+        public VertexBuffer Unknown_08h_Data;
+        public IndexBuffer Unknown_10h_Data;
 
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
 
 
@@ -38,6 +41,8 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // write structure data
 
 

@@ -9,7 +9,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 {
     // IndexBuffer
     // VFT = 0x00000001409123E0 
-    public class Struct_14 : DatBase64
+    public class IndexBuffer : DatBase64
     {
         public override long BlockLength => 0x40;
 
