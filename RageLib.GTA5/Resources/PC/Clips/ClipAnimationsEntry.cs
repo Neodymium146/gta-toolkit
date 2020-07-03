@@ -26,7 +26,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
 {
     public class ClipAnimationsEntry : ResourceSystemBlock
     {
-        public override long Length => 24;
+        public override long BlockLength => 24;
 
         // structure data
         public float Unknown_0h;
@@ -62,7 +62,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.AnimationPointer = (ulong)(this.Animation != null ? this.Animation.Position : 0);
+            this.AnimationPointer = (ulong)(this.Animation != null ? this.Animation.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_0h);

@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
     // aiSplitArray<TNavMeshPoly,341>
     public class PolysList : ResourceSystemBlock
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public uint VFT;
@@ -80,8 +80,8 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.ListPartsPointer = (ulong)(this.ListParts != null ? this.ListParts.Position : 0);
-            this.ListOffsetsPointer = (ulong)(this.ListOffsets != null ? this.ListOffsets.Position : 0);
+            this.ListPartsPointer = (ulong)(this.ListParts != null ? this.ListParts.BlockPosition : 0);
+            this.ListOffsetsPointer = (ulong)(this.ListOffsets != null ? this.ListOffsets.BlockPosition : 0);
             this.ListPartsCount = (uint)(this.ListParts != null ? this.ListParts.Count : 0);
 
             // write structure data

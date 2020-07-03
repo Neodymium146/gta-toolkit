@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
 {
     public class Unknown_C_007 : ResourceSystemBlock
     {
-        public override long Length
+        public override long BlockLength
         {
             get { return 16; }
         }

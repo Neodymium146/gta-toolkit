@@ -27,15 +27,11 @@ namespace RageLib.Resources.GTA5.PC.Textures
 {
     // pgBase
     // grcTexture
-    public class Texture : ResourceSystemBlock
+    public class Texture : PgBase64
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x50;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
         public uint Unknown_10h; // 0x00000000
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
@@ -47,6 +43,10 @@ namespace RageLib.Resources.GTA5.PC.Textures
         public uint Unknown_34h; // 0x00000000
         public uint Unknown_38h; // 0x00000000
         public uint Unknown_3Ch; // 0x00000000
+        public uint Unknown_40h;
+        public uint Unknown_44h; // 0x00000000
+        public uint Unknown_48h;
+        public uint Unknown_4Ch; // 0x00000000
 
         // reference data
         public string_r Name;
@@ -56,11 +56,9 @@ namespace RageLib.Resources.GTA5.PC.Textures
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
@@ -72,6 +70,11 @@ namespace RageLib.Resources.GTA5.PC.Textures
             this.Unknown_34h = reader.ReadUInt32();
             this.Unknown_38h = reader.ReadUInt32();
             this.Unknown_3Ch = reader.ReadUInt32();
+            this.Unknown_40h = reader.ReadUInt32();
+            this.Unknown_44h = reader.ReadUInt32();
+            this.Unknown_48h = reader.ReadUInt32();
+            this.Unknown_4Ch = reader.ReadUInt32();
+
 
             // read reference data
             this.Name = reader.ReadBlockAt<string_r>(
@@ -84,14 +87,12 @@ namespace RageLib.Resources.GTA5.PC.Textures
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
-            this.NamePointer = (ulong)(this.Name?.Position ?? 0);
+            this.NamePointer = (ulong)(this.Name?.BlockPosition ?? 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
@@ -103,6 +104,10 @@ namespace RageLib.Resources.GTA5.PC.Textures
             writer.Write(this.Unknown_34h);
             writer.Write(this.Unknown_38h);
             writer.Write(this.Unknown_3Ch);
+            writer.Write(this.Unknown_40h);
+            writer.Write(this.Unknown_44h);
+            writer.Write(this.Unknown_48h);
+            writer.Write(this.Unknown_4Ch);
         }
 
         /// <summary>
@@ -110,7 +115,7 @@ namespace RageLib.Resources.GTA5.PC.Textures
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (Name != null) list.Add(Name);
             return list.ToArray();
         }

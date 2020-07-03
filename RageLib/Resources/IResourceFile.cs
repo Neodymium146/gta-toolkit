@@ -26,8 +26,8 @@ namespace RageLib.Resources
 {
     public interface IResourceFile
     {
-        byte[] SystemData { get; set; }
-        byte[] GraphicsData { get; set; }
+        byte[] VirtualData { get; set; }
+        byte[] PhysicalData { get; set; }
         int Version { get; set; }
 
         void Load(Stream stream);

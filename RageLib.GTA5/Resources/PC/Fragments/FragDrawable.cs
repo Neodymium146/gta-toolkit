@@ -23,6 +23,7 @@
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Bounds;
 using RageLib.Resources.GTA5.PC.Drawables;
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
@@ -30,39 +31,24 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // fragDrawable
     public class FragDrawable : Drawable
     {
-        public override long Length => 0x150;
+        public override long BlockLength => 0x150;
 
         // structure data
-        public uint Unknown_A8h; // 0x00000000
-        public uint Unknown_ACh; // 0x00000000
+        public ulong Unknown_A8h; // 0x0000000000000000
         public RAGE_Matrix4 Unknown_B0h;      
         public ulong BoundPointer;
-        public ulong Unknown_F8h_Pointer;
-        public ushort Count1;
-        public ushort Count2;
-        public uint Unknown_104h; // 0x00000000
-        public ulong Unknown_108h_Pointer;
-        public ushort Count3;
-        public ushort Count4;
-        public uint Unknown_114h; // 0x00000000
-        public uint Unknown_118h; // 0x00000000
-        public uint Unknown_11Ch; // 0x00000000
-        public uint Unknown_120h; // 0x00000000
-        public uint Unknown_124h; // 0x00000000
-        public uint Unknown_128h; // 0x00000000
-        public uint Unknown_12Ch; // 0x00000000
+        public ResourceSimpleList64<ulong_r> Unknown_F8h_Data;
+        public ResourceSimpleList64<RAGE_Matrix4> Unknown_108h_Data;
+        public ulong Unknown_118h; // 0x0000000000000000
+        public ulong Unknown_120h; // 0x0000000000000000
+        public ulong Unknown_128h; // 0x0000000000000000
         public ulong NamePointer;
-        public uint Unknown_138h; // 0x00000000
-        public uint Unknown_13Ch; // 0x00000000
-        public uint Unknown_140h; // 0x00000000
-        public uint Unknown_144h; // 0x00000000
-        public uint Unknown_148h; // 0x00000000
-        public uint Unknown_14Ch; // 0x00000000
+        public ulong Unknown_138h; // 0x0000000000000000
+        public ulong Unknown_140h; // 0x0000000000000000
+        public ulong Unknown_148h; // 0x0000000000000000
 
         // reference data
         public Bound Bound;
-        public ResourceSimpleArray<ulong_r> Unknown_F8h_Data;
-        public ResourceSimpleArray<RAGE_Matrix4> Unknown_108h_Data;
         public string_r Name;
 
         /// <summary>
@@ -73,43 +59,22 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_A8h = reader.ReadUInt32();
-            this.Unknown_ACh = reader.ReadUInt32();
+            this.Unknown_A8h = reader.ReadUInt64();
             this.Unknown_B0h = reader.ReadBlock<RAGE_Matrix4>();
             this.BoundPointer = reader.ReadUInt64();
-            this.Unknown_F8h_Pointer = reader.ReadUInt64();
-            this.Count1 = reader.ReadUInt16();
-            this.Count2 = reader.ReadUInt16();
-            this.Unknown_104h = reader.ReadUInt32();
-            this.Unknown_108h_Pointer = reader.ReadUInt64();
-            this.Count3 = reader.ReadUInt16();
-            this.Count4 = reader.ReadUInt16();
-            this.Unknown_114h = reader.ReadUInt32();
-            this.Unknown_118h = reader.ReadUInt32();
-            this.Unknown_11Ch = reader.ReadUInt32();
-            this.Unknown_120h = reader.ReadUInt32();
-            this.Unknown_124h = reader.ReadUInt32();
-            this.Unknown_128h = reader.ReadUInt32();
-            this.Unknown_12Ch = reader.ReadUInt32();
+            this.Unknown_F8h_Data = reader.ReadBlock<ResourceSimpleList64<ulong_r>>();
+            this.Unknown_108h_Data = reader.ReadBlock<ResourceSimpleList64<RAGE_Matrix4>>();
+            this.Unknown_118h = reader.ReadUInt64();
+            this.Unknown_120h = reader.ReadUInt64();
+            this.Unknown_128h = reader.ReadUInt64();
             this.NamePointer = reader.ReadUInt64();
-            this.Unknown_138h = reader.ReadUInt32();
-            this.Unknown_13Ch = reader.ReadUInt32();
-            this.Unknown_140h = reader.ReadUInt32();
-            this.Unknown_144h = reader.ReadUInt32();
-            this.Unknown_148h = reader.ReadUInt32();
-            this.Unknown_14Ch = reader.ReadUInt32();
+            this.Unknown_138h = reader.ReadUInt64();
+            this.Unknown_140h = reader.ReadUInt64();
+            this.Unknown_148h = reader.ReadUInt64();
 
             // read reference data
             this.Bound = reader.ReadBlockAt<Bound>(
                 this.BoundPointer // offset
-            );
-            this.Unknown_F8h_Data = reader.ReadBlockAt<ResourceSimpleArray<ulong_r>>(
-                this.Unknown_F8h_Pointer, // offset
-                this.Count1
-            );
-            this.Unknown_108h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
-                this.Unknown_108h_Pointer, // offset
-                this.Count2
             );
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
@@ -124,39 +89,22 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Write(writer, parameters);
 
             // update structure data
-            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.Position : 0);
-            this.Unknown_F8h_Pointer = (ulong)(this.Unknown_F8h_Data != null ? this.Unknown_F8h_Data.Position : 0);
-            //this.c1qqq = (ushort)(this.pxx2data != null ? this.pxx2data.Count : 0);
-            //this.c2qqq = (ushort)(this.pxx3data != null ? this.pxx3data.Count : 0);
-            this.Unknown_108h_Pointer = (ulong)(this.Unknown_108h_Data != null ? this.Unknown_108h_Data.Position : 0);
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
+            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.BlockPosition : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_A8h);
-            writer.Write(this.Unknown_ACh);
             writer.WriteBlock(this.Unknown_B0h);
             writer.Write(this.BoundPointer);
-            writer.Write(this.Unknown_F8h_Pointer);
-            writer.Write(this.Count1);
-            writer.Write(this.Count2);
-            writer.Write(this.Unknown_104h);
-            writer.Write(this.Unknown_108h_Pointer);
-            writer.Write(this.Count3);
-            writer.Write(this.Count4);
-            writer.Write(this.Unknown_114h);
+            writer.WriteBlock(this.Unknown_F8h_Data);
+            writer.WriteBlock(this.Unknown_108h_Data);
             writer.Write(this.Unknown_118h);
-            writer.Write(this.Unknown_11Ch);
             writer.Write(this.Unknown_120h);
-            writer.Write(this.Unknown_124h);
             writer.Write(this.Unknown_128h);
-            writer.Write(this.Unknown_12Ch);
             writer.Write(this.NamePointer);
             writer.Write(this.Unknown_138h);
-            writer.Write(this.Unknown_13Ch);
             writer.Write(this.Unknown_140h);
-            writer.Write(this.Unknown_144h);
             writer.Write(this.Unknown_148h);
-            writer.Write(this.Unknown_14Ch);
         }
 
         /// <summary>
@@ -166,9 +114,18 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         {
             var list = new List<IResourceBlock>(base.GetReferences());
             if (Bound != null) list.Add(Bound);
-            if (Unknown_F8h_Data != null) list.Add(Unknown_F8h_Data);
-            if (Unknown_108h_Data != null) list.Add(Unknown_108h_Data);
             if (Name != null) list.Add(Name);
+            return list.ToArray();
+        }
+
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            var list = new List<Tuple<long, IResourceBlock>>(base.GetParts());
+            
+            list.AddRange(new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0xF8, Unknown_F8h_Data),
+                new Tuple<long, IResourceBlock>(0x108, Unknown_108h_Data),
+            });
             return list.ToArray();
         }
     }

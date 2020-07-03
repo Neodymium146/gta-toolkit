@@ -29,17 +29,18 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 {
     public class ShaderFX : ResourceSystemBlock
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public ulong ParametersPointer;
-        public uint Unknown_8h;
+        public uint ShaderHash;
         public uint Unknown_Ch; // 0x00000000
         public byte ParameterCount;
-        public byte Unknown_11h;
+        public byte DrawBucket;
         public ushort Unknown_12h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
+        public ushort ParametersSize; // Header + Data size
+        public ushort ParametersTotalSize; // Header + Data + Hashes(aligned to 16) + 32 size
+        public uint SpsHash;
         public uint Unknown_1Ch; // 0x00000000
         public uint Unknown_20h;
         public ushort Unknown_24h;
@@ -60,13 +61,14 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             // read structure data
             this.ParametersPointer = reader.ReadUInt64();
-            this.Unknown_8h = reader.ReadUInt32();
+            this.ShaderHash = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
             this.ParameterCount = reader.ReadByte();
-            this.Unknown_11h = reader.ReadByte();
+            this.DrawBucket = reader.ReadByte();
             this.Unknown_12h = reader.ReadUInt16();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
+            this.ParametersSize = reader.ReadUInt16();
+            this.ParametersTotalSize = reader.ReadUInt16();
+            this.SpsHash = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt16();
@@ -99,19 +101,20 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.ParametersPointer = (ulong)(this.ParametersList != null ? this.ParametersList.Position : 0);
+            this.ParametersPointer = (ulong)(this.ParametersList != null ? this.ParametersList.BlockPosition : 0);
             //this.ParametersPointer = (ulong)(this.Parameters != null ? this.Parameters.Position : 0);
             //this.ParameterCount = (byte)(this.Parameters != null ? this.Parameters.Count : 0);
 
             // write structure data
             writer.Write(this.ParametersPointer);
-            writer.Write(this.Unknown_8h);
+            writer.Write(this.ShaderHash);
             writer.Write(this.Unknown_Ch);
             writer.Write(this.ParameterCount);
-            writer.Write(this.Unknown_11h);
+            writer.Write(this.DrawBucket);
             writer.Write(this.Unknown_12h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
+            writer.Write(this.ParametersSize);
+            writer.Write(this.ParametersTotalSize);
+            writer.Write(this.SpsHash);
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
@@ -137,41 +140,56 @@ namespace RageLib.Resources.GTA5.PC.Drawables
     public class ShaderParametersBlock_GTA5_pc : ResourceSystemBlock
     {
 
-        public override long Length
+        public override long BlockLength
         {
             get
             {
-                long offset = 0;
-                foreach (var x in Parameters)
-                {
-                    offset += 16;
-                }
-
-                foreach (var x in Parameters)
-                {
-                    offset += 16 * x.DataType;
-                }
-
-                offset += Parameters.Count * 4;
-
-                return offset;
+                return BaseSize + (BaseSize * 4);
             }
         }
 
-        public List<ShaderParameter> Parameters = new List<ShaderParameter>();
-        public List<uint> Hashes = new List<uint>();
+        public long BaseSize
+        {
+            get
+            {
+                long size = 0;
+
+                foreach (var x in Parameters)
+                {
+                    // Size of Parameters definitions
+                    size += 16;
+
+                    // Size of Parameters data
+                    size += 16 * x.DataType;
+                }
+
+                // Size of Parameters Hashes (aligned to 16)
+                var hashesSize = Parameters.Count * 4;
+                hashesSize += (16 - (hashesSize % 16)) % 16;
+
+                size += hashesSize;
+
+                // Extra 32 bytes
+                size += 32;
+
+                return size;
+            }
+        }
+
+        public ResourceSimpleArray<ShaderParameter> Parameters;
+        public ResourceSimpleArray<ResourceSimpleArray<RAGE_Vector4>> Data;
+        public ResourceSimpleArray<uint_r> Hashes;
+        // Hashes alignment pad
+        // Extra 32 bytes 
+        // Extra 4 * ParametersTotalSize bytes
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             int cnt = Convert.ToInt32(parameters[0]);
 
-            Parameters = new List<ShaderParameter>();
-            for (int i = 0; i < cnt; i++)
-            {
-                Parameters.Add(reader.ReadBlock<ShaderParameter>());
-            }
-
-            int offset = 0;
+            Parameters = reader.ReadBlock<ResourceSimpleArray<ShaderParameter>>(cnt);
+            Data = new ResourceSimpleArray<ResourceSimpleArray<RAGE_Vector4>>();
+            int dataBlockSize = 0;
             for (int i = 0; i < cnt; i++)
             {
                 var p = Parameters[i];
@@ -180,17 +198,13 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 switch (p.DataType)
                 {
                     case 0:
-                        offset += 0;
-                        p.Data = reader.ReadBlockAt<Texture>(
-                            p.DataPointer // offset
-                        );
+                        dataBlockSize += 0;
+                        p.Data = reader.ReadBlockAt<Texture>(p.DataPointer);
                         break;
-                    case 1:
-                        offset += 16;
-                        p.Data = reader.ReadBlockAt<RAGE_Vector4>(
-                            p.DataPointer // offset
-                        );
-                        break;
+                    //case 1:
+                    //    dataBlockSize += 16;
+                    //    p.Data = reader.ReadBlockAt<RAGE_Vector4>(p.DataPointer);
+                    //    break;
                     //case 2:
                     //    offset += 32;
                     //    p.Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Vector4>>(
@@ -207,22 +221,27 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                     //    break;
 
                     default:
-                        offset += 16 * p.DataType;
-                        p.Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Vector4>>(
-                             p.DataPointer, // offset
-                              p.DataType
-                         );
+                        dataBlockSize += 16 * p.DataType;
+                        var data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Vector4>>(p.DataPointer, p.DataType);
+                        p.Data = data;
+                        Data.Add(data);
                         break;
                 }
             }
 
-            reader.Position += offset;
-            Hashes = new List<uint>();
-            for (int i = 0; i < cnt; i++)
-            {
-                Hashes.Add(reader.ReadUInt32());
-            }
+            // Skip Data among Parameters and Hashes which we have already read
+            reader.Position += dataBlockSize;
 
+            Hashes = reader.ReadBlock<ResourceSimpleArray<uint_r>>(cnt);
+
+            // Read hashes alignment pad
+            //reader.Position += (16 - (reader.Position % 16)) % 16;
+
+            // Read extra 32 bytes
+            //reader.Position += 32;
+
+            // Read extra 4 * ParametersTotalSize bytes
+            //reader.Position += 4 * BaseSize;
         }
 
         public override void Write(ResourceDataWriter writer, params object[] parameters)
@@ -230,14 +249,15 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             // update pointers...
             foreach (var f in Parameters)
                 if (f.Data != null)
-                    f.DataPointer = (ulong)f.Data.Position;
+                    f.DataPointer = (ulong)f.Data.BlockPosition;
                 else
                     f.DataPointer = 0;
 
 
             // write parameter infos
             foreach (var f in Parameters)
-                writer.WriteBlock(f);
+                writer.WriteBlock(f); 
+            //writer.WriteBlock(Parameters);
 
             // write vector data
             foreach (var f in Parameters)
@@ -248,7 +268,18 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
             // write hashes
             foreach (var h in Hashes)
-                writer.Write(h);
+                writer.WriteBlock(h); 
+            //writer.WriteBlock(Hashes);
+
+            // Write hashes alignment pad
+            var pad = (16 - (writer.Position % 16)) % 16;
+            writer.Write(new byte[pad]);
+
+            // Write extra 32 bytes
+            writer.Write(new byte[32]);
+
+            // Write extra 4 * ParametersTotalSize bytes
+            writer.Write(new byte[4 * BaseSize]);
         }
 
 
@@ -270,20 +301,22 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             var list = new List<Tuple<long, IResourceBlock>>();
             list.AddRange(base.GetParts());
+            list.Add(new Tuple<long, IResourceBlock>(0x0, Parameters));
 
-            long offset = 0;
-            foreach (var x in Parameters)
-            {
-                list.Add(new Tuple<long, IResourceBlock>(offset, x));
-                offset += 16;
-            }
+            long offset = Parameters.Count * 16;
+            //foreach (var x in Parameters)
+            //{
+            //    list.Add(new Tuple<long, IResourceBlock>(offset, x));
+            //    offset += 16;
+            //}
 
+            list.Add(new Tuple<long, IResourceBlock>(offset, Data));
             foreach (var x in Parameters)
             {
                 if (x.DataType != 0)
-                    list.Add(new Tuple<long, IResourceBlock>(offset, x.Data));
-                offset += 16 * x.DataType;
+                    offset += 16 * x.DataType;
             }
+            list.Add(new Tuple<long, IResourceBlock>(offset, Hashes));
 
             return list.ToArray();
         }

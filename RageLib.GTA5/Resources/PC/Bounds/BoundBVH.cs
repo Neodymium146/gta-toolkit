@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
     // phBoundBVH
     public class BoundBVH : BoundGeometry
     {
-        public override long Length => 0x150;
+        public override long BlockLength => 0x150;
 
         // structure data
         public ulong BvhPointer;
@@ -73,7 +73,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             base.Write(writer, parameters);
 
             // update structure data
-            this.BvhPointer = (ulong)(this.BVH != null ? this.BVH.Position : 0);
+            this.BvhPointer = (ulong)(this.BVH != null ? this.BVH.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.BvhPointer);

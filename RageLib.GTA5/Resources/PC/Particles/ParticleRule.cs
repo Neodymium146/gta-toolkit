@@ -31,7 +31,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxParticleRule
     public class ParticleRule : ResourceSystemBlock
     {
-        public override long Length => 0x240;
+        public override long BlockLength => 0x240;
 
         // structure data
         public uint VFT;
@@ -191,9 +191,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
-            this.p9 = (ulong)(this.p9data != null ? this.p9data.Position : 0);
-            this.p10 = (ulong)(this.p10data != null ? this.p10data.Position : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
+            this.p9 = (ulong)(this.p9data != null ? this.p9data.BlockPosition : 0);
+            this.p10 = (ulong)(this.p10data != null ? this.p10data.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.VFT);

@@ -27,15 +27,11 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 {
     // pgBase
     // phArticulatedBodyType
-    public class ArticulatedBodyType : ResourceSystemBlock
+    public class ArticulatedBodyType : PgBase64
     {
-        public override long Length => 0xB0;
+        public override long BlockLength => 0xB0;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
         public uint Unknown_10h; // 0x00000000
         public uint Unknown_14h;
         public uint Unknown_18h;
@@ -86,11 +82,9 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
@@ -148,17 +142,15 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
-            this.JointTypesPointer = (ulong)(this.JointTypes != null ? this.JointTypes.Position : 0);
-            this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
+            this.JointTypesPointer = (ulong)(this.JointTypes != null ? this.JointTypes.BlockPosition : 0);
+            this.p2 = (ulong)(this.p2data != null ? this.p2data.BlockPosition : 0);
             //this.c1 = (byte)(this.p2data != null ? this.p2data.Count : 0);
             //this.c2 = (byte)(this.p1data != null ? this.p1data.Count : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
@@ -206,7 +198,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (JointTypes != null) list.Add(JointTypes);
             if (p2data != null) list.Add(p2data);
             return list.ToArray();

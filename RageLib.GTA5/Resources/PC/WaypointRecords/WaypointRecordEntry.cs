@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.WaypointRecords
 {
     public class WaypointRecordEntry : ResourceSystemBlock
     {
-        public override long Length => 20;
+        public override long BlockLength => 20;
 
         // structure data
         public float PositionX;

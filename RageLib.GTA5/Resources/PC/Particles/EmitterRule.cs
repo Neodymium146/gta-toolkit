@@ -31,7 +31,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxEmitterRule
     public class EmitterRule : ResourceSystemBlock
     {
-        public override long Length => 0x630;
+        public override long BlockLength => 0x630;
 
         // structure data
         public uint VFT;
@@ -158,11 +158,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
-            this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
-            this.p3 = (ulong)(this.p3data != null ? this.p3data.Position : 0);
-            this.p4 = (ulong)(this.p4data != null ? this.p4data.Position : 0);
-            this.KeyframePropsPointer = (ulong)(this.KeyframeProps != null ? this.KeyframeProps.Position : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
+            this.p2 = (ulong)(this.p2data != null ? this.p2data.BlockPosition : 0);
+            this.p3 = (ulong)(this.p3data != null ? this.p3data.BlockPosition : 0);
+            this.p4 = (ulong)(this.p4data != null ? this.p4data.BlockPosition : 0);
+            this.KeyframePropsPointer = (ulong)(this.KeyframeProps != null ? this.KeyframeProps.BlockPosition : 0);
             //this.refcnt2 = (ushort)(this.refs != null ? this.refs.Count : 0);
 
             // write structure data

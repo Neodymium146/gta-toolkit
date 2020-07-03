@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Expressions
 {
     public class Unknown_E_002 : ResourceSystemBlock
     {
-        public override long Length => 0xA0;
+        public override long BlockLength => 0xA0;
 
         // structure data
         public float Unknown_0h;

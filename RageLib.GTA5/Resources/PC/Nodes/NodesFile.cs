@@ -25,9 +25,9 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Nodes
 {
-    public class NodesFile : FileBase64_GTA5_pc
+    public class NodesFile : PgBase64
     {
-        public override long Length => 0x70;
+        public override long BlockLength => 0x70;
 
         // structure data
         public ulong NodesPointer;
@@ -118,13 +118,13 @@ namespace RageLib.Resources.GTA5.PC.Nodes
             base.Write(writer, parameters);
 
             // update structure data
-            this.NodesPointer = (ulong)(this.Nodes != null ? this.Nodes.Position : 0);
+            this.NodesPointer = (ulong)(this.Nodes != null ? this.Nodes.BlockPosition : 0);
             this.NodesCount = (uint)(this.Nodes != null ? this.Nodes.Count : 0);
-            this.Unknown_28h_Pointer = (ulong)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.Position : 0);
+            this.Unknown_28h_Pointer = (ulong)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.BlockPosition : 0);
             this.DataPointer1Length = (uint)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.Count : 0);
-            this.Unknown_38h_Pointer = (ulong)(this.Unknown_38h_Data != null ? this.Unknown_38h_Data.Position : 0);
-            this.Unknown_40h_Pointer = (ulong)(this.Unknown_40h_Data != null ? this.Unknown_40h_Data.Position : 0);
-            this.Unknown_50h_Pointer = (ulong)(this.Unknown_50h_Data != null ? this.Unknown_50h_Data.Position : 0);
+            this.Unknown_38h_Pointer = (ulong)(this.Unknown_38h_Data != null ? this.Unknown_38h_Data.BlockPosition : 0);
+            this.Unknown_40h_Pointer = (ulong)(this.Unknown_40h_Data != null ? this.Unknown_40h_Data.BlockPosition : 0);
+            this.Unknown_50h_Pointer = (ulong)(this.Unknown_50h_Data != null ? this.Unknown_50h_Data.BlockPosition : 0);
             this.cnt5a = (ushort)(this.Unknown_50h_Data != null ? this.Unknown_50h_Data.Count : 0);
             this.cnt5b = (ushort)(this.Unknown_50h_Data != null ? this.Unknown_50h_Data.Count : 0);
             this.len4 = (uint)(this.Unknown_38h_Data != null ? this.Unknown_38h_Data.Count : 0);

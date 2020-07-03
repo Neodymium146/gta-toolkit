@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crTag
     public class Tag : Property
     {
-        public override long Length => 0x50;
+        public override long BlockLength => 0x50;
 
         // structure data
         public uint Unknown_40h;
@@ -63,7 +63,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
             base.Write(writer, parameters);
 
             // update structure data
-            this.TagsPointer = (ulong)(this.Tags != null ? this.Tags.Position : 0);
+            this.TagsPointer = (ulong)(this.Tags != null ? this.Tags.BlockPosition : 0);
 
             // write structure data         
             writer.Write(this.Unknown_40h);

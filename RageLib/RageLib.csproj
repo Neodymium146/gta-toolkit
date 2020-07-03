@@ -1,112 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{718F3F76-51AE-46CB-B11B-027B9BBC8A0B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>RageLib</RootNamespace>
     <AssemblyName>RageLib</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
+  <!--
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Archives\IArchive.cs" />
-    <Compile Include="Archives\IArchiveDirectory.cs" />
-    <Compile Include="Archives\IArchiveFile.cs" />
-    <Compile Include="Archives\ArchiveHelpers.cs" />
-    <Compile Include="Compression\DeflateCompression.cs" />
-    <Compile Include="Compression\ICompressionAlgorithm.cs" />
-    <Compile Include="Helpers\HashSearch.cs" />
-    <Compile Include="Helpers\DDSIO.cs" />
-    <Compile Include="Helpers\TextureCompression.cs" />
-    <Compile Include="Data\DataReader.cs" />
-    <Compile Include="Data\DataWriter.cs" />
-    <Compile Include="Data\Endianess.cs" />
-    <Compile Include="Hash\Jenkins.cs" />
-    <Compile Include="Helpers\TextureConvert.cs" />
-    <Compile Include="Cryptography\IEncryptionAlgorithm.cs" />
-    <Compile Include="Cryptography\AesEncryption.cs" />
-    <Compile Include="Data\PartialStream.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Common\ListBase.cs" />
-    <Compile Include="Resources\Common\ResourcePointerArray.cs" />
-    <Compile Include="Resources\Common\ResourcePointerArray64.cs" />
-    <Compile Include="Resources\Common\ResourcePointerList.cs" />
-    <Compile Include="Resources\Common\ResourcePointerList64.cs" />
-    <Compile Include="Resources\Common\ResourceSimpleArray.cs" />
-    <Compile Include="Resources\Common\ResourceSimpleArrayArray64.cs" />
-    <Compile Include="Resources\Common\ResourceSimpleList64.cs" />
-    <Compile Include="Resources\Common\Simple\byte_r.cs" />
-    <Compile Include="Resources\Common\Simple\float_r.cs" />
-    <Compile Include="Resources\Common\Simple\string_r.cs" />
-    <Compile Include="Resources\Common\Simple\uint_r.cs" />
-    <Compile Include="Resources\Common\Simple\ulong_r.cs" />
-    <Compile Include="Resources\Common\Simple\ushort_r.cs" />
-    <Compile Include="Resources\IResourceBlock.cs" />
-    <Compile Include="Resources\IResourceFile.cs" />
-    <Compile Include="Resources\ResourceBlock.cs" />
-    <Compile Include="Resources\ResourceDataReader.cs" />
-    <Compile Include="Resources\ResourceDataWriter.cs" />
-    <Compile Include="Resources\ResourceHelpers.cs" />
-    <Compile Include="ResourceWrappers\Drawables\IDrawable.cs" />
-    <Compile Include="ResourceWrappers\Drawables\IDrawableDictionary.cs" />
-    <Compile Include="ResourceWrappers\Drawables\IDrawableDictionaryFile.cs" />
-    <Compile Include="ResourceWrappers\Drawables\IDrawableFile.cs" />
-    <Compile Include="ResourceWrappers\Drawables\IShader.cs" />
-    <Compile Include="ResourceWrappers\Drawables\IShaderGroup.cs" />
-    <Compile Include="ResourceWrappers\Fragments\IFragDrawable.cs" />
-    <Compile Include="ResourceWrappers\Fragments\IFragmentFile.cs" />
-    <Compile Include="ResourceWrappers\Fragments\IFragType.cs" />
-    <Compile Include="ResourceWrappers\IResourceFile.cs" />
-    <Compile Include="ResourceWrappers\Particles\IParticles.cs" />
-    <Compile Include="ResourceWrappers\Particles\IParticlesFile.cs" />
-    <Compile Include="ResourceWrappers\Texture\ITexture.cs" />
-    <Compile Include="ResourceWrappers\Texture\ITextureDictionary.cs" />
-    <Compile Include="ResourceWrappers\Texture\ITextureDictionaryFile.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Libraries\DirectXTex\DirectXTex.vcxproj">
-      <Project>{755ab64b-16b4-4c90-aa3b-bff448e5a21e}</Project>
-      <Name>DirectXTex</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
+    <ProjectReference Include="..\Libraries\DirectXTex\DirectXTex.vcxproj" />
+  </ItemGroup> 
   -->
+
 </Project>

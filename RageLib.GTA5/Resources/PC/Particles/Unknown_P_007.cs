@@ -26,7 +26,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
 {
     public class Unknown_P_007 : ResourceSystemBlock
     {
-        public override long Length => 0x10;
+        public override long BlockLength => 0x10;
 
         // structure data
         public uint Unknown_0h;
@@ -58,7 +58,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
+            this.p1 = (ulong)(this.p1data != null ? this.p1data.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_0h);

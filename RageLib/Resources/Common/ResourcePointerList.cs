@@ -24,7 +24,7 @@ namespace RageLib.Resources.Common
 {
     public class ResourcePointerList<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
     {
-        public override long Length
+        public override long BlockLength
         {
             get { return 8; }
         }
@@ -52,7 +52,7 @@ namespace RageLib.Resources.Common
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update...
-            this.DataPointer = (uint)data_items.Position;
+            this.DataPointer = (uint)data_items.BlockPosition;
             this.DataCount1 = (ushort)data_items.Count;
             this.DataCount2 = (ushort)data_items.Count;
 

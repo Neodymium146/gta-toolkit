@@ -26,7 +26,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
     // clothInstanceTuning
     public class ClothInstanceTuning : ResourceSystemBlock
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public uint VFT;

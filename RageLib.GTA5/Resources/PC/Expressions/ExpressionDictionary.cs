@@ -28,9 +28,9 @@ namespace RageLib.Resources.GTA5.PC.Expressions
 {
     // pgDictionaryBase
     // pgDictionary<crExpressions>
-    public class ExpressionDictionary : FileBase64_GTA5_pc
+    public class ExpressionDictionary : PgBase64
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public uint Unknown_10h;

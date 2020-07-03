@@ -26,7 +26,7 @@ namespace RageLib.Resources.GTA5.PC.VehicleRecords
     // -> http://www.gtamodding.com/wiki/Carrec
     public class VehicleRecordsEntry : ResourceSystemBlock
     {
-        public override long Length => 0x20;
+        public override long BlockLength => 0x20;
 
         // structure data
         public uint Time;

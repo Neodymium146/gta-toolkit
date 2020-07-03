@@ -25,9 +25,9 @@ using System;
 
 namespace RageLib.Resources.GTA5.PC.VehicleRecords
 {
-    public class VehicleRecords : FileBase64_GTA5_pc
+    public class VehicleRecords : PgBase64
     {
-        public override long Length => 0x20;
+        public override long BlockLength => 0x20;
 
         // structure data
         public ResourceSimpleList64<VehicleRecordsEntry> Entries;

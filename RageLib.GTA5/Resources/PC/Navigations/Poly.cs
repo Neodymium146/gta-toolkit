@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
     // TNavMeshPoly
     public class Poly : ResourceSystemBlock
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public uint Unknown_0h;

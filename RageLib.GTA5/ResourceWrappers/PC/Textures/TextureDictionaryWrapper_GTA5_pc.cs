@@ -33,14 +33,14 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
     /// </summary>
     public class TextureDictionaryWrapper_GTA5_pc : ITextureDictionary
     {
-        private TextureDictionary textureDictionary;
+        private PgDictionary64<TextureDX11> textureDictionary;
 
         public ITextureList Textures
         {
             get
             {
-                if (textureDictionary.Textures.Entries != null)
-                    return new TextureListWrapper_GTA5_pc(textureDictionary.Textures.Entries);
+                if (textureDictionary.Values.Entries != null)
+                    return new TextureListWrapper_GTA5_pc(textureDictionary.Values.Entries);
                 else
                     return null;
             }
@@ -54,7 +54,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
         public TextureDictionaryWrapper_GTA5_pc()
         { }
 
-        public TextureDictionaryWrapper_GTA5_pc(TextureDictionary baseClass)
+        public TextureDictionaryWrapper_GTA5_pc(PgDictionary64<TextureDX11> baseClass)
         {
             this.textureDictionary = baseClass;
         }
@@ -64,39 +64,37 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
 
             // structure
 
-            textureDictionary.VFT = 0x40570fd0;
-            textureDictionary.Unknown_4h = 0x00000001;
-            textureDictionary.Unknown_10h = 0x00000000;
-            textureDictionary.Unknown_14h = 0x00000000;
-            textureDictionary.Unknown_18h = 0x00000001;
+            textureDictionary.VFT = 0x0000000140570fd0;
+            textureDictionary.PagesInfoPointer = 0x0000000000000000;
+            textureDictionary.Count = 0x00000001;
             textureDictionary.Unknown_1Ch = 0x00000000;
 
             // references
 
             textureDictionary.PagesInfo = null;
 
-            if (textureDictionary.Textures.Entries != null)
+            if (textureDictionary.Values.Entries != null)
             {
 
                 var theHashList = new List<uint>();
-                foreach (var texture in textureDictionary.Textures.Entries)
+                foreach (var texture in textureDictionary.Values.Entries)
                 {
                     uint hash = Jenkins.Hash((string)texture.Name);
                     theHashList.Add(hash);
                 }
                 theHashList.Sort();
 
-                var bak = textureDictionary.Textures.Entries;
-                textureDictionary.TextureNameHashes.Entries = new ResourceSimpleArray<uint_r>();
-                textureDictionary.Textures.Entries = new ResourcePointerArray64<TextureDX11>();
+                var bak = textureDictionary.Values.Entries;
+                textureDictionary.Hashes.Entries = new ResourceSimpleArray<uint_r>();
+                textureDictionary.Values.Entries = new ResourcePointerArray64<TextureDX11>();
                 foreach (uint x in theHashList)
                 {
-                    textureDictionary.TextureNameHashes.Entries.Add((uint_r)x);
+                    textureDictionary.Hashes.Entries.Add((uint_r)x);
                     foreach (var g in bak)
                     {
                         uint tx = Jenkins.Hash((string)g.Name);
                         if (tx == x)
-                            textureDictionary.Textures.Entries.Add(g);
+                            textureDictionary.Values.Entries.Add(g);
                     }
                 }
 
@@ -112,7 +110,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
                 //textureDictionary.Textures = new ResourcePointerArray64<Texture_GTA5_pc>();
 
 
-                foreach (var texture in textureDictionary.Textures.Entries)
+                foreach (var texture in textureDictionary.Values.Entries)
                 {
                     (new TextureWrapper_GTA5_pc(texture)).UpdateClass();
                 }
@@ -129,7 +127,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
 
         }
 
-        public TextureDictionary GetObject()
+        public PgDictionary64<TextureDX11> GetObject()
         {
             return textureDictionary;
         }

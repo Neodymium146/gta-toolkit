@@ -33,7 +33,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
     /// </summary>
     public class TextureDictionaryFileWrapper_GTA5_pc : ITextureDictionaryFile
     {
-        private TextureDictionary textureDictionary;
+        private PgDictionary64<TextureDX11> textureDictionary;
 
         /// <summary>
         /// Gets the texture dictionary.
@@ -45,9 +45,9 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
 
         public TextureDictionaryFileWrapper_GTA5_pc()
         {
-            textureDictionary = new TextureDictionary();
-            textureDictionary.TextureNameHashes.Entries = new ResourceSimpleArray<uint_r>();
-            textureDictionary.Textures.Entries = new ResourcePointerArray64<TextureDX11>();
+            textureDictionary = new PgDictionary64<TextureDX11>();
+            textureDictionary.Hashes.Entries = new ResourceSimpleArray<uint_r>();
+            textureDictionary.Values.Entries = new ResourcePointerArray64<TextureDX11>();
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
         /// </summary>
         public void Load(string fileName)
         {
-            var resource = new ResourceFile_GTA5_pc<TextureDictionary>();
+            var resource = new ResourceFile_GTA5_pc<PgDictionary64<TextureDX11>>();
             resource.Load(fileName);
 
             textureDictionary = resource.ResourceData;
@@ -69,7 +69,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
             var w = new TextureDictionaryWrapper_GTA5_pc(textureDictionary);
             w.UpdateClass();
 
-            var resource = new ResourceFile_GTA5_pc<TextureDictionary>();
+            var resource = new ResourceFile_GTA5_pc<PgDictionary64<TextureDX11>>();
             resource.ResourceData = textureDictionary;
             resource.Version = 13;
             resource.Save(fileName);
@@ -77,7 +77,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
 
         public void Load(Stream stream)
         {
-            var resource = new ResourceFile_GTA5_pc<TextureDictionary>();
+            var resource = new ResourceFile_GTA5_pc<PgDictionary64<TextureDX11>>();
             resource.Load(stream);
 
             if (resource.Version != 13)
@@ -91,7 +91,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
             var w = new TextureDictionaryWrapper_GTA5_pc(textureDictionary);
             w.UpdateClass();
 
-            var resource = new ResourceFile_GTA5_pc<TextureDictionary>();
+            var resource = new ResourceFile_GTA5_pc<PgDictionary64<TextureDX11>>();
             resource.ResourceData = textureDictionary;
             resource.Version = 13;
             resource.Save(stream);

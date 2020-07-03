@@ -28,7 +28,7 @@ namespace RageLib.Resources
     // crFrameFilter -> this is polymorphic, there are many filters
     public class Filter : ResourceSystemBlock
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public uint VFT;

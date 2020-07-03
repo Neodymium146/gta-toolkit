@@ -21,49 +21,29 @@
 */
 
 using RageLib.Resources.Common;
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
-    // rmcDrawableBase
     // rmcDrawable
-    public class Drawable : FileBase64_GTA5_pc
+    public class Drawable : DrawableBase
     {
-        public override long Length => 0xA8;
+        public override long BlockLength => 0xA8;
 
         // structure data
-        public ulong ShaderGroupPointer;
         public ulong SkeletonPointer;
-        public RAGE_Vector3 BoundingCenter;
-        public float BoundingSphereRadius;
-        public RAGE_Vector4 BoundingBoxMin;
-        public RAGE_Vector4 BoundingBoxMax;
-        public ulong DrawableModelsHighPointer;
-        public ulong DrawableModelsMediumPointer;
-        public ulong DrawableModelsLowPointer;
-        public ulong DrawableModelsVeryLowPointer;
-        public float Unknown_70h;
-        public float Unknown_74h;
-        public float Unknown_78h;
-        public float Unknown_7Ch;
-        public uint Unknown_80h;
-        public uint Unknown_84h;
-        public uint Unknown_88h;
-        public uint Unknown_8Ch;
+        public LodGroup LodGroup;
         public ulong JointsPointer;
-        public uint Unknown_98h;
+        public ushort Unknown_98h;
+        public ushort Unknown_9Ah;
         public uint Unknown_9Ch; // 0x00000000
-        public ulong DrawableModelsXPointer;
+        public ulong PrimaryDrawableModelsPointer;
 
         // reference data
-        public ShaderGroup ShaderGroup;
         public SkeletonData Skeleton;
-        public ResourcePointerList64<DrawableModel> DrawableModelsHigh;
-        public ResourcePointerList64<DrawableModel> DrawableModelsMedium;
-        public ResourcePointerList64<DrawableModel> DrawableModelsLow;
-        public ResourcePointerList64<DrawableModel> DrawableModelsVeryLow;
         public Joints Joints;
-        public ResourcePointerList64<DrawableModel> DrawableModelsX;
+        public ResourcePointerList64<DrawableModel> PrimaryDrawableModels;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -73,53 +53,23 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Read(reader, parameters);
 
             // read structure data
-            this.ShaderGroupPointer = reader.ReadUInt64();
             this.SkeletonPointer = reader.ReadUInt64();
-            this.BoundingCenter = reader.ReadBlock<RAGE_Vector3>();
-            this.BoundingSphereRadius = reader.ReadSingle();
-            this.BoundingBoxMin = reader.ReadBlock<RAGE_Vector4>();
-            this.BoundingBoxMax = reader.ReadBlock<RAGE_Vector4>();
-            this.DrawableModelsHighPointer = reader.ReadUInt64();
-            this.DrawableModelsMediumPointer = reader.ReadUInt64();
-            this.DrawableModelsLowPointer = reader.ReadUInt64();
-            this.DrawableModelsVeryLowPointer = reader.ReadUInt64();
-            this.Unknown_70h = reader.ReadSingle();
-            this.Unknown_74h = reader.ReadSingle();
-            this.Unknown_78h = reader.ReadSingle();
-            this.Unknown_7Ch = reader.ReadSingle();
-            this.Unknown_80h = reader.ReadUInt32();
-            this.Unknown_84h = reader.ReadUInt32();
-            this.Unknown_88h = reader.ReadUInt32();
-            this.Unknown_8Ch = reader.ReadUInt32();
+            this.LodGroup = reader.ReadBlock<LodGroup>();
             this.JointsPointer = reader.ReadUInt64();
-            this.Unknown_98h = reader.ReadUInt32();
+            this.Unknown_98h = reader.ReadUInt16();
+            this.Unknown_9Ah = reader.ReadUInt16();
             this.Unknown_9Ch = reader.ReadUInt32();
-            this.DrawableModelsXPointer = reader.ReadUInt64();
+            this.PrimaryDrawableModelsPointer = reader.ReadUInt64();
 
             // read reference data
-            this.ShaderGroup = reader.ReadBlockAt<ShaderGroup>(
-                this.ShaderGroupPointer // offset
-            );
             this.Skeleton = reader.ReadBlockAt<SkeletonData>(
                 this.SkeletonPointer // offset
-            );
-            this.DrawableModelsHigh = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(
-                this.DrawableModelsHighPointer // offset
-            );
-            this.DrawableModelsMedium = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(
-                this.DrawableModelsMediumPointer // offset
-            );
-            this.DrawableModelsLow = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(
-                this.DrawableModelsLowPointer // offset
-            );
-            this.DrawableModelsVeryLow = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(
-                this.DrawableModelsVeryLowPointer // offset
             );
             this.Joints = reader.ReadBlockAt<Joints>(
                 this.JointsPointer // offset
             );
-            this.DrawableModelsX = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(
-                this.DrawableModelsXPointer // offset
+            this.PrimaryDrawableModels = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(
+                this.PrimaryDrawableModelsPointer // offset
             );
         }
 
@@ -131,38 +81,18 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.ShaderGroupPointer = (ulong)(this.ShaderGroup != null ? this.ShaderGroup.Position : 0);
-            this.SkeletonPointer = (ulong)(this.Skeleton != null ? this.Skeleton.Position : 0);
-            this.DrawableModelsHighPointer = (ulong)(this.DrawableModelsHigh != null ? this.DrawableModelsHigh.Position : 0);
-            this.DrawableModelsMediumPointer = (ulong)(this.DrawableModelsMedium != null ? this.DrawableModelsMedium.Position : 0);
-            this.DrawableModelsLowPointer = (ulong)(this.DrawableModelsLow != null ? this.DrawableModelsLow.Position : 0);
-            this.DrawableModelsVeryLowPointer = (ulong)(this.DrawableModelsVeryLow != null ? this.DrawableModelsVeryLow.Position : 0);
-            this.JointsPointer = (ulong)(this.Joints != null ? this.Joints.Position : 0);
-            this.DrawableModelsXPointer = (ulong)(this.DrawableModelsX != null ? this.DrawableModelsX.Position : 0);
+            this.SkeletonPointer = (ulong)(this.Skeleton != null ? this.Skeleton.BlockPosition : 0);
+            this.JointsPointer = (ulong)(this.Joints != null ? this.Joints.BlockPosition : 0);
+            this.PrimaryDrawableModelsPointer = (ulong)(this.PrimaryDrawableModels != null ? this.PrimaryDrawableModels.BlockPosition : 0);
 
             // write structure data
-            writer.Write(this.ShaderGroupPointer);
             writer.Write(this.SkeletonPointer);
-            writer.WriteBlock(this.BoundingCenter);
-            writer.Write(this.BoundingSphereRadius);
-            writer.WriteBlock(this.BoundingBoxMin);
-            writer.WriteBlock(this.BoundingBoxMax);
-            writer.Write(this.DrawableModelsHighPointer);
-            writer.Write(this.DrawableModelsMediumPointer);
-            writer.Write(this.DrawableModelsLowPointer);
-            writer.Write(this.DrawableModelsVeryLowPointer);
-            writer.Write(this.Unknown_70h);
-            writer.Write(this.Unknown_74h);
-            writer.Write(this.Unknown_78h);
-            writer.Write(this.Unknown_7Ch);
-            writer.Write(this.Unknown_80h);
-            writer.Write(this.Unknown_84h);
-            writer.Write(this.Unknown_88h);
-            writer.Write(this.Unknown_8Ch);
+            writer.WriteBlock(this.LodGroup);
             writer.Write(this.JointsPointer);
             writer.Write(this.Unknown_98h);
+            writer.Write(this.Unknown_9Ah);
             writer.Write(this.Unknown_9Ch);
-            writer.Write(this.DrawableModelsXPointer);
+            writer.Write(this.PrimaryDrawableModelsPointer);
         }
 
         /// <summary>
@@ -171,15 +101,17 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>(base.GetReferences());
-            if (ShaderGroup != null) list.Add(ShaderGroup);
             if (Skeleton != null) list.Add(Skeleton);
-            if (DrawableModelsHigh != null) list.Add(DrawableModelsHigh);
-            if (DrawableModelsMedium != null) list.Add(DrawableModelsMedium);
-            if (DrawableModelsLow != null) list.Add(DrawableModelsLow);
-            if (DrawableModelsVeryLow != null) list.Add(DrawableModelsVeryLow);
             if (Joints != null) list.Add(Joints);
-            if (DrawableModelsX != null) list.Add(DrawableModelsX);
+            if (PrimaryDrawableModels != null) list.Add(PrimaryDrawableModels);
             return list.ToArray();
+        }
+
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x20, LodGroup)
+            };
         }
     }
 }

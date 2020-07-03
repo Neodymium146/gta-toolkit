@@ -34,7 +34,7 @@ namespace RageLib.Resources
         /// <summary>
         /// Gets or sets the position of the data block.
         /// </summary>
-        public virtual long Position
+        public virtual long BlockPosition
         {
             get
             {
@@ -45,7 +45,7 @@ namespace RageLib.Resources
                 position = value;
                 foreach (var part in GetParts())
                 {
-                    part.Item2.Position = value + part.Item1;
+                    part.Item2.BlockPosition = value + part.Item1;
                 }
             }
         }
@@ -53,7 +53,7 @@ namespace RageLib.Resources
         /// <summary>
         /// Gets the length of the data block.
         /// </summary>
-        public abstract long Length
+        public abstract long BlockLength
         {
             get;
         }
@@ -67,6 +67,11 @@ namespace RageLib.Resources
         /// Writes the data block.
         /// </summary>
         public abstract void Write(ResourceDataWriter writer, params object[] parameters);
+
+        /// <summary>
+        /// Updates the data block.
+        /// </summary>
+        public virtual void Update() { }
 
         /// <summary>
         /// Returns a list of data blocks that are part of this block.
@@ -98,7 +103,7 @@ namespace RageLib.Resources
         /// <summary>
         /// Gets or sets the position of the data block.
         /// </summary>
-        public virtual long Position
+        public virtual long BlockPosition
         {
             get;
             set;
@@ -107,7 +112,7 @@ namespace RageLib.Resources
         /// <summary>
         /// Gets the length of the data block.
         /// </summary>
-        public abstract long Length
+        public abstract long BlockLength
         {
             get;
         }

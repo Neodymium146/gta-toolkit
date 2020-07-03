@@ -109,8 +109,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
         private void MetaInitialize()
         {
             meta = new MetaFile();
-            meta.VFT = 0x405bc808;
-            meta.Unknown_4h = 1;
+            meta.VFT = 0x01405bc808;
             meta.Unknown_10h = 0x50524430;
             meta.Unknown_14h = 0x0079;
         }

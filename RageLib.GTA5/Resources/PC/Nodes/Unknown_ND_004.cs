@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Nodes
 {
     public class Unknown_ND_004 : ResourceSystemBlock
     {
-        public override long Length => 8;
+        public override long BlockLength => 8;
 
         // structure data
         public ushort Unknown_0h;

@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Expressions
     // crExpressions
     public class Expression : ResourceSystemBlock
     {
-        public override long Length => 0x90;
+        public override long BlockLength => 0x90;
 
         // structure data
         public uint VFT;
@@ -104,7 +104,7 @@ namespace RageLib.Resources.GTA5.PC.Expressions
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.VFT);

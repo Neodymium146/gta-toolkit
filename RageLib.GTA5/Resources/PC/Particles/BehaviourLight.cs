@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxu_Light
     public class BehaviourLight : Behaviour
     {
-        public override long Length => 0x550;
+        public override long BlockLength => 0x550;
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;

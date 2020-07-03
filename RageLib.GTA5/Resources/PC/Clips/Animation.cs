@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crAnimation
     public class Animation : ResourceSystemBlock
     {
-        public override long Length => 0x60;
+        public override long BlockLength => 0x60;
 
         // structure data
         public uint VFT;

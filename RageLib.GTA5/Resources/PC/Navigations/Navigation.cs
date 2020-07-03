@@ -26,9 +26,9 @@ using System.Collections.Generic;
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
     // CNavMesh
-    public class Navigation : FileBase64_GTA5_pc
+    public class Navigation : PgBase64
     {
-        public override long Length => 0x170;
+        public override long BlockLength => 0x170;
 
         // structure data
         public uint Unknown_10h;
@@ -246,13 +246,13 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             base.Write(writer, parameters);
 
             // update structure data
-            this.VerticesPointer = (ulong)(this.Vertices != null ? this.Vertices.Position : 0);
-            this.IndicesPointer = (ulong)(this.Indices != null ? this.Indices.Position : 0);
-            this.p4 = (ulong)(this.AdjPolys != null ? this.AdjPolys.Position : 0);
-            this.p5 = (ulong)(this.Polys != null ? this.Polys.Position : 0);
-            this.SectorTreePointer = (ulong)(this.SectorTree != null ? this.SectorTree.Position : 0);
-            this.PortalsPointer = (ulong)(this.Portals != null ? this.Portals.Position : 0);
-            this.p8 = (ulong)(this.p8data != null ? this.p8data.Position : 0);
+            this.VerticesPointer = (ulong)(this.Vertices != null ? this.Vertices.BlockPosition : 0);
+            this.IndicesPointer = (ulong)(this.Indices != null ? this.Indices.BlockPosition : 0);
+            this.p4 = (ulong)(this.AdjPolys != null ? this.AdjPolys.BlockPosition : 0);
+            this.p5 = (ulong)(this.Polys != null ? this.Polys.BlockPosition : 0);
+            this.SectorTreePointer = (ulong)(this.SectorTree != null ? this.SectorTree.BlockPosition : 0);
+            this.PortalsPointer = (ulong)(this.Portals != null ? this.Portals.BlockPosition : 0);
+            this.p8 = (ulong)(this.p8data != null ? this.p8data.BlockPosition : 0);
             // this.c0 = (uint)(this.p7data != null ? this.p7data.Count : 0);
             // this.c1 = (uint)(this.p8data != null ? this.p8data.Count : 0);
 

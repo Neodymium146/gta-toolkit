@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
     // clothController
     public class ClothController : ResourceSystemBlock
     {
-        public override long Length => 0x80;
+        public override long BlockLength => 0x80;
 
         // structure data
         public uint VFT;
@@ -123,11 +123,11 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.BridgeSimGfxPointer = (ulong)(this.BridgeSimGfx != null ? this.BridgeSimGfx.Position : 0);
-            this.MorphControllerPointer = (ulong)(this.MorphController != null ? this.MorphController.Position : 0);
-            this.VerletCloth1Pointer = (ulong)(this.VerletCloth1 != null ? this.VerletCloth1.Position : 0);
-            this.VerletCloth2Pointer = (ulong)(this.VerletCloth2 != null ? this.VerletCloth2.Position : 0);
-            this.VerletCloth3Pointer = (ulong)(this.VerletCloth3 != null ? this.VerletCloth3.Position : 0);
+            this.BridgeSimGfxPointer = (ulong)(this.BridgeSimGfx != null ? this.BridgeSimGfx.BlockPosition : 0);
+            this.MorphControllerPointer = (ulong)(this.MorphController != null ? this.MorphController.BlockPosition : 0);
+            this.VerletCloth1Pointer = (ulong)(this.VerletCloth1 != null ? this.VerletCloth1.BlockPosition : 0);
+            this.VerletCloth2Pointer = (ulong)(this.VerletCloth2 != null ? this.VerletCloth2.BlockPosition : 0);
+            this.VerletCloth3Pointer = (ulong)(this.VerletCloth3 != null ? this.VerletCloth3.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.VFT);

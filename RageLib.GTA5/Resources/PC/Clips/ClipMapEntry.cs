@@ -26,7 +26,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
 {
     public class ClipMapEntry : ResourceSystemBlock
     {
-        public override long Length => 0x20;
+        public override long BlockLength => 0x20;
 
         // structure data
         public uint Hash;
@@ -68,8 +68,8 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.ClipPointer = (ulong)(this.Clip != null ? this.Clip.Position : 0);
-            this.NextPointer = (ulong)(this.Next != null ? this.Next.Position : 0);
+            this.ClipPointer = (ulong)(this.Clip != null ? this.Clip.BlockPosition : 0);
+            this.NextPointer = (ulong)(this.Next != null ? this.Next.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Hash);

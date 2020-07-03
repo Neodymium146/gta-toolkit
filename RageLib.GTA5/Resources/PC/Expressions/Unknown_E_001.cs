@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Expressions
 {
     public class Unknown_E_001 : ResourceSystemBlock
     {
-        public override long Length
+        public override long BlockLength
         {
             get { return 16 + Data1.Length + Data2.Length + Data3.Length; }
         }

@@ -20,23 +20,28 @@
     THE SOFTWARE.
 */
 
-using NUnit.Framework;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RageLib.GTA5.ResourceWrappers.PC.Meta;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Xml;
 
 namespace RageLib.GTA5.Tests.ResourceWrappers.PC.Meta
 {
-    [TestFixture]
+    [TestClass]
     public class MetaXmlExporterIntegrationTests
     {
         private const string TEST_DATASET = "RageLib.GTA5.Tests.ResourceWrappers.PC.Meta.TestDataset.xml";
 
-        [Test]
+        [TestMethod]
         public void Export_Always_CorrectlyExportsXml()
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
             var exporter = new MetaXmlExporter();
             var xmlStream = new MemoryStream();
 

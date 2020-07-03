@@ -40,7 +40,7 @@ namespace RageLib.Resources.Common
             return i;
         }
 
-        public override long Length
+        public override long BlockLength
         {
             get { return 8 * data_items.Count; }
         }
@@ -93,7 +93,7 @@ namespace RageLib.Resources.Common
             data_pointers = new List<ulong>();
             foreach (var x in data_items)
                 if (x != null)
-                    data_pointers.Add((uint)x.Position);
+                    data_pointers.Add((uint)x.BlockPosition);
                 else
                     data_pointers.Add((uint)0);
 

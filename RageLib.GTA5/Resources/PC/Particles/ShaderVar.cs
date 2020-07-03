@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxShaderVar
     public class ShaderVar : ResourceSystemBlock, IResourceXXSystemBlock
     {
-        public override long Length => 24;
+        public override long BlockLength => 24;
 
         // structure data
         public uint VFT;

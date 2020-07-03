@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 {
     public class JointRotationLimit : ResourceSystemBlock
     {
-        public override long Length => 0xC0;
+        public override long BlockLength => 0xC0;
 
         // structure data
         public uint Unknown_0h; // 0x00000000

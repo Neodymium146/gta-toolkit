@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxd_Sprite
     public class BehaviourSprite : Behaviour
     {
-        public override long Length => 0x70;
+        public override long BlockLength => 0x70;
 
         // structure data
         public uint Unknown_10h; // 0x00000000

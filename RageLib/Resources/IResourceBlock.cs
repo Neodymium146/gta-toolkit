@@ -32,12 +32,12 @@ namespace RageLib.Resources
         /// <summary>
         /// Gets or sets the position of the data block.
         /// </summary>
-        long Position { get; set; }
+        long BlockPosition { get; set; }
 
         /// <summary>
         /// Gets the length of the data block.
         /// </summary>
-        long Length { get; }
+        long BlockLength { get; }
 
         /// <summary>
         /// Reads the data block.
@@ -64,6 +64,11 @@ namespace RageLib.Resources
         /// Returns a list of data blocks that are referenced by this block.
         /// </summary>
         IResourceBlock[] GetReferences();
+
+        /// <summary>
+        /// Updates the data block.
+        /// </summary>
+        void Update();
     }
 
     public interface IResourceXXSystemBlock : IResourceSystemBlock

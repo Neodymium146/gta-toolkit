@@ -32,11 +32,11 @@ namespace RageLib.Resources
     /// </summary>
     public class ResourceDataReader : DataReader
     {
-        private const long SYSTEM_BASE = 0x50000000;
-        private const long GRAPHICS_BASE = 0x60000000;
+        private const long VIRTUAL_BASE = 0x50000000;
+        private const long PHYSICAL_BASE = 0x60000000;
 
-        private Stream systemStream;
-        private Stream graphicsStream;
+        private Stream virtualStream;
+        private Stream physicalStream;
 
         // this is a dictionary that contains all the resource blocks
         // which were read from this resource reader
@@ -63,13 +63,13 @@ namespace RageLib.Resources
         }
 
         /// <summary>
-        /// Initializes a new resource data reader for the specified system- and graphics-stream.
+        /// Initializes a new resource data reader for the specified virtual- and physical-stream.
         /// </summary>
-        public ResourceDataReader(Stream systemStream, Stream graphicsStream, Endianess endianess = Endianess.LittleEndian)
+        public ResourceDataReader(Stream virtualStream, Stream physicalStream, Endianess endianess = Endianess.LittleEndian)
             : base((Stream)null, endianess)
         {
-            this.systemStream = systemStream;
-            this.graphicsStream = graphicsStream;
+            this.virtualStream = virtualStream;
+            this.physicalStream = physicalStream;
             this.blockPool = new Dictionary<long, List<IResourceBlock>>();
         }
 
@@ -79,41 +79,41 @@ namespace RageLib.Resources
         /// </summary>
         protected override byte[] ReadFromStream(int count, bool ignoreEndianess = false)
         {
-            if ((Position & SYSTEM_BASE) == SYSTEM_BASE)
+            if ((Position & VIRTUAL_BASE) == VIRTUAL_BASE)
             {
-                // read from system stream...
+                // read from virtual stream...
 
-                systemStream.Position = Position & ~0x50000000;
+                virtualStream.Position = Position & ~0x50000000;
 
                 var buffer = new byte[count];
-                systemStream.Read(buffer, 0, count);
+                virtualStream.Read(buffer, 0, count);
 
                 // handle endianess
-                if (!ignoreEndianess && (Endianess == Endianess.BigEndian))
+                if (!ignoreEndianess && !EndianessMatchesArchitecture)
                 {
                     Array.Reverse(buffer);
                 }
 
-                Position = systemStream.Position | 0x50000000;
+                Position = virtualStream.Position | 0x50000000;
                 return buffer;
 
             }
-            if ((Position & GRAPHICS_BASE) == GRAPHICS_BASE)
+            if ((Position & PHYSICAL_BASE) == PHYSICAL_BASE)
             {
-                // read from graphic stream...
+                // read from physical stream...
 
-                graphicsStream.Position = Position & ~0x60000000;
+                physicalStream.Position = Position & ~0x60000000;
 
                 var buffer = new byte[count];
-                graphicsStream.Read(buffer, 0, count);
+                physicalStream.Read(buffer, 0, count);
 
                 // handle endianess
-                if (!ignoreEndianess && (Endianess == Endianess.BigEndian))
+                if (!ignoreEndianess && !EndianessMatchesArchitecture)
                 {
                     Array.Reverse(buffer);
                 }
 
-                Position = graphicsStream.Position | 0x60000000;
+                Position = physicalStream.Position | 0x60000000;
                 return buffer;
             }
             throw new Exception("illegal position!");
@@ -132,7 +132,7 @@ namespace RageLib.Resources
                 foreach (var block in blocks)
                     if (block is T)
                     {
-                        Position += block.Length;
+                        Position += block.BlockLength;
 
                         // since a resource block of the same type
                         // has been found at the same address, return it
@@ -162,7 +162,7 @@ namespace RageLib.Resources
 
             var classPosition = Position;            
             result.Read(this, parameters);
-            result.Position = classPosition;
+            result.BlockPosition = classPosition;
             return (T)result;
         }
 

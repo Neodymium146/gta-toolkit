@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crClip
     public class Clip : ResourceSystemBlock, IResourceXXSystemBlock
     {
-        public override long Length => 0x70;
+        public override long BlockLength => 0x70;
 
         // structure data
         public uint VFT;
@@ -100,11 +100,11 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
             this.NameLength1 = (ushort)(this.Name != null ? this.Name.Value.Length : 0);
             this.NameLength2 = (ushort)(this.Name != null ? this.Name.Value.Length + 1 : 0);
-            this.TagsPointer = (ulong)(this.Tags != null ? this.Tags.Position : 0);
-            this.PropertiesPointer = (ulong)(this.Properties != null ? this.Properties.Position : 0);
+            this.TagsPointer = (ulong)(this.Tags != null ? this.Tags.BlockPosition : 0);
+            this.PropertiesPointer = (ulong)(this.Properties != null ? this.Properties.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.VFT);

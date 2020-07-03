@@ -28,12 +28,10 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 {
     public class BVH : ResourceSystemBlock
     {
-        public override long Length => 0x80;
+        public override long BlockLength => 0x80;
 
         // structure data
-        public ulong NodesPointer;
-        public uint NodesCount;
-        public uint NodesCapacity;
+        public ResourceSimpleList32_64<BVHNode> Nodes;
         public uint Unknown_10h; // 0x00000000
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
@@ -43,14 +41,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public RAGE_Vector4 BoundingBoxCenter;
         public RAGE_Vector4 QuantumInverse;
         public RAGE_Vector4 Quantum; // bounding box dimension / 2^16
-        public ulong TreesPointer;
-        public ushort TreesCount1;
-        public ushort TreesCount2;
-        public uint Unknown_7Ch;
-
-        // reference data
-        public ResourceSimpleArray<BVHNode> Nodes;
-        public ResourceSimpleArray<BVHTreeInfo> Trees;
+        public ResourceSimpleList64<BVHTreeInfo> Trees;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -58,9 +49,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.NodesPointer = reader.ReadUInt64();
-            this.NodesCount = reader.ReadUInt32();
-            this.NodesCapacity = reader.ReadUInt32();
+            this.Nodes = reader.ReadBlock<ResourceSimpleList32_64<BVHNode>>();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
@@ -70,20 +59,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.BoundingBoxCenter = reader.ReadBlock<RAGE_Vector4>();
             this.QuantumInverse = reader.ReadBlock<RAGE_Vector4>();
             this.Quantum = reader.ReadBlock<RAGE_Vector4>();
-            this.TreesPointer = reader.ReadUInt64();
-            this.TreesCount1 = reader.ReadUInt16();
-            this.TreesCount2 = reader.ReadUInt16();
-            this.Unknown_7Ch = reader.ReadUInt32();
-
-            // read reference data
-            this.Nodes = reader.ReadBlockAt<ResourceSimpleArray<BVHNode>>(
-                this.NodesPointer, // offset
-                this.NodesCount
-            );
-            this.Trees = reader.ReadBlockAt<ResourceSimpleArray<BVHTreeInfo>>(
-               this.TreesPointer, // offset
-               this.TreesCount1
-           );
+            this.Trees = reader.ReadBlock<ResourceSimpleList64<BVHTreeInfo>>();
         }
 
         /// <summary>
@@ -91,18 +67,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            // update structure data
-            this.NodesPointer = (ulong)(this.Nodes != null ? this.Nodes.Position : 0);
-            this.NodesCount = (uint)(this.Nodes != null ? this.Nodes.Count : 0);
-            this.NodesCapacity = (uint)(this.Nodes != null ? this.Nodes.Count : 0);
-            this.TreesPointer = (ulong)(this.Trees != null ? this.Trees.Position : 0);
-            this.TreesCount1 = (ushort)(this.Trees != null ? this.Trees.Count : 0);
-            this.TreesCount2 = (ushort)(this.Trees != null ? this.Trees.Count : 0);
-
-            // write structure data
-            writer.Write(this.NodesPointer);
-            writer.Write(this.NodesCount);
-            writer.Write(this.NodesCapacity);
+            writer.WriteBlock(this.Nodes);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
@@ -112,31 +77,19 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             writer.WriteBlock(this.BoundingBoxCenter);
             writer.WriteBlock(this.QuantumInverse);
             writer.WriteBlock(this.Quantum);
-            writer.Write(this.TreesPointer);
-            writer.Write(this.TreesCount1);
-            writer.Write(this.TreesCount2);
-            writer.Write(this.Unknown_7Ch);
-        }
-
-        /// <summary>
-        /// Returns a list of data blocks which are referenced by this block.
-        /// </summary>
-        public override IResourceBlock[] GetReferences()
-        {
-            var list = new List<IResourceBlock>();
-            if (Nodes != null) list.Add(Nodes);
-            if (Trees != null) list.Add(Trees);
-            return list.ToArray();
+            writer.WriteBlock(this.Trees);
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x00, Nodes),
                 new Tuple<long, IResourceBlock>(0x20, BoundingBoxMin),
                 new Tuple<long, IResourceBlock>(0x30, BoundingBoxMax),
                 new Tuple<long, IResourceBlock>(0x40, BoundingBoxCenter),
                 new Tuple<long, IResourceBlock>(0x50, QuantumInverse),
-                new Tuple<long, IResourceBlock>(0x60, Quantum)
+                new Tuple<long, IResourceBlock>(0x60, Quantum),
+                new Tuple<long, IResourceBlock>(0x70, Trees)
             };
         }
     }

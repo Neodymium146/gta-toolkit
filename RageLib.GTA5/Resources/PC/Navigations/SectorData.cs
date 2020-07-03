@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
 {
     public class SectorData : ResourceSystemBlock
     {
-        public override long Length => 0x20;
+        public override long BlockLength => 0x20;
 
         // structure data
         public uint c1;
@@ -73,8 +73,8 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.Position : 0);
-            this.p2 = (ulong)(this.p2data != null ? this.p2data.Position : 0);
+            this.p1 = (ulong)(this.p1data != null ? this.p1data.BlockPosition : 0);
+            this.p2 = (ulong)(this.p2data != null ? this.p2data.BlockPosition : 0);
             this.c2 = (ushort)(this.p1data != null ? this.p1data.Count : 0);
             this.c3 = (ushort)(this.p2data != null ? this.p2data.Count : 0);
 

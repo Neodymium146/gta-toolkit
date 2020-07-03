@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
 {
     public class SectorDataUnk : ResourceSystemBlock
     {
-        public override long Length => 8;
+        public override long BlockLength => 8;
 
         // structure data
         public ushort Unknown_0h;

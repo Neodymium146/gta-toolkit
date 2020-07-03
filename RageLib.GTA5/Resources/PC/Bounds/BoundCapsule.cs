@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
     // phBoundCapsule
     public class BoundCapsule : Bound
     {
-        public override long Length => 0x80;
+        public override long BlockLength => 0x80;
 
         // structure data
         public uint Unknown_70h; // 0x00000000

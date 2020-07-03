@@ -22,6 +22,7 @@
 
 using System;
 using System.IO;
+using System.Numerics;
 
 namespace RageLib.Data
 {
@@ -31,7 +32,9 @@ namespace RageLib.Data
     public class DataWriter
     {
         private Stream baseStream;
-        
+
+        public bool EndianessMatchesArchitecture { get; protected set; }
+
         /// <summary>
         /// Gets or sets the endianess of the underlying stream.
         /// </summary>
@@ -74,6 +77,7 @@ namespace RageLib.Data
         {
             this.baseStream = stream;
             this.Endianess = endianess;
+            this.EndianessMatchesArchitecture = DataHelpers.EndianessMatchesCurrentArchitecture(endianess);
         }
 
         /// <summary>
@@ -82,7 +86,7 @@ namespace RageLib.Data
         /// </summary>
         protected virtual void WriteToStream(byte[] value, bool ignoreEndianess = false)
         {
-            if (!ignoreEndianess && (Endianess == Endianess.BigEndian))
+            if (!ignoreEndianess && !EndianessMatchesArchitecture)
             {
                 var buffer = (byte[])value.Clone();
                 Array.Reverse(buffer);
@@ -182,6 +186,75 @@ namespace RageLib.Data
             foreach (var c in value)
                 Write((byte)c);
             Write((byte)0);
+        }
+
+        /// <summary>
+        /// Writes a vector with two single precision floating point values
+        /// </summary>
+        /// <param name="value"></param>
+        public void Write(Vector2 value)
+        {
+            Write(value.X);
+            Write(value.Y);
+        }
+
+        /// <summary>
+        /// Writes a vector with three single precision floating point values
+        /// </summary>
+        /// <param name="value"></param>
+        public void Write(Vector3 value)
+        {
+            Write(value.X);
+            Write(value.Y);
+            Write(value.Z);
+        }
+
+        /// <summary>
+        /// Writes a vector with four single precision floating point values
+        /// </summary>
+        /// <param name="value"></param>
+        public void Write(Vector4 value)
+        {
+            Write(value.X);
+            Write(value.Y);
+            Write(value.Z);
+            Write(value.W);
+        }
+
+        /// <summary>
+        /// Writes a quaternion with four single precision floating point values
+        /// </summary>
+        /// <param name="value"></param>
+        public void Write(Quaternion value)
+        {
+            Write(value.X);
+            Write(value.Y);
+            Write(value.Z);
+            Write(value.W);
+        }
+
+        /// <summary>
+        /// Writes a matrix with sixteen single precision floating point values
+        /// </summary>
+        /// <param name="value"></param>
+        public void Write(Matrix4x4 value)
+        {
+            Write(value.M11);
+            Write(value.M21);
+            Write(value.M31);
+            Write(value.M41);
+            Write(value.M12);
+            Write(value.M22);
+            Write(value.M32);
+            Write(value.M42);
+            Write(value.M13);
+            Write(value.M23);
+            Write(value.M33);
+            Write(value.M43);
+            Write(value.M14);
+            Write(value.M24);
+            Write(value.M34);
+            Write(value.M44);
         }
     }
 }

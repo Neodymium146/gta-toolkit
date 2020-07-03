@@ -26,7 +26,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 {
     public class ShaderParameter : ResourceSystemBlock
     {
-        public override long Length => 0x10;
+        public override long BlockLength => 0x10;
 
         // structure data
         public byte DataType;
@@ -70,11 +70,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// <summary>
         /// Returns a list of data blocks which are referenced by this block.
         /// </summary>
-        public override IResourceBlock[] GetReferences()
-        {
-            var list = new List<IResourceBlock>(base.GetReferences());
-            if (Data != null) list.Add(Data);
-            return list.ToArray();
-        }
+        //public override IResourceBlock[] GetReferences()
+        //{
+        //    var list = new List<IResourceBlock>(base.GetReferences());
+        //    if (Data != null) list.Add(Data);
+        //    return list.ToArray();
+        //}
     }
 }

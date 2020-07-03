@@ -33,13 +33,13 @@ namespace RageLib.Resources.Common
         /// <summary>
         /// Gets the length of the data block.
         /// </summary>
-        public override long Length
+        public override long BlockLength
         {
             get
             {
                 long length = 0;
                 foreach (var x in Data)
-                    length += x.Length;
+                    length += x.BlockLength;
                 return length;
             }
         }
@@ -91,7 +91,7 @@ namespace RageLib.Resources.Common
             foreach (var x in Data)
             {
                 list.Add(new Tuple<long, IResourceBlock>(length, x));
-                length += x.Length;
+                length += x.BlockLength;
             }
               
 

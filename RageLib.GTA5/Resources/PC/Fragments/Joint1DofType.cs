@@ -25,7 +25,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
     // phJoint1DofType
     public class Joint1DofType : JointType
     {
-        public override long Length => 0xB0;
+        public override long BlockLength => 0xB0;
 
         // structure data
         public uint Unknown_20h;

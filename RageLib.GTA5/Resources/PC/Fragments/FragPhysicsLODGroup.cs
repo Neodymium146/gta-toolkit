@@ -26,20 +26,15 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 {
     // pgBase
     // fragPhysicsLODGroup
-    public class FragPhysicsLODGroup : ResourceSystemBlock
+    public class FragPhysicsLODGroup : PgBase64
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
         public ulong PhysicsLOD1Pointer;
         public ulong PhysicsLOD2Pointer;
         public ulong PhysicsLOD3Pointer;
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
+        public ulong Unknown_28h; // 0x0000000000000000
 
         // reference data
         public FragPhysicsLOD PhysicsLOD1;
@@ -51,16 +46,13 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.PhysicsLOD1Pointer = reader.ReadUInt64();
             this.PhysicsLOD2Pointer = reader.ReadUInt64();
             this.PhysicsLOD3Pointer = reader.ReadUInt64();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
+            this.Unknown_28h = reader.ReadUInt64();
 
             // read reference data
             this.PhysicsLOD1 = reader.ReadBlockAt<FragPhysicsLOD>(
@@ -79,21 +71,18 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
-            this.PhysicsLOD1Pointer = (ulong)(this.PhysicsLOD1 != null ? this.PhysicsLOD1.Position : 0);
-            this.PhysicsLOD2Pointer = (ulong)(this.PhysicsLOD2 != null ? this.PhysicsLOD2.Position : 0);
-            this.PhysicsLOD3Pointer = (ulong)(this.PhysicsLOD3 != null ? this.PhysicsLOD3.Position : 0);
+            this.PhysicsLOD1Pointer = (ulong)(this.PhysicsLOD1 != null ? this.PhysicsLOD1.BlockPosition : 0);
+            this.PhysicsLOD2Pointer = (ulong)(this.PhysicsLOD2 != null ? this.PhysicsLOD2.BlockPosition : 0);
+            this.PhysicsLOD3Pointer = (ulong)(this.PhysicsLOD3 != null ? this.PhysicsLOD3.BlockPosition : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.PhysicsLOD1Pointer);
             writer.Write(this.PhysicsLOD2Pointer);
             writer.Write(this.PhysicsLOD3Pointer);
             writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
         }
 
         /// <summary>
@@ -101,7 +90,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (PhysicsLOD1 != null) list.Add(PhysicsLOD1);
             if (PhysicsLOD2 != null) list.Add(PhysicsLOD2);
             if (PhysicsLOD3 != null) list.Add(PhysicsLOD3);

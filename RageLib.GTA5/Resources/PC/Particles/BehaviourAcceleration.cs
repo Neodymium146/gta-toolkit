@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxu_Acceleration
     public class BehaviourAcceleration : Behaviour
     {
-        public override long Length => 0x170;
+        public override long BlockLength => 0x170;
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;

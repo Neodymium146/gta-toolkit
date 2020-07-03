@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
 {
     public class DataBlock : ResourceSystemBlock
     {
-        public override long Length => 0x10;
+        public override long BlockLength => 0x10;
 
         // structure data
         public int StructureNameHash { get; set; }
@@ -61,7 +61,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
         {
             // update structure data
             this.DataLength = this.Data?.Count ?? 0;
-            this.DataPointer = this.Data?.Position ?? 0;
+            this.DataPointer = this.Data?.BlockPosition ?? 0;
 
             // write structure data
             writer.Write(this.StructureNameHash);

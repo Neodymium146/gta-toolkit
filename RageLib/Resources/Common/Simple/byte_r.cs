@@ -30,7 +30,7 @@ namespace RageLib.Resources.Common
         /// <summary>
         /// Gets the length of the byte.
         /// </summary>
-        public override long Length
+        public override long BlockLength
         {
             get { return 1; }
         }

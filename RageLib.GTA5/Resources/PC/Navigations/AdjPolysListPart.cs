@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
 {
     public class AdjPolysListPart : ResourceSystemBlock
     {
-        public override long Length => 0x10;
+        public override long BlockLength => 0x10;
 
         // structure data
         public ulong AdjPolysPointer;
@@ -60,7 +60,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.AdjPolysPointer = (ulong)(this.AdjPolys != null ? this.AdjPolys.Position : 0);
+            this.AdjPolysPointer = (ulong)(this.AdjPolys != null ? this.AdjPolys.BlockPosition : 0);
             this.AdjPolysCount = (uint)(this.AdjPolys != null ? this.AdjPolys.Count : 0);
 
             // write structure data

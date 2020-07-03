@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
 {
     public class EnumEntryInfo : ResourceSystemBlock
     {
-        public override long Length => 8;
+        public override long BlockLength => 8;
 
         // structure data
         public int EntryNameHash { get; set; }

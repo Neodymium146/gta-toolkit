@@ -30,43 +30,31 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 {
     // fragType
     // gtaFragType
-    public class FragType : FileBase64_GTA5_pc
+    public class FragType : PgBase64
     {
-        public override long Length => 0x130;
+        public override long BlockLength => 0x130;
 
         // structure data
-        public uint Unknown_10h; // 0x00000000
-        public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h; // 0x00000000
-        public uint Unknown_1Ch; // 0x00000000
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h;
-        public uint Unknown_2Ch;
+        public ulong Unknown_10h; // 0x0000000000000000
+        public ulong Unknown_18h; // 0x0000000000000000
+        public RAGE_Vector3 BoundingSphereCenter;
+        public float BoundingSphereRadius;
         public ulong DrawablePointer;
         public ulong Unknown_28h_Pointer;
         public ulong Unknown_30h_Pointer;
         public uint Count0;
         public uint Unknown_4Ch;
-        public uint Unknown_50h; // 0x00000000
-        public uint Unknown_54h; // 0x00000000
+        public ulong Unknown_50h; // 0x0000000000000000
         public ulong NamePointer;
         public ResourcePointerList64<EnvironmentCloth> Clothes;
-        public uint Unknown_70h; // 0x00000000
-        public uint Unknown_74h; // 0x00000000
-        public uint Unknown_78h; // 0x00000000
-        public uint Unknown_7Ch; // 0x00000000
-        public uint Unknown_80h; // 0x00000000
-        public uint Unknown_84h; // 0x00000000
-        public uint Unknown_88h; // 0x00000000
-        public uint Unknown_8Ch; // 0x00000000
-        public uint Unknown_90h; // 0x00000000
-        public uint Unknown_94h; // 0x00000000
-        public uint Unknown_98h; // 0x00000000
-        public uint Unknown_9Ch; // 0x00000000
-        public uint Unknown_A0h; // 0x00000000
-        public uint Unknown_A4h; // 0x00000000
-        public ulong Unknown_A8h_Pointer;
+        public ulong Unknown_70h; // 0x0000000000000000
+        public ulong Unknown_78h; // 0x0000000000000000
+        public ulong Unknown_80h; // 0x0000000000000000
+        public ulong Unknown_88h; // 0x0000000000000000
+        public ulong Unknown_90h; // 0x0000000000000000
+        public ulong Unknown_98h; // 0x0000000000000000
+        public ulong Unknown_A0h; // 0x0000000000000000
+        public ulong MatrixSetPointer;
         public uint Unknown_B0h;
         public uint Unknown_B4h; // 0x00000000
         public uint Unknown_B8h;
@@ -75,35 +63,31 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_C4h;
         public uint Unknown_C8h; // 0xFFFFFFFF
         public uint Unknown_CCh;
-        public uint Unknown_D0h;
-        public uint Unknown_D4h;
+        public float Unknown_D0h;
+        public float Unknown_D4h;
         public byte Unknown_D8h;
         public byte Count3;
         public ushort Unknown_DAh;
         public uint Unknown_DCh; // 0x00000000
         public ulong Unknown_E0h_Pointer;
-        public uint Unknown_E8h; // 0x00000000
-        public uint Unknown_ECh; // 0x00000000
+        public ulong Unknown_E8h; // 0x0000000000000000
         public ulong PhysicsLODGroupPointer;
-        public ulong Unknown_F8h_Pointer;
-        public uint Unknown_100h; // 0x00000000
-        public uint Unknown_104h; // 0x00000000
-        public uint Unknown_108h; // 0x00000000
-        public uint Unknown_10Ch; // 0x00000000
+        public ulong ClothDrawablePointer;
+        public ulong Unknown_100h; // 0x0000000000000000
+        public ulong Unknown_108h; // 0x0000000000000000
         public ResourceSimpleList64<LightAttributes> LightAttributes;
         public ulong Unknown_120h_Pointer;
-        public uint Unknown_128h; // 0x00000000
-        public uint Unknown_12Ch; // 0x00000000
+        public ulong Unknown_128h; // 0x0000000000000000
 
         // reference data
         public FragDrawable Drawable;
         public ResourcePointerArray64<FragDrawable> Unknown_28h_Data;
         public ResourcePointerArray64<string_r> Unknown_30h_Data;
         public string_r Name;
-        public Unknown_F_003 Unknown_A8h_Data;
+        public MatrixSet MatrixSet;
         public ResourcePointerArray64<Unknown_F_004> Unknown_E0h_Data;
         public FragPhysicsLODGroup PhysicsLODGroup;
-        public FragDrawable Unknown_F8h_Data;
+        public FragDrawable ClothDrawable;
         public Unknown_F_002 Unknown_120h_Data;
 
         /// <summary>
@@ -114,38 +98,26 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
+            this.Unknown_10h = reader.ReadUInt64();
+            this.Unknown_18h = reader.ReadUInt64();
+            this.BoundingSphereCenter = reader.ReadBlock<RAGE_Vector3>();
+            this.BoundingSphereRadius = reader.ReadSingle();
             this.DrawablePointer = reader.ReadUInt64();
             this.Unknown_28h_Pointer = reader.ReadUInt64();
             this.Unknown_30h_Pointer = reader.ReadUInt64();
             this.Count0 = reader.ReadUInt32();
             this.Unknown_4Ch = reader.ReadUInt32();
-            this.Unknown_50h = reader.ReadUInt32();
-            this.Unknown_54h = reader.ReadUInt32();
+            this.Unknown_50h = reader.ReadUInt64();
             this.NamePointer = reader.ReadUInt64();
             this.Clothes = reader.ReadBlock<ResourcePointerList64<EnvironmentCloth>>();
-            this.Unknown_70h = reader.ReadUInt32();
-            this.Unknown_74h = reader.ReadUInt32();
-            this.Unknown_78h = reader.ReadUInt32();
-            this.Unknown_7Ch = reader.ReadUInt32();
-            this.Unknown_80h = reader.ReadUInt32();
-            this.Unknown_84h = reader.ReadUInt32();
-            this.Unknown_88h = reader.ReadUInt32();
-            this.Unknown_8Ch = reader.ReadUInt32();
-            this.Unknown_90h = reader.ReadUInt32();
-            this.Unknown_94h = reader.ReadUInt32();
-            this.Unknown_98h = reader.ReadUInt32();
-            this.Unknown_9Ch = reader.ReadUInt32();
-            this.Unknown_A0h = reader.ReadUInt32();
-            this.Unknown_A4h = reader.ReadUInt32();
-            this.Unknown_A8h_Pointer = reader.ReadUInt64();
+            this.Unknown_70h = reader.ReadUInt64();
+            this.Unknown_78h = reader.ReadUInt64();
+            this.Unknown_80h = reader.ReadUInt64();
+            this.Unknown_88h = reader.ReadUInt64();
+            this.Unknown_90h = reader.ReadUInt64();
+            this.Unknown_98h = reader.ReadUInt64();
+            this.Unknown_A0h = reader.ReadUInt64();
+            this.MatrixSetPointer = reader.ReadUInt64();
             this.Unknown_B0h = reader.ReadUInt32();
             this.Unknown_B4h = reader.ReadUInt32();
             this.Unknown_B8h = reader.ReadUInt32();
@@ -154,25 +126,21 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_C4h = reader.ReadUInt32();
             this.Unknown_C8h = reader.ReadUInt32();
             this.Unknown_CCh = reader.ReadUInt32();
-            this.Unknown_D0h = reader.ReadUInt32();
-            this.Unknown_D4h = reader.ReadUInt32();
+            this.Unknown_D0h = reader.ReadSingle();
+            this.Unknown_D4h = reader.ReadSingle();
             this.Unknown_D8h = reader.ReadByte();
             this.Count3 = reader.ReadByte();
             this.Unknown_DAh = reader.ReadUInt16();
             this.Unknown_DCh = reader.ReadUInt32();
             this.Unknown_E0h_Pointer = reader.ReadUInt64();
-            this.Unknown_E8h = reader.ReadUInt32();
-            this.Unknown_ECh = reader.ReadUInt32();
+            this.Unknown_E8h = reader.ReadUInt64();
             this.PhysicsLODGroupPointer = reader.ReadUInt64();
-            this.Unknown_F8h_Pointer = reader.ReadUInt64();
-            this.Unknown_100h = reader.ReadUInt32();
-            this.Unknown_104h = reader.ReadUInt32();
-            this.Unknown_108h = reader.ReadUInt32();
-            this.Unknown_10Ch = reader.ReadUInt32();
+            this.ClothDrawablePointer = reader.ReadUInt64();
+            this.Unknown_100h = reader.ReadUInt64();
+            this.Unknown_108h = reader.ReadUInt64();
             this.LightAttributes = reader.ReadBlock<ResourceSimpleList64<LightAttributes>>();
             this.Unknown_120h_Pointer = reader.ReadUInt64();
-            this.Unknown_128h = reader.ReadUInt32();
-            this.Unknown_12Ch = reader.ReadUInt32();
+            this.Unknown_128h = reader.ReadUInt64();
 
             // read reference data
             this.Drawable = reader.ReadBlockAt<FragDrawable>(
@@ -189,8 +157,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
             );
-            this.Unknown_A8h_Data = reader.ReadBlockAt<Unknown_F_003>(
-                this.Unknown_A8h_Pointer // offset
+            this.MatrixSet = reader.ReadBlockAt<MatrixSet>(
+                this.MatrixSetPointer // offset
             );
             this.Unknown_E0h_Data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_F_004>>(
                 this.Unknown_E0h_Pointer, // offset
@@ -199,8 +167,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.PhysicsLODGroup = reader.ReadBlockAt<FragPhysicsLODGroup>(
                 this.PhysicsLODGroupPointer // offset
             );
-            this.Unknown_F8h_Data = reader.ReadBlockAt<FragDrawable>(
-                this.Unknown_F8h_Pointer // offset
+            this.ClothDrawable = reader.ReadBlockAt<FragDrawable>(
+                this.ClothDrawablePointer // offset
             );
             this.Unknown_120h_Data = reader.ReadBlockAt<Unknown_F_002>(
                 this.Unknown_120h_Pointer // offset
@@ -215,53 +183,37 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             base.Write(writer, parameters);
 
             // update structure data
-            this.DrawablePointer = (ulong)(this.Drawable != null ? this.Drawable.Position : 0);
-            this.Unknown_28h_Pointer = (ulong)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.Position : 0);
-            this.Unknown_30h_Pointer = (ulong)(this.Unknown_30h_Data != null ? this.Unknown_30h_Data.Position : 0);
-            //this.cc00 = (uint)(this.pxxxxx_0data != null ? this.pxxxxx_0data.Count : 0);
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
-            //this.cnt1 = (ushort)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Count : 0);
-            this.Unknown_A8h_Pointer = (ulong)(this.Unknown_A8h_Data != null ? this.Unknown_A8h_Data.Position : 0);
-            //this.anotherCount = (byte)(this.pxxxxx_3data != null ? this.pxxxxx_3data.Count : 0);
-            this.Unknown_E0h_Pointer = (ulong)(this.Unknown_E0h_Data != null ? this.Unknown_E0h_Data.Position : 0);
-            this.PhysicsLODGroupPointer = (ulong)(this.PhysicsLODGroup != null ? this.PhysicsLODGroup.Position : 0);
-            this.Unknown_F8h_Pointer = (ulong)(this.Unknown_F8h_Data != null ? this.Unknown_F8h_Data.Position : 0);
-            //this.cntxx51a = (ushort)(this.pxxxxx_5data != null ? this.pxxxxx_5data.Count : 0);
-            this.Unknown_120h_Pointer = (ulong)(this.Unknown_120h_Data != null ? this.Unknown_120h_Data.Position : 0);
+            this.DrawablePointer = (ulong)(this.Drawable != null ? this.Drawable.BlockPosition : 0);
+            this.Unknown_28h_Pointer = (ulong)(this.Unknown_28h_Data != null ? this.Unknown_28h_Data.BlockPosition : 0);
+            this.Unknown_30h_Pointer = (ulong)(this.Unknown_30h_Data != null ? this.Unknown_30h_Data.BlockPosition : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
+            this.MatrixSetPointer = (ulong)(this.MatrixSet != null ? this.MatrixSet.BlockPosition : 0);
+            this.Unknown_E0h_Pointer = (ulong)(this.Unknown_E0h_Data != null ? this.Unknown_E0h_Data.BlockPosition : 0);
+            this.PhysicsLODGroupPointer = (ulong)(this.PhysicsLODGroup != null ? this.PhysicsLODGroup.BlockPosition : 0);
+            this.ClothDrawablePointer = (ulong)(this.ClothDrawable != null ? this.ClothDrawable.BlockPosition : 0);
+            this.Unknown_120h_Pointer = (ulong)(this.Unknown_120h_Data != null ? this.Unknown_120h_Data.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
-            writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
-            writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
+            writer.WriteBlock(this.BoundingSphereCenter);
+            writer.Write(this.BoundingSphereRadius);
             writer.Write(this.DrawablePointer);
             writer.Write(this.Unknown_28h_Pointer);
             writer.Write(this.Unknown_30h_Pointer);
             writer.Write(this.Count0);
             writer.Write(this.Unknown_4Ch);
             writer.Write(this.Unknown_50h);
-            writer.Write(this.Unknown_54h);
             writer.Write(this.NamePointer);
             writer.WriteBlock(this.Clothes);
             writer.Write(this.Unknown_70h);
-            writer.Write(this.Unknown_74h);
             writer.Write(this.Unknown_78h);
-            writer.Write(this.Unknown_7Ch);
             writer.Write(this.Unknown_80h);
-            writer.Write(this.Unknown_84h);
             writer.Write(this.Unknown_88h);
-            writer.Write(this.Unknown_8Ch);
             writer.Write(this.Unknown_90h);
-            writer.Write(this.Unknown_94h);
             writer.Write(this.Unknown_98h);
-            writer.Write(this.Unknown_9Ch);
             writer.Write(this.Unknown_A0h);
-            writer.Write(this.Unknown_A4h);
-            writer.Write(this.Unknown_A8h_Pointer);
+            writer.Write(this.MatrixSetPointer);
             writer.Write(this.Unknown_B0h);
             writer.Write(this.Unknown_B4h);
             writer.Write(this.Unknown_B8h);
@@ -278,17 +230,13 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_DCh);
             writer.Write(this.Unknown_E0h_Pointer);
             writer.Write(this.Unknown_E8h);
-            writer.Write(this.Unknown_ECh);
             writer.Write(this.PhysicsLODGroupPointer);
-            writer.Write(this.Unknown_F8h_Pointer);
+            writer.Write(this.ClothDrawablePointer);
             writer.Write(this.Unknown_100h);
-            writer.Write(this.Unknown_104h);
             writer.Write(this.Unknown_108h);
-            writer.Write(this.Unknown_10Ch);
             writer.WriteBlock(this.LightAttributes);
             writer.Write(this.Unknown_120h_Pointer);
             writer.Write(this.Unknown_128h);
-            writer.Write(this.Unknown_12Ch);
         }
 
         /// <summary>
@@ -301,10 +249,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             if (Unknown_28h_Data != null) list.Add(Unknown_28h_Data);
             if (Unknown_30h_Data != null) list.Add(Unknown_30h_Data);
             if (Name != null) list.Add(Name);
-            if (Unknown_A8h_Data != null) list.Add(Unknown_A8h_Data);
+            if (MatrixSet != null) list.Add(MatrixSet);
             if (Unknown_E0h_Data != null) list.Add(Unknown_E0h_Data);
             if (PhysicsLODGroup != null) list.Add(PhysicsLODGroup);
-            if (Unknown_F8h_Data != null) list.Add(Unknown_F8h_Data);
+            if (ClothDrawable != null) list.Add(ClothDrawable);
             if (Unknown_120h_Data != null) list.Add(Unknown_120h_Data);
             return list.ToArray();
         }

@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crAnimDictionary
     public class AnimationMap : ResourceSystemBlock
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public uint VFT;
@@ -81,7 +81,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.AnimationsPointer = (ulong)(this.Animations != null ? this.Animations.Position : 0);
+            this.AnimationsPointer = (ulong)(this.Animations != null ? this.Animations.BlockPosition : 0);
             this.AnimationEntriesCount = (ushort)(this.Animations != null ? this.Animations.Count : 0);
             if (this.Animations != null)
             {

@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
     // clothBridgeSimGfx
     public class ClothBridgeSimGfx : ResourceSystemBlock
     {
-        public override long Length => 0x140;
+        public override long BlockLength => 0x140;
 
         // structure data
         public uint VFT;

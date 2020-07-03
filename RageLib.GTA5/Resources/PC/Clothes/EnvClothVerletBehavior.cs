@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
     // phEnvClothVerletBehavior
     public class EnvClothVerletBehavior : ResourceSystemBlock
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public uint Unknown_0h; // 0x00000000

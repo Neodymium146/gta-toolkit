@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxu_ZCull
     public class BehaviourZCull : Behaviour
     {
-        public override long Length => 0x170;
+        public override long BlockLength => 0x170;
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;

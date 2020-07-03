@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
 {
     public class Unknown_P_005 : ResourceSystemBlock
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public ResourceSimpleList64<Unknown_P_008> Unknown_0h;

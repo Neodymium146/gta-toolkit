@@ -31,7 +31,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
     // environmentCloth
     public class EnvironmentCloth : ResourceSystemBlock
     {
-        public override long Length => 0x80;
+        public override long BlockLength => 0x80;
 
         // structure data
         public uint VFT;
@@ -128,10 +128,10 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.InstanceTuningPointer = (ulong)(this.InstanceTuning != null ? this.InstanceTuning.Position : 0);
-            this.DrawablePointer = (ulong)(this.Drawable != null ? this.Drawable.Position : 0);
-            this.ControllerPointer = (ulong)(this.Controller != null ? this.Controller.Position : 0);
-            this.pxxxxx_2 = (ulong)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Position : 0);
+            this.InstanceTuningPointer = (ulong)(this.InstanceTuning != null ? this.InstanceTuning.BlockPosition : 0);
+            this.DrawablePointer = (ulong)(this.Drawable != null ? this.Drawable.BlockPosition : 0);
+            this.ControllerPointer = (ulong)(this.Controller != null ? this.Controller.BlockPosition : 0);
+            this.pxxxxx_2 = (ulong)(this.pxxxxx_2data != null ? this.pxxxxx_2data.BlockPosition : 0);
             this.cntxx51a = (ushort)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Count : 0);
             this.cntxx51b = (ushort)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Count : 0);
 

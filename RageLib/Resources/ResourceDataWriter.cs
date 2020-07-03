@@ -31,11 +31,11 @@ namespace RageLib.Resources
     /// </summary>
     public class ResourceDataWriter : DataWriter
     {
-        private const long SYSTEM_BASE = 0x50000000;
-        private const long GRAPHICS_BASE = 0x60000000;
+        private const long VIRTUAL_BASE = 0x50000000;
+        private const long PHYSICAL_BASE = 0x60000000;
 
-        private Stream systemStream;
-        private Stream graphicsStream;
+        private Stream virtualStream;
+        private Stream physicalStream;
 
         /// <summary>
         /// Gets the length of the underlying stream.
@@ -60,11 +60,11 @@ namespace RageLib.Resources
         /// <summary>
         /// Initializes a new resource data reader for the specified system- and graphics-stream.
         /// </summary>
-        public ResourceDataWriter(Stream systemStream, Stream graphicsStream, Endianess endianess = Endianess.LittleEndian)
+        public ResourceDataWriter(Stream virtualStream, Stream physicalStream, Endianess endianess = Endianess.LittleEndian)
             : base((Stream)null, endianess)
         {
-            this.systemStream = systemStream;
-            this.graphicsStream = graphicsStream;
+            this.virtualStream = virtualStream;
+            this.physicalStream = physicalStream;
         }
 
         /// <summary>
@@ -73,47 +73,47 @@ namespace RageLib.Resources
         /// </summary>
         protected override void WriteToStream(byte[] value, bool ignoreEndianess = true)
         {
-            if ((Position & SYSTEM_BASE) == SYSTEM_BASE)
+            if ((Position & VIRTUAL_BASE) == VIRTUAL_BASE)
             {
-                // write to system stream...
+                // write to virtual stream...
 
-                systemStream.Position = Position & ~SYSTEM_BASE;
+                virtualStream.Position = Position & ~VIRTUAL_BASE;
 
                 // handle endianess
-                if (!ignoreEndianess && (Endianess == Endianess.BigEndian))
+                if (!ignoreEndianess && !EndianessMatchesArchitecture)
                 {
                     var buf = (byte[])value.Clone();
                     Array.Reverse(buf);
-                    systemStream.Write(buf, 0, buf.Length);
+                    virtualStream.Write(buf, 0, buf.Length);
                 }
                 else
                 {
-                    systemStream.Write(value, 0, value.Length);
+                    virtualStream.Write(value, 0, value.Length);
                 }
 
-                Position = systemStream.Position | 0x50000000;
+                Position = virtualStream.Position | 0x50000000;
                 return;
 
             }
-            if ((Position & GRAPHICS_BASE) == GRAPHICS_BASE)
+            if ((Position & PHYSICAL_BASE) == PHYSICAL_BASE)
             {
-                // write to graphic stream...
+                // write to physical stream...
 
-                graphicsStream.Position = Position & ~GRAPHICS_BASE;
+                physicalStream.Position = Position & ~PHYSICAL_BASE;
 
                 // handle endianess
-                if (!ignoreEndianess && (Endianess == Endianess.BigEndian))
+                if (!ignoreEndianess && !EndianessMatchesArchitecture)
                 {
                     var buf = (byte[])value.Clone();
                     Array.Reverse(buf);
-                    graphicsStream.Write(buf, 0, buf.Length);
+                    physicalStream.Write(buf, 0, buf.Length);
                 }
                 else
                 {
-                    graphicsStream.Write(value, 0, value.Length);
+                    physicalStream.Write(value, 0, value.Length);
                 }
 
-                Position = graphicsStream.Position | 0x60000000;
+                Position = physicalStream.Position | 0x60000000;
                 return;
             }
 

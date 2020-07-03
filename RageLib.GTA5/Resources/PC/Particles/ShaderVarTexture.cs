@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxShaderVarTexture
     public class ShaderVarTexture : ShaderVar
     {
-        public override long Length => 0x40;
+        public override long BlockLength => 0x40;
 
         // structure data
         public uint Unknown_18h;
@@ -79,8 +79,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
             base.Write(writer, parameters);
 
             // update structure data
-            this.TexturePointer = (ulong)(this.Texture != null ? this.Texture.Position : 0);
-            this.NamePointer = (ulong)(this.Name != null ? this.Name.Position : 0);
+            this.TexturePointer = (ulong)(this.Texture != null ? this.Texture.BlockPosition : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_18h);

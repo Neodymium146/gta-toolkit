@@ -25,9 +25,9 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.WaypointRecords
 {
-    public class WaypointRecord : FileBase64_GTA5_pc
+    public class WaypointRecord : PgBase64
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public uint Unknown_10h; // 0x00000000
@@ -72,7 +72,7 @@ namespace RageLib.Resources.GTA5.PC.WaypointRecords
             base.Write(writer, parameters);
 
             // update structure data
-            this.EntriesPointer = (ulong)(this.Entries?.Position ?? 0);
+            this.EntriesPointer = (ulong)(this.Entries?.BlockPosition ?? 0);
             this.EntriesCount = (uint)(this.Entries?.Count ?? 0);
 
             // write structure data

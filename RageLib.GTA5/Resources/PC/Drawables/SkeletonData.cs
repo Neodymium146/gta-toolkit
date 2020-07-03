@@ -21,87 +21,72 @@
 */
 
 using RageLib.Resources.Common;
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
+    // pgBase
     // crSkeletonData
-    public class SkeletonData : ResourceSystemBlock
+    public class SkeletonData : PgBase64
     {
-        public override long Length => 0x70;
+        public override long BlockLength => 0x70;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
-        public ulong Unknown_10h_Pointer;
-        public ushort Count1;
-        public ushort Count2;
-        public uint Unknown_1Ch;
+        public AtHashMap<uint_r> BoneMap;
         public ulong BonesPointer;
         public ulong TransformationsInvertedPointer;
         public ulong TransformationsPointer;
         public ulong ParentIndicesPointer;
-        public ulong Unknown_40h_Pointer;
+        public ulong ChildrenIndicesPointer;
         public uint Unknown_48h; // 0x00000000
         public uint Unknown_4Ch; // 0x00000000
         public uint Unknown_50h;
         public uint Unknown_54h;
-        public uint Unknown_58h;
+        public uint DataCRC;
         public ushort Unknown_5Ch; // 0x0001
         public ushort BonesCount;
-        public ushort Count4;
+        public ushort ChildrenIndicesCount;
         public ushort Unknown_62h; // 0x0000
         public uint Unknown_64h; // 0x00000000
         public uint Unknown_68h; // 0x00000000
         public uint Unknown_6Ch; // 0x00000000
 
         // reference data
-        public ResourcePointerArray64<Unknown_D_001> Unknown_10h_Data; // some map
         public ResourceSimpleArray<Bone> Bones;
         public ResourceSimpleArray<RAGE_Matrix4> TransformationsInverted;
         public ResourceSimpleArray<RAGE_Matrix4> Transformations;
         public ResourceSimpleArray<ushort_r> ParentIndices;
-        public ResourceSimpleArray<ushort_r> Unknown_40h_Data;
+        public ResourceSimpleArray<ushort_r> ChildrenIndices;
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h_Pointer = reader.ReadUInt64();
-            this.Count1 = reader.ReadUInt16();
-            this.Count2 = reader.ReadUInt16();
-            this.Unknown_1Ch = reader.ReadUInt32();
+            this.BoneMap = reader.ReadBlock<AtHashMap<uint_r>>();
             this.BonesPointer = reader.ReadUInt64();
             this.TransformationsInvertedPointer = reader.ReadUInt64();
             this.TransformationsPointer = reader.ReadUInt64();
             this.ParentIndicesPointer = reader.ReadUInt64();
-            this.Unknown_40h_Pointer = reader.ReadUInt64();
+            this.ChildrenIndicesPointer = reader.ReadUInt64();
             this.Unknown_48h = reader.ReadUInt32();
             this.Unknown_4Ch = reader.ReadUInt32();
             this.Unknown_50h = reader.ReadUInt32();
             this.Unknown_54h = reader.ReadUInt32();
-            this.Unknown_58h = reader.ReadUInt32();
+            this.DataCRC = reader.ReadUInt32();
             this.Unknown_5Ch = reader.ReadUInt16();
             this.BonesCount = reader.ReadUInt16();
-            this.Count4 = reader.ReadUInt16();
+            this.ChildrenIndicesCount = reader.ReadUInt16();
             this.Unknown_62h = reader.ReadUInt16();
             this.Unknown_64h = reader.ReadUInt32();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Unknown_10h_Data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_D_001>>(
-                this.Unknown_10h_Pointer, // offset
-                this.Count1
-            );
             this.Bones = reader.ReadBlockAt<ResourceSimpleArray<Bone>>(
                 this.BonesPointer, // offset
                 this.BonesCount
@@ -118,9 +103,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 this.ParentIndicesPointer, // offset
                 this.BonesCount
             );
-            this.Unknown_40h_Data = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
-                this.Unknown_40h_Pointer, // offset
-                this.Count4
+            this.ChildrenIndices = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+                this.ChildrenIndicesPointer, // offset
+                this.ChildrenIndicesCount
             );
         }
 
@@ -129,67 +114,32 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
-            this.Unknown_10h_Pointer = (ulong)(this.Unknown_10h_Data != null ? this.Unknown_10h_Data.Position : 0);
-            this.Count1 = (ushort)(this.Unknown_10h_Data?.Count ?? 0);
-            if (this.Unknown_10h_Data != null)
-            {
-                int i = 0;
-                foreach (var x in this.Unknown_10h_Data.data_items)
-                {
-                    if (x != null)
-                    {
-                        var y = x;
-                        do
-                        {
-                            i++;
-                            if (y.Next != null)
-                            {
-                                y = y.Next;
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        } while (true);
-                    }
-                }
-                this.Count2 = (ushort)i;
-            }
-            else
-            {
-                this.Count2 = 0;
-            }
-            this.BonesPointer = (ulong)(this.Bones != null ? this.Bones.Position : 0);
-            this.TransformationsInvertedPointer = (ulong)(this.TransformationsInverted != null ? this.TransformationsInverted.Position : 0);
-            this.TransformationsPointer = (ulong)(this.Transformations != null ? this.Transformations.Position : 0);
-            this.ParentIndicesPointer = (ulong)(this.ParentIndices != null ? this.ParentIndices.Position : 0);
-            this.Unknown_40h_Pointer = (ulong)(this.Unknown_40h_Data != null ? this.Unknown_40h_Data.Position : 0);
+            this.BonesPointer = (ulong)(this.Bones != null ? this.Bones.BlockPosition : 0);
+            this.TransformationsInvertedPointer = (ulong)(this.TransformationsInverted != null ? this.TransformationsInverted.BlockPosition : 0);
+            this.TransformationsPointer = (ulong)(this.Transformations != null ? this.Transformations.BlockPosition : 0);
+            this.ParentIndicesPointer = (ulong)(this.ParentIndices != null ? this.ParentIndices.BlockPosition : 0);
+            this.ChildrenIndicesPointer = (ulong)(this.ChildrenIndices != null ? this.ChildrenIndices.BlockPosition : 0);
             this.BonesCount = (ushort)(this.Bones?.Count ?? 0);
-            this.Count4 = (ushort)(this.Unknown_40h_Data != null ? this.Unknown_40h_Data.Count : 0);
+            this.ChildrenIndicesCount = (ushort)(this.ChildrenIndices != null ? this.ChildrenIndices.Count : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h_Pointer);
-            writer.Write(this.Count1);
-            writer.Write(this.Count2);
-            writer.Write(this.Unknown_1Ch);
+            writer.WriteBlock(this.BoneMap);
             writer.Write(this.BonesPointer);
             writer.Write(this.TransformationsInvertedPointer);
             writer.Write(this.TransformationsPointer);
             writer.Write(this.ParentIndicesPointer);
-            writer.Write(this.Unknown_40h_Pointer);
+            writer.Write(this.ChildrenIndicesPointer);
             writer.Write(this.Unknown_48h);
             writer.Write(this.Unknown_4Ch);
             writer.Write(this.Unknown_50h);
             writer.Write(this.Unknown_54h);
-            writer.Write(this.Unknown_58h);
+            writer.Write(this.DataCRC);
             writer.Write(this.Unknown_5Ch);
             writer.Write(this.BonesCount);
-            writer.Write(this.Count4);
+            writer.Write(this.ChildrenIndicesCount);
             writer.Write(this.Unknown_62h);
             writer.Write(this.Unknown_64h);
             writer.Write(this.Unknown_68h);
@@ -201,14 +151,64 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
-            if (Unknown_10h_Data != null) list.Add(Unknown_10h_Data);
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (Bones != null) list.Add(Bones);
             if (TransformationsInverted != null) list.Add(TransformationsInverted);
             if (Transformations != null) list.Add(Transformations);
             if (ParentIndices != null) list.Add(ParentIndices);
-            if (Unknown_40h_Data != null) list.Add(Unknown_40h_Data);
+            if (ChildrenIndices != null) list.Add(ChildrenIndices);
             return list.ToArray();
+        }
+
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            var list = new List<Tuple<long, IResourceBlock>>(base.GetParts());
+            list.AddRange(new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x10, BoneMap)
+            });
+            return list.ToArray();
+        }
+
+        public override void Update()
+        {
+            UpdateBoneIds();
+            UpdateBoneMap();
+        }
+
+        private void UpdateBoneIds()
+        {
+            if (Bones == null)
+                return;
+
+            foreach (var bone in Bones)
+            {
+                // id of root bone seems to always be 0 
+                if (bone.ParentIndex == ushort.MaxValue)
+                {
+                    bone.BoneId = 0;
+                    continue;
+                }
+
+                string name = bone.Name?.Value;
+
+                if (string.IsNullOrEmpty(name))
+                    bone.BoneId = 0;
+                else
+                    bone.BoneId = Enum.TryParse(name, false, out PedBoneId id) ? (ushort)id : Bone.CalculateBoneIdFromName(name);
+            }
+        }
+
+        private void UpdateBoneMap()
+        {
+            if (Bones == null)
+                return;
+
+            List<KeyValuePair<uint, uint_r>> bonesIndexId = new List<KeyValuePair<uint, uint_r>>();
+
+            foreach (var bone in Bones)
+                bonesIndexId.Add(new KeyValuePair<uint, uint_r>(bone.BoneId, (uint_r)bone.Index));
+
+            BoneMap = new AtHashMap<uint_r>(bonesIndexId);
         }
     }
 }

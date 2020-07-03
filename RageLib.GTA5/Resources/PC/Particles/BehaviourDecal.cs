@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxu_Decal
     public class BehaviourDecal : Behaviour
     {
-        public override long Length => 0x180;
+        public override long BlockLength => 0x180;
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;

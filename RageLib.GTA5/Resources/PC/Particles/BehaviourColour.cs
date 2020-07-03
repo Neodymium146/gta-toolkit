@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
     // ptxu_Colour
     public class BehaviourColour : Behaviour
     {
-        public override long Length => 0x1F0;
+        public override long BlockLength => 0x1F0;
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;

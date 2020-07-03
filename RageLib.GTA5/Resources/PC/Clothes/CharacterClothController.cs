@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
     // characterClothController
     public class CharacterClothController : ClothController
     {
-        public override long Length => 0xF0;
+        public override long BlockLength => 0xF0;
 
         // structure data      
         public ResourceSimpleList64<ushort_r> Unknown_80h;

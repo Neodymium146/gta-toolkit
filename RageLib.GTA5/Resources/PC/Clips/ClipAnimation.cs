@@ -27,7 +27,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crClipAnimation
     public class ClipAnimation : Clip
     {
-        public override long Length => 0x70;
+        public override long BlockLength => 0x70;
 
         // structure data
         public ulong AnimationPointer;
@@ -67,7 +67,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         {
             base.Write(writer, parameters);
 
-            this.AnimationPointer = (ulong)(this.Animation != null ? this.Animation.Position : 0);
+            this.AnimationPointer = (ulong)(this.Animation != null ? this.Animation.BlockPosition : 0);
 
             writer.Write(this.AnimationPointer);
             writer.Write(this.Unknown_58h);

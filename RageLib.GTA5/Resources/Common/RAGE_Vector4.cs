@@ -20,20 +20,20 @@
     THE SOFTWARE.
 */
 
+using System.Numerics;
+
 namespace RageLib.Resources
 {
+    // Vec4
     public class RAGE_Vector4 : ResourceSystemBlock
     {
-        public override long Length
+        public override long BlockLength
         {
             get { return 16; }
         }
 
         // structure data
-        public float x1;
-        public float x2;
-        public float x3;
-        public float x4;
+        public Vector4 Value;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -41,10 +41,7 @@ namespace RageLib.Resources
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.x1 = reader.ReadSingle();
-            this.x2 = reader.ReadSingle();
-            this.x3 = reader.ReadSingle();
-            this.x4 = reader.ReadSingle();
+            this.Value = reader.ReadVector4();
         }
 
         /// <summary>
@@ -53,10 +50,19 @@ namespace RageLib.Resources
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.x1);
-            writer.Write(this.x2);
-            writer.Write(this.x3);
-            writer.Write(this.x4);
+            writer.Write(this.Value);
+        }
+
+        public static explicit operator Vector4(RAGE_Vector4 value)
+        {
+            return value.Value;
+        }
+
+        public static explicit operator RAGE_Vector4(Vector4 value)
+        {
+            var x = new RAGE_Vector4();
+            x.Value = value;
+            return x;
         }
     }
 }

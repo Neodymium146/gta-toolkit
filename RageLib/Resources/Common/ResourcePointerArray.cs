@@ -31,7 +31,7 @@ namespace RageLib.Resources.Common
     public class ResourcePointerArray<T> : ResourceSystemBlock, IList<T> where T : IResourceSystemBlock, new()
     {
 
-        public override long Length
+        public override long BlockLength
         {
             get { return 4 * data_items.Count; }
         }
@@ -72,7 +72,7 @@ namespace RageLib.Resources.Common
             data_pointers = new List<uint>();
             foreach (var x in data_items)
                 if (x != null)
-                    data_pointers.Add((uint)x.Position);
+                    data_pointers.Add((uint)x.BlockPosition);
                 else
                     data_pointers.Add((uint)0);
 

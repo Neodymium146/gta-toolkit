@@ -27,9 +27,9 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 {
     public class Unknown_F_002 : ResourceSystemBlock
     {
-        public override long Length
+        public override long BlockLength
         {
-            get { return 16 + Data.Length; }
+            get { return 16 + Data.BlockLength; }
         }
 
         // structure data

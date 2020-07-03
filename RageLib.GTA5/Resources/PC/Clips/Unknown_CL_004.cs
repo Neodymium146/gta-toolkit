@@ -24,7 +24,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
 {
     public class Unknown_CL_004 : ResourceSystemBlock
     {
-        public override long Length => 0x30;
+        public override long BlockLength => 0x30;
 
         // structure data
         public uint VFT;

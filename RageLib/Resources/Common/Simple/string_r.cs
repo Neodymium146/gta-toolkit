@@ -30,7 +30,7 @@ namespace RageLib.Resources.Common
         /// <summary>
         /// Gets the length of the string.
         /// </summary>
-        public override long Length
+        public override long BlockLength
         {
             get { return Value.Length + 1; }
         }
