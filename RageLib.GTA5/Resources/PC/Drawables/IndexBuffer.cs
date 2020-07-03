@@ -21,6 +21,7 @@
 */
 
 using RageLib.Resources.Common;
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
@@ -47,7 +48,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public ulong Unknown_58h; // 0x0000000000000000
 
         // reference data
-        public ResourceSimpleArray<ushort_r> Indices;
+        public IndexData_GTA5_pc Indices;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -71,7 +72,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_58h = reader.ReadUInt64();
 
             // read reference data
-            this.Indices = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+            this.Indices = reader.ReadBlockAt<IndexData_GTA5_pc>(
                 this.IndicesPointer, // offset
                 this.IndicesCount
             );
@@ -85,7 +86,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.IndicesCount = (uint)(this.Indices != null ? this.Indices.Count : 0);
+            this.IndicesCount = (uint)(this.Indices != null ? this.Indices.BlockLength / 2 : 0);
             this.IndicesPointer = (ulong)(this.Indices != null ? this.Indices.BlockPosition : 0);
 
             // write structure data
@@ -111,6 +112,32 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             var list = new List<IResourceBlock>();
             if (Indices != null) list.Add(Indices);
             return list.ToArray();
+        }
+    }
+
+    public class IndexData_GTA5_pc : ResourceSystemBlock
+    {
+        public override long BlockLength => Data != null ? Data.Length : 0;
+
+        // structure data
+        public byte[] Data;
+
+        /// <summary>
+        /// Reads the data-block from a stream.
+        /// </summary>
+        public override void Read(ResourceDataReader reader, params object[] parameters)
+        {
+            int count = Convert.ToInt32(parameters[0]);
+
+            Data = reader.ReadBytes(count * 2);
+        }
+
+        /// <summary>
+        /// Writes the data-block to a stream.
+        /// </summary>
+        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        {
+            writer.Write(Data);
         }
     }
 }
