@@ -33,17 +33,7 @@ namespace RageLib.Resources.Common
         /// <summary>
         /// Gets the length of the data block.
         /// </summary>
-        public override long BlockLength
-        {
-            get
-            {
-                long length = 0;
-                foreach (var x in Data)
-                    length += x.BlockLength;
-                return length;
-            }
-        }
-
+        public override long BlockLength => blockLength;
 
         public ResourceSimpleArray()
         {
@@ -52,7 +42,7 @@ namespace RageLib.Resources.Common
 
 
 
-        
+
 
 
 
@@ -62,12 +52,12 @@ namespace RageLib.Resources.Common
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             int numElements = Convert.ToInt32(parameters[0]);
-            
+
             Data = new List<T>();
             for (int i = 0; i < numElements; i++)
             {
                 T item = reader.ReadBlock<T>();
-                Data.Add(item);
+                Add(item);
             }
         }
 
@@ -79,7 +69,7 @@ namespace RageLib.Resources.Common
             foreach (var f in Data)
                 f.Write(writer);
         }
-        
+
 
 
 
@@ -93,7 +83,7 @@ namespace RageLib.Resources.Common
                 list.Add(new Tuple<long, IResourceBlock>(length, x));
                 length += x.BlockLength;
             }
-              
+
 
             return list.ToArray();
         }
@@ -101,6 +91,6 @@ namespace RageLib.Resources.Common
 
 
 
-        
+
     }
 }
