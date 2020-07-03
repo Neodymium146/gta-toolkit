@@ -24,6 +24,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace RageLib.Data
@@ -273,6 +275,16 @@ namespace RageLib.Data
             m.M34 = ReadSingle();
             m.M44 = ReadSingle();
             return m;
+        }
+
+        public T[] ReadUnmanaged<T>(int count) where T : unmanaged
+        {
+            int sizeOf = Unsafe.SizeOf<T>();
+
+            byte[] data = ReadBytes(count * sizeOf);
+            Span<T> span = MemoryMarshal.Cast<byte, T>(data.AsSpan());
+
+            return span.ToArray();
         }
     }
 }
