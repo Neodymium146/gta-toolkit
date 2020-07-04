@@ -144,7 +144,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             get
             {
-                return BaseSize + (BaseSize * 4);
+                return BaseSize * (1 + 4);
             }
         }
 
