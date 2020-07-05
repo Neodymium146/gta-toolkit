@@ -203,7 +203,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             if (Bones == null)
                 return;
 
-            List<KeyValuePair<uint, uint_r>> bonesIndexId = new List<KeyValuePair<uint, uint_r>>();
+            List<KeyValuePair<uint, uint_r>> bonesIndexId = new List<KeyValuePair<uint, uint_r>>(Bones.Count);
 
             foreach (var bone in Bones)
                 bonesIndexId.Add(new KeyValuePair<uint, uint_r>(bone.BoneId, (uint_r)bone.Index));
