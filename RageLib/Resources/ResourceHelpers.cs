@@ -262,7 +262,8 @@ namespace RageLib.Resources
             long currentPosition;
 
             var sys = (basePosition == 0x50000000);
-
+            long currentRemainder = 0;
+            
             do
             {
                 var blockset = new ResourceBuilderBlockSet(blocks, sys);
@@ -271,7 +272,7 @@ namespace RageLib.Resources
                 var currentPageSize = startPageSize;
                 var currentPageStart = 0L;
                 var currentPageSpace = startPageSize;
-                var currentRemainder = totalBlockSize;
+                currentRemainder = totalBlockSize;
                 var pageCounts = new uint[9];
                 var bucketIndex = 0;
                 var targetPageSize = Math.Max(65536 * pageSizeMult, startPageSize >> (sys ? 5 : 2));
@@ -347,7 +348,7 @@ namespace RageLib.Resources
                 startPageSize *= 2;
                 pageSizeMult *= 2;
             }
-            while ((flags.Size < totalBlockSize) || (flags.Count + usedPages > 128));
+            while ((currentRemainder > 0) || (flags.Size < totalBlockSize) || (flags.Count + usedPages > 128));
 
         }
     }
