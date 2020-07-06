@@ -104,22 +104,27 @@ namespace RageLib.Resources
 
             public ResourceBuilderBlockSet(IList<IResourceBlock> blocks, bool sys)
             {
+                if (blocks.Count < 1)
+                    return;
+
                 IsSystemSet = sys;
-                if (sys && (blocks.Count > 0))
+
+                int indexStart = 0;
+
+                if (IsSystemSet)
                 {
                     RootBlock = blocks[0];
+                    indexStart = 1;
                 }
-                var list = new List<IResourceBlock>();
-                int start = sys ? 1 : 0;
-                for (int i = start; i < blocks.Count; i++)
-                {
-                    list.Add(blocks[i]);
-                }
+
+                //var list = blocks.GetRange(indexStart, blocks.Count - indexStart);
+                var list = new List<IResourceBlock>(blocks.Count - indexStart);
+                foreach (var block in blocks)
+                    list.Add(block);
+
                 list.Sort((a, b) => b.BlockLength.CompareTo(a.BlockLength));
-                foreach (var bb in list)
-                {
-                    var ln = BlockList.AddLast(bb);
-                }
+
+                BlockList = new LinkedList<IResourceBlock>(list);
             }
 
             private LinkedListNode<IResourceBlock> FindBestBlock(long maxSize)
@@ -237,7 +242,7 @@ namespace RageLib.Resources
             long largestBlockSize = 0; // find largest structure
             long startPageSize = BASE_SIZE;// 0x2000; // find starting page size
             long totalBlockSize = 0;
-            
+
             foreach (var block in blocks)
             {
                 // Get size of all blocks padded
@@ -263,7 +268,7 @@ namespace RageLib.Resources
 
             var sys = (basePosition == 0x50000000);
             long currentRemainder = 0;
-            
+
             do
             {
                 var blockset = new ResourceBuilderBlockSet(blocks, sys);
@@ -279,7 +284,7 @@ namespace RageLib.Resources
                 var minPageSize = Math.Max(512 * pageSizeMult, Math.Min(targetPageSize, startPageSize) >> 4);
                 var baseShift = 0u;
                 var baseSize = 512;
-                
+
                 while (baseSize < minPageSize)
                 {
                     baseShift++;
@@ -291,7 +296,7 @@ namespace RageLib.Resources
 
                 var baseSizeMax = baseSize << 8;
                 var baseSizeMaxTest = startPageSize;
-                
+
                 while (baseSizeMaxTest < baseSizeMax)
                 {
                     bucketIndex++;
@@ -316,7 +321,7 @@ namespace RageLib.Resources
                         // Get the biggest block
                         block = blockset.TakeBestBlock(long.MaxValue);
                         var blockLength = block?.BlockLength ?? 0;
-                        
+
                         // Get the smallest page which can contain the block
                         while (blockLength <= (currentPageSize >> 1))
                         {
