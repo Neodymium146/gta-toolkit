@@ -53,7 +53,7 @@ namespace RageLib.Resources.Common
         {
             int numElements = Convert.ToInt32(parameters[0]);
 
-            Data = new List<T>();
+            Data = new List<T>(numElements);
             for (int i = 0; i < numElements; i++)
             {
                 T item = reader.ReadBlock<T>();
@@ -75,7 +75,7 @@ namespace RageLib.Resources.Common
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
-            var list = new List<Tuple<long, IResourceBlock>>();
+            var list = new List<Tuple<long, IResourceBlock>>(Data.Count);
 
             long length = 0;
             foreach (var x in Data)

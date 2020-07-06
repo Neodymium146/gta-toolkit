@@ -65,7 +65,7 @@ namespace RageLib.Resources.Common
 
             var numEl = (ResourceSimpleArray<uint_r>)parameters[1];
 
-            ptr_list = new List<ulong>();
+            ptr_list = new List<ulong>(numEl.Count);
             for (int i = 0; i < numEl.Count; i++)
                 ptr_list.Add(reader.ReadUInt64());
 
@@ -94,7 +94,7 @@ namespace RageLib.Resources.Common
             //    f.Write(writer);
 
 
-            ptr_list = new List<ulong>();
+            ptr_list = new List<ulong>(Data.Count);
             foreach (var x in Data)
                 ptr_list.Add((ulong)x.BlockPosition);
 
@@ -118,7 +118,7 @@ namespace RageLib.Resources.Common
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
-            var children = new List<Tuple<long, IResourceBlock>>();
+            var children = new List<Tuple<long, IResourceBlock>>(Data != null ? Data.Count : 0);
 
             if (Data != null)
             {

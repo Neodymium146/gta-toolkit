@@ -63,7 +63,7 @@ namespace RageLib.Resources.Common
             int numElements = Convert.ToInt32(parameters[0]);
 
             // read structure data            
-            data_pointers = new List<ulong>();
+            data_pointers = new List<ulong>(numElements);
             for (int i = 0; i < numElements; i++)
             {
                 data_pointers.Add(reader.ReadUInt64());
@@ -78,7 +78,7 @@ namespace RageLib.Resources.Common
             }
 
             // read reference data
-            data_items = new List<T>();
+            data_items = new List<T>(numElements);
             for (int i = 0; i < numElements; i++)
             {
                 data_items.Add(
@@ -90,7 +90,7 @@ namespace RageLib.Resources.Common
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update...
-            data_pointers = new List<ulong>();
+            data_pointers = new List<ulong>(data_items.Count);
             foreach (var x in data_items)
                 if (x != null)
                     data_pointers.Add((uint)x.BlockPosition);
@@ -105,7 +105,7 @@ namespace RageLib.Resources.Common
 
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(data_items.Count);
 
             foreach (var x in data_items)
                 list.Add(x);
