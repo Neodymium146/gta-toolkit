@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RageLib.Resources
+﻿namespace RageLib.Resources
 {
     // datResourceChunk
     public struct ResourceChunk
@@ -15,7 +9,9 @@ namespace RageLib.Resources
 
     public struct ResourceChunkFlags
     {
-        private uint Value;
+        private uint _value;
+        private static readonly uint[] _bucketsCapacity = new uint[9] { 0x1, 0x3, 0xF, 0x3F, 0x7F, 0x1, 0x1, 0x1, 0x1, };
+        private static readonly int[] _bucketsShifts = new int[9] { 4, 5, 7, 11, 17, 24, 25, 26, 27, };
 
         /// <summary>
         /// An array of all the chunks
@@ -55,17 +51,18 @@ namespace RageLib.Resources
         {
             get
             {
+                var chunksSizes = ChunksSizes;
                 return new uint[]
                 {
-                    ChunksSizes[0] * BucketsCapacity[0],
-                    ChunksSizes[1] * BucketsCapacity[1],
-                    ChunksSizes[2] * BucketsCapacity[2],
-                    ChunksSizes[3] * BucketsCapacity[3],
-                    ChunksSizes[4] * BucketsCapacity[4],
-                    ChunksSizes[5] * BucketsCapacity[5],
-                    ChunksSizes[6] * BucketsCapacity[6],
-                    ChunksSizes[7] * BucketsCapacity[7],
-                    ChunksSizes[8] * BucketsCapacity[8],
+                    chunksSizes[0] * _bucketsCapacity[0],
+                    chunksSizes[1] * _bucketsCapacity[1],
+                    chunksSizes[2] * _bucketsCapacity[2],
+                    chunksSizes[3] * _bucketsCapacity[3],
+                    chunksSizes[4] * _bucketsCapacity[4],
+                    chunksSizes[5] * _bucketsCapacity[5],
+                    chunksSizes[6] * _bucketsCapacity[6],
+                    chunksSizes[7] * _bucketsCapacity[7],
+                    chunksSizes[8] * _bucketsCapacity[8],
                 };
             }
         }
@@ -77,21 +74,22 @@ namespace RageLib.Resources
         {
             get
             {
-                return BucketsSizesCapacity[0]
-                    + BucketsSizesCapacity[1]
-                    + BucketsSizesCapacity[2]
-                    + BucketsSizesCapacity[3]
-                    + BucketsSizesCapacity[4]
-                    + BucketsSizesCapacity[5]
-                    + BucketsSizesCapacity[6]
-                    + BucketsSizesCapacity[7]
-                    + BucketsSizesCapacity[8];
+                var bucketsSizesCapacity = BucketsSizesCapacity;
+                return bucketsSizesCapacity[0]
+                    + bucketsSizesCapacity[1]
+                    + bucketsSizesCapacity[2]
+                    + bucketsSizesCapacity[3]
+                    + bucketsSizesCapacity[4]
+                    + bucketsSizesCapacity[5]
+                    + bucketsSizesCapacity[6]
+                    + bucketsSizesCapacity[7]
+                    + bucketsSizesCapacity[8];
             }
         }
 
-        public uint TypeVal => (Value >> 28) & 0xF;
+        public uint TypeVal => (_value >> 28) & 0xF;
 
-        public uint BaseShift => (Value & 0xF);
+        public uint BaseShift => (_value & 0xF);
 
         public uint BaseSize => (0x200u << (int)BaseShift);
 
@@ -102,17 +100,18 @@ namespace RageLib.Resources
         {
             get
             {
+                var baseSize = BaseSize;
                 return new uint[]
                 {
-                    BaseSize << 8,
-                    BaseSize << 7,
-                    BaseSize << 6,
-                    BaseSize << 5,
-                    BaseSize << 4,
-                    BaseSize << 3,
-                    BaseSize << 2,
-                    BaseSize << 1,
-                    BaseSize << 0,
+                    baseSize << 8,
+                    baseSize << 7,
+                    baseSize << 6,
+                    baseSize << 5,
+                    baseSize << 4,
+                    baseSize << 3,
+                    baseSize << 2,
+                    baseSize << 1,
+                    baseSize << 0,
                 };
             }
         }
@@ -126,15 +125,15 @@ namespace RageLib.Resources
             {
                 return new uint[]
                 {
-                    (Value >> BucketsShifts[0]) & BucketsCapacity[0],
-                    (Value >> BucketsShifts[1]) & BucketsCapacity[1],
-                    (Value >> BucketsShifts[2]) & BucketsCapacity[2],
-                    (Value >> BucketsShifts[3]) & BucketsCapacity[3],
-                    (Value >> BucketsShifts[4]) & BucketsCapacity[4],
-                    (Value >> BucketsShifts[5]) & BucketsCapacity[5],
-                    (Value >> BucketsShifts[6]) & BucketsCapacity[6],
-                    (Value >> BucketsShifts[7]) & BucketsCapacity[7],
-                    (Value >> BucketsShifts[8]) & BucketsCapacity[8],
+                    (_value >> _bucketsShifts[0]) & _bucketsCapacity[0],
+                    (_value >> _bucketsShifts[1]) & _bucketsCapacity[1],
+                    (_value >> _bucketsShifts[2]) & _bucketsCapacity[2],
+                    (_value >> _bucketsShifts[3]) & _bucketsCapacity[3],
+                    (_value >> _bucketsShifts[4]) & _bucketsCapacity[4],
+                    (_value >> _bucketsShifts[5]) & _bucketsCapacity[5],
+                    (_value >> _bucketsShifts[6]) & _bucketsCapacity[6],
+                    (_value >> _bucketsShifts[7]) & _bucketsCapacity[7],
+                    (_value >> _bucketsShifts[8]) & _bucketsCapacity[8],
                 };
             }
         }
@@ -146,17 +145,19 @@ namespace RageLib.Resources
         {
             get
             {
+                var chunksSizes = ChunksSizes;
+                var bucketsCount = BucketsCount;
                 return new uint[]
                 {
-                    ChunksSizes[0] * BucketsCount[0],
-                    ChunksSizes[1] * BucketsCount[1],
-                    ChunksSizes[2] * BucketsCount[2],
-                    ChunksSizes[3] * BucketsCount[3],
-                    ChunksSizes[4] * BucketsCount[4],
-                    ChunksSizes[5] * BucketsCount[5],
-                    ChunksSizes[6] * BucketsCount[6],
-                    ChunksSizes[7] * BucketsCount[7],
-                    ChunksSizes[8] * BucketsCount[8],
+                    chunksSizes[0] * bucketsCount[0],
+                    chunksSizes[1] * bucketsCount[1],
+                    chunksSizes[2] * bucketsCount[2],
+                    chunksSizes[3] * bucketsCount[3],
+                    chunksSizes[4] * bucketsCount[4],
+                    chunksSizes[5] * bucketsCount[5],
+                    chunksSizes[6] * bucketsCount[6],
+                    chunksSizes[7] * bucketsCount[7],
+                    chunksSizes[8] * bucketsCount[8],
                 };
             }
         }
@@ -165,15 +166,16 @@ namespace RageLib.Resources
         {
             get
             {
-                return BucketsCount[0]
-                    + BucketsCount[1]
-                    + BucketsCount[2]
-                    + BucketsCount[3]
-                    + BucketsCount[4]
-                    + BucketsCount[5]
-                    + BucketsCount[6]
-                    + BucketsCount[7]
-                    + BucketsCount[8];
+                var bucketsCount = BucketsCount;
+                return bucketsCount[0]
+                    + bucketsCount[1]
+                    + bucketsCount[2]
+                    + bucketsCount[3]
+                    + bucketsCount[4]
+                    + bucketsCount[5]
+                    + bucketsCount[6]
+                    + bucketsCount[7]
+                    + bucketsCount[8];
             }
         }
 
@@ -181,46 +183,40 @@ namespace RageLib.Resources
         {
             get
             {
-                return BucketsSizes[0]
-                    + BucketsSizes[1]
-                    + BucketsSizes[2]
-                    + BucketsSizes[3]
-                    + BucketsSizes[4]
-                    + BucketsSizes[5]
-                    + BucketsSizes[6]
-                    + BucketsSizes[7]
-                    + BucketsSizes[8];
+                var bucketsSizes = BucketsSizes;
+                return bucketsSizes[0]
+                    + bucketsSizes[1]
+                    + bucketsSizes[2]
+                    + bucketsSizes[3]
+                    + bucketsSizes[4]
+                    + bucketsSizes[5]
+                    + bucketsSizes[6]
+                    + bucketsSizes[7]
+                    + bucketsSizes[8];
             }
         }
 
         public ResourceChunkFlags(uint v)
         {
-            Value = v;
+            _value = v;
         }
 
         public ResourceChunkFlags(uint[] chunksCounts, uint baseShift)
         {
             var v = baseShift & 0xF;
-            v += (chunksCounts[0] & BucketsCapacity[0]) << BucketsShifts[0];
-            v += (chunksCounts[1] & BucketsCapacity[1]) << BucketsShifts[1];
-            v += (chunksCounts[2] & BucketsCapacity[2]) << BucketsShifts[2];
-            v += (chunksCounts[3] & BucketsCapacity[3]) << BucketsShifts[3];
-            v += (chunksCounts[4] & BucketsCapacity[4]) << BucketsShifts[4];
-            v += (chunksCounts[5] & BucketsCapacity[5]) << BucketsShifts[5];
-            v += (chunksCounts[6] & BucketsCapacity[6]) << BucketsShifts[6];
-            v += (chunksCounts[7] & BucketsCapacity[7]) << BucketsShifts[7];
-            v += (chunksCounts[8] & BucketsCapacity[8]) << BucketsShifts[8];
-            Value = v;
+            v += (chunksCounts[0] & _bucketsCapacity[0]) << _bucketsShifts[0];
+            v += (chunksCounts[1] & _bucketsCapacity[1]) << _bucketsShifts[1];
+            v += (chunksCounts[2] & _bucketsCapacity[2]) << _bucketsShifts[2];
+            v += (chunksCounts[3] & _bucketsCapacity[3]) << _bucketsShifts[3];
+            v += (chunksCounts[4] & _bucketsCapacity[4]) << _bucketsShifts[4];
+            v += (chunksCounts[5] & _bucketsCapacity[5]) << _bucketsShifts[5];
+            v += (chunksCounts[6] & _bucketsCapacity[6]) << _bucketsShifts[6];
+            v += (chunksCounts[7] & _bucketsCapacity[7]) << _bucketsShifts[7];
+            v += (chunksCounts[8] & _bucketsCapacity[8]) << _bucketsShifts[8];
+            _value = v;
         }
 
-        /// <summary>
-        /// The number of chunks each bucket can contain
-        /// </summary>
-        public static readonly uint[] BucketsCapacity = new uint[9] { 0x1, 0x3, 0xF, 0x3F, 0x7F, 0x1, 0x1, 0x1, 0x1, };
-
-        private static readonly int[] BucketsShifts = new int[9] { 4, 5, 7, 11, 17, 24, 25, 26, 27, };
-
-        public bool CanAddChunk(int bucketIndex) => BucketsCount[bucketIndex] + 1 <= BucketsCapacity[bucketIndex];
+        public bool CanAddChunk(int bucketIndex) => BucketsCount[bucketIndex] + 1 <= _bucketsCapacity[bucketIndex];
 
         public bool TryAddChunk(int bucketIndex)
         {
@@ -236,17 +232,17 @@ namespace RageLib.Resources
                 if (i == bucketIndex)
                     count++;
 
-                v += (count & BucketsCapacity[i]) << BucketsShifts[i];
+                v += (count & _bucketsCapacity[i]) << _bucketsShifts[i];
             }
 
-            Value = v;
+            _value = v;
 
             return true;
         }
 
         public static implicit operator uint(ResourceChunkFlags f)
         {
-            return f.Value;
+            return f._value;
         }
 
         public static implicit operator ResourceChunkFlags(uint v)
