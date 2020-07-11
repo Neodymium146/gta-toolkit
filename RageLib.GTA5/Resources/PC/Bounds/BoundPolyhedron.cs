@@ -60,7 +60,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
         // reference data
         public ResourceSimpleArray<BoundVertex> Unknown_78h_Data;
-        public ResourceSimpleArray<BoundPolygon> Polygons;
+        public ResourceSimpleArray<BoundPrimitive> Polygons;
         public ResourceSimpleArray<BoundVertex> Vertices;
         public ResourceSimpleArray<uint_r> Unknown_B8h_Data;
         public ResourceSimpleArray<uint_r> Unknown_C0h_Data;
@@ -106,7 +106,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 this.Unknown_78h_Pointer, // offset
                 this.VerticesCount2
             );
-            this.Polygons = reader.ReadBlockAt<ResourceSimpleArray<BoundPolygon>>(
+            this.Polygons = reader.ReadBlockAt<ResourceSimpleArray<BoundPrimitive>>(
                 this.PolygonsPointer, // offset
                 this.PolygonsCount
             );
