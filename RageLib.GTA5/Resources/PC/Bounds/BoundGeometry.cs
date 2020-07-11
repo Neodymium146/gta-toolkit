@@ -88,7 +88,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             );
             this.PolygonMaterialIndices = reader.ReadBlockAt<ResourceSimpleArray<byte_r>>(
                 this.PolygonMaterialIndicesPointer, // offset
-                this.PolygonsCount
+                this.PrimitivesCount
             );
         }
 

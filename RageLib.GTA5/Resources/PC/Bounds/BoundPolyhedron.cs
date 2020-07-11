@@ -36,31 +36,22 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public ulong Unknown_78h_Pointer;
         public uint Unknown_80h;
         public uint VerticesCount1;
-        public ulong PolygonsPointer;
-        public uint Unknown_90h;
-        public uint Unknown_94h;
-        public uint Unknown_98h;
-        public uint Unknown_9Ch;
-        public float Unknown_A0h;
-        public float Unknown_A4h;
-        public float Unknown_A8h;
-        public float Unknown_ACh;
+        public ulong PrimitivesPointer;
+        public RAGE_Vector4 Quantum;
+        public RAGE_Vector4 Offset;
         public ulong VerticesPointer;
         public ulong Unknown_B8h_Pointer;
         public ulong Unknown_C0h_Pointer;
         public ulong Unknown_C8h_Pointer;
         public uint VerticesCount2;
-        public uint PolygonsCount;
-        public uint Unknown_D8h; // 0x00000000
-        public uint Unknown_DCh; // 0x00000000
-        public uint Unknown_E0h; // 0x00000000
-        public uint Unknown_E4h; // 0x00000000
-        public uint Unknown_E8h; // 0x00000000
-        public uint Unknown_ECh; // 0x00000000
+        public uint PrimitivesCount;
+        public ulong Unknown_D8h; // 0x0000000000000000
+        public ulong Unknown_E0h; // 0x0000000000000000
+        public ulong Unknown_E8h; // 0x0000000000000000
 
         // reference data
         public ResourceSimpleArray<BoundVertex> Unknown_78h_Data;
-        public ResourceSimpleArray<BoundPrimitive> Polygons;
+        public ResourceSimpleArray<BoundPrimitive> Primitives;
         public ResourceSimpleArray<BoundVertex> Vertices;
         public ResourceSimpleArray<uint_r> Unknown_B8h_Data;
         public ResourceSimpleArray<uint_r> Unknown_C0h_Data;
@@ -79,36 +70,27 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Unknown_78h_Pointer = reader.ReadUInt64();
             this.Unknown_80h = reader.ReadUInt32();
             this.VerticesCount1 = reader.ReadUInt32();
-            this.PolygonsPointer = reader.ReadUInt64();
-            this.Unknown_90h = reader.ReadUInt32();
-            this.Unknown_94h = reader.ReadUInt32();
-            this.Unknown_98h = reader.ReadUInt32();
-            this.Unknown_9Ch = reader.ReadUInt32();
-            this.Unknown_A0h = reader.ReadSingle();
-            this.Unknown_A4h = reader.ReadSingle();
-            this.Unknown_A8h = reader.ReadSingle();
-            this.Unknown_ACh = reader.ReadSingle();
+            this.PrimitivesPointer = reader.ReadUInt64();
+            this.Quantum = reader.ReadBlock<RAGE_Vector4>();
+            this.Offset = reader.ReadBlock<RAGE_Vector4>();
             this.VerticesPointer = reader.ReadUInt64();
             this.Unknown_B8h_Pointer = reader.ReadUInt64();
             this.Unknown_C0h_Pointer = reader.ReadUInt64();
             this.Unknown_C8h_Pointer = reader.ReadUInt64();
             this.VerticesCount2 = reader.ReadUInt32();
-            this.PolygonsCount = reader.ReadUInt32();
-            this.Unknown_D8h = reader.ReadUInt32();
-            this.Unknown_DCh = reader.ReadUInt32();
-            this.Unknown_E0h = reader.ReadUInt32();
-            this.Unknown_E4h = reader.ReadUInt32();
-            this.Unknown_E8h = reader.ReadUInt32();
-            this.Unknown_ECh = reader.ReadUInt32();
+            this.PrimitivesCount = reader.ReadUInt32();
+            this.Unknown_D8h = reader.ReadUInt64();
+            this.Unknown_E0h = reader.ReadUInt64();
+            this.Unknown_E8h = reader.ReadUInt64();
 
             // read reference data
             this.Unknown_78h_Data = reader.ReadBlockAt<ResourceSimpleArray<BoundVertex>>(
                 this.Unknown_78h_Pointer, // offset
                 this.VerticesCount2
             );
-            this.Polygons = reader.ReadBlockAt<ResourceSimpleArray<BoundPrimitive>>(
-                this.PolygonsPointer, // offset
-                this.PolygonsCount
+            this.Primitives = reader.ReadBlockAt<ResourceSimpleArray<BoundPrimitive>>(
+                this.PrimitivesPointer, // offset
+                this.PrimitivesCount
             );
             this.Vertices = reader.ReadBlockAt<ResourceSimpleArray<BoundVertex>>(
                 this.VerticesPointer, // offset
@@ -139,13 +121,13 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             // update structure data
             this.Unknown_78h_Pointer = (ulong)(this.Unknown_78h_Data != null ? this.Unknown_78h_Data.BlockPosition : 0);
             this.VerticesCount1 = (uint)(this.Vertices != null ? this.Vertices.Count : 0);
-            this.PolygonsPointer = (ulong)(this.Polygons != null ? this.Polygons.BlockPosition : 0);
+            this.PrimitivesPointer = (ulong)(this.Primitives != null ? this.Primitives.BlockPosition : 0);
             this.VerticesPointer = (ulong)(this.Vertices != null ? this.Vertices.BlockPosition : 0);
             this.Unknown_B8h_Pointer = (ulong)(this.Unknown_B8h_Data != null ? this.Unknown_B8h_Data.BlockPosition : 0);
             this.Unknown_C0h_Pointer = (ulong)(this.Unknown_C0h_Data != null ? this.Unknown_C0h_Data.BlockPosition : 0);
             this.Unknown_C8h_Pointer = (ulong)(this.Unknown_C8h_Data != null ? this.Unknown_C8h_Data.BlockPosition : 0);
             this.VerticesCount2 = (uint)(this.Vertices != null ? this.Vertices.Count : 0);
-            this.PolygonsCount = (uint)(this.Polygons != null ? this.Polygons.Count : 0);
+            this.PrimitivesCount = (uint)(this.Primitives != null ? this.Primitives.Count : 0);
 
             // write structure data
             writer.Write(this.Unknown_70h);
@@ -153,27 +135,18 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             writer.Write(this.Unknown_78h_Pointer);
             writer.Write(this.Unknown_80h);
             writer.Write(this.VerticesCount1);
-            writer.Write(this.PolygonsPointer);
-            writer.Write(this.Unknown_90h);
-            writer.Write(this.Unknown_94h);
-            writer.Write(this.Unknown_98h);
-            writer.Write(this.Unknown_9Ch);
-            writer.Write(this.Unknown_A0h);
-            writer.Write(this.Unknown_A4h);
-            writer.Write(this.Unknown_A8h);
-            writer.Write(this.Unknown_ACh);
+            writer.Write(this.PrimitivesPointer);
+            writer.WriteBlock(this.Quantum);
+            writer.WriteBlock(this.Offset);
             writer.Write(this.VerticesPointer);
             writer.Write(this.Unknown_B8h_Pointer);
             writer.Write(this.Unknown_C0h_Pointer);
             writer.Write(this.Unknown_C8h_Pointer);
             writer.Write(this.VerticesCount2);
-            writer.Write(this.PolygonsCount);
+            writer.Write(this.PrimitivesCount);
             writer.Write(this.Unknown_D8h);
-            writer.Write(this.Unknown_DCh);
             writer.Write(this.Unknown_E0h);
-            writer.Write(this.Unknown_E4h);
             writer.Write(this.Unknown_E8h);
-            writer.Write(this.Unknown_ECh);
         }
 
         /// <summary>
@@ -183,7 +156,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         {
             var list = new List<IResourceBlock>(base.GetReferences());
             if (Unknown_78h_Data != null) list.Add(Unknown_78h_Data);
-            if (Polygons != null) list.Add(Polygons);
+            if (Primitives != null) list.Add(Primitives);
             if (Vertices != null) list.Add(Vertices);
             if (Unknown_B8h_Data != null) list.Add(Unknown_B8h_Data);
             if (Unknown_C0h_Data != null) list.Add(Unknown_C0h_Data);
