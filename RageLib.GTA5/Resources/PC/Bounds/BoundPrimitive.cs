@@ -42,9 +42,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
         public IResourceSystemBlock GetType(ResourceDataReader reader, params object[] parameters)
         {
-            reader.Position += 16;
-            var type = reader.ReadByte() & 0xF8 & 0x7;
-            reader.Position -= 17;
+            var type = reader.ReadByte() & 0x7;
+            reader.Position -= 1;
 
             switch (type)
             {
