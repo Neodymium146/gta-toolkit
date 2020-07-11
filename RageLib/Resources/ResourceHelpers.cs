@@ -267,18 +267,18 @@ namespace RageLib.Resources
             long currentPosition;
 
             var sys = (basePosition == 0x50000000);
-            long currentRemainder = 0;
+            bool invalidLayout;
 
             do
             {
+                invalidLayout = false;
                 var blockset = new ResourceBuilderBlockSet(blocks, sys);
                 var rootblock = blockset.RootBlock;
                 currentPosition = 0L;
                 var currentPageSize = startPageSize;
                 var currentPageStart = 0L;
                 var currentPageSpace = startPageSize;
-                currentRemainder = totalBlockSize;
-                var pageCounts = new uint[9];
+                long currentRemainder = totalBlockSize;
                 var bucketIndex = 0;
                 var targetPageSize = Math.Max(65536 * pageSizeMult, startPageSize >> (sys ? 5 : 2));
                 var minPageSize = Math.Max(512 * pageSizeMult, Math.Min(targetPageSize, startPageSize) >> 4);
@@ -292,7 +292,7 @@ namespace RageLib.Resources
                     if (baseShift >= 0xF) break;
                 }
 
-                flags = new ResourceChunkFlags(pageCounts, baseShift);
+                flags = new ResourceChunkFlags(new uint[9], baseShift);
 
                 var baseSizeMax = baseSize << 8;
                 var baseSizeMaxTest = startPageSize;
@@ -337,7 +337,10 @@ namespace RageLib.Resources
 
                         // Try adding another chunk to this bucket
                         if (!flags.TryAddChunk(bucketIndex))
+                        {
+                            invalidLayout = true;
                             break;
+                        }
                     }
 
                     //add this block to the current page.
@@ -353,7 +356,7 @@ namespace RageLib.Resources
                 startPageSize *= 2;
                 pageSizeMult *= 2;
             }
-            while ((currentRemainder > 0) || (flags.Size < totalBlockSize) || (flags.Count + usedPages > 128));
+            while ((invalidLayout) || (flags.Size < totalBlockSize) || (flags.Count + usedPages > 128));
 
         }
     }
