@@ -119,8 +119,10 @@ namespace RageLib.Resources
 
                 //var list = blocks.GetRange(indexStart, blocks.Count - indexStart);
                 var list = new List<IResourceBlock>(blocks.Count - indexStart);
-                foreach (var block in blocks)
-                    list.Add(block);
+                for (int i = indexStart; i < blocks.Count; i++)
+                {
+                    list.Add(blocks[i]);
+                }
 
                 list.Sort((a, b) => b.BlockLength.CompareTo(a.BlockLength));
 
