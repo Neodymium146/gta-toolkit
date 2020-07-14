@@ -20,9 +20,10 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.Common;
 using System;
 using System.Collections.Generic;
+using RageLib.GTA5.Resources.PC.Drawables;
+using RageLib.Resources.Common;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
@@ -34,13 +35,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         // structure data
         public AtHashMap<uint_r> BoneMap;
-        public ulong BonesPointer;
+        public ulong BoneDataPointer; // why this points to the array directly ?
         public ulong TransformationsInvertedPointer;
         public ulong TransformationsPointer;
         public ulong ParentIndicesPointer;
         public ulong ChildrenIndicesPointer;
-        public uint Unknown_48h; // 0x00000000
-        public uint Unknown_4Ch; // 0x00000000
+        public ulong Unknown_48h; // 0x0000000000000000
         public uint Unknown_50h;
         public uint Unknown_54h;
         public uint DataCRC;
@@ -49,11 +49,10 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public ushort ChildrenIndicesCount;
         public ushort Unknown_62h; // 0x0000
         public uint Unknown_64h; // 0x00000000
-        public uint Unknown_68h; // 0x00000000
-        public uint Unknown_6Ch; // 0x00000000
+        public ulong Unknown_68h; // 0x0000000000000000
 
         // reference data
-        public ResourceSimpleArray<Bone> Bones;
+        public BoneData BoneData;
         public ResourceSimpleArray<RAGE_Matrix4> TransformationsInverted;
         public ResourceSimpleArray<RAGE_Matrix4> Transformations;
         public ResourceSimpleArray<ushort_r> ParentIndices;
@@ -68,13 +67,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
             // read structure data
             this.BoneMap = reader.ReadBlock<AtHashMap<uint_r>>();
-            this.BonesPointer = reader.ReadUInt64();
+            this.BoneDataPointer = reader.ReadUInt64();
             this.TransformationsInvertedPointer = reader.ReadUInt64();
             this.TransformationsPointer = reader.ReadUInt64();
             this.ParentIndicesPointer = reader.ReadUInt64();
             this.ChildrenIndicesPointer = reader.ReadUInt64();
-            this.Unknown_48h = reader.ReadUInt32();
-            this.Unknown_4Ch = reader.ReadUInt32();
+            this.Unknown_48h = reader.ReadUInt64();
             this.Unknown_50h = reader.ReadUInt32();
             this.Unknown_54h = reader.ReadUInt32();
             this.DataCRC = reader.ReadUInt32();
@@ -83,12 +81,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.ChildrenIndicesCount = reader.ReadUInt16();
             this.Unknown_62h = reader.ReadUInt16();
             this.Unknown_64h = reader.ReadUInt32();
-            this.Unknown_68h = reader.ReadUInt32();
-            this.Unknown_6Ch = reader.ReadUInt32();
+            this.Unknown_68h = reader.ReadUInt64();
 
             // read reference data
-            this.Bones = reader.ReadBlockAt<ResourceSimpleArray<Bone>>(
-                this.BonesPointer, // offset
+            this.BoneData = reader.ReadBlockAt<BoneData>(
+                this.BoneDataPointer - 16, // offset
                 this.BonesCount
             );
             this.TransformationsInverted = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
@@ -117,23 +114,22 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.BonesPointer = (ulong)(this.Bones != null ? this.Bones.BlockPosition : 0);
+            this.BoneDataPointer = (ulong)(this.BoneData != null ? this.BoneData.BlockPosition + 16 : 0);
             this.TransformationsInvertedPointer = (ulong)(this.TransformationsInverted != null ? this.TransformationsInverted.BlockPosition : 0);
             this.TransformationsPointer = (ulong)(this.Transformations != null ? this.Transformations.BlockPosition : 0);
             this.ParentIndicesPointer = (ulong)(this.ParentIndices != null ? this.ParentIndices.BlockPosition : 0);
             this.ChildrenIndicesPointer = (ulong)(this.ChildrenIndices != null ? this.ChildrenIndices.BlockPosition : 0);
-            this.BonesCount = (ushort)(this.Bones?.Count ?? 0);
+            this.BonesCount = (ushort)(this.BoneData?.BonesCount ?? 0);
             this.ChildrenIndicesCount = (ushort)(this.ChildrenIndices != null ? this.ChildrenIndices.Count : 0);
 
             // write structure data
             writer.WriteBlock(this.BoneMap);
-            writer.Write(this.BonesPointer);
+            writer.Write(this.BoneDataPointer);
             writer.Write(this.TransformationsInvertedPointer);
             writer.Write(this.TransformationsPointer);
             writer.Write(this.ParentIndicesPointer);
             writer.Write(this.ChildrenIndicesPointer);
             writer.Write(this.Unknown_48h);
-            writer.Write(this.Unknown_4Ch);
             writer.Write(this.Unknown_50h);
             writer.Write(this.Unknown_54h);
             writer.Write(this.DataCRC);
@@ -143,7 +139,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Unknown_62h);
             writer.Write(this.Unknown_64h);
             writer.Write(this.Unknown_68h);
-            writer.Write(this.Unknown_6Ch);
         }
 
         /// <summary>
@@ -152,7 +147,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>(base.GetReferences());
-            if (Bones != null) list.Add(Bones);
+            if (BoneData != null) list.Add(BoneData);
             if (TransformationsInverted != null) list.Add(TransformationsInverted);
             if (Transformations != null) list.Add(Transformations);
             if (ParentIndices != null) list.Add(ParentIndices);
@@ -177,10 +172,10 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         private void UpdateBoneIds()
         {
-            if (Bones == null)
+            if (BoneData == null)
                 return;
 
-            foreach (var bone in Bones)
+            foreach (var bone in BoneData.Bones)
             {
                 // id of root bone seems to always be 0 
                 if (bone.ParentIndex == ushort.MaxValue)
@@ -200,12 +195,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         private void UpdateBoneMap()
         {
-            if (Bones == null)
+            if (BoneData == null)
                 return;
 
-            List<KeyValuePair<uint, uint_r>> bonesIndexId = new List<KeyValuePair<uint, uint_r>>(Bones.Count);
+            List<KeyValuePair<uint, uint_r>> bonesIndexId = new List<KeyValuePair<uint, uint_r>>((int)BoneData.BonesCount);
 
-            foreach (var bone in Bones)
+            foreach (var bone in BoneData.Bones)
                 bonesIndexId.Add(new KeyValuePair<uint, uint_r>(bone.BoneId, (uint_r)bone.Index));
 
             BoneMap = new AtHashMap<uint_r>(bonesIndexId);
