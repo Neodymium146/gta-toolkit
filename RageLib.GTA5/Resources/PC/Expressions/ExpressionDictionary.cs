@@ -37,7 +37,7 @@ namespace RageLib.Resources.GTA5.PC.Expressions
         public uint Unknown_14h;
         public uint Unknown_18h;
         public uint Unknown_1Ch;
-        public ResourceSimpleList64<uint_r> ExpressionNameHashes;
+        public SimpleList64<uint> ExpressionNameHashes;
         public ResourcePointerList64<Expression> Expressions;
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace RageLib.Resources.GTA5.PC.Expressions
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.ExpressionNameHashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.ExpressionNameHashes = reader.ReadBlock<SimpleList64<uint>>();
             this.Expressions = reader.ReadBlock<ResourcePointerList64<Expression>>();
         }
 

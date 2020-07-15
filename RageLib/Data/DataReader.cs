@@ -277,7 +277,7 @@ namespace RageLib.Data
             return m;
         }
 
-        public T[] ReadUnmanaged<T>(int count) where T : unmanaged
+        public T[] ReadArray<T>(int count) where T : unmanaged
         {
             int sizeOf = Unsafe.SizeOf<T>();
 

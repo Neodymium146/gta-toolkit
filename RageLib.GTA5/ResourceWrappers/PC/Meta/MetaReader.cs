@@ -205,12 +205,9 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
             return result;
         }
 
-        private byte[] ToBytes(ResourceSimpleArray<byte_r> data)
+        private byte[] ToBytes(SimpleArray<byte> data)
         {
-            var result = new byte[data.Count];
-            for (int i = 0; i < data.Count; i++)
-                result[i] = data[i].Value;
-            return result;
+            return data.ToArray();
         }
 
         public static StructureInfo GetInfo(MetaFile meta, int structureKey)

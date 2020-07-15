@@ -26,7 +26,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
         public ulong Unknown_38h;           // 0x0000000000000000
 
         // reference data
-        public ResourceSimpleArray<ushort_r> Indices;
+        public SimpleArray<ushort> Indices;
         public Struct_15 Unknown_30h_Data;
 
 

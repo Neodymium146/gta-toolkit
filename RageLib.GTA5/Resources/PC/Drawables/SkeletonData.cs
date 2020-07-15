@@ -56,8 +56,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public BoneData BoneData;
         public SimpleArray<Matrix4x4> TransformationsInverted;
         public SimpleArray<Matrix4x4> Transformations;
-        public ResourceSimpleArray<ushort_r> ParentIndices;
-        public ResourceSimpleArray<ushort_r> ChildrenIndices;
+        public SimpleArray<ushort> ParentIndices;
+        public SimpleArray<ushort> ChildrenIndices;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -97,11 +97,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 this.TransformationsPointer, // offset
                 this.BonesCount
             );
-            this.ParentIndices = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+            this.ParentIndices = reader.ReadBlockAt<SimpleArray<ushort>>(
                 this.ParentIndicesPointer, // offset
                 this.BonesCount
             );
-            this.ChildrenIndices = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+            this.ChildrenIndices = reader.ReadBlockAt<SimpleArray<ushort>>(
                 this.ChildrenIndicesPointer, // offset
                 this.ChildrenIndicesCount
             );

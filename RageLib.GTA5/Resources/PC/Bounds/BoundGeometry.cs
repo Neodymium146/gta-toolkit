@@ -50,8 +50,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
         // reference data
         public ResourceSimpleArray<BoundMaterial> Materials;
-        public ResourceSimpleArray<uint_r> MaterialColours;
-        public ResourceSimpleArray<byte_r> PolygonMaterialIndices;
+        public SimpleArray<uint> MaterialColours;
+        public SimpleArray<byte> PolygonMaterialIndices;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -82,11 +82,11 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 this.MaterialsPointer, // offset
                 this.MaterialsCount
             );
-            this.MaterialColours = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
+            this.MaterialColours = reader.ReadBlockAt<SimpleArray<uint>>(
                 this.MaterialColoursPointer, // offset
                 this.MaterialColoursCount
             );
-            this.PolygonMaterialIndices = reader.ReadBlockAt<ResourceSimpleArray<byte_r>>(
+            this.PolygonMaterialIndices = reader.ReadBlockAt<SimpleArray<byte>>(
                 this.PolygonMaterialIndicesPointer, // offset
                 this.PrimitivesCount
             );

@@ -54,8 +54,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public ResourceSimpleArray<BoundVertex> Unknown_78h_Data;
         public ResourceSimpleArray<BoundPrimitive> Primitives;
         public ResourceSimpleArray<BoundVertex> Vertices;
-        public ResourceSimpleArray<uint_r> Unknown_B8h_Data;
-        public ResourceSimpleArray<uint_r> Unknown_C0h_Data;
+        public SimpleArray<uint> Unknown_B8h_Data;
+        public SimpleArray<uint> Unknown_C0h_Data;
         public ResourceSimpleArrayArray64<uint_r> Unknown_C8h_Data;
 
         /// <summary>
@@ -97,11 +97,11 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 this.VerticesPointer, // offset
                 this.VerticesCount2
             );
-            this.Unknown_B8h_Data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
+            this.Unknown_B8h_Data = reader.ReadBlockAt<SimpleArray<uint>>(
                 this.Unknown_B8h_Pointer, // offset
                 this.VerticesCount2
             );
-            this.Unknown_C0h_Data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
+            this.Unknown_C0h_Data = reader.ReadBlockAt<SimpleArray<uint>>(
                 this.Unknown_C0h_Pointer, // offset
                 8
             );

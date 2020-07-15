@@ -48,8 +48,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public SimpleArray<Matrix4x4> ChildTransformations1;
         public SimpleArray<Matrix4x4> ChildTransformations2;
         public ResourceSimpleArray<RAGE_AABB> ChildBoundingBoxes;
-        public ResourceSimpleArray<ulong_r> ChildFlags1;
-        public ResourceSimpleArray<ulong_r> ChildFlags2;
+        public SimpleArray<ulong> ChildFlags1;
+        public SimpleArray<ulong> ChildFlags2;
         public BVH BVH;
 
         /// <summary>
@@ -88,11 +88,11 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 this.ChildBoundingBoxesPointer, // offset
                 this.ChildrenCount1
             );
-            this.ChildFlags1 = reader.ReadBlockAt<ResourceSimpleArray<ulong_r>>(
+            this.ChildFlags1 = reader.ReadBlockAt<SimpleArray<ulong>>(
                 this.ChildFlags1Pointer, // offset
                 this.ChildrenCount1
             );
-            this.ChildFlags2 = reader.ReadBlockAt<ResourceSimpleArray<ulong_r>>(
+            this.ChildFlags2 = reader.ReadBlockAt<SimpleArray<ulong>>(
                 this.ChildFlags2Pointer, // offset
                 this.ChildrenCount1
             );

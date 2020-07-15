@@ -55,7 +55,7 @@ namespace RageLib.Resources.GTA5.PC.Nodes
         public ResourceSimpleArray<Node> Nodes;
         public ResourceSimpleArray<Unknown_ND_002> Unknown_28h_Data;
         public ResourceSimpleArray<Unknown_ND_003> Unknown_38h_Data;
-        public ResourceSimpleArray<byte_r> Unknown_40h_Data;
+        public SimpleArray<byte> Unknown_40h_Data;
         public ResourceSimpleArray<Unknown_ND_004> Unknown_50h_Data;
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace RageLib.Resources.GTA5.PC.Nodes
                 this.Unknown_38h_Pointer, // offset
                 this.len4
             );
-            this.Unknown_40h_Data = reader.ReadBlockAt<ResourceSimpleArray<byte_r>>(
+            this.Unknown_40h_Data = reader.ReadBlockAt<SimpleArray<byte>>(
                 this.Unknown_40h_Pointer, // offset
                 this.len5
             );

@@ -14,7 +14,7 @@ namespace RageLib.Resources.Common
         public ulong ParentPointer; // 0x0000000000000000
         public uint Count; // 0x00000001
         public uint Unknown_1Ch; // 0x00000000
-        public ResourceSimpleList64<uint_r> Hashes;
+        public SimpleList64<uint> Hashes;
         public ResourcePointerList64<T> Values;
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace RageLib.Resources.Common
             this.ParentPointer = reader.ReadUInt64();
             this.Count = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Hashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Hashes = reader.ReadBlock<SimpleList64<uint>>();
             this.Values = reader.ReadBlock<ResourcePointerList64<T>>();
         }
 

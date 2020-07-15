@@ -34,7 +34,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public uint Unknown_14h; // 0x00000001
         public uint Unknown_18h; // 0x00000001
         public uint Unknown_1Ch; // 0x00000001
-        public ResourceSimpleList64<uint_r> BoundNameHashes;
+        public SimpleList64<uint> BoundNameHashes;
         public ResourcePointerList64<Bound> Bounds;
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.BoundNameHashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.BoundNameHashes = reader.ReadBlock<SimpleList64<uint>>();
             this.Bounds = reader.ReadBlock<ResourcePointerList64<Bound>>();
         }
 

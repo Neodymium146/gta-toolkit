@@ -73,7 +73,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
         // reference data
         public ArticulatedBodyType ArticulatedBodyType;
-        public ResourceSimpleArray<uint_r> Unknown_28h_Data;
+        public SimpleArray<uint> Unknown_28h_Data;
         public FragTypeGroupNames GroupNames;
         public ResourcePointerArray64<FragTypeGroup> Groups;
         public ResourcePointerArray64<FragTypeChild> Children;
@@ -83,8 +83,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public SimpleArray<Vector4> Unknown_F0h_Data;
         public SimpleArray<Vector4> Unknown_F8h_Data;
         public Unknown_F_001 Unknown_100h_Data;
-        public ResourceSimpleArray<byte_r> Unknown_108h_Data;
-        public ResourceSimpleArray<byte_r> Unknown_110h_Data;
+        public SimpleArray<byte> Unknown_108h_Data;
+        public SimpleArray<byte> Unknown_110h_Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -135,7 +135,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.ArticulatedBodyType = reader.ReadBlockAt<ArticulatedBodyType>(
                 this.ArticulatedBodyTypePointer // offset
             );
-            this.Unknown_28h_Data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
+            this.Unknown_28h_Data = reader.ReadBlockAt<SimpleArray<uint>>(
                 this.Unknown_28h_Pointer, // offset
                 this.ChildrenCount
             );
@@ -171,11 +171,11 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_100h_Data = reader.ReadBlockAt<Unknown_F_001>(
                 this.Unknown_100h_Pointer // offset
             );
-            this.Unknown_108h_Data = reader.ReadBlockAt<ResourceSimpleArray<byte_r>>(
+            this.Unknown_108h_Data = reader.ReadBlockAt<SimpleArray<byte>>(
                 this.Unknown_108h_Pointer, // offset
                 this.Count1
             );
-            this.Unknown_110h_Data = reader.ReadBlockAt<ResourceSimpleArray<byte_r>>(
+            this.Unknown_110h_Data = reader.ReadBlockAt<SimpleArray<byte>>(
                 this.Unknown_110h_Pointer, // offset
                 this.Count2
             );

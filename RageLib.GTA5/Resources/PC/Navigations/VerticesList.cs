@@ -44,7 +44,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
 
         // reference data
         public ResourceSimpleArray<VerticesListPart> ListParts;
-        public ResourceSimpleArray<uint_r> ListOffsets;
+        public SimpleArray<uint> ListOffsets;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -68,7 +68,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
                 this.ListPartsPointer, // offset
                 this.ListPartsCount
             );
-            this.ListOffsets = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
+            this.ListOffsets = reader.ReadBlockAt<SimpleArray<uint>>(
                 this.ListOffsetsPointer, // offset
                 this.ListPartsCount
             );

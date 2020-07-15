@@ -179,7 +179,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         public ResourceSimpleArray<ShaderParameter> Parameters;
         public ResourceSimpleArray<SimpleArray<Vector4>> Data;
-        public ResourceSimpleArray<uint_r> Hashes;
+        public SimpleArray<uint> Hashes;
         // Hashes alignment pad
         // Extra 32 bytes 
         // Extra 4 * ParametersTotalSize bytes
@@ -233,7 +233,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             // Skip Data among Parameters and Hashes which we have already read
             reader.Position += dataBlockSize;
 
-            Hashes = reader.ReadBlock<ResourceSimpleArray<uint_r>>(cnt);
+            Hashes = reader.ReadBlock<SimpleArray<uint>>(cnt);
 
             // Read hashes alignment pad
             //reader.Position += (16 - (reader.Position % 16)) % 16;
@@ -268,9 +268,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             }
 
             // write hashes
-            foreach (var h in Hashes)
-                writer.WriteBlock(h); 
-            //writer.WriteBlock(Hashes);
+            //foreach (var h in Hashes)
+            //    writer.WriteBlock(h); 
+            writer.WriteBlock(Hashes);
 
             // Write hashes alignment pad
             var pad = (16 - (writer.Position % 16)) % 16;

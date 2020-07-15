@@ -31,7 +31,7 @@ namespace RageLib.Resources.Common
             int count = Convert.ToInt32(parameters[0]);
 
             Data.Capacity += count;
-            Data.AddRange(reader.ReadUnmanaged<T>(count));
+            Data.AddRange(reader.ReadArray<T>(count));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace RageLib.Resources.Common
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            writer.WriteUnmanaged<T>(Data.ToArray());
+            writer.WriteArray<T>(Data.ToArray());
         }
 
         public int Count => Data.Count;

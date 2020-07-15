@@ -47,7 +47,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Textures
         public TextureDictionaryFileWrapper_GTA5_pc()
         {
             textureDictionary = new PgDictionary64<TextureDX11>();
-            textureDictionary.Hashes = new ResourceSimpleList64<uint_r>();
+            textureDictionary.Hashes = new SimpleList64<uint>();
             textureDictionary.Values = new ResourcePointerList64<TextureDX11>();
         }
 

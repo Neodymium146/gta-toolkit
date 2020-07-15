@@ -259,7 +259,7 @@ namespace RageLib.Data
             Write(value.M44);
         }
 
-        public void WriteUnmanaged<T>(T[] items) where T : unmanaged
+        public void WriteArray<T>(T[] items) where T : unmanaged
         {
             if (items == null) 
                 return;

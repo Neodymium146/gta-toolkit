@@ -42,9 +42,9 @@ namespace RageLib.Resources.GTA5.PC.Expressions
         public uint Unknown_18h;
         public uint Unknown_1Ch;
         public ResourcePointerList64<Unknown_E_001> Unknown_20h;
-        public ResourceSimpleList64<uint_r> Unknown_30h;
+        public SimpleList64<uint> Unknown_30h;
         public ResourceSimpleList64<Unknown_E_002> Unknown_40h;
-        public ResourceSimpleList64<uint_r> Unknown_50h;
+        public SimpleList64<uint> Unknown_50h;
         public ulong NamePointer;
         public uint Unknown_68h; // short, short, (name len, name len+1)
         public uint Unknown_6Ch;
@@ -76,9 +76,9 @@ namespace RageLib.Resources.GTA5.PC.Expressions
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.Unknown_20h = reader.ReadBlock<ResourcePointerList64<Unknown_E_001>>();
-            this.Unknown_30h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_30h = reader.ReadBlock<SimpleList64<uint>>();
             this.Unknown_40h = reader.ReadBlock<ResourceSimpleList64<Unknown_E_002>>();
-            this.Unknown_50h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_50h = reader.ReadBlock<SimpleList64<uint>>();
             this.NamePointer = reader.ReadUInt64();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
