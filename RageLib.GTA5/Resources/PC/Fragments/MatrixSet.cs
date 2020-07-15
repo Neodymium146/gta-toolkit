@@ -44,7 +44,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
-        public ResourceSimpleArray<RAGE_Matrix3> Data;
+        public ResourceSimpleArray<RAGE_Matrix3x4> Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -62,7 +62,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Data = reader.ReadBlock<ResourceSimpleArray<RAGE_Matrix3>>(
+            this.Data = reader.ReadBlock<ResourceSimpleArray<RAGE_Matrix3x4>>(
                 cnt1
                 );
         }

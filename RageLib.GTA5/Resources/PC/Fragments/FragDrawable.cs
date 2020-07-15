@@ -35,10 +35,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
         // structure data
         public ulong Unknown_A8h; // 0x0000000000000000
-        public RAGE_Matrix4 Unknown_B0h;      
+        public RAGE_Matrix4x4 Unknown_B0h;      
         public ulong BoundPointer;
         public ResourceSimpleList64<ulong_r> Unknown_F8h_Data;
-        public ResourceSimpleList64<RAGE_Matrix4> Unknown_108h_Data;
+        public ResourceSimpleList64<RAGE_Matrix4x4> Unknown_108h_Data;
         public ulong Unknown_118h; // 0x0000000000000000
         public ulong Unknown_120h; // 0x0000000000000000
         public ulong Unknown_128h; // 0x0000000000000000
@@ -60,10 +60,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
             // read structure data
             this.Unknown_A8h = reader.ReadUInt64();
-            this.Unknown_B0h = reader.ReadBlock<RAGE_Matrix4>();
+            this.Unknown_B0h = reader.ReadBlock<RAGE_Matrix4x4>();
             this.BoundPointer = reader.ReadUInt64();
             this.Unknown_F8h_Data = reader.ReadBlock<ResourceSimpleList64<ulong_r>>();
-            this.Unknown_108h_Data = reader.ReadBlock<ResourceSimpleList64<RAGE_Matrix4>>();
+            this.Unknown_108h_Data = reader.ReadBlock<ResourceSimpleList64<RAGE_Matrix4x4>>();
             this.Unknown_118h = reader.ReadUInt64();
             this.Unknown_120h = reader.ReadUInt64();
             this.Unknown_128h = reader.ReadUInt64();

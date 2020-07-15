@@ -24,15 +24,13 @@ using System.Numerics;
 
 namespace RageLib.Resources.Common
 {
-    // Mat34V
-    public class RAGE_Matrix3 : ResourceSystemBlock
+    // Mat44V
+    public class RAGE_Matrix4x4 : ResourceSystemBlock
     {
-        public override long BlockLength => 0x30;
+        public override long BlockLength => 0x40;
 
         // structure data
-        public Vector4 Row1;
-        public Vector4 Row2;
-        public Vector4 Row3;
+        public Matrix4x4 Value;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -40,9 +38,7 @@ namespace RageLib.Resources.Common
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            Row1 = reader.ReadVector4();
-            Row2 = reader.ReadVector4();
-            Row3 = reader.ReadVector4();
+            Value = reader.ReadMatrix4x4();
         }
 
         /// <summary>
@@ -51,9 +47,19 @@ namespace RageLib.Resources.Common
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(Row1);
-            writer.Write(Row2);
-            writer.Write(Row3);
+            writer.Write(Value);
+        }
+
+        public static explicit operator Matrix4x4(RAGE_Matrix4x4 value)
+        {
+            return value.Value;
+        }
+
+        public static explicit operator RAGE_Matrix4x4(Matrix4x4 value)
+        {
+            var x = new RAGE_Matrix4x4();
+            x.Value = value;
+            return x;
         }
     }
 }
