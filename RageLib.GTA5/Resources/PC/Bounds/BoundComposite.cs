@@ -22,6 +22,7 @@
 
 using RageLib.Resources.Common;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
@@ -44,8 +45,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
         // reference data
         public ResourcePointerArray64<Bound> Children;
-        public ResourceSimpleArray<RAGE_Matrix4x4> ChildTransformations1;
-        public ResourceSimpleArray<RAGE_Matrix4x4> ChildTransformations2;
+        public SimpleArray<Matrix4x4> ChildTransformations1;
+        public SimpleArray<Matrix4x4> ChildTransformations2;
         public ResourceSimpleArray<RAGE_AABB> ChildBoundingBoxes;
         public ResourceSimpleArray<ulong_r> ChildFlags1;
         public ResourceSimpleArray<ulong_r> ChildFlags2;
@@ -75,11 +76,11 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 this.ChildrenPointer, // offset
                 this.ChildrenCount1
             );
-            this.ChildTransformations1 = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4x4>>(
+            this.ChildTransformations1 = reader.ReadBlockAt<SimpleArray<Matrix4x4>>(
                 this.ChildTransformations1Pointer, // offset
                 this.ChildrenCount1
             );
-            this.ChildTransformations2 = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4x4>>(
+            this.ChildTransformations2 = reader.ReadBlockAt<SimpleArray<Matrix4x4>>(
                 this.ChildTransformations2Pointer, // offset
                 this.ChildrenCount1
             );

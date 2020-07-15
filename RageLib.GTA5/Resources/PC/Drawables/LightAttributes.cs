@@ -21,6 +21,7 @@
 */
 
 using RageLib.Resources.Common;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
@@ -32,7 +33,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         // structure data
         public uint Unknown_0h; // 0x00000000
         public uint Unknown_4h; // 0x00000000
-        public RAGE_Vector3 Position;
+        public Vector3 Position;
         public uint Unknown_14h; // 0x00000000
         public byte ColorR;
         public byte ColorG;
@@ -46,7 +47,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint TimeFlags;
         public float Falloff;
         public float FalloffExponent;
-        public RAGE_Vector3 CullingPlaneNormal;
+        public Vector3 CullingPlaneNormal;
         public float CullingPlaneOffset;
         public byte ShadowBlur;
         public byte Unknown_45h;
@@ -68,11 +69,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public float ShadowNearClip;
         public float CoronaIntensity;
         public float CoronaZBias;
-        public RAGE_Vector3 Direction;
-        public RAGE_Vector3 Tangent;
+        public Vector3 Direction;
+        public Vector3 Tangent;
         public float ConeInnerAngle;
         public float ConeOuterAngle;
-        public RAGE_Vector3 Extent;
+        public Vector3 Extent;
         public uint ProjectedTextureHash;
         public uint Unknown_A4h; // 0x00000000
 
@@ -84,7 +85,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             // read structure data
             this.Unknown_0h = reader.ReadUInt32();
             this.Unknown_4h = reader.ReadUInt32();
-            this.Position = reader.ReadBlock<RAGE_Vector3>();
+            this.Position = reader.ReadVector3();
             this.Unknown_14h = reader.ReadUInt32();
             this.ColorR = reader.ReadByte();
             this.ColorG = reader.ReadByte();
@@ -98,7 +99,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.TimeFlags = reader.ReadUInt32();
             this.Falloff = reader.ReadSingle();
             this.FalloffExponent = reader.ReadSingle();
-            this.CullingPlaneNormal = reader.ReadBlock<RAGE_Vector3>();
+            this.CullingPlaneNormal = reader.ReadVector3();
             this.CullingPlaneOffset = reader.ReadSingle();
             this.ShadowBlur = reader.ReadByte();
             this.Unknown_45h = reader.ReadByte();
@@ -120,11 +121,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.ShadowNearClip = reader.ReadSingle();
             this.CoronaIntensity = reader.ReadSingle();
             this.CoronaZBias = reader.ReadSingle();
-            this.Direction = reader.ReadBlock<RAGE_Vector3>();
-            this.Tangent = reader.ReadBlock<RAGE_Vector3>();
+            this.Direction = reader.ReadVector3();
+            this.Tangent = reader.ReadVector3();
             this.ConeInnerAngle = reader.ReadSingle();
             this.ConeOuterAngle = reader.ReadSingle();
-            this.Extent = reader.ReadBlock<RAGE_Vector3>();
+            this.Extent = reader.ReadVector3();
             this.ProjectedTextureHash = reader.ReadUInt32();
             this.Unknown_A4h = reader.ReadUInt32();
         }
@@ -137,7 +138,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             // write structure data
             writer.Write(this.Unknown_0h);
             writer.Write(this.Unknown_4h);
-            writer.WriteBlock(this.Position);
+            writer.Write(this.Position);
             writer.Write(this.Unknown_14h);
             writer.Write(this.ColorR);
             writer.Write(this.ColorG);
@@ -151,7 +152,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.TimeFlags);
             writer.Write(this.Falloff);
             writer.Write(this.FalloffExponent);
-            writer.WriteBlock(this.CullingPlaneNormal);
+            writer.Write(this.CullingPlaneNormal);
             writer.Write(this.CullingPlaneOffset);
             writer.Write(this.ShadowBlur);
             writer.Write(this.Unknown_45h);
@@ -173,11 +174,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.ShadowNearClip);
             writer.Write(this.CoronaIntensity);
             writer.Write(this.CoronaZBias);
-            writer.WriteBlock(this.Direction);
-            writer.WriteBlock(this.Tangent);
+            writer.Write(this.Direction);
+            writer.Write(this.Tangent);
             writer.Write(this.ConeInnerAngle);
             writer.Write(this.ConeOuterAngle);
-            writer.WriteBlock(this.Extent);
+            writer.Write(this.Extent);
             writer.Write(this.ProjectedTextureHash);
             writer.Write(this.Unknown_A4h);
         }

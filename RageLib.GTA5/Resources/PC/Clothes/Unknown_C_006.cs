@@ -22,6 +22,7 @@
 
 using RageLib.Resources.Common;
 using System;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Clothes
 {
@@ -50,12 +51,12 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public uint Unknown_44h; // 0x00000000
         public uint Unknown_48h; // 0x00000000
         public uint Unknown_4Ch; // 0x00000000
-        public ResourceSimpleList64<RAGE_Vector4> Unknown_50h;
+        public SimpleList64<Vector4> Unknown_50h;
         public ResourceSimpleList64<ushort_r> Unknown_60h;
         public ResourceSimpleList64<ushort_r> Unknown_70h;
         public ResourceSimpleList64<ushort_r> Unknown_80h;
         public ResourceSimpleList64<ushort_r> Unknown_90h;
-        public ResourceSimpleList64<RAGE_Vector4> Unknown_A0h;
+        public SimpleList64<Vector4> Unknown_A0h;
         public ResourceSimpleList64<ushort_r> Unknown_B0h;
         public ResourceSimpleList64<ushort_r> Unknown_C0h;
         public ResourceSimpleList64<ushort_r> Unknown_D0h;
@@ -121,12 +122,12 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.Unknown_44h = reader.ReadUInt32();
             this.Unknown_48h = reader.ReadUInt32();
             this.Unknown_4Ch = reader.ReadUInt32();
-            this.Unknown_50h = reader.ReadBlock<ResourceSimpleList64<RAGE_Vector4>>();
+            this.Unknown_50h = reader.ReadBlock<SimpleList64<Vector4>>();
             this.Unknown_60h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
             this.Unknown_70h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
             this.Unknown_80h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
             this.Unknown_90h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
-            this.Unknown_A0h = reader.ReadBlock<ResourceSimpleList64<RAGE_Vector4>>();
+            this.Unknown_A0h = reader.ReadBlock<SimpleList64<Vector4>>();
             this.Unknown_B0h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
             this.Unknown_C0h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
             this.Unknown_D0h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();

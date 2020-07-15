@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,10 +14,10 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override long BlockLength => 0x70;
 
         // structure data
-        public RAGE_Vector3 BoundingCenter;
+        public Vector3 BoundingCenter;
         public float BoundingSphereRadius;
-        public RAGE_Vector4 BoundingBoxMin;
-        public RAGE_Vector4 BoundingBoxMax;
+        public Vector4 BoundingBoxMin;
+        public Vector4 BoundingBoxMax;
         public ulong DrawableModelsHighPointer;
         public ulong DrawableModelsMediumPointer;
         public ulong DrawableModelsLowPointer;
@@ -42,10 +43,10 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.BoundingCenter = reader.ReadBlock<RAGE_Vector3>();
+            this.BoundingCenter = reader.ReadVector3();
             this.BoundingSphereRadius = reader.ReadSingle();
-            this.BoundingBoxMin = reader.ReadBlock<RAGE_Vector4>();
-            this.BoundingBoxMax = reader.ReadBlock<RAGE_Vector4>();
+            this.BoundingBoxMin = reader.ReadVector4();
+            this.BoundingBoxMax = reader.ReadVector4();
             this.DrawableModelsHighPointer = reader.ReadUInt64();
             this.DrawableModelsMediumPointer = reader.ReadUInt64();
             this.DrawableModelsLowPointer = reader.ReadUInt64();
@@ -87,10 +88,10 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.DrawableModelsVeryLowPointer = (ulong)(this.DrawableModelsVeryLow != null ? this.DrawableModelsVeryLow.BlockPosition : 0);
 
             // write structure data
-            writer.WriteBlock(this.BoundingCenter);
+            writer.Write(this.BoundingCenter);
             writer.Write(this.BoundingSphereRadius);
-            writer.WriteBlock(this.BoundingBoxMin);
-            writer.WriteBlock(this.BoundingBoxMax);
+            writer.Write(this.BoundingBoxMin);
+            writer.Write(this.BoundingBoxMax);
             writer.Write(this.DrawableModelsHighPointer);
             writer.Write(this.DrawableModelsMediumPointer);
             writer.Write(this.DrawableModelsLowPointer);

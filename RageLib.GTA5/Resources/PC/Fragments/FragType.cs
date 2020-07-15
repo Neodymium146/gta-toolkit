@@ -25,6 +25,7 @@ using RageLib.Resources.GTA5.PC.Drawables;
 using System.Collections.Generic;
 using System;
 using RageLib.Resources.GTA5.PC.Clothes;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
@@ -37,7 +38,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         // structure data
         public ulong Unknown_10h; // 0x0000000000000000
         public ulong Unknown_18h; // 0x0000000000000000
-        public RAGE_Vector3 BoundingSphereCenter;
+        public Vector3 BoundingSphereCenter;
         public float BoundingSphereRadius;
         public ulong DrawablePointer;
         public ulong Unknown_28h_Pointer;
@@ -100,7 +101,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             // read structure data
             this.Unknown_10h = reader.ReadUInt64();
             this.Unknown_18h = reader.ReadUInt64();
-            this.BoundingSphereCenter = reader.ReadBlock<RAGE_Vector3>();
+            this.BoundingSphereCenter = reader.ReadVector3();
             this.BoundingSphereRadius = reader.ReadSingle();
             this.DrawablePointer = reader.ReadUInt64();
             this.Unknown_28h_Pointer = reader.ReadUInt64();
@@ -196,7 +197,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             // write structure data
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_18h);
-            writer.WriteBlock(this.BoundingSphereCenter);
+            writer.Write(this.BoundingSphereCenter);
             writer.Write(this.BoundingSphereRadius);
             writer.Write(this.DrawablePointer);
             writer.Write(this.Unknown_28h_Pointer);

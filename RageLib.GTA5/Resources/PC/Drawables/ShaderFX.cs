@@ -24,6 +24,7 @@ using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Textures;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
@@ -177,7 +178,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         }
 
         public ResourceSimpleArray<ShaderParameter> Parameters;
-        public ResourceSimpleArray<ResourceSimpleArray<RAGE_Vector4>> Data;
+        public ResourceSimpleArray<SimpleArray<Vector4>> Data;
         public ResourceSimpleArray<uint_r> Hashes;
         // Hashes alignment pad
         // Extra 32 bytes 
@@ -188,7 +189,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             int cnt = Convert.ToInt32(parameters[0]);
 
             Parameters = reader.ReadBlock<ResourceSimpleArray<ShaderParameter>>(cnt);
-            Data = new ResourceSimpleArray<ResourceSimpleArray<RAGE_Vector4>>();
+            Data = new ResourceSimpleArray<SimpleArray<Vector4>>();
             int dataBlockSize = 0;
             for (int i = 0; i < cnt; i++)
             {
@@ -222,7 +223,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
                     default:
                         dataBlockSize += 16 * p.DataType;
-                        var data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Vector4>>(p.DataPointer, p.DataType);
+                        var data = reader.ReadBlockAt<SimpleArray<Vector4>>(p.DataPointer, p.DataType);
                         p.Data = data;
                         Data.Add(data);
                         break;

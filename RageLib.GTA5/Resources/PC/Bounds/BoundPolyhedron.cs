@@ -22,6 +22,7 @@
 
 using RageLib.Resources.Common;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
@@ -37,8 +38,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public uint Unknown_80h;
         public uint VerticesCount1;
         public ulong PrimitivesPointer;
-        public RAGE_Vector4 Quantum;
-        public RAGE_Vector4 Offset;
+        public Vector4 Quantum;
+        public Vector4 Offset;
         public ulong VerticesPointer;
         public ulong Unknown_B8h_Pointer;
         public ulong Unknown_C0h_Pointer;
@@ -71,8 +72,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Unknown_80h = reader.ReadUInt32();
             this.VerticesCount1 = reader.ReadUInt32();
             this.PrimitivesPointer = reader.ReadUInt64();
-            this.Quantum = reader.ReadBlock<RAGE_Vector4>();
-            this.Offset = reader.ReadBlock<RAGE_Vector4>();
+            this.Quantum = reader.ReadVector4();
+            this.Offset = reader.ReadVector4();
             this.VerticesPointer = reader.ReadUInt64();
             this.Unknown_B8h_Pointer = reader.ReadUInt64();
             this.Unknown_C0h_Pointer = reader.ReadUInt64();
@@ -136,8 +137,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             writer.Write(this.Unknown_80h);
             writer.Write(this.VerticesCount1);
             writer.Write(this.PrimitivesPointer);
-            writer.WriteBlock(this.Quantum);
-            writer.WriteBlock(this.Offset);
+            writer.Write(this.Quantum);
+            writer.Write(this.Offset);
             writer.Write(this.VerticesPointer);
             writer.Write(this.Unknown_B8h_Pointer);
             writer.Write(this.Unknown_C0h_Pointer);

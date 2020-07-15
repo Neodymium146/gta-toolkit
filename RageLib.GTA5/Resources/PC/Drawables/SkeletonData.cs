@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using RageLib.GTA5.Resources.PC.Drawables;
 using RageLib.Resources.Common;
 
@@ -53,8 +54,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         // reference data
         public BoneData BoneData;
-        public ResourceSimpleArray<RAGE_Matrix4x4> TransformationsInverted;
-        public ResourceSimpleArray<RAGE_Matrix4x4> Transformations;
+        public SimpleArray<Matrix4x4> TransformationsInverted;
+        public SimpleArray<Matrix4x4> Transformations;
         public ResourceSimpleArray<ushort_r> ParentIndices;
         public ResourceSimpleArray<ushort_r> ChildrenIndices;
 
@@ -88,11 +89,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 this.BoneDataPointer - 16, // offset
                 this.BonesCount
             );
-            this.TransformationsInverted = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4x4>>(
+            this.TransformationsInverted = reader.ReadBlockAt<SimpleArray<Matrix4x4>>(
                 this.TransformationsInvertedPointer, // offset
                 this.BonesCount
             );
-            this.Transformations = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4x4>>(
+            this.Transformations = reader.ReadBlockAt<SimpleArray<Matrix4x4>>(
                 this.TransformationsPointer, // offset
                 this.BonesCount
             );
