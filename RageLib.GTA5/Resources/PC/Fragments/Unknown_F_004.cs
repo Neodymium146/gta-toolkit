@@ -20,8 +20,9 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.GTA5.PC.Drawables;
 using System;
+using RageLib.Resources.Common;
+using RageLib.Resources.GTA5.PC.Drawables;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {

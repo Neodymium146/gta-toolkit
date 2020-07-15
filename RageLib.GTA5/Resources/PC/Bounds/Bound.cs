@@ -21,6 +21,7 @@
 */
 
 using System;
+using RageLib.Resources.Common;
 
 namespace RageLib.Resources.GTA5.PC.Bounds
 {

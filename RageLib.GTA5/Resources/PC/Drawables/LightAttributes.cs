@@ -20,6 +20,8 @@
     THE SOFTWARE.
 */
 
+using RageLib.Resources.Common;
+
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
     // CLightAttr

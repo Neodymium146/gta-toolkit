@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2016 Neodymium
+    Copyright(c) 2015 Neodymium
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,15 @@
 
 using System.Numerics;
 
-namespace RageLib.Resources
+namespace RageLib.Resources.Common
 {
-    // Vec3V
-    public class RAGE_Vector3 : ResourceSystemBlock
+    // Mat44V
+    public class RAGE_Matrix4 : ResourceSystemBlock
     {
-        public override long BlockLength
-        {
-            get { return 12; }
-        }
+        public override long BlockLength => 0x40;
 
         // structure data
-        public Vector3 Value;
+        public Matrix4x4 Value;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -41,7 +38,7 @@ namespace RageLib.Resources
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Value = reader.ReadVector3();
+            Value = reader.ReadMatrix4x4();
         }
 
         /// <summary>
@@ -50,17 +47,17 @@ namespace RageLib.Resources
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.Value);
+            writer.Write(Value);
         }
 
-        public static explicit operator Vector3(RAGE_Vector3 value)
+        public static explicit operator Matrix4x4(RAGE_Matrix4 value)
         {
             return value.Value;
         }
 
-        public static explicit operator RAGE_Vector3(Vector3 value)
+        public static explicit operator RAGE_Matrix4(Matrix4x4 value)
         {
-            var x = new RAGE_Vector3();
+            var x = new RAGE_Matrix4();
             x.Value = value;
             return x;
         }
