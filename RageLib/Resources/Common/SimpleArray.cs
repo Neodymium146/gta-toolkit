@@ -10,12 +10,10 @@ namespace RageLib.Resources.Common
     /// </summary>
     public class SimpleArray<T> : ResourceSystemBlock, IList<T> where T : unmanaged
     {
-        public readonly int SizeOf;
-
         /// <summary>
         /// Gets the length of the data block.
         /// </summary>
-        public override long BlockLength => Data != null ? Data.Count * SizeOf : 0;
+        public override long BlockLength => Data != null ? Data.Count * Unsafe.SizeOf<T>() : 0;
 
         // structure data
         private List<T> Data;
@@ -23,7 +21,6 @@ namespace RageLib.Resources.Common
         public SimpleArray()
         {
             Data = new List<T>();
-            SizeOf = Unsafe.SizeOf<T>();
         }
 
         /// <summary>
