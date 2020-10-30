@@ -21,11 +21,11 @@
   </ItemGroup>
   
   <ItemGroup>
-    <EmbeddedResource Include="XmlInfos.xml" />
+    <EmbeddedResource Include="..\..\RageLib.GTA5\ResourceWrappers\PC\Meta\Definitions\XmlInfos.xml" Link="XmlInfos.xml" />
   </ItemGroup>
   
   <ItemGroup>
-    <EmbeddedResource Include="PsoDefinitions.xml" />
+    <EmbeddedResource Include="..\..\RageLib.GTA5\PSOWrappers\Xml\PsoDefinitions.xml" Link="PsoDefinitions.xml" />
   </ItemGroup>
   
 </Project>
