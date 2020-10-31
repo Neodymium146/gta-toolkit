@@ -23,10 +23,11 @@
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5;
 using RageLib.Resources.GTA5.PC.Textures;
+using RageLib.ResourceWrappers;
 using System;
 using System.IO;
 
-namespace RageLib.ResourceWrappers.GTA5.PC.Textures
+namespace RageLib.GTA5.ResourceWrappers.PC.Textures
 {
     /// <summary>
     /// Represents a wrapper for a GTA5 PC texture dictionary file.

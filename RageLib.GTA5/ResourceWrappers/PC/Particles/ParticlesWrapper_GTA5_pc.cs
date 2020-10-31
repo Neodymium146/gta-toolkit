@@ -22,7 +22,7 @@
 
 using RageLib.Resources.GTA5.PC.Particles;
 using RageLib.ResourceWrappers;
-using RageLib.ResourceWrappers.GTA5.PC.Textures;
+using RageLib.GTA5.ResourceWrappers.PC.Textures;
 using RageLib.ResourceWrappers.Particles;
 using System;
 

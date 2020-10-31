@@ -23,10 +23,10 @@
 using RageLib.GTA5.ResourceWrappers.PC.Drawables;
 using RageLib.GTA5.ResourceWrappers.PC.Fragments;
 using RageLib.GTA5.ResourceWrappers.PC.Particles;
+using RageLib.GTA5.ResourceWrappers.PC.Textures;
 using RageLib.ResourceWrappers;
 using RageLib.ResourceWrappers.Drawables;
 using RageLib.ResourceWrappers.Fragments;
-using RageLib.ResourceWrappers.GTA5.PC.Textures;
 using RageLib.ResourceWrappers.Particles;
 using System;
 using System.Collections.Generic;

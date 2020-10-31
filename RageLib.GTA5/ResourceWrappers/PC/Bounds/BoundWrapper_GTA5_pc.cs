@@ -1,7 +1,7 @@
 ﻿using RageLib.Resources.GTA5.PC.Bounds;
 using RageLib.ResourceWrappers.Bounds;
 
-namespace RageLib.ResourceWrappers.GTA5.PC.Bounds
+namespace RageLib.GTA5.ResourceWrappers.PC.Bounds
 {
     public class BoundWrapper_GTA5_pc : IBound
     {

@@ -3,7 +3,7 @@ using RageLib.Resources.GTA5.PC.Bounds;
 using RageLib.ResourceWrappers.Bounds;
 using System.IO;
 
-namespace RageLib.ResourceWrappers.GTA5.PC.Bounds
+namespace RageLib.GTA5.ResourceWrappers.PC.Bounds
 {
     public class BoundFileWrapper_GTA5_pc : IBoundFile
     {
