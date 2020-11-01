@@ -20,6 +20,7 @@
     THE SOFTWARE.
 */
 
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources.Common
@@ -78,9 +79,7 @@ namespace RageLib.Resources.Common
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
-            if (Entries != null) list.Add(Entries);
-            return list.ToArray();
+            return Entries == null ? Array.Empty<IResourceBlock>() : new IResourceBlock[] { Entries };
         }
     }
 }

@@ -20,6 +20,7 @@
     THE SOFTWARE.
 */
 
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources
@@ -70,9 +71,7 @@ namespace RageLib.Resources
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
-            if (PagesInfo != null) list.Add(PagesInfo);
-            return list.ToArray();
+            return PagesInfo == null ? Array.Empty<IResourceBlock>() : new IResourceBlock[] { PagesInfo };
         }
     }
 }

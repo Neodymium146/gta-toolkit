@@ -20,6 +20,8 @@
     THE SOFTWARE.
 */
 
+using System;
+
 namespace RageLib.Resources.Common
 {
     public class ResourcePointerList<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
@@ -35,7 +37,7 @@ namespace RageLib.Resources.Common
         public ushort DataCount2;
 
         // reference data
-        public ResourcePointerArray<T> data_items;
+        public ResourcePointerArray<T> Entries;
         
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
@@ -43,7 +45,7 @@ namespace RageLib.Resources.Common
             this.DataCount1 = reader.ReadUInt16();
             this.DataCount2 = reader.ReadUInt16();
 
-            this.data_items = reader.ReadBlockAt<ResourcePointerArray<T>>(
+            this.Entries = reader.ReadBlockAt<ResourcePointerArray<T>>(
                 this.DataPointer, // offset
                 this.DataCount1
             );
@@ -52,14 +54,19 @@ namespace RageLib.Resources.Common
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update...
-            this.DataPointer = (uint)data_items.BlockPosition;
-            this.DataCount1 = (ushort)data_items.Count;
-            this.DataCount2 = (ushort)data_items.Count;
+            this.DataPointer = (uint)Entries.BlockPosition;
+            this.DataCount1 = (ushort)Entries.Count;
+            this.DataCount2 = (ushort)Entries.Count;
 
             // write...
             writer.Write(DataPointer);
             writer.Write(DataCount1);
             writer.Write(DataCount2);
+        }
+
+        public override IResourceBlock[] GetReferences()
+        {
+            return Entries == null ? Array.Empty<IResourceBlock>() : new IResourceBlock[] { Entries };
         }
     }
 }
