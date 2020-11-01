@@ -78,7 +78,7 @@ namespace RageLib.Resources
         /// </summary>
         public virtual Tuple<long, IResourceBlock>[] GetParts()
         {
-            return new Tuple<long, IResourceBlock>[0];
+            return Array.Empty<Tuple<long, IResourceBlock>>();
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace RageLib.Resources
         /// </summary>
         public virtual IResourceBlock[] GetReferences()
         {
-            return new IResourceBlock[0];
+            return Array.Empty<IResourceBlock>();
         }
     }
 
