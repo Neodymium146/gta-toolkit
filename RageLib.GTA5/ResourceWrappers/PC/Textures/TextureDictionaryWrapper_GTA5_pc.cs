@@ -86,11 +86,10 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Textures
                 theHashList.Sort();
 
                 var bak = textureDictionary.Values.Entries;
-                textureDictionary.Hashes.Entries = new SimpleArray<uint>();
+                textureDictionary.Hashes.Entries = new SimpleArray<uint>(theHashList.ToArray());
                 textureDictionary.Values.Entries = new ResourcePointerArray64<TextureDX11>();
                 foreach (uint x in theHashList)
                 {
-                    textureDictionary.Hashes.Entries.Add(x);
                     foreach (var g in bak)
                     {
                         uint tx = Jenkins.Hash((string)g.Name);
