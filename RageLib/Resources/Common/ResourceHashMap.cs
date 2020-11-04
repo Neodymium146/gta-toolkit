@@ -211,7 +211,7 @@ namespace RageLib.Resources.Common
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.DataPointer = (ulong)(this.Next != null ? this.Data.BlockPosition : 0);
+            this.DataPointer = (ulong)(this.Data != null ? this.Data.BlockPosition : 0);
             this.NextPointer = (ulong)(this.Next != null ? this.Next.BlockPosition : 0);
 
             // write structure data
