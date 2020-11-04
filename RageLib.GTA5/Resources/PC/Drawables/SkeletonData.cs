@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Numerics;
 using RageLib.GTA5.Resources.PC.Drawables;
 using RageLib.Resources.Common;
@@ -169,6 +170,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             UpdateBoneIds();
             UpdateBoneMap();
+            UpdateBoneTransformations();
         }
 
         private void UpdateBoneIds()
@@ -205,6 +207,99 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 bonesIndexId.Add(new KeyValuePair<uint, uint_r>(bone.BoneId, (uint_r)bone.Index));
 
             BoneMap = new AtHashMap<uint_r>(bonesIndexId);
+        }
+
+        public void UpdateBoneTransformations()
+        {
+            var bones = BoneData?.Bones;
+
+            if (bones == null)
+            {
+                Transformations = null;
+                TransformationsInverted = null;
+                return;
+            }
+
+            var worldTransformations = new Matrix4x4[BonesCount];
+            var worldTransformationsInverted = new Matrix4x4[BonesCount];
+
+            for (int i = 0; i < BonesCount; i++)
+            {
+                var bone = bones[i];
+
+                // Get Local Transform Matrix
+                var localMatrix = GetLocalMatrix(bone);
+                
+                // Get World Transform Matrix
+                var worldMatrix = GetWorldMatrix(bone);
+                Matrix4x4.Invert(worldMatrix, out Matrix4x4 worldMatrixInverted);
+
+                // TODO: Find out how 4th column is calculated
+                //       In some cases M24 and M34 aren't accurate
+                localMatrix.M14 = 0f;
+                localMatrix.M24 = 4f;
+                localMatrix.M34 = -3f;
+                localMatrix.M44 = 0f;
+                worldMatrixInverted.M14 = 0f;
+                worldMatrixInverted.M24 = 0f;
+                worldMatrixInverted.M34 = 0f;
+                worldMatrixInverted.M44 = 0f;
+
+                worldTransformations[i] = localMatrix;
+                worldTransformationsInverted[i] = worldMatrixInverted;
+
+                //var oldMat = Transformations[i];
+                //var oldMatInv = TransformationsInverted[i];
+                //Debug.Assert(MatrixAlmostEquals(localMatrix, oldMat));
+                //Debug.Assert(MatrixAlmostEquals(worldMatrix, oldMat));
+                //Debug.Assert(MatrixAlmostEquals(worldMatrixInverted, oldMatInv));
+
+                //bool MatrixAlmostEquals(Matrix4x4 m1, Matrix4x4 m2, float epsilon = 0.001f)
+                //{
+                //    return
+                //        (MathF.Abs(m1.M11 - m2.M11) < epsilon) &&
+                //        (MathF.Abs(m1.M12 - m2.M12) < epsilon) &&
+                //        (MathF.Abs(m1.M13 - m2.M13) < epsilon) &&
+                //        (MathF.Abs(m1.M14 - m2.M14) < epsilon) &&
+                //        (MathF.Abs(m1.M21 - m2.M21) < epsilon) &&
+                //        (MathF.Abs(m1.M22 - m2.M22) < epsilon) &&
+                //        (MathF.Abs(m1.M23 - m2.M23) < epsilon) &&
+                //        (MathF.Abs(m1.M24 - m2.M24) < epsilon) &&
+                //        (MathF.Abs(m1.M31 - m2.M31) < epsilon) &&
+                //        (MathF.Abs(m1.M32 - m2.M32) < epsilon) &&
+                //        (MathF.Abs(m1.M33 - m2.M33) < epsilon) &&
+                //        (MathF.Abs(m1.M34 - m2.M34) < epsilon) &&
+                //        (MathF.Abs(m1.M41 - m2.M41) < epsilon) &&
+                //        (MathF.Abs(m1.M42 - m2.M42) < epsilon) &&
+                //        (MathF.Abs(m1.M43 - m2.M43) < epsilon) &&
+                //        (MathF.Abs(m1.M44 - m2.M44) < epsilon);
+                //}
+            }
+
+            Transformations = new SimpleArray<Matrix4x4>(worldTransformations);
+            TransformationsInverted = new SimpleArray<Matrix4x4>(worldTransformationsInverted);
+        }
+
+        // TODO: Use a wrapper class to cache transforms and parent of each Bone
+        public Matrix4x4 GetLocalMatrix(Bone bone)
+        {
+            return Matrix4x4.CreateScale(bone.Scale) * Matrix4x4.CreateFromQuaternion(bone.Rotation) * Matrix4x4.CreateTranslation(bone.Translation);
+        }
+
+        public Matrix4x4 GetWorldMatrix(Bone bone)
+        {
+            var localMatrix = GetLocalMatrix(bone);
+
+            var parentIndex = bone.ParentIndex;
+
+            if (parentIndex != ushort.MaxValue)
+            {
+                var parentBone = BoneData?.Bones[parentIndex];
+                var parentWorldMatrix = GetWorldMatrix(parentBone);
+                return localMatrix * parentWorldMatrix;
+            }
+
+            return localMatrix;
         }
     }
 }
