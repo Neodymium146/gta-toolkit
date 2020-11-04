@@ -36,7 +36,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override long BlockLength => 0x70;
 
         // structure data
-        public AtHashMap<uint_r> BoneMap;
+        public HashMap BoneMap;
         public ulong BoneDataPointer; // why this points to the array directly ?
         public ulong TransformationsInvertedPointer;
         public ulong TransformationsPointer;
@@ -68,7 +68,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Read(reader, parameters);
 
             // read structure data
-            this.BoneMap = reader.ReadBlock<AtHashMap<uint_r>>();
+            this.BoneMap = reader.ReadBlock<HashMap>();
             this.BoneDataPointer = reader.ReadUInt64();
             this.TransformationsInvertedPointer = reader.ReadUInt64();
             this.TransformationsPointer = reader.ReadUInt64();
@@ -201,12 +201,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             if (BoneData == null)
                 return;
 
-            List<KeyValuePair<uint, uint_r>> bonesIndexId = new List<KeyValuePair<uint, uint_r>>((int)BoneData.BonesCount);
+            List<KeyValuePair<uint, uint>> bonesIndexId = new List<KeyValuePair<uint, uint>>((int)BoneData.BonesCount);
 
             foreach (var bone in BoneData.Bones)
-                bonesIndexId.Add(new KeyValuePair<uint, uint_r>(bone.BoneId, (uint_r)bone.Index));
+                bonesIndexId.Add(new KeyValuePair<uint, uint>(bone.BoneId, (uint)bone.Index));
 
-            BoneMap = new AtHashMap<uint_r>(bonesIndexId);
+            BoneMap = new HashMap(bonesIndexId);
         }
 
         public void UpdateBoneTransformations()

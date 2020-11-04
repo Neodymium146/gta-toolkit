@@ -5,7 +5,7 @@ namespace RageLib.Resources.Common
 {
     // TODO: Implement IDictionary<uint, T>
     // atHashMap
-    public class AtHashMap<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
+    public class HashMap : ResourceSystemBlock
     {
         public override long BlockLength => 0x10;
 
@@ -18,7 +18,7 @@ namespace RageLib.Resources.Common
         public byte Initialized;
 
         // reference data
-        public ResourcePointerArray64<AtHashMapEntry<T>> Buckets;
+        public ResourcePointerArray64<HashMapEntry> Buckets;
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
@@ -31,7 +31,7 @@ namespace RageLib.Resources.Common
             this.Initialized = reader.ReadByte();
 
             // read reference data
-            this.Buckets = reader.ReadBlockAt<ResourcePointerArray64<AtHashMapEntry<T>>>(
+            this.Buckets = reader.ReadBlockAt<ResourcePointerArray64<HashMapEntry>>(
                 this.BucketsPointer, // offset
                 this.BucketsCount
             );
@@ -65,12 +65,12 @@ namespace RageLib.Resources.Common
         //    Resize(GetEntries());
         //}
 
-        public AtHashMap()
+        public HashMap()
         {
 
         }
 
-        public AtHashMap(ICollection<KeyValuePair<uint, T>> items)
+        public HashMap(ICollection<KeyValuePair<uint, uint>> items)
         {
             Resize(items);
         }
@@ -97,12 +97,12 @@ namespace RageLib.Resources.Common
             else return 0;
         }
 
-        private void Resize(ICollection<KeyValuePair<uint, T>> entries)
+        private void Resize(ICollection<KeyValuePair<uint, uint>> entries)
         {
             Count = (ushort)entries.Count;
             BucketsCount = GetBucketsCount((uint)entries.Count);
 
-            Buckets = new ResourcePointerArray64<AtHashMapEntry<T>>();
+            Buckets = new ResourcePointerArray64<HashMapEntry>();
 
             for (int i = 0; i < BucketsCount; i++)
                 Buckets.Add(null);
@@ -113,9 +113,9 @@ namespace RageLib.Resources.Common
             Initialized = 1;
         }
 
-        public void Add(KeyValuePair<uint, T> item)
+        public void Add(KeyValuePair<uint, uint> item)
         {
-            var entry = new AtHashMapEntry<T>()
+            var entry = new HashMapEntry()
             {
                 Hash = item.Key,
                 Data = item.Value,
@@ -140,9 +140,9 @@ namespace RageLib.Resources.Common
             }
         }
 
-        private List<KeyValuePair<uint, T>> GetEntries()
+        private List<KeyValuePair<uint, uint>> GetEntries()
         {
-            var entries = new List<KeyValuePair<uint, T>>();
+            var entries = new List<KeyValuePair<uint, uint>>();
 
             if (Buckets == null)
                 return entries;
@@ -156,8 +156,7 @@ namespace RageLib.Resources.Common
 
                 do
                 {
-                    if (entry.Data != null)
-                        entries.Add(new KeyValuePair<uint, T>(entry.Hash, entry.Data));
+                    entries.Add(new KeyValuePair<uint, uint>(entry.Hash, entry.Data));
 
                     entry = entry.Next;
 
@@ -168,17 +167,17 @@ namespace RageLib.Resources.Common
         }
     }
 
-    public class AtHashMapEntry<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
+    public class HashMapEntry : ResourceSystemBlock
     {
-        public override long BlockLength => 0xC + (Data != null ? Data.BlockLength : 0);
+        public override long BlockLength => 0x10;
 
         // structure data
         public uint Hash;
-        public T Data;
+        public uint Data;
         public ulong NextPointer;
 
         // reference data
-        public AtHashMapEntry<T> Next;
+        public HashMapEntry Next;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -187,11 +186,11 @@ namespace RageLib.Resources.Common
         {
             // read structure data
             this.Hash = reader.ReadUInt32();
-            this.Data = reader.ReadBlock<T>();
+            this.Data = reader.ReadUInt32();
             this.NextPointer = reader.ReadUInt64();
 
             // read reference data
-            this.Next = reader.ReadBlockAt<AtHashMapEntry<T>>(
+            this.Next = reader.ReadBlockAt<HashMapEntry>(
                 this.NextPointer // offset
             );
         }
@@ -206,7 +205,7 @@ namespace RageLib.Resources.Common
 
             // write structure data
             writer.Write(this.Hash);
-            writer.WriteBlock(this.Data);
+            writer.Write(this.Data);
             writer.Write(this.NextPointer);
         }
 
@@ -216,13 +215,6 @@ namespace RageLib.Resources.Common
         public override IResourceBlock[] GetReferences()
         {
             return Next == null ? Array.Empty<IResourceBlock>() : new IResourceBlock[] { Next };
-        }
-
-        public override Tuple<long, IResourceBlock>[] GetParts()
-        {
-            return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x4, Data)
-            };
         }
     }
 }
