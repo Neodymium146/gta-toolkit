@@ -6,21 +6,26 @@ using System.Runtime.CompilerServices;
 namespace RageLib.Resources.Common
 {
     /// <summary>
-    /// Represents an array of type T.
+    /// A <see cref="ResourceSystemBlock"/> which holds an array of unmanaged type.
     /// </summary>
-    public class SimpleArray<T> : ResourceSystemBlock, IList<T> where T : unmanaged
+    public class SimpleArray<T> : ResourceSystemBlock, IEnumerable where T : unmanaged
     {
         /// <summary>
         /// Gets the length of the data block.
         /// </summary>
-        public override long BlockLength => Data != null ? Data.Count * Unsafe.SizeOf<T>() : 0;
+        public override long BlockLength => Data.Length * Unsafe.SizeOf<T>();
 
         // structure data
-        private List<T> Data;
+        private T[] Data;
 
         public SimpleArray()
         {
-            Data = new List<T>();
+            Data = Array.Empty<T>();
+        }
+
+        public SimpleArray(T[] array)
+        {
+            Data = array;
         }
 
         /// <summary>
@@ -30,8 +35,7 @@ namespace RageLib.Resources.Common
         {
             int count = Convert.ToInt32(parameters[0]);
 
-            Data.Capacity += count;
-            Data.AddRange(reader.ReadUnmanaged<T>(count));
+            Data = reader.ReadArray<T>(count);
         }
 
         /// <summary>
@@ -39,12 +43,15 @@ namespace RageLib.Resources.Common
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            writer.WriteUnmanaged<T>(Data.ToArray());
+            writer.WriteArray<T>(Data);
         }
 
-        public int Count => Data.Count;
+        public IEnumerator GetEnumerator()
+        {
+            return Data.GetEnumerator();
+        }
 
-        public bool IsReadOnly => false;
+        public int Count => Data.Length;
 
         public T this[int index] 
         { 
@@ -52,54 +59,10 @@ namespace RageLib.Resources.Common
             set => Data[index] = value;
         }
 
-        public int IndexOf(T item)
+        // TODO: Check usage to know if it's safe to return without creating a copy
+        public T[] ToArray()
         {
-            return Data.IndexOf(item);
-        }
-
-        public void Insert(int index, T item)
-        {
-            Data.Insert(index, item);
-        }
-
-        public void RemoveAt(int index)
-        {
-            Data.RemoveAt(index);
-        }
-
-        public void Add(T item)
-        {
-            Data.Add(item);
-        }
-
-        public void Clear()
-        {
-            Data.Clear();
-        }
-
-        public bool Contains(T item)
-        {
-            return Data.Contains(item);
-        }
-
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            Data.CopyTo(array, arrayIndex);
-        }
-
-        public bool Remove(T item)
-        {
-            return Data.Remove(item);
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return Data.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return Data.GetEnumerator();
+            return (T[])Data.Clone();
         }
     }
 }

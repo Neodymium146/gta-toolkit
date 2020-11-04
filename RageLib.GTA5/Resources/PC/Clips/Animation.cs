@@ -51,7 +51,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public uint Unknown_38h;
         public uint Unknown_3Ch;
         public ResourcePointerList64<Sequence> Sequences;
-        public ResourceSimpleList64<uint_r> Unknown_50h;
+        public SimpleList64<uint> Unknown_50h;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -78,7 +78,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
             this.Unknown_38h = reader.ReadUInt32();
             this.Unknown_3Ch = reader.ReadUInt32();
             this.Sequences = reader.ReadBlock<ResourcePointerList64<Sequence>>();
-            this.Unknown_50h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_50h = reader.ReadBlock<SimpleList64<uint>>();
         }
 
         /// <summary>

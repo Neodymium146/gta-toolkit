@@ -35,7 +35,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
         public long DataPointer { get; private set; }
 
         // reference data
-        public ResourceSimpleArray<byte_r> Data { get; set; }
+        public SimpleArray<byte> Data { get; set; }
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -48,7 +48,7 @@ namespace RageLib.Resources.GTA5.PC.Meta
             this.DataPointer = reader.ReadInt64();
 
             // read reference data
-            this.Data = reader.ReadBlockAt<ResourceSimpleArray<byte_r>>(
+            this.Data = reader.ReadBlockAt<SimpleArray<byte>>(
                 (ulong)this.DataPointer, // offset
                 this.DataLength
             );

@@ -35,7 +35,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public uint Unknown_Ch; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<ushort_r> Indices;
+        public SimpleArray<ushort> Indices;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -48,7 +48,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             this.Unknown_Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Indices = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+            this.Indices = reader.ReadBlockAt<SimpleArray<ushort>>(
                 this.IndicesPointer, // offset
                 this.IndicesCount
             );

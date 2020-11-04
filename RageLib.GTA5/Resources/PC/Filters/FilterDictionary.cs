@@ -36,7 +36,7 @@ namespace RageLib.Resources
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000001
         public uint Unknown_1Ch; // 0x00000000
-        public ResourceSimpleList64<uint_r> FilterNameHashes;
+        public SimpleList64<uint> FilterNameHashes;
         public ResourcePointerList64<Filter> Filters;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace RageLib.Resources
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.FilterNameHashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.FilterNameHashes = reader.ReadBlock<SimpleList64<uint>>();
             this.Filters = reader.ReadBlock<ResourcePointerList64<Filter>>();
         }
 

@@ -56,9 +56,7 @@ namespace RageLib.Resources.Common
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
-            if (Buckets != null) list.Add(Buckets);
-            return list.ToArray();
+            return Buckets == null ? Array.Empty<IResourceBlock>() : new IResourceBlock[] { Buckets };
         }
 
         // Don't use it for now
@@ -217,9 +215,7 @@ namespace RageLib.Resources.Common
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
-            if (Next != null) list.Add(Next);
-            return list.ToArray();
+            return Next == null ? Array.Empty<IResourceBlock>() : new IResourceBlock[] { Next };
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()

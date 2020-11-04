@@ -24,6 +24,7 @@ using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Bounds;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Clothes
 {
@@ -61,8 +62,8 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public uint Unknown_64h; // 0x00000000
         public uint Unknown_68h; // 0x00000000
         public uint Unknown_6Ch; // 0x00000000
-        public ResourceSimpleList64<RAGE_Vector4> Unknown_70h;
-        public ResourceSimpleList64<RAGE_Vector4> Unknown_80h;
+        public SimpleList64<Vector4> Unknown_70h;
+        public SimpleList64<Vector4> Unknown_80h;
         public uint Unknown_90h; // 0x00000000
         public uint Unknown_94h; // 0x00000000
         public uint Unknown_98h; // 0x00000000
@@ -154,8 +155,8 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.Unknown_64h = reader.ReadUInt32();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
-            this.Unknown_70h = reader.ReadBlock<ResourceSimpleList64<RAGE_Vector4>>();
-            this.Unknown_80h = reader.ReadBlock<ResourceSimpleList64<RAGE_Vector4>>();
+            this.Unknown_70h = reader.ReadBlock<SimpleList64<Vector4>>();
+            this.Unknown_80h = reader.ReadBlock<SimpleList64<Vector4>>();
             this.Unknown_90h = reader.ReadUInt32();
             this.Unknown_94h = reader.ReadUInt32();
             this.Unknown_98h = reader.ReadUInt32();

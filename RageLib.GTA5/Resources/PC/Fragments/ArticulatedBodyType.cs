@@ -22,6 +22,7 @@
 
 using RageLib.Resources.Common;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
@@ -75,7 +76,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
         // reference data
         public ResourcePointerArray64<JointType> JointTypes;
-        public ResourceSimpleArray<RAGE_Vector4> p2data;
+        public SimpleArray<Vector4> p2data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -131,7 +132,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
                 this.JointTypesPointer, // offset
                 this.JointTypesCount
             );
-            this.p2data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Vector4>>(
+            this.p2data = reader.ReadBlockAt<SimpleArray<Vector4>>(
                 this.p2, // offset
                 this.c1
             );

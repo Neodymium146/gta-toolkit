@@ -23,6 +23,7 @@
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Bounds;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
@@ -39,15 +40,15 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_1Ch;
         public ulong ArticulatedBodyTypePointer;
         public ulong Unknown_28h_Pointer;
-        public RAGE_Vector4 Unknown_30h;
-        public RAGE_Vector4 Unknown_40h;
-        public RAGE_Vector4 Unknown_50h; // unbrokenCGOffset ?
-        public RAGE_Vector4 DampingLinearC;
-        public RAGE_Vector4 DampingLinearV;
-        public RAGE_Vector4 DampingLinearV2;
-        public RAGE_Vector4 DampingAngularC;
-        public RAGE_Vector4 DampingAngularV;
-        public RAGE_Vector4 DampingAngularV2;
+        public Vector4 Unknown_30h;
+        public Vector4 Unknown_40h;
+        public Vector4 Unknown_50h; // unbrokenCGOffset ?
+        public Vector4 DampingLinearC;
+        public Vector4 DampingLinearV;
+        public Vector4 DampingLinearV2;
+        public Vector4 DampingAngularC;
+        public Vector4 DampingAngularV;
+        public Vector4 DampingAngularV2;
         public ulong GroupNamesPointer;
         public ulong GroupsPointer;
         public ulong ChildrenPointer;
@@ -72,18 +73,18 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
         // reference data
         public ArticulatedBodyType ArticulatedBodyType;
-        public ResourceSimpleArray<uint_r> Unknown_28h_Data;
+        public SimpleArray<uint> Unknown_28h_Data;
         public FragTypeGroupNames GroupNames;
         public ResourcePointerArray64<FragTypeGroup> Groups;
         public ResourcePointerArray64<FragTypeChild> Children;
         public Archetype Archetype1;
         public Archetype Archetype2;
         public Bound Bound;
-        public ResourceSimpleArray<RAGE_Vector4> Unknown_F0h_Data;
-        public ResourceSimpleArray<RAGE_Vector4> Unknown_F8h_Data;
+        public SimpleArray<Vector4> Unknown_F0h_Data;
+        public SimpleArray<Vector4> Unknown_F8h_Data;
         public Unknown_F_001 Unknown_100h_Data;
-        public ResourceSimpleArray<byte_r> Unknown_108h_Data;
-        public ResourceSimpleArray<byte_r> Unknown_110h_Data;
+        public SimpleArray<byte> Unknown_108h_Data;
+        public SimpleArray<byte> Unknown_110h_Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -99,15 +100,15 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_1Ch = reader.ReadUInt32();
             this.ArticulatedBodyTypePointer = reader.ReadUInt64();
             this.Unknown_28h_Pointer = reader.ReadUInt64();
-            this.Unknown_30h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_40h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_50h = reader.ReadBlock<RAGE_Vector4>();
-            this.DampingLinearC = reader.ReadBlock<RAGE_Vector4>();
-            this.DampingLinearV = reader.ReadBlock<RAGE_Vector4>();
-            this.DampingLinearV2 = reader.ReadBlock<RAGE_Vector4>();
-            this.DampingAngularC = reader.ReadBlock<RAGE_Vector4>();
-            this.DampingAngularV = reader.ReadBlock<RAGE_Vector4>();
-            this.DampingAngularV2 = reader.ReadBlock<RAGE_Vector4>();
+            this.Unknown_30h = reader.ReadVector4();
+            this.Unknown_40h = reader.ReadVector4();
+            this.Unknown_50h = reader.ReadVector4();
+            this.DampingLinearC = reader.ReadVector4();
+            this.DampingLinearV = reader.ReadVector4();
+            this.DampingLinearV2 = reader.ReadVector4();
+            this.DampingAngularC = reader.ReadVector4();
+            this.DampingAngularV = reader.ReadVector4();
+            this.DampingAngularV2 = reader.ReadVector4();
             this.GroupNamesPointer = reader.ReadUInt64();
             this.GroupsPointer = reader.ReadUInt64();
             this.ChildrenPointer = reader.ReadUInt64();
@@ -134,7 +135,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.ArticulatedBodyType = reader.ReadBlockAt<ArticulatedBodyType>(
                 this.ArticulatedBodyTypePointer // offset
             );
-            this.Unknown_28h_Data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
+            this.Unknown_28h_Data = reader.ReadBlockAt<SimpleArray<uint>>(
                 this.Unknown_28h_Pointer, // offset
                 this.ChildrenCount
             );
@@ -159,22 +160,22 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Bound = reader.ReadBlockAt<Bound>(
                 this.BoundPointer // offset
             );
-            this.Unknown_F0h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Vector4>>(
+            this.Unknown_F0h_Data = reader.ReadBlockAt<SimpleArray<Vector4>>(
                 this.Unknown_F0h_Pointer, // offset
                 this.ChildrenCount
             );
-            this.Unknown_F8h_Data = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Vector4>>(
+            this.Unknown_F8h_Data = reader.ReadBlockAt<SimpleArray<Vector4>>(
                 this.Unknown_F8h_Pointer, // offset
                 this.ChildrenCount
             );
             this.Unknown_100h_Data = reader.ReadBlockAt<Unknown_F_001>(
                 this.Unknown_100h_Pointer // offset
             );
-            this.Unknown_108h_Data = reader.ReadBlockAt<ResourceSimpleArray<byte_r>>(
+            this.Unknown_108h_Data = reader.ReadBlockAt<SimpleArray<byte>>(
                 this.Unknown_108h_Pointer, // offset
                 this.Count1
             );
-            this.Unknown_110h_Data = reader.ReadBlockAt<ResourceSimpleArray<byte_r>>(
+            this.Unknown_110h_Data = reader.ReadBlockAt<SimpleArray<byte>>(
                 this.Unknown_110h_Pointer, // offset
                 this.Count2
             );
@@ -213,15 +214,15 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.ArticulatedBodyTypePointer);
             writer.Write(this.Unknown_28h_Pointer);
-            writer.WriteBlock(this.Unknown_30h);
-            writer.WriteBlock(this.Unknown_40h);
-            writer.WriteBlock(this.Unknown_50h);
-            writer.WriteBlock(this.DampingLinearC);
-            writer.WriteBlock(this.DampingLinearV);
-            writer.WriteBlock(this.DampingLinearV2);
-            writer.WriteBlock(this.DampingAngularC);
-            writer.WriteBlock(this.DampingAngularV);
-            writer.WriteBlock(this.DampingAngularV2);
+            writer.Write(this.Unknown_30h);
+            writer.Write(this.Unknown_40h);
+            writer.Write(this.Unknown_50h);
+            writer.Write(this.DampingLinearC);
+            writer.Write(this.DampingLinearV);
+            writer.Write(this.DampingLinearV2);
+            writer.Write(this.DampingAngularC);
+            writer.Write(this.DampingAngularV);
+            writer.Write(this.DampingAngularV2);
             writer.Write(this.GroupNamesPointer);
             writer.Write(this.GroupsPointer);
             writer.Write(this.ChildrenPointer);

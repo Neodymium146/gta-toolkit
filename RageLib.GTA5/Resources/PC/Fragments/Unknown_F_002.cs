@@ -37,7 +37,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_4h;
         public uint cnt1;
         public uint Unknown_Ch;
-        public ResourceSimpleArray<byte_r> Data;
+        public SimpleArray<byte> Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -49,7 +49,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_4h = reader.ReadUInt32();
             this.cnt1 = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
-            this.Data = reader.ReadBlock<ResourceSimpleArray<byte_r>>(
+            this.Data = reader.ReadBlock<SimpleArray<byte>>(
               cnt1 - 16
               );
         }

@@ -36,12 +36,12 @@ namespace RageLib.Resources.GTA5.PC.Textures
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000001
         public uint Unknown_1Ch; // 0x00000000
-        public ResourceSimpleList64<uint_r> TextureNameHashes;
+        public SimpleList64<uint> TextureNameHashes;
         public ResourcePointerList64<TextureDX11> Textures;
 
         public TextureDictionary()
         {
-            this.TextureNameHashes = new ResourceSimpleList64<uint_r>();
+            this.TextureNameHashes = new SimpleList64<uint>();
             this.Textures = new ResourcePointerList64<TextureDX11>();
         }
 
@@ -57,7 +57,7 @@ namespace RageLib.Resources.GTA5.PC.Textures
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.TextureNameHashes = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.TextureNameHashes = reader.ReadBlock<SimpleList64<uint>>();
             this.Textures = reader.ReadBlock<ResourcePointerList64<TextureDX11>>();
         }
 

@@ -120,7 +120,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public PolysList Polys;
         public Sector SectorTree;
         public ResourceSimpleArray<Portal> Portals;
-        public ResourceSimpleArray<ushort_r> p8data;
+        public SimpleArray<ushort> p8data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -232,7 +232,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
                 this.PortalsPointer, // offset
                 this.PortalsCount
             );
-            this.p8data = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+            this.p8data = reader.ReadBlockAt<SimpleArray<ushort>>(
                 this.p8, // offset
                 this.c1
             );

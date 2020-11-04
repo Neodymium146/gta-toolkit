@@ -68,7 +68,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public ClothInstanceTuning InstanceTuning;
         public FragDrawable Drawable;
         public ClothController Controller;
-        public ResourceSimpleArray<uint_r> pxxxxx_2data;
+        public SimpleArray<uint> pxxxxx_2data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -116,7 +116,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.Controller = reader.ReadBlockAt<ClothController>(
                 this.ControllerPointer // offset
             );
-            this.pxxxxx_2data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
+            this.pxxxxx_2data = reader.ReadBlockAt<SimpleArray<uint>>(
                 this.pxxxxx_2, // offset
                 this.cntxx51a
             );

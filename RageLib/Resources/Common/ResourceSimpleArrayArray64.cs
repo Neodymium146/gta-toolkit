@@ -63,7 +63,7 @@ namespace RageLib.Resources.Common
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
 
-            var numEl = (ResourceSimpleArray<uint_r>)parameters[1];
+            var numEl = (SimpleArray<uint>)parameters[1];
 
             ptr_list = new List<ulong>(numEl.Count);
             for (int i = 0; i < numEl.Count; i++)

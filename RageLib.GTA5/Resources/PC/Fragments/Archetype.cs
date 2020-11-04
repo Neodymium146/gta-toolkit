@@ -23,6 +23,7 @@
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Bounds;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
@@ -54,14 +55,14 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public float Unknown_54h; // 1.0f
         public uint Unknown_58h; // 0x00000000
         public uint Unknown_5Ch; // 0x00000000
-        public RAGE_Vector4 Unknown_60h;
-        public RAGE_Vector4 Unknown_70h;
-        public RAGE_Vector4 Unknown_80h; // 0.0 0.0 0.0 NaN
-        public RAGE_Vector4 Unknown_90h; // 0.0 0.0 0.0 NaN
-        public RAGE_Vector4 Unknown_A0h; // 0.0 0.0 0.0 NaN
-        public RAGE_Vector4 Unknown_B0h; // 0.0 0.0 0.0 NaN
-        public RAGE_Vector4 Unknown_C0h; // 0.0 0.0 0.0 NaN
-        public RAGE_Vector4 Unknown_D0h; // 0.0 0.0 0.0 NaN
+        public Vector4 Unknown_60h;
+        public Vector4 Unknown_70h;
+        public Vector4 Unknown_80h; // 0.0 0.0 0.0 NaN
+        public Vector4 Unknown_90h; // 0.0 0.0 0.0 NaN
+        public Vector4 Unknown_A0h; // 0.0 0.0 0.0 NaN
+        public Vector4 Unknown_B0h; // 0.0 0.0 0.0 NaN
+        public Vector4 Unknown_C0h; // 0.0 0.0 0.0 NaN
+        public Vector4 Unknown_D0h; // 0.0 0.0 0.0 NaN
 
         // reference data
         public string_r Name;
@@ -93,14 +94,14 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_54h = reader.ReadSingle();
             this.Unknown_58h = reader.ReadUInt32();
             this.Unknown_5Ch = reader.ReadUInt32();
-            this.Unknown_60h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_70h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_80h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_90h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_A0h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_B0h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_C0h = reader.ReadBlock<RAGE_Vector4>();
-            this.Unknown_D0h = reader.ReadBlock<RAGE_Vector4>();
+            this.Unknown_60h = reader.ReadVector4();
+            this.Unknown_70h = reader.ReadVector4();
+            this.Unknown_80h = reader.ReadVector4();
+            this.Unknown_90h = reader.ReadVector4();
+            this.Unknown_A0h = reader.ReadVector4();
+            this.Unknown_B0h = reader.ReadVector4();
+            this.Unknown_C0h = reader.ReadVector4();
+            this.Unknown_D0h = reader.ReadVector4();
 
             // read reference data
             this.Name = reader.ReadBlockAt<string_r>(
@@ -141,14 +142,14 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_54h);
             writer.Write(this.Unknown_58h);
             writer.Write(this.Unknown_5Ch);
-            writer.WriteBlock(this.Unknown_60h);
-            writer.WriteBlock(this.Unknown_70h);
-            writer.WriteBlock(this.Unknown_80h);
-            writer.WriteBlock(this.Unknown_90h);
-            writer.WriteBlock(this.Unknown_A0h);
-            writer.WriteBlock(this.Unknown_B0h);
-            writer.WriteBlock(this.Unknown_C0h);
-            writer.WriteBlock(this.Unknown_D0h);
+            writer.Write(this.Unknown_60h);
+            writer.Write(this.Unknown_70h);
+            writer.Write(this.Unknown_80h);
+            writer.Write(this.Unknown_90h);
+            writer.Write(this.Unknown_A0h);
+            writer.Write(this.Unknown_B0h);
+            writer.Write(this.Unknown_C0h);
+            writer.Write(this.Unknown_D0h);
         }
 
         /// <summary>

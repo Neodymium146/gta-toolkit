@@ -91,19 +91,12 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
             return meta;
         }
 
-        private ResourceSimpleArray<byte_r> StreamToResourceBytes(Stream stream)
+        private SimpleArray<byte> StreamToResourceBytes(Stream stream)
         {
-            var resourceBytes = new ResourceSimpleArray<byte_r>();
             var buffer = new byte[stream.Length];
             stream.Position = 0;
             stream.Read(buffer, 0, (int)stream.Length);
-            foreach (var b in buffer)
-            {
-                var rb = new byte_r();
-                rb.Value = b;
-                resourceBytes.Add(rb);
-            }
-            return resourceBytes;
+            return new SimpleArray<byte>(buffer);
         }
 
         private void MetaInitialize()

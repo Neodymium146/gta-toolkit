@@ -37,8 +37,8 @@ namespace RageLib.Resources
         public uint Unknown_Ch;
         public uint Unknown_10h; // 0x00000004
         public uint Unknown_14h; // 0x00000000
-        public ResourceSimpleList64<ulong_r> Unknown_18h;
-        public ResourceSimpleList64<uint_r> Unknown_28h;
+        public SimpleList64<ulong> Unknown_18h;
+        public SimpleList64<uint> Unknown_28h;
         public uint Unknown_38h; // 0x00000000
         public uint Unknown_3Ch; // 0x00000000
 
@@ -54,8 +54,8 @@ namespace RageLib.Resources
             this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadBlock<ResourceSimpleList64<ulong_r>>();
-            this.Unknown_28h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_18h = reader.ReadBlock<SimpleList64<ulong>>();
+            this.Unknown_28h = reader.ReadBlock<SimpleList64<uint>>();
             this.Unknown_38h = reader.ReadUInt32();
             this.Unknown_3Ch = reader.ReadUInt32();
         }

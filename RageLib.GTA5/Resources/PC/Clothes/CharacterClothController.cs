@@ -32,19 +32,19 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override long BlockLength => 0xF0;
 
         // structure data      
-        public ResourceSimpleList64<ushort_r> Unknown_80h;
+        public SimpleList64<ushort> Unknown_80h;
         public ResourceSimpleList64<Unknown_C_002> Unknown_90h;
         public uint Unknown_A0h; // 0x3D23D70A
         public uint Unknown_A4h; // 0x00000000
         public uint Unknown_A8h; // 0x00000000
         public uint Unknown_ACh; // 0x00000000
-        public ResourceSimpleList64<uint_r> Unknown_B0h;
+        public SimpleList64<uint> Unknown_B0h;
         public ResourceSimpleList64<Unknown_C_003> Unknown_C0h;
         public uint Unknown_D0h; // 0x00000000
         public uint Unknown_D4h; // 0x00000000
         public uint Unknown_D8h; // 0x00000000
         public uint Unknown_DCh; // 0x3F800000
-        public ResourceSimpleList64<uint_r> Unknown_E0h;
+        public SimpleList64<uint> Unknown_E0h;
         
         /// <summary>
         /// Reads the data-block from a stream.
@@ -54,19 +54,19 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             base.Read(reader, parameters);
 
             // read structure data         
-            this.Unknown_80h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
+            this.Unknown_80h = reader.ReadBlock<SimpleList64<ushort>>();
             this.Unknown_90h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_002>>();
             this.Unknown_A0h = reader.ReadUInt32();
             this.Unknown_A4h = reader.ReadUInt32();
             this.Unknown_A8h = reader.ReadUInt32();
             this.Unknown_ACh = reader.ReadUInt32();
-            this.Unknown_B0h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_B0h = reader.ReadBlock<SimpleList64<uint>>();
             this.Unknown_C0h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_003>>();
             this.Unknown_D0h = reader.ReadUInt32();
             this.Unknown_D4h = reader.ReadUInt32();
             this.Unknown_D8h = reader.ReadUInt32();
             this.Unknown_DCh = reader.ReadUInt32();
-            this.Unknown_E0h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_E0h = reader.ReadBlock<SimpleList64<uint>>();
         }
 
         /// <summary>

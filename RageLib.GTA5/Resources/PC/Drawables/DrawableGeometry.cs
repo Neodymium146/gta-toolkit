@@ -61,7 +61,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         // reference data
         public VertexBuffer VertexBuffer;
         public IndexBuffer IndexBuffer;
-        public ResourceSimpleArray<ushort_r> BonesId;
+        public SimpleArray<ushort> BonesId;
         public VertexData_GTA5_pc VertexData;
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.IndexBuffer = reader.ReadBlockAt<IndexBuffer>(
                 this.IndexBufferPointer // offset
             );
-            this.BonesId = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+            this.BonesId = reader.ReadBlockAt<SimpleArray<ushort>>(
                 this.BonesIdPointer, // offset
                 this.BonesCount
             );
