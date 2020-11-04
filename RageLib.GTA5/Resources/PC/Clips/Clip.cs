@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
     // crClip
     public class Clip : PgBase64, IResourceXXSystemBlock
     {
-        public override long BlockLength => 0x70;
+        public override long BlockLength => 0x50;
 
         // structure data
         public uint Unknown_10h;
