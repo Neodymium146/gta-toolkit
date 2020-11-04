@@ -29,9 +29,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override long BlockLength => 24;
 
         // structure data
-        public float Unknown_0h;
-        public float Unknown_4h;
-        public float Unknown_8h;
+        public float StartTime;
+        public float EndTime;
+        public float Rate;
         public uint Unknown_Ch; // 0x00000000
         public ulong AnimationPointer;
 
@@ -44,9 +44,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadSingle();
-            this.Unknown_4h = reader.ReadSingle();
-            this.Unknown_8h = reader.ReadSingle();
+            this.StartTime = reader.ReadSingle();
+            this.EndTime = reader.ReadSingle();
+            this.Rate = reader.ReadSingle();
             this.Unknown_Ch = reader.ReadUInt32();
             this.AnimationPointer = reader.ReadUInt64();
 
@@ -65,9 +65,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
             this.AnimationPointer = (ulong)(this.Animation != null ? this.Animation.BlockPosition : 0);
 
             // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
+            writer.Write(this.StartTime);
+            writer.Write(this.EndTime);
+            writer.Write(this.Rate);
             writer.Write(this.Unknown_Ch);
             writer.Write(this.AnimationPointer);
         }

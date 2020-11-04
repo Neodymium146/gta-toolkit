@@ -31,9 +31,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
 
         // structure data
         public ulong AnimationPointer;
-        public float Unknown_58h;
-        public float Unknown_5Ch;
-        public float Unknown_60h;
+        public float StartTime;
+        public float EndTime;
+        public float Rate;
         public uint Unknown_64h; // 0x00000000
         public uint Unknown_68h; // 0x00000000
         public uint Unknown_6Ch; // 0x00000000
@@ -48,9 +48,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
         {
             base.Read(reader, parameters);
             this.AnimationPointer = reader.ReadUInt64();
-            this.Unknown_58h = reader.ReadSingle();
-            this.Unknown_5Ch = reader.ReadSingle();
-            this.Unknown_60h = reader.ReadSingle();
+            this.StartTime = reader.ReadSingle();
+            this.EndTime = reader.ReadSingle();
+            this.Rate = reader.ReadSingle();
             this.Unknown_64h = reader.ReadUInt32();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
@@ -70,9 +70,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
             this.AnimationPointer = (ulong)(this.Animation != null ? this.Animation.BlockPosition : 0);
 
             writer.Write(this.AnimationPointer);
-            writer.Write(this.Unknown_58h);
-            writer.Write(this.Unknown_5Ch);
-            writer.Write(this.Unknown_60h);
+            writer.Write(this.StartTime);
+            writer.Write(this.EndTime);
+            writer.Write(this.Rate);
             writer.Write(this.Unknown_64h);
             writer.Write(this.Unknown_68h);
             writer.Write(this.Unknown_6Ch);

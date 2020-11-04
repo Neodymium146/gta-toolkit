@@ -70,12 +70,6 @@ namespace RageLib.Resources.GTA5.PC.Clips
             writer.Write(this.Unknown_2Ch);
         }
 
-        public override IResourceBlock[] GetReferences()
-        {
-            var list = new List<IResourceBlock>(base.GetReferences());
-            return list.ToArray();
-        }
-
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
