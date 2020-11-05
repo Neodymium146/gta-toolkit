@@ -33,7 +33,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override long BlockLength => 0x50;
 
         // structure data
-        public uint Unknown_10h;
+        public byte Type;
+        public byte Unknown_11h;
+        public ushort Unknown_12h;
         public uint Unknown_14h; // 0x00000000
         public ulong NamePointer;
         public ushort NameLength1;
@@ -61,7 +63,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_10h = reader.ReadUInt32();
+            this.Type = reader.ReadByte();
+            this.Unknown_11h = reader.ReadByte();
+            this.Unknown_12h = reader.ReadUInt16();
             this.Unknown_14h = reader.ReadUInt32();
             this.NamePointer = reader.ReadUInt64();
             this.NameLength1 = reader.ReadUInt16();
@@ -103,7 +107,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
             this.PropertiesPointer = (ulong)(this.Properties != null ? this.Properties.BlockPosition : 0);
 
             // write structure data
-            writer.Write(this.Unknown_10h);
+            writer.Write(this.Type);
+            writer.Write(this.Unknown_11h);
+            writer.Write(this.Unknown_12h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.NamePointer);
             writer.Write(this.NameLength1);
