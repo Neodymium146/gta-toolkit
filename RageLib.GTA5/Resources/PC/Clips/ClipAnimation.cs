@@ -83,8 +83,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
-            list.AddRange(base.GetReferences());
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (Animation != null) list.Add(Animation);
             return list.ToArray();
         }

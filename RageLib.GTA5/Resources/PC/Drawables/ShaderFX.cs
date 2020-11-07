@@ -288,8 +288,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
-            list.AddRange(base.GetReferences());
+            var list = new List<IResourceBlock>(base.GetReferences());
 
             foreach (var x in Parameters)
                 if (x.DataType == 0)
@@ -300,8 +299,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
-            var list = new List<Tuple<long, IResourceBlock>>();
-            list.AddRange(base.GetParts());
+            var list = new List<Tuple<long, IResourceBlock>>(base.GetParts());
             list.Add(new Tuple<long, IResourceBlock>(0x0, Parameters));
 
             long offset = Parameters.Count * 16;

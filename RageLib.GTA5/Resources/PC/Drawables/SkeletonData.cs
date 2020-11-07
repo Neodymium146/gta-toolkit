@@ -160,9 +160,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             var list = new List<Tuple<long, IResourceBlock>>(base.GetParts());
-            list.AddRange(new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x10, BoneMap)
-            });
+            list.Add(new Tuple<long, IResourceBlock>(0x10, BoneMap));
             return list.ToArray();
         }
 
