@@ -27,9 +27,14 @@ namespace RageLib.GTA5.PSO
 {
     public enum PsoSection : uint
     {
-        Data = 0x5053494E,
-        DataMapping = 0x504D4150,
-        Definition = 0x50534348,
+        PSIN = 0x5053494E,
+        PMAP = 0x504D4150,
+        PSCH = 0x50534348,
+        PSIG = 0x50534947,
+        STRF = 0x53545246,
+        STRS = 0x53545253,
+        STRE = 0x53545245,
+        CHKS = 0x43484B53,
     }
 
     public class PsoFile
@@ -37,6 +42,11 @@ namespace RageLib.GTA5.PSO
         public PsoDataSection DataSection { get; set; }
         public PsoDataMappingSection DataMappingSection { get; set; }
         public PsoDefinitionSection DefinitionSection { get; set; }
+        public PsoSTRFSection STRFSection { get; set; }
+        public PsoSTRSSection STRSSection { get; set; }
+        public PsoPSIGSection PSIGSection { get; set; }
+        public PsoSTRESection STRESection { get; set; }
+        public PsoCHKSSection CHKSSection { get; set; }
 
         public void Load(string fileName)
         {
@@ -63,23 +73,39 @@ namespace RageLib.GTA5.PSO
 
                 switch (ident)
                 {
-                    case PsoSection.Data:
+                    case PsoSection.PSIN:
                         DataSection = new PsoDataSection();
                         DataSection.Read(sectionReader);
                         break;
-
-                    case PsoSection.DataMapping:
+                    case PsoSection.PMAP:
                         DataMappingSection = new PsoDataMappingSection();
                         DataMappingSection.Read(sectionReader);
                         break;
-
-                    case PsoSection.Definition:
+                    case PsoSection.PSCH:
                         DefinitionSection = new PsoDefinitionSection();
                         DefinitionSection.Read(sectionReader);
                         break;
-
+                    case PsoSection.STRF:
+                        STRFSection = new PsoSTRFSection();
+                        STRFSection.Read(sectionReader);
+                        break;
+                    case PsoSection.STRS:
+                        STRSSection = new PsoSTRSSection();
+                        STRSSection.Read(sectionReader);
+                        break;
+                    case PsoSection.STRE:
+                        STRESection = new PsoSTRESection();
+                        STRESection.Read(sectionReader);
+                        break;
+                    case PsoSection.PSIG:
+                        PSIGSection = new PsoPSIGSection();
+                        PSIGSection.Read(sectionReader);
+                        break;
+                    case PsoSection.CHKS:
+                        CHKSSection = new PsoCHKSSection();
+                        CHKSSection.Read(sectionReader);
+                        break;
                     default:
-                        // ignore
                         break;
                 }
             }
@@ -97,6 +123,11 @@ namespace RageLib.GTA5.PSO
             if (DataSection != null) DataSection.Write(writer);
             if (DataMappingSection != null) DataMappingSection.Write(writer);
             if (DefinitionSection != null) DefinitionSection.Write(writer);
+            if (STRFSection != null) STRFSection.Write(writer);
+            if (STRSSection != null) STRSSection.Write(writer);
+            if (PSIGSection != null) PSIGSection.Write(writer);
+            if (STRESection != null) STRESection.Write(writer);
+            if (CHKSSection != null) CHKSSection.Write(writer);
         }
 
 
