@@ -57,8 +57,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public BoneData BoneData;
         public SimpleArray<Matrix4x4> TransformationsInverted;
         public SimpleArray<Matrix4x4> Transformations;
-        public SimpleArray<ushort> ParentIndices;
-        public SimpleArray<ushort> ChildrenIndices;
+        public SimpleArray<short> ParentIndices;
+        public SimpleArray<short> ChildrenIndices;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -98,11 +98,11 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 this.TransformationsPointer, // offset
                 this.BonesCount
             );
-            this.ParentIndices = reader.ReadBlockAt<SimpleArray<ushort>>(
+            this.ParentIndices = reader.ReadBlockAt<SimpleArray<short>>(
                 this.ParentIndicesPointer, // offset
                 this.BonesCount
             );
-            this.ChildrenIndices = reader.ReadBlockAt<SimpleArray<ushort>>(
+            this.ChildrenIndices = reader.ReadBlockAt<SimpleArray<short>>(
                 this.ChildrenIndicesPointer, // offset
                 this.ChildrenIndicesCount
             );
@@ -181,7 +181,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             foreach (var bone in BoneData.Bones)
             {
                 // id of root bone seems to always be 0 
-                if (bone.ParentIndex == ushort.MaxValue)
+                if (bone.ParentIndex == -1)
                 {
                     bone.BoneId = 0;
                     continue;
@@ -292,7 +292,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
             var parentIndex = bone.ParentIndex;
 
-            if (parentIndex != ushort.MaxValue)
+            if (parentIndex != -1)
             {
                 var parentBone = BoneData?.Bones[parentIndex];
                 var parentWorldMatrix = GetWorldMatrix(parentBone);

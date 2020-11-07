@@ -39,12 +39,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint Unknown_1Ch; // 0x00000000
         public Vector3 Scale;
         public float Unknown_2Ch; // 1.0
-        public ushort NextSiblingIndex;
-        public ushort ParentIndex;
+        public short NextSiblingIndex;
+        public short ParentIndex;
         public uint Unknown_34h; // 0x00000000
         public ulong NamePointer;
         public BoneFlags Flags;
-        public ushort Index;
+        public short Index;
         public ushort BoneId;
         public ushort Unknown_46h;
         public uint Unknown_48h; // 0x00000000
@@ -64,12 +64,12 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_1Ch = reader.ReadUInt32();
             this.Scale = reader.ReadVector3();
             this.Unknown_2Ch = reader.ReadSingle();
-            this.NextSiblingIndex = reader.ReadUInt16();
-            this.ParentIndex = reader.ReadUInt16();
+            this.NextSiblingIndex = reader.ReadInt16();
+            this.ParentIndex = reader.ReadInt16();
             this.Unknown_34h = reader.ReadUInt32();
             this.NamePointer = reader.ReadUInt64();
             this.Flags = (BoneFlags)reader.ReadUInt16();
-            this.Index = reader.ReadUInt16();
+            this.Index = reader.ReadInt16();
             this.BoneId = reader.ReadUInt16();
             this.Unknown_46h = reader.ReadUInt16();
             this.Unknown_48h = reader.ReadUInt32();
