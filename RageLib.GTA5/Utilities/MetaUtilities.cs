@@ -246,7 +246,7 @@ namespace RageLib.GTA5.Utilities
             while (stack.Count > 0)
             {
                 var node = stack.Pop();
-                foreach (XmlNode descendantNode in node.ChildNodes)
+                foreach (XmlNode descendantNode in node.SelectNodes("descendant::*"))
                 {
                     stack.Push(descendantNode);
                 }
