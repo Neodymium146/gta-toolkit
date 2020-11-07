@@ -170,6 +170,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             UpdateBoneIds();
             UpdateBoneMap();
+            UpdateIndices();
             UpdateBoneTransformations();
         }
 
@@ -207,6 +208,45 @@ namespace RageLib.Resources.GTA5.PC.Drawables
                 bonesIndexId.Add(new KeyValuePair<uint, uint>(bone.BoneId, (uint)bone.Index));
 
             BoneMap = new HashMap(bonesIndexId);
+        }
+
+        public void UpdateIndices()
+        {
+            var bones = BoneData?.Bones;
+
+            if (bones == null)
+            {
+                ParentIndices = null;
+                ChildrenIndices = null;
+                return;
+            }
+
+            // Build ParentIndices array
+            var parentIndices = new short[BonesCount];
+
+            for (int i = 0; i < BonesCount; i++)
+            {
+                var bone = bones[i];
+                parentIndices[i] = bone.ParentIndex;
+                Debug.Assert(parentIndices[i] == ParentIndices[i]);
+            }
+
+            ParentIndices = new SimpleArray<short>(parentIndices);
+
+            // Build ChildrenIndices array
+            // TODO: try to replicate original order
+            //       does order matter or they are just (short, short) tuples?
+            List<short> childrenIndices = new List<short>();
+            for (int i = 0; i < BonesCount; i++)
+            {
+                if(ParentIndices[i] != -1)
+                {
+                    childrenIndices.Add((short)i);
+                    childrenIndices.Add(ParentIndices[i]);
+                }
+            }
+
+            ChildrenIndices = new SimpleArray<short>(childrenIndices.ToArray());
         }
 
         public void UpdateBoneTransformations()
