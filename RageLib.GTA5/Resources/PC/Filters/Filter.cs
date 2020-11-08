@@ -23,7 +23,7 @@
 using RageLib.Resources.Common;
 using System;
 
-namespace RageLib.Resources
+namespace RageLib.Resources.GTA5.PC.Filters
 {
     // crFrameFilter -> this is polymorphic, there are many filters
     public class Filter : ResourceSystemBlock
