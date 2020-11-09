@@ -237,6 +237,7 @@ namespace RageLib.GTA5.Utilities
         public static HashSet<string> GetAllStringsFromXml(Stream xmlFileStream)
         {
             var xmlStrings = new HashSet<string>();
+            var separators = new char[] { ' ', '\t', '\n' };
 
             var document = new XmlDocument();
             document.Load(xmlFileStream);
@@ -255,7 +256,7 @@ namespace RageLib.GTA5.Utilities
                     xmlStrings.Add(node.InnerText.Trim());
 
                     // for flags...
-                    string[] splitted = node.InnerText.Split(new char[] { ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] splitted = node.InnerText.Split(separators, StringSplitOptions.RemoveEmptyEntries);
                     foreach (var x in splitted)
                     {
                         xmlStrings.Add(x.Trim());
