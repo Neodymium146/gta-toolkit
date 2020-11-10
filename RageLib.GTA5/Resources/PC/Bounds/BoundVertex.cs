@@ -27,9 +27,9 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override long BlockLength => 6;
 
         // structure data
-        public ushort X;
-        public ushort Y;
-        public ushort Z;
+        public short X;
+        public short Y;
+        public short Z;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -37,9 +37,9 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.X = reader.ReadUInt16();
-            this.Y = reader.ReadUInt16();
-            this.Z = reader.ReadUInt16();
+            this.X = reader.ReadInt16();
+            this.Y = reader.ReadInt16();
+            this.Z = reader.ReadInt16();
         }
 
         /// <summary>
