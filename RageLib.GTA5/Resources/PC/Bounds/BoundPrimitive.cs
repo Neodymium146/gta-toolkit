@@ -69,40 +69,58 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public short edgeIndex2;
         public short edgeIndex3;
 
-        public int vertIndex1
+        public int VertexIndex1
         {
             get => triIndex1 & 0x7FFF;
-            set { triIndex1 = (ushort)((value & 0x7FFF) + (vertFlag1 ? 0x8000 : 0)); }
+            set => triIndex1 = (ushort)((triIndex1 & 0x8000) | (value & 0x7FFF));
         }
 
-        public int vertIndex2
+        public int VertexIndex2
         {
             get => triIndex2 & 0x7FFF;
-            set { triIndex2 = (ushort)((value & 0x7FFF) + (vertFlag2 ? 0x8000 : 0)); }
+            set => triIndex2 = (ushort)((triIndex2 & 0x8000) | (value & 0x7FFF));
         }
 
-        public int vertIndex3
+        public int VertexIndex3
         {
             get => triIndex3 & 0x7FFF;
-            set { triIndex3 = (ushort)((value & 0x7FFF) + (vertFlag3 ? 0x8000 : 0)); }
+            set => triIndex3 = (ushort)((triIndex3 & 0x8000) | (value & 0x7FFF));
         }
 
-        public bool vertFlag1
+        public bool VertexFlag1
         {
-            get => (triIndex1 & 0x8000) > 0;
-            set { triIndex1 = (ushort)(vertIndex1 + (value ? 0x8000 : 0)); }
+            get => (triIndex1 & 0x8000) == 0x8000;
+            set
+            {
+                if (value)
+                    triIndex1 |= 0x8000;
+                else
+                    triIndex1 &= 0x7FFF;
+            }
         }
 
-        public bool vertFlag2
+        public bool VertexFlag2
         {
-            get { return (triIndex2 & 0x8000) > 0; }
-            set { triIndex2 = (ushort)(vertIndex2 + (value ? 0x8000 : 0)); }
+            get => (triIndex2 & 0x8000) == 0x8000;
+            set
+            {
+                if (value)
+                    triIndex2 |= 0x8000;
+                else
+                    triIndex2 &= 0x7FFF;
+            }
         }
 
-        public bool vertFlag3
+        public bool VertexFlag3
         {
-            get => (triIndex3 & 0x8000) > 0;
-            set { triIndex3 = (ushort)(vertIndex3 + (value ? 0x8000 : 0)); }
+            get => (triIndex3 & 0x8000) == 0x8000;
+            set
+            {
+                if (value)
+                    triIndex3 |= 0x8000;
+                else
+                    triIndex3 &= 0x7FFF;
+            }
         }
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
