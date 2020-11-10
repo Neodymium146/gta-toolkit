@@ -21,8 +21,10 @@
 */
 
 using RageLib.Resources.Common;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
@@ -164,5 +166,52 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             if (Unknown_C8h_Data != null) list.Add(Unknown_C8h_Data);
             return list.ToArray();
         }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector3 GetVertex(BoundVertex quantizedVertex)
+        {
+            return new Vector3(quantizedVertex.X * Quantum.X, quantizedVertex.Y * Quantum.Y, quantizedVertex.Z * Quantum.Z);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector3 GetVertexOffset(Vector3 vertex)
+        {
+            return vertex + new Vector3(Offset.X, Offset.Y, Offset.Z);
+        }
+
+        public Vector3 CalculateQuantum()
+        {
+            var aabbMin = new Vector3(float.MaxValue);
+            var aabbMax = new Vector3(float.MinValue);
+
+            for (int i = 0; i < VerticesCount2; i++)
+            {
+                var index = i & 0x7FFF;
+                var vertex = GetVertex(Vertices[index]);
+
+                aabbMin = Vector3.Min(aabbMin, vertex);
+                aabbMax = Vector3.Max(aabbMax, vertex);
+            }
+
+            //var aabbCenter = (aabbMax + aabbMin) * 0.5f;
+            var size = aabbMax - aabbMin;
+            var quantum = size / 65535.0f;
+            return quantum;
+        }
+
+        public BoundVertex GetQuantizedVertex(Vector3 vertex)
+        {
+            BoundVertex boundVertex = new BoundVertex();
+            boundVertex.X = (short)MathF.Round(vertex.X / Quantum.X);
+            boundVertex.Y = (short)MathF.Round(vertex.Y / Quantum.Y);
+            boundVertex.Z = (short)MathF.Round(vertex.Z / Quantum.Z);
+            return boundVertex;
+        }
+
+        //public override void Update()
+        //{
+        //    // Test
+        //    var quantum = CalculateQuantum();
+        //}
     }
 }
