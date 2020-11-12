@@ -23,6 +23,7 @@
 using RageLib.Resources.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
@@ -40,8 +41,10 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public uint Unknown_80h;
         public uint VerticesCount1;
         public ulong PrimitivesPointer;
-        public Vector4 Quantum;
-        public Vector4 Offset;
+        public Vector3 Quantum;
+        public float Unknown_9Ch;
+        public Vector3 Offset;
+        public float Unknown_ACh;
         public ulong VerticesPointer;
         public ulong Unknown_B8h_Pointer;
         public ulong Unknown_C0h_Pointer;
@@ -74,8 +77,10 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Unknown_80h = reader.ReadUInt32();
             this.VerticesCount1 = reader.ReadUInt32();
             this.PrimitivesPointer = reader.ReadUInt64();
-            this.Quantum = reader.ReadVector4();
-            this.Offset = reader.ReadVector4();
+            this.Quantum = reader.ReadVector3();
+            this.Unknown_9Ch = reader.ReadSingle();
+            this.Offset = reader.ReadVector3();
+            this.Unknown_ACh = reader.ReadSingle();
             this.VerticesPointer = reader.ReadUInt64();
             this.Unknown_B8h_Pointer = reader.ReadUInt64();
             this.Unknown_C0h_Pointer = reader.ReadUInt64();
@@ -140,7 +145,9 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             writer.Write(this.VerticesCount1);
             writer.Write(this.PrimitivesPointer);
             writer.Write(this.Quantum);
+            writer.Write(this.Unknown_9Ch);
             writer.Write(this.Offset);
+            writer.Write(this.Unknown_ACh);
             writer.Write(this.VerticesPointer);
             writer.Write(this.Unknown_B8h_Pointer);
             writer.Write(this.Unknown_C0h_Pointer);
@@ -176,7 +183,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector3 GetVertexOffset(Vector3 vertex)
         {
-            return vertex + new Vector3(Offset.X, Offset.Y, Offset.Z);
+            return vertex + Offset;
         }
 
         public Vector3 CalculateQuantum()
@@ -193,7 +200,6 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 aabbMax = Vector3.Max(aabbMax, vertex);
             }
 
-            //var aabbCenter = (aabbMax + aabbMin) * 0.5f;
             var size = aabbMax - aabbMin;
             var quantum = size / 65535.0f;
             return quantum;
@@ -208,10 +214,109 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             return boundVertex;
         }
 
-        //public override void Update()
-        //{
-        //    // Test
-        //    var quantum = CalculateQuantum();
-        //}
+        public override void Update()
+        {
+            // Test
+            TestQuantum();
+            TestTriangleArea();
+            TestTriangleEdges();
+        }
+
+        public void TestQuantum()
+        {
+            var quantum = CalculateQuantum();
+            Debug.Assert(MathF.Abs(quantum.X - Quantum.X) < 0.0001f);
+            Debug.Assert(MathF.Abs(quantum.Y - Quantum.Y) < 0.0001f);
+            Debug.Assert(MathF.Abs(quantum.Z - Quantum.Z) < 0.0001f);
+        }
+
+        public void TestTriangleArea()
+        {
+            for (int i = 0; i < PrimitivesCount; i++)
+            {
+                var primitive = Primitives[i];
+
+                if (primitive is not BoundPrimitiveTriangle primitiveTriangle)
+                    continue;
+
+                var quantizedVertex1 = Vertices[primitiveTriangle.VertexIndex1];
+                var quantizedVertex2 = Vertices[primitiveTriangle.VertexIndex2];
+                var quantizedVertex3 = Vertices[primitiveTriangle.VertexIndex3];
+
+                var vertex1 = GetVertex(quantizedVertex1);
+                var vertex2 = GetVertex(quantizedVertex2);
+                var vertex3 = GetVertex(quantizedVertex3);
+
+                var triangleArea = Vector3.Cross(vertex2 - vertex1, vertex3 - vertex1).Length() * 0.5f;
+
+                Debug.Assert(MathF.Abs(triangleArea - primitiveTriangle.triArea) < 0.0001f);
+            }
+        }
+
+        public void TestTriangleEdges()
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            static ValueTuple<ushort, ushort> GetEdge(ushort vertexIndex1, ushort vertexIndex2)
+            {
+                return vertexIndex1 < vertexIndex2 ?
+                    (vertexIndex1, vertexIndex2) :
+                    (vertexIndex2, vertexIndex1);
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            static int ChooseEdge(ValueTuple<int, int> edge, int i)
+            {
+                return edge.Item2 != i ? edge.Item2 : edge.Item1 != i ? edge.Item1 : -1;
+            }
+
+            // Key: (vertex1, vertex2) 
+            // Value: (triangle1, triangle2)
+            Dictionary <ValueTuple<ushort, ushort>, ValueTuple<int, int>> edgesMap = new();
+            ValueTuple<ushort, ushort>[] edges = new (ushort, ushort)[3];
+
+            for (int i = 0; i < PrimitivesCount; i++)
+            {
+                var primitive = Primitives[i];
+
+                if (primitive is not BoundPrimitiveTriangle triangle)
+                    continue;
+
+                edges[0] = GetEdge(triangle.VertexIndex1, triangle.VertexIndex2);
+                edges[1] = GetEdge(triangle.VertexIndex2, triangle.VertexIndex3);
+                edges[2] = GetEdge(triangle.VertexIndex3, triangle.VertexIndex1);
+
+                for (int e = 0; e < 3; e++)
+                {
+                    if (edgesMap.ContainsKey(edges[e]))
+                    {
+                        var triangles = edgesMap[edges[e]];
+                        
+                        edgesMap[edges[e]] = (triangles.Item1, i);
+                    }   
+                    else
+                        edgesMap[edges[e]] = (i, -1);
+                }
+            }
+
+            for (int i = 0; i < PrimitivesCount; i++)
+            {
+                var primitive = Primitives[i];
+
+                if (primitive is not BoundPrimitiveTriangle triangle)
+                    continue;
+
+                var edge1 = edgesMap[GetEdge(triangle.VertexIndex1, triangle.VertexIndex2)];
+                var edge2 = edgesMap[GetEdge(triangle.VertexIndex2, triangle.VertexIndex3)];
+                var edge3 = edgesMap[GetEdge(triangle.VertexIndex3, triangle.VertexIndex1)];
+
+                var edgeIndex1 = (short)ChooseEdge(edge1, i);
+                var edgeIndex2 = (short)ChooseEdge(edge2, i);
+                var edgeIndex3 = (short)ChooseEdge(edge3, i);
+
+                Debug.Assert(edgeIndex1 == triangle.edgeIndex1);
+                Debug.Assert(edgeIndex2 == triangle.edgeIndex2);
+                Debug.Assert(edgeIndex3 == triangle.edgeIndex3);
+            }
+        }
     }
 }

@@ -69,21 +69,21 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public short edgeIndex2;
         public short edgeIndex3;
 
-        public int VertexIndex1
+        public ushort VertexIndex1
         {
-            get => triIndex1 & 0x7FFF;
+            get => (ushort)(triIndex1 & 0x7FFF);
             set => triIndex1 = (ushort)((triIndex1 & 0x8000) | (value & 0x7FFF));
         }
 
-        public int VertexIndex2
+        public ushort VertexIndex2
         {
-            get => triIndex2 & 0x7FFF;
+            get => (ushort)(triIndex2 & 0x7FFF);
             set => triIndex2 = (ushort)((triIndex2 & 0x8000) | (value & 0x7FFF));
         }
 
-        public int VertexIndex3
+        public ushort VertexIndex3
         {
-            get => triIndex3 & 0x7FFF;
+            get => (ushort)(triIndex3 & 0x7FFF);
             set => triIndex3 = (ushort)((triIndex3 & 0x8000) | (value & 0x7FFF));
         }
 
