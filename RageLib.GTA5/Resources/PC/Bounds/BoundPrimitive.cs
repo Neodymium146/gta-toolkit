@@ -65,9 +65,9 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public ushort triIndex1;
         public ushort triIndex2;
         public ushort triIndex3;
-        public short edgeIndex1;
-        public short edgeIndex2;
-        public short edgeIndex3;
+        public short NeighborIndex1;
+        public short NeighborIndex2;
+        public short NeighborIndex3;
 
         public ushort VertexIndex1
         {
@@ -129,9 +129,9 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             triIndex1 = reader.ReadUInt16();
             triIndex2 = reader.ReadUInt16();
             triIndex3 = reader.ReadUInt16();
-            edgeIndex1 = reader.ReadInt16();
-            edgeIndex2 = reader.ReadInt16();
-            edgeIndex3 = reader.ReadInt16();
+            NeighborIndex1 = reader.ReadInt16();
+            NeighborIndex2 = reader.ReadInt16();
+            NeighborIndex3 = reader.ReadInt16();
         }
 
         public override void Write(ResourceDataWriter writer, params object[] parameters)
@@ -140,9 +140,9 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             writer.Write(triIndex1);
             writer.Write(triIndex2);
             writer.Write(triIndex3);
-            writer.Write(edgeIndex1);
-            writer.Write(edgeIndex2);
-            writer.Write(edgeIndex3);
+            writer.Write(NeighborIndex1);
+            writer.Write(NeighborIndex2);
+            writer.Write(NeighborIndex3);
         }
     }
 
