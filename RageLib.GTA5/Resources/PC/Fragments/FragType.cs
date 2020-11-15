@@ -77,7 +77,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public ulong Unknown_100h; // 0x0000000000000000
         public ulong Unknown_108h; // 0x0000000000000000
         public ResourceSimpleList64<LightAttributes> LightAttributes;
-        public ulong Unknown_120h_Pointer;
+        public ulong VehicleGlassWindowDataPointer;
         public ulong Unknown_128h; // 0x0000000000000000
 
         // reference data
@@ -89,7 +89,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public ResourcePointerArray64<Unknown_F_004> Unknown_E0h_Data;
         public FragPhysicsLODGroup PhysicsLODGroup;
         public FragDrawable ClothDrawable;
-        public Unknown_F_002 Unknown_120h_Data;
+        public VehicleGlassWindowData VehicleGlassWindowData;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -140,7 +140,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_100h = reader.ReadUInt64();
             this.Unknown_108h = reader.ReadUInt64();
             this.LightAttributes = reader.ReadBlock<ResourceSimpleList64<LightAttributes>>();
-            this.Unknown_120h_Pointer = reader.ReadUInt64();
+            this.VehicleGlassWindowDataPointer = reader.ReadUInt64();
             this.Unknown_128h = reader.ReadUInt64();
 
             // read reference data
@@ -171,8 +171,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.ClothDrawable = reader.ReadBlockAt<FragDrawable>(
                 this.ClothDrawablePointer // offset
             );
-            this.Unknown_120h_Data = reader.ReadBlockAt<Unknown_F_002>(
-                this.Unknown_120h_Pointer // offset
+            this.VehicleGlassWindowData = reader.ReadBlockAt<VehicleGlassWindowData>(
+                this.VehicleGlassWindowDataPointer // offset
             );
         }
 
@@ -192,7 +192,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_E0h_Pointer = (ulong)(this.Unknown_E0h_Data != null ? this.Unknown_E0h_Data.BlockPosition : 0);
             this.PhysicsLODGroupPointer = (ulong)(this.PhysicsLODGroup != null ? this.PhysicsLODGroup.BlockPosition : 0);
             this.ClothDrawablePointer = (ulong)(this.ClothDrawable != null ? this.ClothDrawable.BlockPosition : 0);
-            this.Unknown_120h_Pointer = (ulong)(this.Unknown_120h_Data != null ? this.Unknown_120h_Data.BlockPosition : 0);
+            this.VehicleGlassWindowDataPointer = (ulong)(this.VehicleGlassWindowData != null ? this.VehicleGlassWindowData.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_10h);
@@ -236,7 +236,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_100h);
             writer.Write(this.Unknown_108h);
             writer.WriteBlock(this.LightAttributes);
-            writer.Write(this.Unknown_120h_Pointer);
+            writer.Write(this.VehicleGlassWindowDataPointer);
             writer.Write(this.Unknown_128h);
         }
 
@@ -254,7 +254,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             if (Unknown_E0h_Data != null) list.Add(Unknown_E0h_Data);
             if (PhysicsLODGroup != null) list.Add(PhysicsLODGroup);
             if (ClothDrawable != null) list.Add(ClothDrawable);
-            if (Unknown_120h_Data != null) list.Add(Unknown_120h_Data);
+            if (VehicleGlassWindowData != null) list.Add(VehicleGlassWindowData);
             return list.ToArray();
         }
 
