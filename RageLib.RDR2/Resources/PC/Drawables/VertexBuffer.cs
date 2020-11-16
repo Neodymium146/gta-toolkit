@@ -26,7 +26,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 
         // reference data
         public VertexData_RDR2_pc Data;
-        public Struct_15 Unknown_30h_Data;
+        public ShaderResourceView Unknown_30h_Data;
         public Struct_21 Unknown_38h_Data;
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
@@ -34,9 +34,21 @@ namespace RageLib.Resources.RDR2.PC.Drawables
             base.Read(reader, parameters);
 
             // read structure data
-
+            this.VertexCount = reader.ReadUInt32();
+            this.VertexStride = reader.ReadUInt16();
+            this.Unknown_0Eh = reader.ReadUInt16();
+            this.Flags = reader.ReadUInt32();
+            this.Unknown_14h = reader.ReadUInt32();
+            this.DataPointer = reader.ReadUInt64();
+            this.Unknown_20h = reader.ReadUInt64();
+            this.Unknown_28h = reader.ReadUInt64();
+            this.Unknown_30h_Pointer = reader.ReadUInt64();
+            this.Unknown_38h_Pointer = reader.ReadUInt64();
 
             // read reference data
+            this.Data = reader.ReadBlockAt<VertexData_RDR2_pc>(DataPointer, VertexStride, VertexCount);
+            this.Unknown_30h_Data = reader.ReadBlockAt<ShaderResourceView>(Unknown_30h_Pointer);
+            this.Unknown_38h_Data = reader.ReadBlockAt<Struct_21>(Unknown_38h_Pointer);
         }
 
         public override void Write(ResourceDataWriter writer, params object[] parameters)

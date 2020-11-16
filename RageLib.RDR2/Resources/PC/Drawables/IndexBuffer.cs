@@ -27,7 +27,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 
         // reference data
         public SimpleArray<ushort> Indices;
-        public Struct_15 Unknown_30h_Data;
+        public ShaderResourceView Unknown_30h_Data;
 
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
@@ -35,9 +35,20 @@ namespace RageLib.Resources.RDR2.PC.Drawables
             base.Read(reader, parameters);
 
             // read structure data
-
+            this.IndicesCount = reader.ReadUInt16();
+            this.Unknown_0Ah = reader.ReadUInt16();
+            this.Unknown_0Ch = reader.ReadUInt32();
+            this.Unknown_10h = reader.ReadUInt32();
+            this.Unknown_14h = reader.ReadUInt32();
+            this.IndicesPointer = reader.ReadUInt64();
+            this.Unknown_20h = reader.ReadUInt64();
+            this.Unknown_28h = reader.ReadUInt64();
+            this.Unknown_30h_Pointer = reader.ReadUInt64();
+            this.Unknown_38h = reader.ReadUInt64();
 
             // read reference data
+            this.Indices = reader.ReadBlockAt<SimpleArray<ushort>>(IndicesPointer, IndicesCount);
+            this.Unknown_30h_Data = reader.ReadBlockAt<ShaderResourceView>(Unknown_30h_Pointer);
         }
 
         public override void Write(ResourceDataWriter writer, params object[] parameters)

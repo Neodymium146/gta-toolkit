@@ -1,9 +1,4 @@
 ﻿using RageLib.Resources.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
@@ -15,27 +10,35 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 
         // structure data
         public ResourcePointerList64<DrawableGeometry> Geometries;
-        public ulong Unknown_18h_Pointer;
-        public ulong Unknown_20h_Pointer;
+        public ulong GeometriesBoundsPointer;
+        public ulong ShaderMappingPointer;
         public ulong Unknown_28h;           // 0x0000000000000000
         public uint Unknown_30h;
         public ushort Unknown_34h;
-        public ushort Unknown_36h;
+        public ushort GeometriesCount;
         public ulong Unknown_38h;           // 0x0000000000000000
 
         // reference data
-        public Struct_07 Unknown_18h_Data;
-        public Struct_08 Unknown_20h_Data;
-
+        public ResourceSimpleArray<RAGE_AABB> GeometriesBounds;
+        public SimpleArray<ushort> ShaderMapping;
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             base.Read(reader, parameters);
 
             // read structure data
-
+            this.Geometries = reader.ReadBlock<ResourcePointerList64<DrawableGeometry>>();
+            this.GeometriesBoundsPointer = reader.ReadUInt64();
+            this.ShaderMappingPointer = reader.ReadUInt64();
+            this.Unknown_28h = reader.ReadUInt64();
+            this.Unknown_30h = reader.ReadUInt32();
+            this.Unknown_34h = reader.ReadUInt16();
+            this.GeometriesCount = reader.ReadUInt16();
+            this.Unknown_38h = reader.ReadUInt64();
 
             // read reference data
+            this.GeometriesBounds = reader.ReadBlockAt<ResourceSimpleArray<RAGE_AABB>>(GeometriesBoundsPointer, GeometriesCount);
+            this.ShaderMapping = reader.ReadBlockAt<SimpleArray<ushort>>(ShaderMappingPointer, GeometriesCount);
         }
 
         public override void Write(ResourceDataWriter writer, params object[] parameters)

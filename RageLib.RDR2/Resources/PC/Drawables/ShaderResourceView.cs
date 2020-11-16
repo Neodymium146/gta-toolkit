@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
-    public class Struct_15 : ResourceSystemBlock
+    // rage::sga::ShaderResourceView
+    // VFT = 0x0000000140910080
+    public class ShaderResourceView : ResourceSystemBlock
     {
         public override long BlockLength => 0x40;
 
@@ -25,7 +27,16 @@ namespace RageLib.Resources.RDR2.PC.Drawables
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-
+            this.VFT = reader.ReadUInt64();
+            this.Unknown_08h = reader.ReadUInt64();
+            this.Unknown_10h = reader.ReadUInt32();
+            this.Unknown_14h = reader.ReadUInt32();
+            this.Unknown_18h = reader.ReadUInt32();
+            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadUInt64();
+            this.Unknown_28h = reader.ReadUInt64();
+            this.Unknown_30h = reader.ReadUInt64();
+            this.Unknown_38h = reader.ReadUInt64();
 
             // read reference data
         }

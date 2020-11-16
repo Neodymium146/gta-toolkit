@@ -1,4 +1,5 @@
-﻿using RageLib.Resources.Common;
+﻿using RageLib.RDR2.Resources.PC.Bounds;
+using RageLib.Resources.Common;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -36,7 +37,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 		public ulong Unknown_50h;                   // 0x0000000000000000
 		public ulong NamePointer;
 		public ulong Unknown_60h;                   // 0x0000000000000000
-		public ulong Unknown_68h;                   // 0x0000000000000000
+		public ulong BoundPointer;
 		public ulong Unknown_70h_Pointer;
 		public ulong Unknown_78h;                   // 0x0000000000000000
 
@@ -47,6 +48,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 		public ResourcePointerList64<DrawableModel> DrawableModelsLow;
 		public ResourcePointerList64<DrawableModel> DrawableModelsVeryLow;
 		public string_r Name;
+		public Bound Bound;
 
 		public override void Read(ResourceDataReader reader, params object[] parameters)
 		{
@@ -59,9 +61,35 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 			this.BoundingSphereRadius = reader.ReadSingle();
 			this.BoundingBoxMin = reader.ReadVector4();
 			this.BoundingBoxMax = reader.ReadVector4();
+			this.DrawableModelsHighPointer = reader.ReadUInt64();
+			this.DrawableModelsMediumPointer = reader.ReadUInt64();
+			this.DrawableModelsLowPointer = reader.ReadUInt64();
+			this.DrawableModelsVeryLowPointer = reader.ReadUInt64();
+			this.LodDistanceHigh = reader.ReadSingle();
+			this.LodDistanceMedium = reader.ReadSingle();
+			this.LodDistanceLow = reader.ReadSingle();
+			this.LodDistanceVeryLow = reader.ReadSingle();
+			this.DrawBucketMaskHigh = reader.ReadUInt32();
+			this.DrawBucketMaskMedium = reader.ReadUInt32();
+			this.DrawBucketMaskLow = reader.ReadUInt32();
+			this.DrawBucketMaskVeryLow = reader.ReadUInt32();
+			this.Unknown_40h = reader.ReadUInt64();
+			this.Unknown_48h = reader.ReadUInt64();
+			this.Unknown_50h = reader.ReadUInt64();
+			this.NamePointer = reader.ReadUInt64();
+			this.Unknown_60h = reader.ReadUInt64();
+			this.BoundPointer = reader.ReadUInt64();
+			this.Unknown_70h_Pointer = reader.ReadUInt64();
+			this.Unknown_78h = reader.ReadUInt64();
 
 			// read reference data
 			this.ShaderGroup = reader.ReadBlockAt<ShaderGroup>(this.ShaderGroupPointer);
+			this.DrawableModelsHigh = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(this.DrawableModelsHighPointer);
+			this.DrawableModelsMedium = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(this.DrawableModelsMediumPointer);
+			this.DrawableModelsLow = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(this.DrawableModelsLowPointer);
+			this.DrawableModelsVeryLow = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(this.DrawableModelsVeryLowPointer);
+			this.Name = reader.ReadBlockAt<string_r>(NamePointer);
+			this.Bound = reader.ReadBlockAt<Bound>(BoundPointer);
 		}
 
 		public override void Write(ResourceDataWriter writer, params object[] parameters)

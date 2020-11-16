@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RageLib.Resources.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
+    // rage::sga::Texture
     // VFT = 0x00000001409100B0
-    public class Struct_16 : DatBase64
+    public class Texture : DatBase64
     {
         public override long BlockLength => 0xB0;
 
@@ -20,7 +22,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
         public uint Unknown_1Ch;
         public uint Unknown_20h;
         public uint Unknown_24h;
-        public ulong Unknown_28h_Pointer;
+        public ulong NamePointer;
         public ulong Unknown_30h_Pointer;
         public ulong Unknown_38h_Pointer;   // Graphics Pointer?
         public ulong Unknown_40h;           // 0x0000000000000000
@@ -28,17 +30,40 @@ namespace RageLib.Resources.RDR2.PC.Drawables
         public ulong Unknown_50h;           // 0x0000000000000000
         public ulong Unknown_58h;           // 0x0000000000000000
         public ulong Unknown_60h;           // 0x0000000000000000
-        public Struct_15 Unknown_68h;       // 0x0000000140910080	Embedded block 
+        public ShaderResourceView Unknown_68h;       // 0x0000000140910080	Embedded block 
         public ulong Unknown_A8h;           // 0x0000000000000000
+
+        // reference data
+        public string_r Name;
+        public ShaderResourceView Unknown_30h_Data;
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             base.Read(reader, parameters);
 
             // read structure data
-
+            this.Unknown_08h = reader.ReadUInt32();
+            this.Unknown_0Ch = reader.ReadUInt32();
+            this.Unknown_10h = reader.ReadUInt32();
+            this.Unknown_14h = reader.ReadUInt32();
+            this.Unknown_18h = reader.ReadUInt32();
+            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadUInt32();
+            this.Unknown_24h = reader.ReadUInt32();
+            this.NamePointer = reader.ReadUInt64();
+            this.Unknown_30h_Pointer = reader.ReadUInt64();
+            this.Unknown_38h_Pointer = reader.ReadUInt64();
+            this.Unknown_40h = reader.ReadUInt64();
+            this.Unknown_48h = reader.ReadUInt64();
+            this.Unknown_50h = reader.ReadUInt64();
+            this.Unknown_58h = reader.ReadUInt64();
+            this.Unknown_60h = reader.ReadUInt64();
+            this.Unknown_68h = reader.ReadBlock<ShaderResourceView>();
+            this.Unknown_A8h = reader.ReadUInt64();
 
             // read reference data
+            this.Name = reader.ReadBlockAt<string_r>(NamePointer);
+            this.Unknown_30h_Data = reader.ReadBlockAt<ShaderResourceView>(Unknown_30h_Pointer);
         }
 
         public override void Write(ResourceDataWriter writer, params object[] parameters)
