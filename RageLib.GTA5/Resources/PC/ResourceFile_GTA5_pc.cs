@@ -28,29 +28,13 @@ using System.IO.Compression;
 
 namespace RageLib.Resources.GTA5
 {
-    // datResourceInfo
-    public struct ResourceInfo
-    {
-        public ResourceChunkFlags VirtualFlags { get; set; }
-        public ResourceChunkFlags PhysicalFlags { get; set; }
-    }
-
-    // datResourceFileHeader
-    public struct ResourceFileHeader
-    {
-        public int Id;
-        public int Version;
-        public ResourceInfo ResourceInfo;
-    }
-
-    // TODO: refactor everywhere to include ResourceFileHeader
     public class ResourceFile_GTA5_pc : IResourceFile
     {
         protected const int RESOURCE_IDENT = 0x37435352;
 
+        public DatResourceFileHeader ResourceFileHeader;
+        
         public int Version { get; set; }
-
-        public ResourceInfo ResourceInfo { get; set; }
 
         public byte[] VirtualData { get; set; }
         public byte[] PhysicalData { get; set; }
@@ -66,23 +50,35 @@ namespace RageLib.Resources.GTA5
             var reader = new DataReader(stream);
             reader.Position = 0;
 
+            // read the header
             var ident = reader.ReadUInt32();
-            Version = reader.ReadInt32();
-            ResourceChunkFlags virtualPageFlags = reader.ReadUInt32();
-            ResourceChunkFlags physicalPageFlags = reader.ReadUInt32();
+            var flags = reader.ReadUInt32();
+            uint virtualPageFlags = reader.ReadUInt32();
+            uint physicalPageFlags = reader.ReadUInt32();
 
-            ResourceInfo = new ResourceInfo()
-            {
-                VirtualFlags = virtualPageFlags,
-                PhysicalFlags = physicalPageFlags
+            ResourceFileHeader = new DatResourceFileHeader()
+            {   
+                Id = ident,
+                Flags = flags,
+                
+                ResourceInfo = new DatResourceInfo()
+                {
+                    VirtualFlags = virtualPageFlags,
+                    PhysicalFlags = physicalPageFlags
+                },
             };
+            
+            Version = (int)ResourceFileHeader.Flags & 0xFF;
 
-            VirtualData = new byte[virtualPageFlags.Size];
-            PhysicalData = new byte[physicalPageFlags.Size];
+            var virtualSize = ((ResourceChunkFlags)virtualPageFlags).Size;
+            var physicalSize = ((ResourceChunkFlags)physicalPageFlags).Size;
+
+            VirtualData = new byte[virtualSize];
+            PhysicalData = new byte[physicalSize];
 
             var deflateStream = new DeflateStream(stream, CompressionMode.Decompress, true);
-            deflateStream.Read(VirtualData, 0, (int)virtualPageFlags.Size);
-            deflateStream.Read(PhysicalData, 0, (int)physicalPageFlags.Size);
+            deflateStream.Read(VirtualData, 0, (int)virtualSize);
+            deflateStream.Read(PhysicalData, 0, (int)physicalSize);
             deflateStream.Close();
         }
 
@@ -96,10 +92,11 @@ namespace RageLib.Resources.GTA5
         {
             var writer = new DataWriter(stream);
 
-            writer.Write((uint)0x37435352);
-            writer.Write((int)Version);
-            writer.Write((uint)ResourceInfo.VirtualFlags);
-            writer.Write((uint)ResourceInfo.PhysicalFlags);
+            // write the header
+            writer.Write(ResourceFileHeader.Id);
+            writer.Write(ResourceFileHeader.Flags);
+            writer.Write(ResourceFileHeader.ResourceInfo.VirtualFlags);
+            writer.Write(ResourceFileHeader.ResourceInfo.PhysicalFlags);
 
             var deflateStream = new DeflateStream(stream, CompressionMode.Compress, true);
             deflateStream.Write(VirtualData, 0, VirtualData.Length);
@@ -158,10 +155,16 @@ namespace RageLib.Resources.GTA5
             virtualPageFlags += ((((uint)Version >> 4) & 0xF) << 28);
             physicalPageFlags += ((((uint)Version >> 0) & 0xF) << 28);
 
-            ResourceInfo = new ResourceInfo()
+            // create a header
+            ResourceFileHeader = new DatResourceFileHeader
             {
-                VirtualFlags = virtualPageFlags,
-                PhysicalFlags = physicalPageFlags
+                Id = RESOURCE_IDENT,
+                Flags = (uint)Version,
+                ResourceInfo = new DatResourceInfo()
+                {
+                    VirtualFlags = virtualPageFlags,
+                    PhysicalFlags = physicalPageFlags
+                }
             };
 
             ////////////////////////////////////////////////////////////////////////////
