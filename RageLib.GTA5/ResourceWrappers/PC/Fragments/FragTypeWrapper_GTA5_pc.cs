@@ -33,8 +33,8 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Fragments
         {
             get
             {
-                if (fragType.Drawable != null)
-                    return new FragDrawableWrapper_GTA5_pc(fragType.Drawable);
+                if (fragType.PrimaryDrawable != null)
+                    return new FragDrawableWrapper_GTA5_pc(fragType.PrimaryDrawable);
                 else
                     return null;
             }
