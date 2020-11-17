@@ -37,7 +37,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
             this.Unknown_38h = reader.ReadUInt64();
 
             // read reference data
-            this.GeometriesBounds = reader.ReadBlockAt<ResourceSimpleArray<RAGE_AABB>>(GeometriesBoundsPointer, GeometriesCount);
+            this.GeometriesBounds = reader.ReadBlockAt<ResourceSimpleArray<RAGE_AABB>>(GeometriesBoundsPointer, GeometriesCount > 1 ? GeometriesCount + 1 : GeometriesCount);
             this.ShaderMapping = reader.ReadBlockAt<SimpleArray<ushort>>(ShaderMappingPointer, GeometriesCount);
         }
 
