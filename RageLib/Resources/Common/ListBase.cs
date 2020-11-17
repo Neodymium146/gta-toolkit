@@ -112,7 +112,7 @@ namespace RageLib.Resources.Common
 
         public void Insert(int index, T item)
         {
-            if (index > 0 && index < Count)
+            if (index >= 0 && index < Count)
             {
                 RemoveAt(index);
                 Data.Insert(index, item);
@@ -132,7 +132,7 @@ namespace RageLib.Resources.Common
 
         public void RemoveAt(int index)
         {
-            if(index > 0 && index < Count)
+            if(index >= 0 && index < Count)
             {
                 var item = Data[index];
                 blockLength -= item.BlockLength;
