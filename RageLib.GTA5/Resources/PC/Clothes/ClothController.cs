@@ -25,15 +25,11 @@ using System.Collections.Generic;
 namespace RageLib.Resources.GTA5.PC.Clothes
 {
     // clothController
-    public class ClothController : ResourceSystemBlock
+    public class ClothController : PgBase64
     {
         public override long BlockLength => 0x80;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
         public ulong BridgeSimGfxPointer;
         public ulong MorphControllerPointer;
         public ulong VerletCloth1Pointer;
@@ -70,11 +66,9 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.BridgeSimGfxPointer = reader.ReadUInt64();
             this.MorphControllerPointer = reader.ReadUInt64();
             this.VerletCloth1Pointer = reader.ReadUInt64();
@@ -122,6 +116,8 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
             this.BridgeSimGfxPointer = (ulong)(this.BridgeSimGfx != null ? this.BridgeSimGfx.BlockPosition : 0);
             this.MorphControllerPointer = (ulong)(this.MorphController != null ? this.MorphController.BlockPosition : 0);
@@ -130,10 +126,6 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.VerletCloth3Pointer = (ulong)(this.VerletCloth3 != null ? this.VerletCloth3.BlockPosition : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.BridgeSimGfxPointer);
             writer.Write(this.MorphControllerPointer);
             writer.Write(this.VerletCloth1Pointer);
@@ -164,7 +156,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (BridgeSimGfx != null) list.Add(BridgeSimGfx);
             if (MorphController != null) list.Add(MorphController);
             if (VerletCloth1 != null) list.Add(VerletCloth1);

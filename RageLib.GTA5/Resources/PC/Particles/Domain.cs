@@ -27,13 +27,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
 {
     // datBase
     // ptxDomain
-    public class Domain : ResourceSystemBlock, IResourceXXSystemBlock
+    public class Domain : DatBase64, IResourceXXSystemBlock
     {
         public override long BlockLength => 0x280;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
         public uint Unknown_8h;
         public byte Unknown_Ch;
         public byte Unknown_Dh;
@@ -57,9 +55,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
             this.Unknown_8h = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadByte();
             this.Unknown_Dh = reader.ReadByte();
@@ -84,9 +82,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
             writer.Write(this.Unknown_8h);
             writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_Dh);
