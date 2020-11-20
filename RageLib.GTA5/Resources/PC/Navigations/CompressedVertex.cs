@@ -23,7 +23,7 @@
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
     // CNavMeshCompressedVertex
-    public class Vertex : ResourceSystemBlock
+    public class CompressedVertex : ResourceSystemBlock
     {
         public override long BlockLength => 6;
 

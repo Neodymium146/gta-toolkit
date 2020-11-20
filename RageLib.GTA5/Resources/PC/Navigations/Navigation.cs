@@ -97,7 +97,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public uint Unknown_16Ch; // 0x00000000
 
         // reference data
-        public ResourceSplitArray<Vertex> Vertices;
+        public ResourceSplitArray<CompressedVertex> Vertices;
         public ResourceSplitArray<ushort_r> Indices;
         public ResourceSplitArray<AdjPoly> AdjPolys;
         public ResourceSplitArray<Poly> Polys;
@@ -178,7 +178,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             this.Unknown_16Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Vertices = reader.ReadBlockAt<ResourceSplitArray<Vertex>>(
+            this.Vertices = reader.ReadBlockAt<ResourceSplitArray<CompressedVertex>>(
                 this.VerticesPointer // offset
             );
             this.Indices = reader.ReadBlockAt<ResourceSplitArray<ushort_r>>(
