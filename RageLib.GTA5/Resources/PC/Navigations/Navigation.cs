@@ -22,6 +22,7 @@
 
 using RageLib.Resources.Common;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
@@ -35,31 +36,13 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public uint Unknown_14h; // 0x00010011
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
-        public uint Unknown_20h; // 0x3F800000
-        public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x7F800001
-        public uint Unknown_30h; // 0x00000000
-        public uint Unknown_34h; // 0x3F800000
-        public uint Unknown_38h; // 0x00000000
-        public uint Unknown_3Ch; // 0x7F800001
-        public uint Unknown_40h; // 0x00000000
-        public uint Unknown_44h; // 0x00000000
-        public uint Unknown_48h; // 0x3F800000
-        public uint Unknown_4Ch; // 0x7F800001
-        public uint Unknown_50h; // 0x00000000
-        public uint Unknown_54h; // 0x00000000
-        public uint Unknown_58h; // 0x00000000
-        public uint Unknown_5Ch; // 0x7F800001
-        public uint Unknown_60h;  // float
-        public uint Unknown_64h;  // float
-        public uint Unknown_68h;  // float
-        public uint Unknown_6Ch; // 0x7F800001
+        public Matrix4x4 Unknown_20h;
+        public Vector4 Unknown_60h;
         public ulong VerticesPointer;
         public uint Unknown_78h; // 0x00000000
         public uint Unknown_7Ch; // 0x00000000
         public ulong IndicesPointer;
-        public ulong p4;
+        public ulong AdjPolysPointer;
         public uint Unknown_90h;
         public uint Unknown_94h;
         public uint Unknown_98h;
@@ -94,7 +77,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public uint Unknown_10Ch; // 0x00000000
         public uint Unknown_110h; // 0x00000000
         public uint Unknown_114h; // 0x00000000
-        public ulong p5;
+        public ulong PolysPointer;
         public ulong SectorTreePointer;
         public ulong PortalsPointer;
         public ulong p8;
@@ -114,10 +97,10 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public uint Unknown_16Ch; // 0x00000000
 
         // reference data
-        public VerticesList Vertices;
-        public IndicesList Indices;
-        public AdjPolysList AdjPolys;
-        public PolysList Polys;
+        public ResourceSplitArray<Vertex> Vertices;
+        public ResourceSplitArray<ushort_r> Indices;
+        public ResourceSplitArray<AdjPoly> AdjPolys;
+        public ResourceSplitArray<Poly> Polys;
         public Sector SectorTree;
         public ResourceSimpleArray<Portal> Portals;
         public SimpleArray<ushort> p8data;
@@ -134,31 +117,13 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.Unknown_30h = reader.ReadUInt32();
-            this.Unknown_34h = reader.ReadUInt32();
-            this.Unknown_38h = reader.ReadUInt32();
-            this.Unknown_3Ch = reader.ReadUInt32();
-            this.Unknown_40h = reader.ReadUInt32();
-            this.Unknown_44h = reader.ReadUInt32();
-            this.Unknown_48h = reader.ReadUInt32();
-            this.Unknown_4Ch = reader.ReadUInt32();
-            this.Unknown_50h = reader.ReadUInt32();
-            this.Unknown_54h = reader.ReadUInt32();
-            this.Unknown_58h = reader.ReadUInt32();
-            this.Unknown_5Ch = reader.ReadUInt32();
-            this.Unknown_60h = reader.ReadUInt32();
-            this.Unknown_64h = reader.ReadUInt32();
-            this.Unknown_68h = reader.ReadUInt32();
-            this.Unknown_6Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadMatrix4x4();
+            this.Unknown_60h = reader.ReadVector4();
             this.VerticesPointer = reader.ReadUInt64();
             this.Unknown_78h = reader.ReadUInt32();
             this.Unknown_7Ch = reader.ReadUInt32();
             this.IndicesPointer = reader.ReadUInt64();
-            this.p4 = reader.ReadUInt64();
+            this.AdjPolysPointer = reader.ReadUInt64();
             this.Unknown_90h = reader.ReadUInt32();
             this.Unknown_94h = reader.ReadUInt32();
             this.Unknown_98h = reader.ReadUInt32();
@@ -193,7 +158,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             this.Unknown_10Ch = reader.ReadUInt32();
             this.Unknown_110h = reader.ReadUInt32();
             this.Unknown_114h = reader.ReadUInt32();
-            this.p5 = reader.ReadUInt64();
+            this.PolysPointer = reader.ReadUInt64();
             this.SectorTreePointer = reader.ReadUInt64();
             this.PortalsPointer = reader.ReadUInt64();
             this.p8 = reader.ReadUInt64();
@@ -213,17 +178,17 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             this.Unknown_16Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Vertices = reader.ReadBlockAt<VerticesList>(
+            this.Vertices = reader.ReadBlockAt<ResourceSplitArray<Vertex>>(
                 this.VerticesPointer // offset
             );
-            this.Indices = reader.ReadBlockAt<IndicesList>(
+            this.Indices = reader.ReadBlockAt<ResourceSplitArray<ushort_r>>(
                 this.IndicesPointer // offset
             );
-            this.AdjPolys = reader.ReadBlockAt<AdjPolysList>(
-                this.p4 // offset
+            this.AdjPolys = reader.ReadBlockAt<ResourceSplitArray<AdjPoly>>(
+                this.AdjPolysPointer // offset
             );
-            this.Polys = reader.ReadBlockAt<PolysList>(
-                this.p5 // offset
+            this.Polys = reader.ReadBlockAt<ResourceSplitArray<Poly>>(
+                this.PolysPointer // offset
             );
             this.SectorTree = reader.ReadBlockAt<Sector>(
                 this.SectorTreePointer // offset
@@ -248,8 +213,8 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             // update structure data
             this.VerticesPointer = (ulong)(this.Vertices != null ? this.Vertices.BlockPosition : 0);
             this.IndicesPointer = (ulong)(this.Indices != null ? this.Indices.BlockPosition : 0);
-            this.p4 = (ulong)(this.AdjPolys != null ? this.AdjPolys.BlockPosition : 0);
-            this.p5 = (ulong)(this.Polys != null ? this.Polys.BlockPosition : 0);
+            this.AdjPolysPointer = (ulong)(this.AdjPolys != null ? this.AdjPolys.BlockPosition : 0);
+            this.PolysPointer = (ulong)(this.Polys != null ? this.Polys.BlockPosition : 0);
             this.SectorTreePointer = (ulong)(this.SectorTree != null ? this.SectorTree.BlockPosition : 0);
             this.PortalsPointer = (ulong)(this.Portals != null ? this.Portals.BlockPosition : 0);
             this.p8 = (ulong)(this.p8data != null ? this.p8data.BlockPosition : 0);
@@ -262,30 +227,12 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
-            writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
-            writer.Write(this.Unknown_30h);
-            writer.Write(this.Unknown_34h);
-            writer.Write(this.Unknown_38h);
-            writer.Write(this.Unknown_3Ch);
-            writer.Write(this.Unknown_40h);
-            writer.Write(this.Unknown_44h);
-            writer.Write(this.Unknown_48h);
-            writer.Write(this.Unknown_4Ch);
-            writer.Write(this.Unknown_50h);
-            writer.Write(this.Unknown_54h);
-            writer.Write(this.Unknown_58h);
-            writer.Write(this.Unknown_5Ch);
             writer.Write(this.Unknown_60h);
-            writer.Write(this.Unknown_64h);
-            writer.Write(this.Unknown_68h);
-            writer.Write(this.Unknown_6Ch);
             writer.Write(this.VerticesPointer);
             writer.Write(this.Unknown_78h);
             writer.Write(this.Unknown_7Ch);
             writer.Write(this.IndicesPointer);
-            writer.Write(this.p4);
+            writer.Write(this.AdjPolysPointer);
             writer.Write(this.Unknown_90h);
             writer.Write(this.Unknown_94h);
             writer.Write(this.Unknown_98h);
@@ -320,7 +267,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             writer.Write(this.Unknown_10Ch);
             writer.Write(this.Unknown_110h);
             writer.Write(this.Unknown_114h);
-            writer.Write(this.p5);
+            writer.Write(this.PolysPointer);
             writer.Write(this.SectorTreePointer);
             writer.Write(this.PortalsPointer);
             writer.Write(this.p8);

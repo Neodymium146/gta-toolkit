@@ -21,6 +21,7 @@
 */
 
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
@@ -29,14 +30,8 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public override long BlockLength => 0x60;
 
         // structure data
-        public float Unknown_0h;
-        public float Unknown_4h;
-        public float Unknown_8h;
-        public float Unknown_Ch; // NaN
-        public float Unknown_10h;
-        public float Unknown_14h;
-        public float Unknown_18h;
-        public float Unknown_1Ch; // NaN
+        public Vector4 Unknown_0h;
+        public Vector4 Unknown_10h;
         public uint Unknown_20h;
         public uint Unknown_24h;
         public uint Unknown_28h;
@@ -62,14 +57,8 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadSingle();
-            this.Unknown_4h = reader.ReadSingle();
-            this.Unknown_8h = reader.ReadSingle();
-            this.Unknown_Ch = reader.ReadSingle();
-            this.Unknown_10h = reader.ReadSingle();
-            this.Unknown_14h = reader.ReadSingle();
-            this.Unknown_18h = reader.ReadSingle();
-            this.Unknown_1Ch = reader.ReadSingle();
+            this.Unknown_0h = reader.ReadVector4();
+            this.Unknown_10h = reader.ReadVector4();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
             this.Unknown_28h = reader.ReadUInt32();
@@ -114,13 +103,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
 
             // write structure data
             writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
