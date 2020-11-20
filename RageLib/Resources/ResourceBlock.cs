@@ -69,9 +69,9 @@ namespace RageLib.Resources
         public abstract void Write(ResourceDataWriter writer, params object[] parameters);
 
         /// <summary>
-        /// Updates the data block.
+        /// Allows to rebuild the data block before writing.
         /// </summary>
-        public virtual void Update() { }
+        public virtual void Rebuild() { }
 
         /// <summary>
         /// Returns a list of data blocks that are part of this block.

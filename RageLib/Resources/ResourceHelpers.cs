@@ -156,11 +156,11 @@ namespace RageLib.Resources
             return ((ALIGN_SIZE - (p % ALIGN_SIZE)) % ALIGN_SIZE);
         }
 
-        public static void UpdateBlocks(IResourceBlock rootBlock)
+        public static void RebuildBlocks(IResourceBlock rootBlock)
         {
             var processed = new HashSet<IResourceBlock>();
 
-            void UpdateChildren(IResourceBlock block)
+            void RebuildChildren(IResourceBlock block)
             {
                 if (block is IResourceSystemBlock sblock)
                 {
@@ -169,21 +169,21 @@ namespace RageLib.Resources
                         var references = sblock.GetReferences();
                         foreach (var reference in references)
                         {
-                            UpdateChildren(reference);
+                            RebuildChildren(reference);
                         }
 
                         var parts = sblock.GetParts();
                         foreach (var part in parts)
                         {
-                            UpdateChildren(part.Item2);
+                            RebuildChildren(part.Item2);
                         }
 
-                        sblock.Update();
+                        sblock.Rebuild();
                     }
                 }
             }
 
-            UpdateChildren(rootBlock);
+            RebuildChildren(rootBlock);
         }
 
         public static void GetBlocks(IResourceBlock rootBlock, out IList<IResourceBlock> sys, out IList<IResourceBlock> gfx)

@@ -164,7 +164,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             return list.ToArray();
         }
 
-        public override void Update()
+        public override void Rebuild()
         {
             UpdateBoneIds();
             UpdateBoneMap();

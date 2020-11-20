@@ -143,7 +143,6 @@ namespace RageLib.Resources.RDR2
             // Create a temp datResourceMap
             fileBase.PagesInfo = new PagesInfo(64, 64);
 
-            ResourceHelpers.UpdateBlocks(ResourceData);
 
             ResourceHelpers.GetBlocks(ResourceData, out IList<IResourceBlock> systemBlocks, out IList<IResourceBlock> graphicBlocks);
 

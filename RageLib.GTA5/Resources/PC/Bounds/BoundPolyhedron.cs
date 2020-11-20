@@ -213,7 +213,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             return boundVertex;
         }
 
-        public override void Update()
+        public override void Rebuild()
         {
             // Test
             TestQuantum();
