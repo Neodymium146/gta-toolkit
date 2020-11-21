@@ -24,7 +24,6 @@ using RageLib.Resources.GTA5.PC.Particles;
 using RageLib.ResourceWrappers;
 using RageLib.GTA5.ResourceWrappers.PC.Textures;
 using RageLib.ResourceWrappers.Particles;
-using System;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Particles
 {
@@ -36,12 +35,10 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Particles
         {
             get
             {
-                // TODO: rework this
-                throw new NotImplementedException();
-               //if (particles.TextureDictionary != null)
-               //    return new TextureDictionaryWrapper_GTA5_pc(particles.TextureDictionary);
-               //else
-               //    return null;
+                if (particles.TextureDictionary != null)
+                    return new TextureDictionaryWrapper_GTA5_pc(particles.TextureDictionary);
+                else
+                    return null;
             }
         }
 
