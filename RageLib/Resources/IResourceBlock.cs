@@ -68,7 +68,7 @@ namespace RageLib.Resources
         /// <summary>
         /// Updates the data block.
         /// </summary>
-        void Update();
+        void Rebuild();
     }
 
     public interface IResourceXXSystemBlock : IResourceSystemBlock

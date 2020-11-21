@@ -27,21 +27,17 @@ namespace RageLib.Resources.GTA5.PC.Clips
 {
     // pgBase
     // crAnimation
-    public class Animation : ResourceSystemBlock
+    public class Animation : PgBase64
     {
         public override long BlockLength => 0x60;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
         public ushort Unknown_10h;
         public ushort Unknown_12h;
         public ushort Unknown_14h;
         public ushort Unknown_16h;
         public float Unknown_18h;
-        public uint Unknown_1Ch;
+        public uint Unknown_1Ch; // Signature?
         public uint Unknown_20h; // 0x00000000
         public uint Unknown_24h; // 0x00000000
         public uint Unknown_28h; // 0x00000000
@@ -51,18 +47,16 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public uint Unknown_38h;
         public uint Unknown_3Ch;
         public ResourcePointerList64<Sequence> Sequences;
-        public ResourceSimpleList64<uint_r> Unknown_50h;
+        public ResourceSimpleList64<Animation_Unknown> Unknown_50h;
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt16();
             this.Unknown_12h = reader.ReadUInt16();
             this.Unknown_14h = reader.ReadUInt16();
@@ -78,7 +72,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
             this.Unknown_38h = reader.ReadUInt32();
             this.Unknown_3Ch = reader.ReadUInt32();
             this.Sequences = reader.ReadBlock<ResourcePointerList64<Sequence>>();
-            this.Unknown_50h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_50h = reader.ReadBlock<ResourceSimpleList64<Animation_Unknown>>();
         }
 
         /// <summary>
@@ -86,11 +80,9 @@ namespace RageLib.Resources.GTA5.PC.Clips
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_12h);
             writer.Write(this.Unknown_14h);

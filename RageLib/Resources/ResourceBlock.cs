@@ -69,16 +69,16 @@ namespace RageLib.Resources
         public abstract void Write(ResourceDataWriter writer, params object[] parameters);
 
         /// <summary>
-        /// Updates the data block.
+        /// Allows to rebuild the data block before writing.
         /// </summary>
-        public virtual void Update() { }
+        public virtual void Rebuild() { }
 
         /// <summary>
         /// Returns a list of data blocks that are part of this block.
         /// </summary>
         public virtual Tuple<long, IResourceBlock>[] GetParts()
         {
-            return new Tuple<long, IResourceBlock>[0];
+            return Array.Empty<Tuple<long, IResourceBlock>>();
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace RageLib.Resources
         /// </summary>
         public virtual IResourceBlock[] GetReferences()
         {
-            return new IResourceBlock[0];
+            return Array.Empty<IResourceBlock>();
         }
     }
 

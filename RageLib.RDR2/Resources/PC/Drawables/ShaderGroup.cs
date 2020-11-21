@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
-	// ShaderGroup
+	// rage::grmShaderGroup
 	// VFT = 0x0000000140912C88
 	public class ShaderGroup : DatBase64
 	{
@@ -19,7 +19,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 		public ulong Unknown_38h;           // 0x0000000000000000
 
 		// reference data
-		public PgDictionary64<Struct_16> TextureDictionary;
+		public PgDictionary64<Texture> TextureDictionary;
 
 		public override void Read(ResourceDataReader reader, params object[] parameters)
 		{
@@ -34,7 +34,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
 			this.Unknown_38h = reader.ReadUInt64();
 
 			// read reference data
-			this.TextureDictionary = reader.ReadBlockAt<PgDictionary64<Struct_16>>(this.TextureDictionaryPointer);
+			this.TextureDictionary = reader.ReadBlockAt<PgDictionary64<Texture>>(this.TextureDictionaryPointer);
 		}
 
 		public override void Write(ResourceDataWriter writer, params object[] parameters)

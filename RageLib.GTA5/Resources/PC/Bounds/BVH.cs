@@ -23,6 +23,7 @@
 using RageLib.Resources.Common;
 using System.Collections.Generic;
 using System;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
@@ -36,11 +37,11 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
-        public RAGE_Vector4 BoundingBoxMin;
-        public RAGE_Vector4 BoundingBoxMax;
-        public RAGE_Vector4 BoundingBoxCenter;
-        public RAGE_Vector4 QuantumInverse;
-        public RAGE_Vector4 Quantum; // bounding box dimension / 2^16
+        public Vector4 BoundingBoxMin;
+        public Vector4 BoundingBoxMax;
+        public Vector4 BoundingBoxCenter;
+        public Vector4 QuantumInverse;
+        public Vector4 Quantum; // bounding box dimension / 2^16
         public ResourceSimpleList64<BVHTreeInfo> Trees;
 
         /// <summary>
@@ -54,11 +55,11 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.BoundingBoxMin = reader.ReadBlock<RAGE_Vector4>();
-            this.BoundingBoxMax = reader.ReadBlock<RAGE_Vector4>();
-            this.BoundingBoxCenter = reader.ReadBlock<RAGE_Vector4>();
-            this.QuantumInverse = reader.ReadBlock<RAGE_Vector4>();
-            this.Quantum = reader.ReadBlock<RAGE_Vector4>();
+            this.BoundingBoxMin = reader.ReadVector4();
+            this.BoundingBoxMax = reader.ReadVector4();
+            this.BoundingBoxCenter = reader.ReadVector4();
+            this.QuantumInverse = reader.ReadVector4();
+            this.Quantum = reader.ReadVector4();
             this.Trees = reader.ReadBlock<ResourceSimpleList64<BVHTreeInfo>>();
         }
 
@@ -72,11 +73,11 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.WriteBlock(this.BoundingBoxMin);
-            writer.WriteBlock(this.BoundingBoxMax);
-            writer.WriteBlock(this.BoundingBoxCenter);
-            writer.WriteBlock(this.QuantumInverse);
-            writer.WriteBlock(this.Quantum);
+            writer.Write(this.BoundingBoxMin);
+            writer.Write(this.BoundingBoxMax);
+            writer.Write(this.BoundingBoxCenter);
+            writer.Write(this.QuantumInverse);
+            writer.Write(this.Quantum);
             writer.WriteBlock(this.Trees);
         }
 
@@ -84,11 +85,6 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         {
             return new Tuple<long, IResourceBlock>[] {
                 new Tuple<long, IResourceBlock>(0x00, Nodes),
-                new Tuple<long, IResourceBlock>(0x20, BoundingBoxMin),
-                new Tuple<long, IResourceBlock>(0x30, BoundingBoxMax),
-                new Tuple<long, IResourceBlock>(0x40, BoundingBoxCenter),
-                new Tuple<long, IResourceBlock>(0x50, QuantumInverse),
-                new Tuple<long, IResourceBlock>(0x60, Quantum),
                 new Tuple<long, IResourceBlock>(0x70, Trees)
             };
         }

@@ -39,7 +39,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public uint Unknown_1Ch; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<ushort_r> p1data;
+        public SimpleArray<ushort> p1data;
         public ResourceSimpleArray<SectorDataUnk> p2data;
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             this.Unknown_1Ch = reader.ReadUInt32();
 
             // read reference data
-            this.p1data = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+            this.p1data = reader.ReadBlockAt<SimpleArray<ushort>>(
                 this.p1, // offset
                 this.c2
             );

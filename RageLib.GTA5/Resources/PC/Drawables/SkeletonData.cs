@@ -20,9 +20,12 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Numerics;
+using RageLib.GTA5.Resources.PC.Drawables;
+using RageLib.Resources.Common;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
@@ -33,14 +36,13 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override long BlockLength => 0x70;
 
         // structure data
-        public AtHashMap<uint_r> BoneMap;
-        public ulong BonesPointer;
+        public HashMap BoneMap;
+        public ulong BoneDataPointer; // why this points to the array directly ?
         public ulong TransformationsInvertedPointer;
         public ulong TransformationsPointer;
         public ulong ParentIndicesPointer;
         public ulong ChildrenIndicesPointer;
-        public uint Unknown_48h; // 0x00000000
-        public uint Unknown_4Ch; // 0x00000000
+        public ulong Unknown_48h; // 0x0000000000000000
         public uint Unknown_50h;
         public uint Unknown_54h;
         public uint DataCRC;
@@ -49,15 +51,14 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public ushort ChildrenIndicesCount;
         public ushort Unknown_62h; // 0x0000
         public uint Unknown_64h; // 0x00000000
-        public uint Unknown_68h; // 0x00000000
-        public uint Unknown_6Ch; // 0x00000000
+        public ulong Unknown_68h; // 0x0000000000000000
 
         // reference data
-        public ResourceSimpleArray<Bone> Bones;
-        public ResourceSimpleArray<RAGE_Matrix4> TransformationsInverted;
-        public ResourceSimpleArray<RAGE_Matrix4> Transformations;
-        public ResourceSimpleArray<ushort_r> ParentIndices;
-        public ResourceSimpleArray<ushort_r> ChildrenIndices;
+        public BoneData BoneData;
+        public SimpleArray<Matrix4x4> TransformationsInverted;
+        public SimpleArray<Matrix4x4> Transformations;
+        public SimpleArray<short> ParentIndices;
+        public SimpleArray<short> ChildrenIndices;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -67,14 +68,13 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Read(reader, parameters);
 
             // read structure data
-            this.BoneMap = reader.ReadBlock<AtHashMap<uint_r>>();
-            this.BonesPointer = reader.ReadUInt64();
+            this.BoneMap = reader.ReadBlock<HashMap>();
+            this.BoneDataPointer = reader.ReadUInt64();
             this.TransformationsInvertedPointer = reader.ReadUInt64();
             this.TransformationsPointer = reader.ReadUInt64();
             this.ParentIndicesPointer = reader.ReadUInt64();
             this.ChildrenIndicesPointer = reader.ReadUInt64();
-            this.Unknown_48h = reader.ReadUInt32();
-            this.Unknown_4Ch = reader.ReadUInt32();
+            this.Unknown_48h = reader.ReadUInt64();
             this.Unknown_50h = reader.ReadUInt32();
             this.Unknown_54h = reader.ReadUInt32();
             this.DataCRC = reader.ReadUInt32();
@@ -83,27 +83,26 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.ChildrenIndicesCount = reader.ReadUInt16();
             this.Unknown_62h = reader.ReadUInt16();
             this.Unknown_64h = reader.ReadUInt32();
-            this.Unknown_68h = reader.ReadUInt32();
-            this.Unknown_6Ch = reader.ReadUInt32();
+            this.Unknown_68h = reader.ReadUInt64();
 
             // read reference data
-            this.Bones = reader.ReadBlockAt<ResourceSimpleArray<Bone>>(
-                this.BonesPointer, // offset
+            this.BoneData = reader.ReadBlockAt<BoneData>(
+                this.BoneDataPointer - 16, // offset
                 this.BonesCount
             );
-            this.TransformationsInverted = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
+            this.TransformationsInverted = reader.ReadBlockAt<SimpleArray<Matrix4x4>>(
                 this.TransformationsInvertedPointer, // offset
                 this.BonesCount
             );
-            this.Transformations = reader.ReadBlockAt<ResourceSimpleArray<RAGE_Matrix4>>(
+            this.Transformations = reader.ReadBlockAt<SimpleArray<Matrix4x4>>(
                 this.TransformationsPointer, // offset
                 this.BonesCount
             );
-            this.ParentIndices = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+            this.ParentIndices = reader.ReadBlockAt<SimpleArray<short>>(
                 this.ParentIndicesPointer, // offset
                 this.BonesCount
             );
-            this.ChildrenIndices = reader.ReadBlockAt<ResourceSimpleArray<ushort_r>>(
+            this.ChildrenIndices = reader.ReadBlockAt<SimpleArray<short>>(
                 this.ChildrenIndicesPointer, // offset
                 this.ChildrenIndicesCount
             );
@@ -117,23 +116,22 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             base.Write(writer, parameters);
 
             // update structure data
-            this.BonesPointer = (ulong)(this.Bones != null ? this.Bones.BlockPosition : 0);
+            this.BoneDataPointer = (ulong)(this.BoneData != null ? this.BoneData.BlockPosition + 16 : 0);
             this.TransformationsInvertedPointer = (ulong)(this.TransformationsInverted != null ? this.TransformationsInverted.BlockPosition : 0);
             this.TransformationsPointer = (ulong)(this.Transformations != null ? this.Transformations.BlockPosition : 0);
             this.ParentIndicesPointer = (ulong)(this.ParentIndices != null ? this.ParentIndices.BlockPosition : 0);
             this.ChildrenIndicesPointer = (ulong)(this.ChildrenIndices != null ? this.ChildrenIndices.BlockPosition : 0);
-            this.BonesCount = (ushort)(this.Bones?.Count ?? 0);
+            this.BonesCount = (ushort)(this.BoneData?.BonesCount ?? 0);
             this.ChildrenIndicesCount = (ushort)(this.ChildrenIndices != null ? this.ChildrenIndices.Count : 0);
 
             // write structure data
             writer.WriteBlock(this.BoneMap);
-            writer.Write(this.BonesPointer);
+            writer.Write(this.BoneDataPointer);
             writer.Write(this.TransformationsInvertedPointer);
             writer.Write(this.TransformationsPointer);
             writer.Write(this.ParentIndicesPointer);
             writer.Write(this.ChildrenIndicesPointer);
             writer.Write(this.Unknown_48h);
-            writer.Write(this.Unknown_4Ch);
             writer.Write(this.Unknown_50h);
             writer.Write(this.Unknown_54h);
             writer.Write(this.DataCRC);
@@ -143,7 +141,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Unknown_62h);
             writer.Write(this.Unknown_64h);
             writer.Write(this.Unknown_68h);
-            writer.Write(this.Unknown_6Ch);
         }
 
         /// <summary>
@@ -152,7 +149,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>(base.GetReferences());
-            if (Bones != null) list.Add(Bones);
+            if (BoneData != null) list.Add(BoneData);
             if (TransformationsInverted != null) list.Add(TransformationsInverted);
             if (Transformations != null) list.Add(Transformations);
             if (ParentIndices != null) list.Add(ParentIndices);
@@ -163,27 +160,27 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             var list = new List<Tuple<long, IResourceBlock>>(base.GetParts());
-            list.AddRange(new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x10, BoneMap)
-            });
+            list.Add(new Tuple<long, IResourceBlock>(0x10, BoneMap));
             return list.ToArray();
         }
 
-        public override void Update()
+        public override void Rebuild()
         {
             UpdateBoneIds();
             UpdateBoneMap();
+            UpdateIndices();
+            UpdateBoneTransformations();
         }
 
         private void UpdateBoneIds()
         {
-            if (Bones == null)
+            if (BoneData == null)
                 return;
 
-            foreach (var bone in Bones)
+            foreach (var bone in BoneData.Bones)
             {
                 // id of root bone seems to always be 0 
-                if (bone.ParentIndex == ushort.MaxValue)
+                if (bone.ParentIndex == -1)
                 {
                     bone.BoneId = 0;
                     continue;
@@ -200,15 +197,147 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         private void UpdateBoneMap()
         {
-            if (Bones == null)
+            if (BoneData == null)
                 return;
 
-            List<KeyValuePair<uint, uint_r>> bonesIndexId = new List<KeyValuePair<uint, uint_r>>();
+            List<KeyValuePair<uint, uint>> bonesIndexId = new List<KeyValuePair<uint, uint>>((int)BoneData.BonesCount);
 
-            foreach (var bone in Bones)
-                bonesIndexId.Add(new KeyValuePair<uint, uint_r>(bone.BoneId, (uint_r)bone.Index));
+            foreach (var bone in BoneData.Bones)
+                bonesIndexId.Add(new KeyValuePair<uint, uint>(bone.BoneId, (uint)bone.Index));
 
-            BoneMap = new AtHashMap<uint_r>(bonesIndexId);
+            BoneMap = new HashMap(bonesIndexId);
+        }
+
+        public void UpdateIndices()
+        {
+            var bones = BoneData?.Bones;
+
+            if (bones == null)
+            {
+                ParentIndices = null;
+                ChildrenIndices = null;
+                return;
+            }
+
+            // Build ParentIndices array
+            var parentIndices = new short[BonesCount];
+
+            for (int i = 0; i < BonesCount; i++)
+            {
+                var bone = bones[i];
+                parentIndices[i] = bone.ParentIndex;
+                Debug.Assert(parentIndices[i] == ParentIndices[i]);
+            }
+
+            ParentIndices = new SimpleArray<short>(parentIndices);
+
+            // Build ChildrenIndices array
+            // TODO: try to replicate original order
+            //       does order matter or they are just (short, short) tuples?
+            List<short> childrenIndices = new List<short>();
+            for (int i = 0; i < BonesCount; i++)
+            {
+                if(ParentIndices[i] != -1)
+                {
+                    childrenIndices.Add((short)i);
+                    childrenIndices.Add(ParentIndices[i]);
+                }
+            }
+
+            ChildrenIndices = new SimpleArray<short>(childrenIndices.ToArray());
+        }
+
+        public void UpdateBoneTransformations()
+        {
+            var bones = BoneData?.Bones;
+
+            if (bones == null)
+            {
+                Transformations = null;
+                TransformationsInverted = null;
+                return;
+            }
+
+            var worldTransformations = new Matrix4x4[BonesCount];
+            var worldTransformationsInverted = new Matrix4x4[BonesCount];
+
+            for (int i = 0; i < BonesCount; i++)
+            {
+                var bone = bones[i];
+
+                // Get Local Transform Matrix
+                var localMatrix = GetLocalMatrix(bone);
+                
+                // Get World Transform Matrix
+                var worldMatrix = GetWorldMatrix(bone);
+                Matrix4x4.Invert(worldMatrix, out Matrix4x4 worldMatrixInverted);
+
+                // TODO: Find out how 4th column is calculated
+                //       In some cases M24 and M34 aren't accurate
+                localMatrix.M14 = 0f;
+                localMatrix.M24 = 4f;
+                localMatrix.M34 = -3f;
+                localMatrix.M44 = 0f;
+                worldMatrixInverted.M14 = 0f;
+                worldMatrixInverted.M24 = 0f;
+                worldMatrixInverted.M34 = 0f;
+                worldMatrixInverted.M44 = 0f;
+
+                worldTransformations[i] = localMatrix;
+                worldTransformationsInverted[i] = worldMatrixInverted;
+
+                //var oldMat = Transformations[i];
+                //var oldMatInv = TransformationsInverted[i];
+                //Debug.Assert(MatrixAlmostEquals(localMatrix, oldMat));
+                //Debug.Assert(MatrixAlmostEquals(worldMatrix, oldMat));
+                //Debug.Assert(MatrixAlmostEquals(worldMatrixInverted, oldMatInv));
+
+                //bool MatrixAlmostEquals(Matrix4x4 m1, Matrix4x4 m2, float epsilon = 0.001f)
+                //{
+                //    return
+                //        (MathF.Abs(m1.M11 - m2.M11) < epsilon) &&
+                //        (MathF.Abs(m1.M12 - m2.M12) < epsilon) &&
+                //        (MathF.Abs(m1.M13 - m2.M13) < epsilon) &&
+                //        (MathF.Abs(m1.M14 - m2.M14) < epsilon) &&
+                //        (MathF.Abs(m1.M21 - m2.M21) < epsilon) &&
+                //        (MathF.Abs(m1.M22 - m2.M22) < epsilon) &&
+                //        (MathF.Abs(m1.M23 - m2.M23) < epsilon) &&
+                //        (MathF.Abs(m1.M24 - m2.M24) < epsilon) &&
+                //        (MathF.Abs(m1.M31 - m2.M31) < epsilon) &&
+                //        (MathF.Abs(m1.M32 - m2.M32) < epsilon) &&
+                //        (MathF.Abs(m1.M33 - m2.M33) < epsilon) &&
+                //        (MathF.Abs(m1.M34 - m2.M34) < epsilon) &&
+                //        (MathF.Abs(m1.M41 - m2.M41) < epsilon) &&
+                //        (MathF.Abs(m1.M42 - m2.M42) < epsilon) &&
+                //        (MathF.Abs(m1.M43 - m2.M43) < epsilon) &&
+                //        (MathF.Abs(m1.M44 - m2.M44) < epsilon);
+                //}
+            }
+
+            Transformations = new SimpleArray<Matrix4x4>(worldTransformations);
+            TransformationsInverted = new SimpleArray<Matrix4x4>(worldTransformationsInverted);
+        }
+
+        // TODO: Use a wrapper class to cache transforms and parent of each Bone
+        public Matrix4x4 GetLocalMatrix(Bone bone)
+        {
+            return Matrix4x4.CreateScale(bone.Scale) * Matrix4x4.CreateFromQuaternion(bone.Rotation) * Matrix4x4.CreateTranslation(bone.Translation);
+        }
+
+        public Matrix4x4 GetWorldMatrix(Bone bone)
+        {
+            var localMatrix = GetLocalMatrix(bone);
+
+            var parentIndex = bone.ParentIndex;
+
+            if (parentIndex != -1)
+            {
+                var parentBone = BoneData?.Bones[parentIndex];
+                var parentWorldMatrix = GetWorldMatrix(parentBone);
+                return localMatrix * parentWorldMatrix;
+            }
+
+            return localMatrix;
         }
     }
 }

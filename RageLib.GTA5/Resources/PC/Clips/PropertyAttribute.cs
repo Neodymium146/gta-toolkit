@@ -85,6 +85,12 @@ namespace RageLib.Resources.GTA5.PC.Clips
 
             switch (type)
             {
+                //crPropertyAttributeSituation
+                //crPropertyAttributeBitSet
+                //crPropertyAttributeVector4
+                //crPropertyAttributeMatrix34
+                //crPropertyAttributeData
+
                 case 1: return new PropertyAttributeFloat();
                 case 2: return new PropertyAttributeInt();
                 case 3: return new PropertyAttributeBool();

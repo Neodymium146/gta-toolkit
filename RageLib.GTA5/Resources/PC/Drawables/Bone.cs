@@ -24,6 +24,7 @@ using RageLib.Hash;
 using RageLib.Resources.Common;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
@@ -33,17 +34,17 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override long BlockLength => 0x50;
 
         // structure data
-        public RAGE_Vector4 Rotation;
-        public RAGE_Vector3 Translation;
+        public Quaternion Rotation;
+        public Vector3 Translation;
         public uint Unknown_1Ch; // 0x00000000
-        public RAGE_Vector3 Scale;
+        public Vector3 Scale;
         public float Unknown_2Ch; // 1.0
-        public ushort NextSiblingIndex;
-        public ushort ParentIndex;
+        public short NextSiblingIndex;
+        public short ParentIndex;
         public uint Unknown_34h; // 0x00000000
         public ulong NamePointer;
         public BoneFlags Flags;
-        public ushort Index;
+        public short Index;
         public ushort BoneId;
         public ushort Unknown_46h;
         public uint Unknown_48h; // 0x00000000
@@ -58,17 +59,17 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Rotation = reader.ReadBlock<RAGE_Vector4>();
-            this.Translation = reader.ReadBlock<RAGE_Vector3>();
+            this.Rotation = reader.ReadQuaternion();
+            this.Translation = reader.ReadVector3();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Scale = reader.ReadBlock<RAGE_Vector3>();
+            this.Scale = reader.ReadVector3();
             this.Unknown_2Ch = reader.ReadSingle();
-            this.NextSiblingIndex = reader.ReadUInt16();
-            this.ParentIndex = reader.ReadUInt16();
+            this.NextSiblingIndex = reader.ReadInt16();
+            this.ParentIndex = reader.ReadInt16();
             this.Unknown_34h = reader.ReadUInt32();
             this.NamePointer = reader.ReadUInt64();
             this.Flags = (BoneFlags)reader.ReadUInt16();
-            this.Index = reader.ReadUInt16();
+            this.Index = reader.ReadInt16();
             this.BoneId = reader.ReadUInt16();
             this.Unknown_46h = reader.ReadUInt16();
             this.Unknown_48h = reader.ReadUInt32();
@@ -89,10 +90,10 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
 
             // write structure data
-            writer.WriteBlock(this.Rotation);
-            writer.WriteBlock(this.Translation);
+            writer.Write(this.Rotation);
+            writer.Write(this.Translation);
             writer.Write(this.Unknown_1Ch);
-            writer.WriteBlock(this.Scale);
+            writer.Write(this.Scale);
             writer.Write(this.Unknown_2Ch);
             writer.Write(this.NextSiblingIndex);
             writer.Write(this.ParentIndex);

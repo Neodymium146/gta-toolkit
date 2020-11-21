@@ -21,7 +21,7 @@
 */
 
 using RageLib.Resources.Common;
-using System.Collections.Generic;
+using System;
 
 namespace RageLib.Resources.GTA5.PC.Clips
 {
@@ -30,17 +30,11 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override long BlockLength => 0x20;
 
         // structure data
-        public ulong TagListPointer;
-        public ushort TagsCount1;
-        public ushort TagsCount2;
-        public uint Unknown_Ch; // 0x00000000
+        public ResourcePointerList64<Tag> TagList;
         public uint Unknown_10h;
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
-
-        // reference data
-        public ResourcePointerArray64<Tag> TagList;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -48,20 +42,11 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.TagListPointer = reader.ReadUInt64();
-            this.TagsCount1 = reader.ReadUInt16();
-            this.TagsCount2 = reader.ReadUInt16();
-            this.Unknown_Ch = reader.ReadUInt32();
+            this.TagList = reader.ReadBlock<ResourcePointerList64<Tag>>();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-
-            // read reference data
-            this.TagList = reader.ReadBlockAt<ResourcePointerArray64<Tag>>(
-                this.TagListPointer, // offset
-                this.TagsCount1
-            );
         }
 
         /// <summary>
@@ -69,30 +54,19 @@ namespace RageLib.Resources.GTA5.PC.Clips
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            // update structure data
-            this.TagListPointer = (ulong)(this.TagList != null ? this.TagList.BlockPosition : 0);
-            this.TagsCount1 = (ushort)(this.TagList != null ? this.TagList.Count : 0);
-            this.TagsCount2 = (ushort)(this.TagList != null ? this.TagList.Count : 0);
-
             // write structure data
-            writer.Write(this.TagListPointer);
-            writer.Write(this.TagsCount1);
-            writer.Write(this.TagsCount2);
-            writer.Write(this.Unknown_Ch);
+            writer.WriteBlock(this.TagList);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
         }
 
-        /// <summary>
-        /// Returns a list of data blocks which are referenced by this block.
-        /// </summary>
-        public override IResourceBlock[] GetReferences()
+        public override Tuple<long, IResourceBlock>[] GetParts()
         {
-            var list = new List<IResourceBlock>();
-            if (TagList != null) list.Add(TagList);
-            return list.ToArray();
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x0, TagList),
+            };
         }
     }
 }

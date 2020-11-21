@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace RageLib.Resources.RDR2.PC.Drawables
 {
-	// DrawableModel
 	public class Struct_09 : ResourceSystemBlock
 	{
 		public override long BlockLength => 0x40;

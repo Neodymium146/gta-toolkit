@@ -23,7 +23,7 @@
 using RageLib.Resources.GTA5.PC.Drawables;
 using RageLib.ResourceWrappers;
 using RageLib.ResourceWrappers.Drawables;
-using RageLib.ResourceWrappers.GTA5.PC.Textures;
+using RageLib.GTA5.ResourceWrappers.PC.Textures;
 using System;
 
 namespace RageLib.GTA5.ResourceWrappers.PC.Drawables

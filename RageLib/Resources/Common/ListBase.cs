@@ -27,6 +27,7 @@ namespace RageLib.Resources.Common
 {
     public abstract class ListBase<T> : ResourceSystemBlock, IList<T> where T : IResourceSystemBlock, new()
     {
+        protected long blockLength;
 
         // this is the data...
         public List<T> Data { get; set; }
@@ -43,7 +44,7 @@ namespace RageLib.Resources.Common
             }
             set
             {
-                Data[index] = value;
+                Insert(index, value);
             }
         }
 
@@ -80,11 +81,13 @@ namespace RageLib.Resources.Common
         public void Add(T item)
         {
             Data.Add(item);
+            blockLength += item.BlockLength;
         }
 
         public void Clear()
         {
             Data.Clear();
+            blockLength = 0;
         }
 
         public bool Contains(T item)
@@ -109,17 +112,32 @@ namespace RageLib.Resources.Common
 
         public void Insert(int index, T item)
         {
-            Data.Insert(index, item);
+            if (index >= 0 && index < Count)
+            {
+                RemoveAt(index);
+                Data.Insert(index, item);
+                blockLength += item.BlockLength;
+            }
         }
 
         public bool Remove(T item)
         {
-            return Data.Remove(item);
+            if (Data.Remove(item))
+            {
+                blockLength -= item.BlockLength;
+                return true;
+            }
+            return false;
         }
 
         public void RemoveAt(int index)
         {
-            Data.RemoveAt(index);
+            if(index >= 0 && index < Count)
+            {
+                var item = Data[index];
+                blockLength -= item.BlockLength;
+                Data.RemoveAt(index);
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()

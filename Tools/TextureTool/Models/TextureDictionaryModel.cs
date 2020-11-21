@@ -21,7 +21,7 @@
 */
 
 using RageLib.ResourceWrappers;
-using RageLib.ResourceWrappers.GTA5.PC.Textures;
+using RageLib.GTA5.ResourceWrappers.PC.Textures;
 using System;
 using System.Collections.Generic;
 using System.IO;

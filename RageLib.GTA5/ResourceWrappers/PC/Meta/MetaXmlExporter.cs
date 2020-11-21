@@ -232,9 +232,9 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                 var sb = new StringBuilder();
                 for (int i = 0; i < intValue.Value.Length; i++)
                 {
-                    sb.Append(intValue.Value[i].ToString());
+                    sb.Append(intValue.Value[i]);
                     if (i != intValue.Value.Length - 1)
-                        sb.Append(" ");
+                        sb.Append(' ');
                 }
                 writer.WriteString(sb.ToString());
             }
@@ -363,7 +363,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                     {
                         if (xy.EntryValue == i)
                         {
-                            sb.Append(" ");
+                            sb.Append(' ');
                             sb.Append(GetFlagNameForHash(xy.EntryNameHash));
                         }
                     }
@@ -383,7 +383,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                     {
                         if (xy.EntryValue == i)
                         {
-                            sb.Append(" ");
+                            sb.Append(' ');
                             sb.Append(GetFlagNameForHash(xy.EntryNameHash));
                         }
                     }
@@ -408,7 +408,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                             {
                                 if (xy.EntryValue == i)
                                 {
-                                    sb.Append(" ");
+                                    sb.Append(' ');
                                     sb.Append(GetFlagNameForHash(xy.EntryNameHash));
                                 }
                             }
@@ -416,7 +416,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
                         else
                         {
                             sb.Append(" flag_index_");
-                            sb.Append(i.ToString());
+                            sb.Append(i);
                         }
                     }
                 }
@@ -547,10 +547,10 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta
             for (int i = 0; i < b.Length; i++)
             {
                 //result.Append("0x");
-                result.Append(b[i].ToString());
+                result.Append(b[i]);
                 if (i != b.Length - 1)
                 {
-                    result.Append(" ");
+                    result.Append(' ');
                 }
             }
             return result.ToString();

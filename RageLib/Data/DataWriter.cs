@@ -23,6 +23,8 @@
 using System;
 using System.IO;
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace RageLib.Data
 {
@@ -255,6 +257,15 @@ namespace RageLib.Data
             Write(value.M24);
             Write(value.M34);
             Write(value.M44);
+        }
+
+        public void WriteArray<T>(T[] items) where T : unmanaged
+        {
+            if (items == null) 
+                return;
+
+            Span<byte> span = MemoryMarshal.Cast<T, byte>(items.AsSpan());
+            Write(span.ToArray());
         }
     }
 }

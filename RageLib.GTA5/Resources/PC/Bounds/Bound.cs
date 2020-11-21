@@ -21,6 +21,8 @@
 */
 
 using System;
+using System.Numerics;
+using RageLib.Resources.Common;
 
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
@@ -37,15 +39,15 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public float RadiusAroundCentroid;
         public uint Unknown_18h;
         public uint Unknown_1Ch;
-        public RAGE_Vector3 BoundingBoxMax;
+        public Vector3 BoundingBoxMax;
         public float Margin;
-        public RAGE_Vector3 BoundingBoxMin;
+        public Vector3 BoundingBoxMin;
         public uint RefCount;
-        public RAGE_Vector3 CentroidOffset;
+        public Vector3 CentroidOffset;
         public uint MaterialId0;
-        public RAGE_Vector3 CGOffset;
+        public Vector3 CGOffset;
         public uint MaterialId1;
-        public RAGE_Vector4 VolumeDistribution;
+        public Vector4 VolumeDistribution;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -61,15 +63,15 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.RadiusAroundCentroid = reader.ReadSingle();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.BoundingBoxMax = reader.ReadBlock<RAGE_Vector3>();
+            this.BoundingBoxMax = reader.ReadVector3();
             this.Margin = reader.ReadSingle();
-            this.BoundingBoxMin = reader.ReadBlock<RAGE_Vector3>();
+            this.BoundingBoxMin = reader.ReadVector3();
             this.RefCount = reader.ReadUInt32();
-            this.CentroidOffset = reader.ReadBlock<RAGE_Vector3>();
+            this.CentroidOffset = reader.ReadVector3();
             this.MaterialId0 = reader.ReadUInt32();
-            this.CGOffset = reader.ReadBlock<RAGE_Vector3>();
+            this.CGOffset = reader.ReadVector3();
             this.MaterialId1 = reader.ReadUInt32();
-            this.VolumeDistribution = reader.ReadBlock<RAGE_Vector4>();
+            this.VolumeDistribution = reader.ReadVector4();
         }
 
         /// <summary>
@@ -86,15 +88,15 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             writer.Write(this.RadiusAroundCentroid);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.WriteBlock(this.BoundingBoxMax);
+            writer.Write(this.BoundingBoxMax);
             writer.Write(this.Margin);
-            writer.WriteBlock(this.BoundingBoxMin);
+            writer.Write(this.BoundingBoxMin);
             writer.Write(this.RefCount);
-            writer.WriteBlock(this.CentroidOffset);
+            writer.Write(this.CentroidOffset);
             writer.Write(this.MaterialId0);
-            writer.WriteBlock(this.CGOffset);
+            writer.Write(this.CGOffset);
             writer.Write(this.MaterialId1);
-            writer.WriteBlock(this.VolumeDistribution);
+            writer.Write(this.VolumeDistribution);
         }
 
         public IResourceSystemBlock GetType(ResourceDataReader reader, params object[] parameters)

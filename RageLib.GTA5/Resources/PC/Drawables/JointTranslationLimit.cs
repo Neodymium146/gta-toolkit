@@ -20,6 +20,9 @@
     THE SOFTWARE.
 */
 
+using RageLib.Resources.Common;
+using System.Numerics;
+
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
     public class JointTranslationLimit : ResourceSystemBlock
@@ -35,9 +38,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
-        public RAGE_Vector3 Min;
+        public Vector3 Min;
         public uint Unknown_2Ch; // 0x00000000
-        public RAGE_Vector3 Max;
+        public Vector3 Max;
         public uint Unknown_3Ch; // 0x00000000
 
         /// <summary>
@@ -54,9 +57,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Min = reader.ReadBlock<RAGE_Vector3>();
+            this.Min = reader.ReadVector3();
             this.Unknown_2Ch = reader.ReadUInt32();
-            this.Max = reader.ReadBlock<RAGE_Vector3>();
+            this.Max = reader.ReadVector3();
             this.Unknown_3Ch = reader.ReadUInt32();
         }
 
@@ -74,9 +77,9 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.WriteBlock(this.Min);
+            writer.Write(this.Min);
             writer.Write(this.Unknown_2Ch);
-            writer.WriteBlock(this.Max);
+            writer.Write(this.Max);
             writer.Write(this.Unknown_3Ch);
         }
     }

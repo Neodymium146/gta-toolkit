@@ -20,7 +20,6 @@
     THE SOFTWARE.
 */
 
-using HtmlAgilityPack;
 using RageLib.Cryptography;
 using RageLib.GTA5.Archives;
 using RageLib.GTA5.Cryptography;
@@ -33,6 +32,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Xml;
 
 namespace RageLib.GTA5.Utilities
 {
@@ -237,38 +237,37 @@ namespace RageLib.GTA5.Utilities
         public static HashSet<string> GetAllStringsFromXml(Stream xmlFileStream)
         {
             var xmlStrings = new HashSet<string>();
+            var separators = new char[] { ' ', '\t', '\n' };
 
-            var document = new HtmlDocument();
-            document.OptionOutputOriginalCase = true;
-            document.OptionWriteEmptyNodes = true;
+            var document = new XmlDocument();
             document.Load(xmlFileStream);
 
-            var stack = new Stack<HtmlNode>();
-            stack.Push(document.DocumentNode);
+            var stack = new Stack<XmlNode>();
+            stack.Push(document.DocumentElement);
             while (stack.Count > 0)
             {
                 var node = stack.Pop();
-                foreach (var descendantNode in node.Descendants())
+                foreach (XmlNode descendantNode in node.SelectNodes("descendant::*"))
                 {
                     stack.Push(descendantNode);
                 }
-                if (node.NodeType == HtmlNodeType.Text)
+                if (node.NodeType == XmlNodeType.Text)
                 {
                     xmlStrings.Add(node.InnerText.Trim());
 
                     // for flags...
-                    string[] splitted = node.InnerText.Split(new char[] {' ','\t','\n' },StringSplitOptions.RemoveEmptyEntries);
+                    string[] splitted = node.InnerText.Split(separators, StringSplitOptions.RemoveEmptyEntries);
                     foreach (var x in splitted)
                     {
                         xmlStrings.Add(x.Trim());
                     }
                 }
-                if (node.NodeType == HtmlNodeType.Element)
+                if (node.NodeType == XmlNodeType.Element)
                 {
-                    xmlStrings.Add(node.OriginalName.Trim());
-                    foreach (var attribute in node.Attributes)
+                    xmlStrings.Add(node.Name.Trim());
+                    foreach (XmlAttribute attribute in node.Attributes)
                     {
-                        xmlStrings.Add(attribute.OriginalName.Trim());
+                        xmlStrings.Add(attribute.Name.Trim());
                         xmlStrings.Add(attribute.Value.Trim());
                     }
                 }

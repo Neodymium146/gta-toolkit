@@ -600,10 +600,10 @@ namespace RageLib.GTA5.PSOWrappers
             for (int i = 0; i < b.Length; i++)
             {
                 //result.Append("0x");
-                result.Append(b[i].ToString());
+                result.Append(b[i]);
                 if (i != b.Length - 1)
                 {
-                    result.Append(" ");
+                    result.Append(' ');
                 }
             }
             return result.ToString();

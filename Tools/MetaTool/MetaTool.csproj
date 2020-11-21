@@ -1,31 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>MetaTool</RootNamespace>
-    <AssemblyName>MetaTool</AssemblyName>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net5.0</TargetFramework>
+		<RootNamespace>MetaTool</RootNamespace>
+		<AssemblyName>MetaTool</AssemblyName>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\RageLib.GTA5\RageLib.GTA5.csproj" />
-    <ProjectReference Include="..\..\RageLib\RageLib.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\RageLib.GTA5\RageLib.GTA5.csproj" />
+		<ProjectReference Include="..\..\RageLib\RageLib.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Lists\FileNames.txt" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <EmbeddedResource Include="Lists\MetaNames.txt" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <EmbeddedResource Include="XmlInfos.xml" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <EmbeddedResource Include="PsoDefinitions.xml" />
-  </ItemGroup>
-  
+	<ItemGroup>
+		<EmbeddedResource Include="Lists\FileNames.txt" />
+		<EmbeddedResource Include="Lists\MetaNames.txt" />
+		<EmbeddedResource Include="Lists\PsoCollisions.txt" />
+		<EmbeddedResource Include="Lists\PsoCommon.txt" />
+		<EmbeddedResource Include="Lists\PsoEnumValues.txt" />
+		<EmbeddedResource Include="Lists\PsoFieldNames.txt" />
+		<EmbeddedResource Include="Lists\PsoTypeNames.txt" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="..\..\RageLib.GTA5\ResourceWrappers\PC\Meta\Definitions\XmlInfos.xml" Link="XmlInfos.xml" />
+		<EmbeddedResource Include="..\..\RageLib.GTA5\PSOWrappers\Xml\PsoDefinitions.xml" Link="PsoDefinitions.xml" />
+	</ItemGroup>
+
 </Project>

@@ -29,15 +29,11 @@ namespace RageLib.Resources.GTA5.PC.Clothes
     // pgBase
     // clothBase (TODO)
     // environmentCloth
-    public class EnvironmentCloth : ResourceSystemBlock
+    public class EnvironmentCloth : PgBase64
     {
         public override long BlockLength => 0x80;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
         public ulong InstanceTuningPointer;
         public ulong DrawablePointer;
         public uint Unknown_20h; // 0x00000000
@@ -68,18 +64,16 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public ClothInstanceTuning InstanceTuning;
         public FragDrawable Drawable;
         public ClothController Controller;
-        public ResourceSimpleArray<uint_r> pxxxxx_2data;
+        public SimpleArray<uint> pxxxxx_2data;
 
         /// <summary>
         /// Reads the data-block from a stream.
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.InstanceTuningPointer = reader.ReadUInt64();
             this.DrawablePointer = reader.ReadUInt64();
             this.Unknown_20h = reader.ReadUInt32();
@@ -116,7 +110,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.Controller = reader.ReadBlockAt<ClothController>(
                 this.ControllerPointer // offset
             );
-            this.pxxxxx_2data = reader.ReadBlockAt<ResourceSimpleArray<uint_r>>(
+            this.pxxxxx_2data = reader.ReadBlockAt<SimpleArray<uint>>(
                 this.pxxxxx_2, // offset
                 this.cntxx51a
             );
@@ -127,6 +121,8 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
             this.InstanceTuningPointer = (ulong)(this.InstanceTuning != null ? this.InstanceTuning.BlockPosition : 0);
             this.DrawablePointer = (ulong)(this.Drawable != null ? this.Drawable.BlockPosition : 0);
@@ -136,10 +132,6 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.cntxx51b = (ushort)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Count : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.InstanceTuningPointer);
             writer.Write(this.DrawablePointer);
             writer.Write(this.Unknown_20h);
@@ -172,7 +164,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (InstanceTuning != null) list.Add(InstanceTuning);
             if (Drawable != null) list.Add(Drawable);
             if (Controller != null) list.Add(Controller);

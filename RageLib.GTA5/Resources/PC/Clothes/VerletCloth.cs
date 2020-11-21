@@ -24,20 +24,17 @@ using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Bounds;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Clothes
 {
     // pgBase
     // phVerletCloth
-    public class VerletCloth : ResourceSystemBlock
+    public class VerletCloth : PgBase64
     {
         public override long BlockLength => 0x180;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
         public uint Unknown_10h; // 0x00000000
         public uint Unknown_14h; // 0x00000000
         public ulong BoundPointer;
@@ -61,8 +58,8 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public uint Unknown_64h; // 0x00000000
         public uint Unknown_68h; // 0x00000000
         public uint Unknown_6Ch; // 0x00000000
-        public ResourceSimpleList64<RAGE_Vector4> Unknown_70h;
-        public ResourceSimpleList64<RAGE_Vector4> Unknown_80h;
+        public SimpleList64<Vector4> Unknown_70h;
+        public SimpleList64<Vector4> Unknown_80h;
         public uint Unknown_90h; // 0x00000000
         public uint Unknown_94h; // 0x00000000
         public uint Unknown_98h; // 0x00000000
@@ -126,11 +123,9 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.BoundPointer = reader.ReadUInt64();
@@ -154,8 +149,8 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.Unknown_64h = reader.ReadUInt32();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
-            this.Unknown_70h = reader.ReadBlock<ResourceSimpleList64<RAGE_Vector4>>();
-            this.Unknown_80h = reader.ReadBlock<ResourceSimpleList64<RAGE_Vector4>>();
+            this.Unknown_70h = reader.ReadBlock<SimpleList64<Vector4>>();
+            this.Unknown_80h = reader.ReadBlock<SimpleList64<Vector4>>();
             this.Unknown_90h = reader.ReadUInt32();
             this.Unknown_94h = reader.ReadUInt32();
             this.Unknown_98h = reader.ReadUInt32();
@@ -226,16 +221,14 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
             this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.BlockPosition : 0);
             this.BehaviorPointer = (ulong)(this.Behavior != null ? this.Behavior.BlockPosition : 0);
             this.Unknown_140h_Pointer = (ulong)(this.Unknown_140h_Data != null ? this.Unknown_140h_Data.BlockPosition : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.BoundPointer);
@@ -320,7 +313,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (Bound != null) list.Add(Bound);
             if (Behavior != null) list.Add(Behavior);
             if (Unknown_140h_Data != null) list.Add(Unknown_140h_Data);

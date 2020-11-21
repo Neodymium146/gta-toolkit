@@ -21,6 +21,7 @@
 */
 
 using RageLib.Resources.Common;
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Clips
@@ -37,16 +38,12 @@ namespace RageLib.Resources.GTA5.PC.Clips
         public ulong AnimationsPointer;
         public uint Unknown_20h; // 0x00000101
         public uint Unknown_24h; // 0x00000000
-        public ulong ClipsPointer;
-        public ushort ClipEntriesCount;
-        public ushort ClipEntriesTotalCount;
-        public uint Unknown_34h; // 0x01000000
+        public ResourceHashMap<Clip> Clips;
         public uint Unknown_38h; // 0x00000000
         public uint Unknown_3Ch; // 0x00000000
 
         // reference data
         public AnimationMap Animations;
-        public ResourcePointerArray64<ClipMapEntry> Clips;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -61,20 +58,13 @@ namespace RageLib.Resources.GTA5.PC.Clips
             this.AnimationsPointer = reader.ReadUInt64();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
-            this.ClipsPointer = reader.ReadUInt64();
-            this.ClipEntriesCount = reader.ReadUInt16();
-            this.ClipEntriesTotalCount = reader.ReadUInt16();
-            this.Unknown_34h = reader.ReadUInt32();
+            this.Clips = reader.ReadBlock<ResourceHashMap<Clip>>();
             this.Unknown_38h = reader.ReadUInt32();
             this.Unknown_3Ch = reader.ReadUInt32();
 
             // read reference data
             this.Animations = reader.ReadBlockAt<AnimationMap>(
                 this.AnimationsPointer // offset
-            );
-            this.Clips = reader.ReadBlockAt<ResourcePointerArray64<ClipMapEntry>>(
-                this.ClipsPointer, // offset
-                this.ClipEntriesCount
             );
         }
 
@@ -87,39 +77,6 @@ namespace RageLib.Resources.GTA5.PC.Clips
 
             // update structure data
             this.AnimationsPointer = (ulong)(this.Animations != null ? this.Animations.BlockPosition : 0);
-            this.ClipsPointer = (ulong)(this.Clips != null ? this.Clips.BlockPosition : 0);
-            this.ClipEntriesCount = (ushort)(this.Clips != null ? this.Clips.Count : 0);
-            if (this.Clips != null)
-            {
-                int i = 0;
-                foreach (var x in this.Clips.data_items)
-                {
-                    if (x != null)
-                    {
-                        var y = x;
-                        do
-                        {
-                            if (y.Clip != null)
-                            {
-                                i++;
-                            }
-                            if (y.Next != null)
-                            {
-                                y = y.Next;
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        } while (true);
-                    }
-                }
-                this.ClipEntriesTotalCount = (ushort)i;
-            }
-            else
-            {
-                this.ClipEntriesTotalCount = 0;
-            }
 
             // write structure data
             writer.Write(this.Unknown_10h);
@@ -127,10 +84,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
             writer.Write(this.AnimationsPointer);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
-            writer.Write(this.ClipsPointer);
-            writer.Write(this.ClipEntriesCount);
-            writer.Write(this.ClipEntriesTotalCount);
-            writer.Write(this.Unknown_34h);
+            writer.WriteBlock(this.Clips);
             writer.Write(this.Unknown_38h);
             writer.Write(this.Unknown_3Ch);
         }
@@ -142,8 +96,14 @@ namespace RageLib.Resources.GTA5.PC.Clips
         {
             var list = new List<IResourceBlock>(base.GetReferences());
             if (Animations != null) list.Add(Animations);
-            if (Clips != null) list.Add(Clips);
             return list.ToArray();
+        }
+
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x28, Clips)
+            };
         }
     }
 }

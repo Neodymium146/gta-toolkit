@@ -23,10 +23,11 @@
 using RageLib.Hash;
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Textures;
+using RageLib.ResourceWrappers;
 using System;
 using System.Collections.Generic;
 
-namespace RageLib.ResourceWrappers.GTA5.PC.Textures
+namespace RageLib.GTA5.ResourceWrappers.PC.Textures
 {
     /// <summary>
     /// Represents a wrapper for a GTA5 PC texture dictionary.
@@ -85,11 +86,10 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
                 theHashList.Sort();
 
                 var bak = textureDictionary.Values.Entries;
-                textureDictionary.Hashes.Entries = new ResourceSimpleArray<uint_r>();
+                textureDictionary.Hashes.Entries = new SimpleArray<uint>(theHashList.ToArray());
                 textureDictionary.Values.Entries = new ResourcePointerArray64<TextureDX11>();
                 foreach (uint x in theHashList)
                 {
-                    textureDictionary.Hashes.Entries.Add((uint_r)x);
                     foreach (var g in bak)
                     {
                         uint tx = Jenkins.Hash((string)g.Name);
@@ -98,7 +98,7 @@ namespace RageLib.ResourceWrappers.GTA5.PC.Textures
                     }
                 }
 
-                //textureDictionary.Hashes = new ResourceSimpleArray<uint_r>();            
+                //textureDictionary.Hashes = new SimpleArray<uint>();            
                 //foreach (var texture in textureDictionary.Textures)
                 //{
                 //    uint hash = Jenkins.Hash((string)texture.Name);

@@ -104,22 +104,29 @@ namespace RageLib.Resources
 
             public ResourceBuilderBlockSet(IList<IResourceBlock> blocks, bool sys)
             {
+                if (blocks.Count < 1)
+                    return;
+
                 IsSystemSet = sys;
-                if (sys && (blocks.Count > 0))
+
+                int indexStart = 0;
+
+                if (IsSystemSet)
                 {
                     RootBlock = blocks[0];
+                    indexStart = 1;
                 }
-                var list = new List<IResourceBlock>();
-                int start = sys ? 1 : 0;
-                for (int i = start; i < blocks.Count; i++)
+
+                //var list = blocks.GetRange(indexStart, blocks.Count - indexStart);
+                var list = new List<IResourceBlock>(blocks.Count - indexStart);
+                for (int i = indexStart; i < blocks.Count; i++)
                 {
                     list.Add(blocks[i]);
                 }
+
                 list.Sort((a, b) => b.BlockLength.CompareTo(a.BlockLength));
-                foreach (var bb in list)
-                {
-                    var ln = BlockList.AddLast(bb);
-                }
+
+                BlockList = new LinkedList<IResourceBlock>(list);
             }
 
             private LinkedListNode<IResourceBlock> FindBestBlock(long maxSize)
@@ -149,11 +156,11 @@ namespace RageLib.Resources
             return ((ALIGN_SIZE - (p % ALIGN_SIZE)) % ALIGN_SIZE);
         }
 
-        public static void UpdateBlocks(IResourceBlock rootBlock)
+        public static void RebuildBlocks(IResourceBlock rootBlock)
         {
             var processed = new HashSet<IResourceBlock>();
 
-            void UpdateChildren(IResourceBlock block)
+            void RebuildChildren(IResourceBlock block)
             {
                 if (block is IResourceSystemBlock sblock)
                 {
@@ -162,21 +169,21 @@ namespace RageLib.Resources
                         var references = sblock.GetReferences();
                         foreach (var reference in references)
                         {
-                            UpdateChildren(reference);
+                            RebuildChildren(reference);
                         }
 
                         var parts = sblock.GetParts();
                         foreach (var part in parts)
                         {
-                            UpdateChildren(part.Item2);
+                            RebuildChildren(part.Item2);
                         }
 
-                        sblock.Update();
+                        sblock.Rebuild();
                     }
                 }
             }
 
-            UpdateChildren(rootBlock);
+            RebuildChildren(rootBlock);
         }
 
         public static void GetBlocks(IResourceBlock rootBlock, out IList<IResourceBlock> sys, out IList<IResourceBlock> gfx)
@@ -225,18 +232,19 @@ namespace RageLib.Resources
             gfx = new List<IResourceBlock>(graphicBlocks);
         }
 
-        public static void AssignPositions(IList<IResourceBlock> blocks, uint basePosition, out ResourceChunkFlags pageFlags, uint usedPages)
+        public static void AssignPositions(IList<IResourceBlock> blocks, uint basePosition, out ResourceChunkFlags flags, uint usedPages)
         {
+            flags = new ResourceChunkFlags();
+
             if (blocks.Count <= 0)
             {
-                pageFlags = new ResourceChunkFlags();
                 return;
             }
 
             long largestBlockSize = 0; // find largest structure
             long startPageSize = BASE_SIZE;// 0x2000; // find starting page size
             long totalBlockSize = 0;
-            
+
             foreach (var block in blocks)
             {
                 // Get size of all blocks padded
@@ -258,28 +266,27 @@ namespace RageLib.Resources
             }
 
             var pageSizeMult = 1;
-            int pageCount;
             long currentPosition;
 
             var sys = (basePosition == 0x50000000);
+            bool invalidLayout;
 
             do
             {
+                invalidLayout = false;
                 var blockset = new ResourceBuilderBlockSet(blocks, sys);
                 var rootblock = blockset.RootBlock;
                 currentPosition = 0L;
                 var currentPageSize = startPageSize;
                 var currentPageStart = 0L;
                 var currentPageSpace = startPageSize;
-                var currentRemainder = totalBlockSize;
-                pageCount = 1;
-                var pageCounts = new uint[9];
-                var pageCountIndex = 0;
+                long currentRemainder = totalBlockSize;
+                var bucketIndex = 0;
                 var targetPageSize = Math.Max(65536 * pageSizeMult, startPageSize >> (sys ? 5 : 2));
                 var minPageSize = Math.Max(512 * pageSizeMult, Math.Min(targetPageSize, startPageSize) >> 4);
                 var baseShift = 0u;
                 var baseSize = 512;
-                
+
                 while (baseSize < minPageSize)
                 {
                     baseShift++;
@@ -287,16 +294,19 @@ namespace RageLib.Resources
                     if (baseShift >= 0xF) break;
                 }
 
+                flags = new ResourceChunkFlags(new uint[9], baseShift);
+
                 var baseSizeMax = baseSize << 8;
                 var baseSizeMaxTest = startPageSize;
-                
+
                 while (baseSizeMaxTest < baseSizeMax)
                 {
-                    pageCountIndex++;
+                    bucketIndex++;
                     baseSizeMaxTest *= 2;
                 }
 
-                pageCounts[pageCountIndex] = 1;
+                if (!flags.TryAddChunk(bucketIndex))
+                    break;
 
                 while (blockset.Count > 0)
                 {
@@ -313,21 +323,26 @@ namespace RageLib.Resources
                         // Get the biggest block
                         block = blockset.TakeBestBlock(long.MaxValue);
                         var blockLength = block?.BlockLength ?? 0;
-                        
+
                         // Get the smallest page which can contain the block
                         while (blockLength <= (currentPageSize >> 1))
                         {
                             if (currentPageSize <= minPageSize) break;
-                            if (pageCountIndex >= 8) break;
+                            if (bucketIndex >= 8) break;
                             if ((currentPageSize <= targetPageSize) && (currentRemainder >= (currentPageSize - minPageSize))) break;
 
                             currentPageSize = currentPageSize >> 1;
-                            pageCountIndex++;
+                            bucketIndex++;
                         }
 
                         currentPageSpace = currentPageSize;
-                        pageCounts[pageCountIndex]++;
-                        pageCount++;
+
+                        // Try adding another chunk to this bucket
+                        if (!flags.TryAddChunk(bucketIndex))
+                        {
+                            invalidLayout = true;
+                            break;
+                        }
                     }
 
                     //add this block to the current page.
@@ -340,12 +355,10 @@ namespace RageLib.Resources
                     currentRemainder -= usedspace;
                 }
 
-                pageFlags = new ResourceChunkFlags(pageCounts, baseShift);
-
                 startPageSize *= 2;
                 pageSizeMult *= 2;
             }
-            while ((pageCount != pageFlags.Count) || (pageFlags.Size < currentPosition) || (pageFlags.Count + usedPages > 128));
+            while ((invalidLayout) || (flags.Size < totalBlockSize) || (flags.Count + usedPages > 128));
 
         }
     }

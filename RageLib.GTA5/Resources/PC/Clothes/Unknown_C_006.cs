@@ -22,6 +22,7 @@
 
 using RageLib.Resources.Common;
 using System;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Clothes
 {
@@ -50,16 +51,16 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public uint Unknown_44h; // 0x00000000
         public uint Unknown_48h; // 0x00000000
         public uint Unknown_4Ch; // 0x00000000
-        public ResourceSimpleList64<RAGE_Vector4> Unknown_50h;
-        public ResourceSimpleList64<ushort_r> Unknown_60h;
-        public ResourceSimpleList64<ushort_r> Unknown_70h;
-        public ResourceSimpleList64<ushort_r> Unknown_80h;
-        public ResourceSimpleList64<ushort_r> Unknown_90h;
-        public ResourceSimpleList64<RAGE_Vector4> Unknown_A0h;
-        public ResourceSimpleList64<ushort_r> Unknown_B0h;
-        public ResourceSimpleList64<ushort_r> Unknown_C0h;
-        public ResourceSimpleList64<ushort_r> Unknown_D0h;
-        public ResourceSimpleList64<ushort_r> Unknown_E0h;
+        public SimpleList64<Vector4> Unknown_50h;
+        public SimpleList64<ushort> Unknown_60h;
+        public SimpleList64<ushort> Unknown_70h;
+        public SimpleList64<ushort> Unknown_80h;
+        public SimpleList64<ushort> Unknown_90h;
+        public SimpleList64<Vector4> Unknown_A0h;
+        public SimpleList64<ushort> Unknown_B0h;
+        public SimpleList64<ushort> Unknown_C0h;
+        public SimpleList64<ushort> Unknown_D0h;
+        public SimpleList64<ushort> Unknown_E0h;
         public uint Unknown_F0h; // 0x00000000
         public uint Unknown_F4h; // 0x00000000
         public uint Unknown_F8h; // 0x00000000
@@ -84,8 +85,8 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public uint Unknown_144h; // 0x00000000
         public uint Unknown_148h; // 0x00000000
         public uint Unknown_14Ch; // 0x00000000
-        public ResourceSimpleList64<ushort_r> Unknown_150h;
-        public ResourceSimpleList64<ushort_r> Unknown_160h;
+        public SimpleList64<ushort> Unknown_150h;
+        public SimpleList64<ushort> Unknown_160h;
         public uint Unknown_170h; // 0x00000000
         public uint Unknown_174h; // 0x00000000
         public uint Unknown_178h; // 0x00000000
@@ -121,16 +122,16 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.Unknown_44h = reader.ReadUInt32();
             this.Unknown_48h = reader.ReadUInt32();
             this.Unknown_4Ch = reader.ReadUInt32();
-            this.Unknown_50h = reader.ReadBlock<ResourceSimpleList64<RAGE_Vector4>>();
-            this.Unknown_60h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
-            this.Unknown_70h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
-            this.Unknown_80h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
-            this.Unknown_90h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
-            this.Unknown_A0h = reader.ReadBlock<ResourceSimpleList64<RAGE_Vector4>>();
-            this.Unknown_B0h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
-            this.Unknown_C0h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
-            this.Unknown_D0h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
-            this.Unknown_E0h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
+            this.Unknown_50h = reader.ReadBlock<SimpleList64<Vector4>>();
+            this.Unknown_60h = reader.ReadBlock<SimpleList64<ushort>>();
+            this.Unknown_70h = reader.ReadBlock<SimpleList64<ushort>>();
+            this.Unknown_80h = reader.ReadBlock<SimpleList64<ushort>>();
+            this.Unknown_90h = reader.ReadBlock<SimpleList64<ushort>>();
+            this.Unknown_A0h = reader.ReadBlock<SimpleList64<Vector4>>();
+            this.Unknown_B0h = reader.ReadBlock<SimpleList64<ushort>>();
+            this.Unknown_C0h = reader.ReadBlock<SimpleList64<ushort>>();
+            this.Unknown_D0h = reader.ReadBlock<SimpleList64<ushort>>();
+            this.Unknown_E0h = reader.ReadBlock<SimpleList64<ushort>>();
             this.Unknown_F0h = reader.ReadUInt32();
             this.Unknown_F4h = reader.ReadUInt32();
             this.Unknown_F8h = reader.ReadUInt32();
@@ -155,8 +156,8 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.Unknown_144h = reader.ReadUInt32();
             this.Unknown_148h = reader.ReadUInt32();
             this.Unknown_14Ch = reader.ReadUInt32();
-            this.Unknown_150h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
-            this.Unknown_160h = reader.ReadBlock<ResourceSimpleList64<ushort_r>>();
+            this.Unknown_150h = reader.ReadBlock<SimpleList64<ushort>>();
+            this.Unknown_160h = reader.ReadBlock<SimpleList64<ushort>>();
             this.Unknown_170h = reader.ReadUInt32();
             this.Unknown_174h = reader.ReadUInt32();
             this.Unknown_178h = reader.ReadUInt32();

@@ -30,19 +30,15 @@ namespace RageLib.Resources.GTA5.PC.Clothes
     // pgBase
     // clothBase (TODO)
     // characterCloth
-    public class CharacterCloth : ResourceSystemBlock
+    public class CharacterCloth : PgBase64
     {
         public override long BlockLength => 0xD0;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
         public ResourceSimpleList64<Unknown_C_001> Unknown_10h;
         public ulong ControllerPointer;
         public ulong BoundPointer;
-        public ResourceSimpleList64<uint_r> Unknown_30h;
+        public SimpleList64<uint> Unknown_30h;
         public uint Unknown_40h; // 0x00000000
         public uint Unknown_44h; // 0x00000000
         public uint Unknown_48h; // 0x00000000
@@ -63,7 +59,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public uint Unknown_84h; // 0x00000000
         public uint Unknown_88h; // 0x00000000
         public uint Unknown_8Ch; // 0x00000000
-        public ResourceSimpleList64<uint_r> Unknown_90h;
+        public SimpleList64<uint> Unknown_90h;
         public uint Unknown_A0h; // 0x00000000
         public uint Unknown_A4h; // 0x00000000
         public uint Unknown_A8h; // 0x00000000
@@ -86,15 +82,13 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_001>>();
             this.ControllerPointer = reader.ReadUInt64();
             this.BoundPointer = reader.ReadUInt64();
-            this.Unknown_30h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_30h = reader.ReadBlock<SimpleList64<uint>>();
             this.Unknown_40h = reader.ReadUInt32();
             this.Unknown_44h = reader.ReadUInt32();
             this.Unknown_48h = reader.ReadUInt32();
@@ -115,7 +109,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.Unknown_84h = reader.ReadUInt32();
             this.Unknown_88h = reader.ReadUInt32();
             this.Unknown_8Ch = reader.ReadUInt32();
-            this.Unknown_90h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_90h = reader.ReadBlock<SimpleList64<uint>>();
             this.Unknown_A0h = reader.ReadUInt32();
             this.Unknown_A4h = reader.ReadUInt32();
             this.Unknown_A8h = reader.ReadUInt32();
@@ -143,15 +137,13 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
             this.ControllerPointer = (ulong)(this.Controller != null ? this.Controller.BlockPosition : 0);
             this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.BlockPosition : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.WriteBlock(this.Unknown_10h);
             writer.Write(this.ControllerPointer);
             writer.Write(this.BoundPointer);
@@ -196,7 +188,7 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (Controller != null) list.Add(Controller);
             if (Bound != null) list.Add(Bound);
             return list.ToArray();

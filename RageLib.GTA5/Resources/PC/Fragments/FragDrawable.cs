@@ -25,6 +25,7 @@ using RageLib.Resources.GTA5.PC.Bounds;
 using RageLib.Resources.GTA5.PC.Drawables;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
 {
@@ -35,10 +36,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
         // structure data
         public ulong Unknown_A8h; // 0x0000000000000000
-        public RAGE_Matrix4 Unknown_B0h;      
+        public Matrix4x4 Unknown_B0h;      
         public ulong BoundPointer;
-        public ResourceSimpleList64<ulong_r> Unknown_F8h_Data;
-        public ResourceSimpleList64<RAGE_Matrix4> Unknown_108h_Data;
+        public SimpleList64<ulong> Unknown_F8h_Data;
+        public SimpleList64<Matrix4x4> Unknown_108h_Data;
         public ulong Unknown_118h; // 0x0000000000000000
         public ulong Unknown_120h; // 0x0000000000000000
         public ulong Unknown_128h; // 0x0000000000000000
@@ -60,10 +61,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
             // read structure data
             this.Unknown_A8h = reader.ReadUInt64();
-            this.Unknown_B0h = reader.ReadBlock<RAGE_Matrix4>();
+            this.Unknown_B0h = reader.ReadMatrix4x4();
             this.BoundPointer = reader.ReadUInt64();
-            this.Unknown_F8h_Data = reader.ReadBlock<ResourceSimpleList64<ulong_r>>();
-            this.Unknown_108h_Data = reader.ReadBlock<ResourceSimpleList64<RAGE_Matrix4>>();
+            this.Unknown_F8h_Data = reader.ReadBlock<SimpleList64<ulong>>();
+            this.Unknown_108h_Data = reader.ReadBlock<SimpleList64<Matrix4x4>>();
             this.Unknown_118h = reader.ReadUInt64();
             this.Unknown_120h = reader.ReadUInt64();
             this.Unknown_128h = reader.ReadUInt64();
@@ -94,7 +95,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
 
             // write structure data
             writer.Write(this.Unknown_A8h);
-            writer.WriteBlock(this.Unknown_B0h);
+            writer.Write(this.Unknown_B0h);
             writer.Write(this.BoundPointer);
             writer.WriteBlock(this.Unknown_F8h_Data);
             writer.WriteBlock(this.Unknown_108h_Data);
@@ -121,11 +122,8 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             var list = new List<Tuple<long, IResourceBlock>>(base.GetParts());
-            
-            list.AddRange(new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0xF8, Unknown_F8h_Data),
-                new Tuple<long, IResourceBlock>(0x108, Unknown_108h_Data),
-            });
+            list.Add(new Tuple<long, IResourceBlock>(0xF8, Unknown_F8h_Data));
+            list.Add(new Tuple<long, IResourceBlock>(0x108, Unknown_108h_Data));
             return list.ToArray();
         }
     }

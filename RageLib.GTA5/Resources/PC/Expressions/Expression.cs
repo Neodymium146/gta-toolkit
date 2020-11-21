@@ -28,25 +28,22 @@ namespace RageLib.Resources.GTA5.PC.Expressions
 {
     // pgBase
     // crExpressions
-    public class Expression : ResourceSystemBlock
+    public class Expression : PgBase64
     {
         public override long BlockLength => 0x90;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
         public uint Unknown_10h;
         public uint Unknown_14h;
         public uint Unknown_18h;
         public uint Unknown_1Ch;
         public ResourcePointerList64<Unknown_E_001> Unknown_20h;
-        public ResourceSimpleList64<uint_r> Unknown_30h;
+        public SimpleList64<uint> Unknown_30h;
         public ResourceSimpleList64<Unknown_E_002> Unknown_40h;
-        public ResourceSimpleList64<uint_r> Unknown_50h;
+        public SimpleList64<uint> Unknown_50h;
         public ulong NamePointer;
-        public uint Unknown_68h; // short, short, (name len, name len+1)
+        public ushort NameLength1;
+        public ushort NameLength2;
         public uint Unknown_6Ch;
         public uint Unknown_70h;
         public uint Unknown_74h;
@@ -66,21 +63,20 @@ namespace RageLib.Resources.GTA5.PC.Expressions
         /// </summary>
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
+            base.Read(reader, parameters);
+
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.Unknown_20h = reader.ReadBlock<ResourcePointerList64<Unknown_E_001>>();
-            this.Unknown_30h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_30h = reader.ReadBlock<SimpleList64<uint>>();
             this.Unknown_40h = reader.ReadBlock<ResourceSimpleList64<Unknown_E_002>>();
-            this.Unknown_50h = reader.ReadBlock<ResourceSimpleList64<uint_r>>();
+            this.Unknown_50h = reader.ReadBlock<SimpleList64<uint>>();
             this.NamePointer = reader.ReadUInt64();
-            this.Unknown_68h = reader.ReadUInt32();
+            this.NameLength1 = reader.ReadUInt16();
+            this.NameLength2 = reader.ReadUInt16();
             this.Unknown_6Ch = reader.ReadUInt32();
             this.Unknown_70h = reader.ReadUInt32();
             this.Unknown_74h = reader.ReadUInt32();
@@ -103,14 +99,12 @@ namespace RageLib.Resources.GTA5.PC.Expressions
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
+            base.Write(writer, parameters);
+
             // update structure data
             this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
 
             // write structure data
-            writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
@@ -120,7 +114,8 @@ namespace RageLib.Resources.GTA5.PC.Expressions
             writer.WriteBlock(this.Unknown_40h);
             writer.WriteBlock(this.Unknown_50h);
             writer.Write(this.NamePointer);
-            writer.Write(this.Unknown_68h);
+            writer.Write(this.NameLength1);
+            writer.Write(this.NameLength2);
             writer.Write(this.Unknown_6Ch);
             writer.Write(this.Unknown_70h);
             writer.Write(this.Unknown_74h);
@@ -138,7 +133,7 @@ namespace RageLib.Resources.GTA5.PC.Expressions
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
+            var list = new List<IResourceBlock>(base.GetReferences());
             if (Name != null) list.Add(Name);
             return list.ToArray();
         }

@@ -6,10 +6,8 @@
     <AssemblyName>RageLib</AssemblyName>
   </PropertyGroup>
 
-  <!--
   <ItemGroup>
     <ProjectReference Include="..\Libraries\DirectXTex\DirectXTex.vcxproj" />
-  </ItemGroup> 
-  -->
+  </ItemGroup>
 
 </Project>
