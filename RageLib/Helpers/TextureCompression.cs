@@ -147,129 +147,129 @@ namespace RageLib.Compression
         DXGI_FORMAT_FORCE_UINT = 0xffffffff
     }
 
-    //public static class TextureHelper
-    //{
-    //
-    //    public static byte[] GetRgbaImage(ITexture model, int mipMapLevel = 0)
-    //    {
-    //
-    //        var x = model.GetTextureData(mipMapLevel);
-    //        switch (model.Format)
-    //        {
-    //            // compressed formats...
-    //            case TextureFormat.D3DFMT_DXT1:
-    //                return TextureCompressionHelper.DecompressBC1(x, model.Width, model.Height);
-    //
-    //            case TextureFormat.D3DFMT_DXT3:
-    //                {
-    //                    return TextureCompressionHelper.DecompressBC2(x, model.Width, model.Height);
-    //                }
-    //            case TextureFormat.D3DFMT_DXT5:
-    //                {
-    //                    return TextureCompressionHelper.DecompressBC3(x, model.Width, model.Height);
-    //                }
-    //            case TextureFormat.D3DFMT_ATI1:
-    //                {
-    //                    return TextureCompressionHelper.DecompressBC4(x, model.Width, model.Height);
-    //                }
-    //            case TextureFormat.D3DFMT_ATI2:
-    //                {
-    //                    return TextureCompressionHelper.DecompressBC5(x, model.Width, model.Height);
-    //                }
-    //            case TextureFormat.D3DFMT_BC7:
-    //                {
-    //                    return TextureCompressionHelper.DecompressBC7(x, model.Width, model.Height);
-    //                }
-    //
-    //            // uncompressed formats...
-    //            case TextureFormat.D3DFMT_A8:
-    //                {
-    //                    return TextureConvert.MakeRGBAFromA8(x, model.Width, model.Height);
-    //                }
-    //            case TextureFormat.D3DFMT_L8:
-    //                {
-    //                    return TextureConvert.MakeARGBFromL8(x, model.Width, model.Height);
-    //                }
-    //            case TextureFormat.D3DFMT_A1R5G5B5:
-    //                {
-    //                    return TextureConvert.MakeARGBFromA1R5G5B5(x, model.Width, model.Height);
-    //                }
-    //            case TextureFormat.D3DFMT_A8B8G8R8:
-    //                {
-    //                    return TextureConvert.MakeRGBAFromA8B8G8R8(x, model.Width, model.Height);
-    //                }
-    //            case TextureFormat.D3DFMT_A8R8G8B8:
-    //                {
-    //                    return TextureConvert.MakeRGBAFromA8R8G8B8(x, model.Width, model.Height);
-    //                }
-    //
-    //            default:
-    //                throw new System.Exception("unknown format");
-    //        }
-    //    }
-    //
-    //}
-    //
-    //public static class TextureCompressionHelper
-    //{
-    //    public static byte[] DecompressBC1(byte[] data, int width, int height)
-    //    {
-    //        return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM);
-    //    }
-    //
-    //    public static byte[] DecompressBC2(byte[] data, int width, int height)
-    //    {
-    //        return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM);
-    //    }
-    //
-    //    public static byte[] DecompressBC3(byte[] data, int width, int height)
-    //    {
-    //        return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM);
-    //    }
-    //
-    //    public static byte[] DecompressBC4(byte[] data, int width, int height)
-    //    {
-    //        return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC4_UNORM);
-    //    }
-    //
-    //    public static byte[] DecompressBC5(byte[] data, int width, int height)
-    //    {
-    //        return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM);
-    //    }
-    //
-    //    public static byte[] DecompressBC7(byte[] data, int width, int height)
-    //    {
-    //        return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM);
-    //    }
-    //
-    //    public static byte[] CompressBC1(byte[] data, int width, int height)
-    //    {
-    //        return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM);
-    //    }
-    //
-    //    public static byte[] CompressBC2(byte[] data, int width, int height)
-    //    {
-    //        return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM);
-    //    }
-    //
-    //    public static byte[] CompressBC3(byte[] data, int width, int height)
-    //    {
-    //        return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM);
-    //    }
-    //
-    //    public static byte[] CompressBC4(byte[] data, int width, int height)
-    //    {
-    //        return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC4_UNORM);
-    //    }
-    //
-    //    public static byte[] CompressBC5(byte[] data, int width, int height)
-    //    {
-    //        return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM);
-    //    }
-    //
-    //    public static byte[] CompressBC7(byte[] data, int width, int height)
-    //    {
-    //        return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM);
-    //    }
-    //}
+    public static class TextureHelper
+    {
+
+        public static byte[] GetRgbaImage(ITexture model, int mipMapLevel = 0)
+        {
+
+            var x = model.GetTextureData(mipMapLevel);
+            switch (model.Format)
+            {
+                // compressed formats...
+                case TextureFormat.D3DFMT_DXT1:
+                    return TextureCompressionHelper.DecompressBC1(x, model.Width, model.Height);
+
+                case TextureFormat.D3DFMT_DXT3:
+                    {
+                        return TextureCompressionHelper.DecompressBC2(x, model.Width, model.Height);
+                    }
+                case TextureFormat.D3DFMT_DXT5:
+                    {
+                        return TextureCompressionHelper.DecompressBC3(x, model.Width, model.Height);
+                    }
+                case TextureFormat.D3DFMT_ATI1:
+                    {
+                        return TextureCompressionHelper.DecompressBC4(x, model.Width, model.Height);
+                    }
+                case TextureFormat.D3DFMT_ATI2:
+                    {
+                        return TextureCompressionHelper.DecompressBC5(x, model.Width, model.Height);
+                    }
+                case TextureFormat.D3DFMT_BC7:
+                    {
+                        return TextureCompressionHelper.DecompressBC7(x, model.Width, model.Height);
+                    }
+
+                // uncompressed formats...
+                case TextureFormat.D3DFMT_A8:
+                    {
+                        return TextureConvert.MakeRGBAFromA8(x, model.Width, model.Height);
+                    }
+                case TextureFormat.D3DFMT_L8:
+                    {
+                        return TextureConvert.MakeARGBFromL8(x, model.Width, model.Height);
+                    }
+                case TextureFormat.D3DFMT_A1R5G5B5:
+                    {
+                        return TextureConvert.MakeARGBFromA1R5G5B5(x, model.Width, model.Height);
+                    }
+                case TextureFormat.D3DFMT_A8B8G8R8:
+                    {
+                        return TextureConvert.MakeRGBAFromA8B8G8R8(x, model.Width, model.Height);
+                    }
+                case TextureFormat.D3DFMT_A8R8G8B8:
+                    {
+                        return TextureConvert.MakeRGBAFromA8R8G8B8(x, model.Width, model.Height);
+                    }
+
+                default:
+                    throw new System.Exception("unknown format");
+            }
+        }
+
+    }
+
+    public static class TextureCompressionHelper
+    {
+        public static byte[] DecompressBC1(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM);
+        }
+
+        public static byte[] DecompressBC2(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM);
+        }
+
+        public static byte[] DecompressBC3(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM);
+        }
+
+        public static byte[] DecompressBC4(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC4_UNORM);
+        }
+
+        public static byte[] DecompressBC5(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM);
+        }
+
+        public static byte[] DecompressBC7(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Decompress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM);
+        }
+
+        public static byte[] CompressBC1(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM);
+        }
+
+        public static byte[] CompressBC2(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM);
+        }
+
+        public static byte[] CompressBC3(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM);
+        }
+
+        public static byte[] CompressBC4(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC4_UNORM);
+        }
+
+        public static byte[] CompressBC5(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM);
+        }
+
+        public static byte[] CompressBC7(byte[] data, int width, int height)
+        {
+            return DirectXTex.ImageCompressor.Compress(data, width, height, (int)DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM);
+        }
+    }
 }
