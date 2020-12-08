@@ -41,22 +41,22 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public uint Unknown_14h; // 0x00000000
         public ulong NamePointer;
         public ulong BoundPointer;
-        public uint Unknown_28h; // 0x00000001
-        public uint Unknown_2Ch; // 0xFFFFFFFF
-        public uint Unknown_30h; // 0x00010000
+        public uint TypeFlags; // 0x00000001
+        public uint IncludeFlags; // 0xFFFFFFFF
+        public uint PropertyFlags; // 0x00010000
         public uint Unknown_34h; // 0x00000000
         public uint Unknown_38h; // 0x00000000
         public uint Unknown_3Ch; // 0x00000000
-        public float Unknown_40h;
-        public float Unknown_44h;
+        public float Mass;
+        public float InvMass;
         public float Unknown_48h; // 1.0f
-        public float Unknown_4Ch; // 150.0f
-        public float Unknown_50h; // 6.2831855f = 2*pi
+        public float MaxSpeed; // 150.0f
+        public float MaxAngSpeed; // 6.2831855f = 2*pi
         public float Unknown_54h; // 1.0f
         public uint Unknown_58h; // 0x00000000
         public uint Unknown_5Ch; // 0x00000000
-        public Vector4 Unknown_60h;
-        public Vector4 Unknown_70h;
+        public Vector4 AngInertia;
+        public Vector4 InvAngInertia;
         public Vector4 Unknown_80h; // 0.0 0.0 0.0 NaN
         public Vector4 Unknown_90h; // 0.0 0.0 0.0 NaN
         public Vector4 Unknown_A0h; // 0.0 0.0 0.0 NaN
@@ -80,22 +80,22 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_14h = reader.ReadUInt32();
             this.NamePointer = reader.ReadUInt64();
             this.BoundPointer = reader.ReadUInt64();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.Unknown_30h = reader.ReadUInt32();
+            this.TypeFlags = reader.ReadUInt32();
+            this.IncludeFlags = reader.ReadUInt32();
+            this.PropertyFlags = reader.ReadUInt32();
             this.Unknown_34h = reader.ReadUInt32();
             this.Unknown_38h = reader.ReadUInt32();
             this.Unknown_3Ch = reader.ReadUInt32();
-            this.Unknown_40h = reader.ReadSingle();
-            this.Unknown_44h = reader.ReadSingle();
+            this.Mass = reader.ReadSingle();
+            this.InvMass = reader.ReadSingle();
             this.Unknown_48h = reader.ReadSingle();
-            this.Unknown_4Ch = reader.ReadSingle();
-            this.Unknown_50h = reader.ReadSingle();
+            this.MaxSpeed = reader.ReadSingle();
+            this.MaxAngSpeed = reader.ReadSingle();
             this.Unknown_54h = reader.ReadSingle();
             this.Unknown_58h = reader.ReadUInt32();
             this.Unknown_5Ch = reader.ReadUInt32();
-            this.Unknown_60h = reader.ReadVector4();
-            this.Unknown_70h = reader.ReadVector4();
+            this.AngInertia = reader.ReadVector4();
+            this.InvAngInertia = reader.ReadVector4();
             this.Unknown_80h = reader.ReadVector4();
             this.Unknown_90h = reader.ReadVector4();
             this.Unknown_A0h = reader.ReadVector4();
@@ -128,22 +128,22 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_14h);
             writer.Write(this.NamePointer);
             writer.Write(this.BoundPointer);
-            writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
-            writer.Write(this.Unknown_30h);
+            writer.Write(this.TypeFlags);
+            writer.Write(this.IncludeFlags);
+            writer.Write(this.PropertyFlags);
             writer.Write(this.Unknown_34h);
             writer.Write(this.Unknown_38h);
             writer.Write(this.Unknown_3Ch);
-            writer.Write(this.Unknown_40h);
-            writer.Write(this.Unknown_44h);
+            writer.Write(this.Mass);
+            writer.Write(this.InvMass);
             writer.Write(this.Unknown_48h);
-            writer.Write(this.Unknown_4Ch);
-            writer.Write(this.Unknown_50h);
+            writer.Write(this.MaxSpeed);
+            writer.Write(this.MaxAngSpeed);
             writer.Write(this.Unknown_54h);
             writer.Write(this.Unknown_58h);
             writer.Write(this.Unknown_5Ch);
-            writer.Write(this.Unknown_60h);
-            writer.Write(this.Unknown_70h);
+            writer.Write(this.AngInertia);
+            writer.Write(this.InvAngInertia);
             writer.Write(this.Unknown_80h);
             writer.Write(this.Unknown_90h);
             writer.Write(this.Unknown_A0h);
