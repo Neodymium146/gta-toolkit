@@ -34,8 +34,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
         // structure data
         public byte Type;
-        public byte Unknown_11h;
-        public ushort Unknown_12h;
+        public byte Flags;
+        public ushort PartIndex;
         public float RadiusAroundCentroid;
         public uint Unknown_18h;
         public uint Unknown_1Ch;
@@ -58,8 +58,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
             // read structure data
             this.Type = reader.ReadByte();
-            this.Unknown_11h = reader.ReadByte();
-            this.Unknown_12h = reader.ReadUInt16();
+            this.Flags = reader.ReadByte();
+            this.PartIndex = reader.ReadUInt16();
             this.RadiusAroundCentroid = reader.ReadSingle();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
@@ -83,8 +83,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
             // write structure data
             writer.Write(this.Type);
-            writer.Write(this.Unknown_11h);
-            writer.Write(this.Unknown_12h);
+            writer.Write(this.Flags);
+            writer.Write(this.PartIndex);
             writer.Write(this.RadiusAroundCentroid);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);

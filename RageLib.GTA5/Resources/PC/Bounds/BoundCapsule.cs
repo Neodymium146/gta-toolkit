@@ -28,7 +28,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override long BlockLength => 0x80;
 
         // structure data
-        public uint Unknown_70h; // 0x00000000
+        public float CapsuleHalfHeight; // 0x00000000
         public uint Unknown_74h; // 0x00000000
         public uint Unknown_78h; // 0x00000000
         public uint Unknown_7Ch; // 0x00000000
@@ -41,7 +41,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_70h = reader.ReadUInt32();
+            this.CapsuleHalfHeight = reader.ReadSingle();
             this.Unknown_74h = reader.ReadUInt32();
             this.Unknown_78h = reader.ReadUInt32();
             this.Unknown_7Ch = reader.ReadUInt32();
@@ -55,7 +55,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             base.Write(writer, parameters);
 
             // write structure data
-            writer.Write(this.Unknown_70h);
+            writer.Write(this.CapsuleHalfHeight);
             writer.Write(this.Unknown_74h);
             writer.Write(this.Unknown_78h);
             writer.Write(this.Unknown_7Ch);

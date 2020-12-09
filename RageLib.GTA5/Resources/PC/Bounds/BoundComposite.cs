@@ -32,24 +32,24 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override long BlockLength => 0xB0;
 
         // structure data
-        public ulong ChildrenPointer;
-        public ulong ChildTransformations1Pointer;
-        public ulong ChildTransformations2Pointer;
+        public ulong BoundsPointer;
+        public ulong CurrentMatricesPointer;
+        public ulong LastMatricesPointer;
         public ulong ChildBoundingBoxesPointer;
-        public ulong ChildFlags1Pointer;
-        public ulong ChildFlags2Pointer;
-        public ushort ChildrenCount1;
-        public ushort ChildrenCount2;
+        public ulong TypeAndIncludeFlagsPointer;
+        public ulong OwnedTypeAndIncludeFlagsPointer;
+        public ushort MaxNumBounds;
+        public ushort NumBounds;
         public uint Unknown_A4h; // 0x00000000
         public ulong BVHPointer;
 
         // reference data
-        public ResourcePointerArray64<Bound> Children;
-        public SimpleArray<Matrix4x4> ChildTransformations1;
-        public SimpleArray<Matrix4x4> ChildTransformations2;
+        public ResourcePointerArray64<Bound> Bounds;
+        public SimpleArray<Matrix4x4> CurrentMatrices;
+        public SimpleArray<Matrix4x4> LastMatrices;
         public ResourceSimpleArray<RAGE_AABB> ChildBoundingBoxes;
-        public SimpleArray<ulong> ChildFlags1;
-        public SimpleArray<ulong> ChildFlags2;
+        public SimpleArray<ulong> TypeAndIncludeFlags;
+        public SimpleArray<ulong> OwnedTypeAndIncludeFlags;
         public BVH BVH;
 
         /// <summary>
@@ -60,41 +60,41 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             base.Read(reader, parameters);
 
             // read structure data
-            this.ChildrenPointer = reader.ReadUInt64();
-            this.ChildTransformations1Pointer = reader.ReadUInt64();
-            this.ChildTransformations2Pointer = reader.ReadUInt64();
+            this.BoundsPointer = reader.ReadUInt64();
+            this.CurrentMatricesPointer = reader.ReadUInt64();
+            this.LastMatricesPointer = reader.ReadUInt64();
             this.ChildBoundingBoxesPointer = reader.ReadUInt64();
-            this.ChildFlags1Pointer = reader.ReadUInt64();
-            this.ChildFlags2Pointer = reader.ReadUInt64();
-            this.ChildrenCount1 = reader.ReadUInt16();
-            this.ChildrenCount2 = reader.ReadUInt16();
+            this.TypeAndIncludeFlagsPointer = reader.ReadUInt64();
+            this.OwnedTypeAndIncludeFlagsPointer = reader.ReadUInt64();
+            this.MaxNumBounds = reader.ReadUInt16();
+            this.NumBounds = reader.ReadUInt16();
             this.Unknown_A4h = reader.ReadUInt32();
             this.BVHPointer = reader.ReadUInt64();
 
             // read reference data
-            this.Children = reader.ReadBlockAt<ResourcePointerArray64<Bound>>(
-                this.ChildrenPointer, // offset
-                this.ChildrenCount1
+            this.Bounds = reader.ReadBlockAt<ResourcePointerArray64<Bound>>(
+                this.BoundsPointer, // offset
+                this.MaxNumBounds
             );
-            this.ChildTransformations1 = reader.ReadBlockAt<SimpleArray<Matrix4x4>>(
-                this.ChildTransformations1Pointer, // offset
-                this.ChildrenCount1
+            this.CurrentMatrices = reader.ReadBlockAt<SimpleArray<Matrix4x4>>(
+                this.CurrentMatricesPointer, // offset
+                this.MaxNumBounds
             );
-            this.ChildTransformations2 = reader.ReadBlockAt<SimpleArray<Matrix4x4>>(
-                this.ChildTransformations2Pointer, // offset
-                this.ChildrenCount1
+            this.LastMatrices = reader.ReadBlockAt<SimpleArray<Matrix4x4>>(
+                this.LastMatricesPointer, // offset
+                this.MaxNumBounds
             );
             this.ChildBoundingBoxes = reader.ReadBlockAt<ResourceSimpleArray<RAGE_AABB>>(
                 this.ChildBoundingBoxesPointer, // offset
-                this.ChildrenCount1
+                this.MaxNumBounds
             );
-            this.ChildFlags1 = reader.ReadBlockAt<SimpleArray<ulong>>(
-                this.ChildFlags1Pointer, // offset
-                this.ChildrenCount1
+            this.TypeAndIncludeFlags = reader.ReadBlockAt<SimpleArray<ulong>>(
+                this.TypeAndIncludeFlagsPointer, // offset
+                this.MaxNumBounds
             );
-            this.ChildFlags2 = reader.ReadBlockAt<SimpleArray<ulong>>(
-                this.ChildFlags2Pointer, // offset
-                this.ChildrenCount1
+            this.OwnedTypeAndIncludeFlags = reader.ReadBlockAt<SimpleArray<ulong>>(
+                this.OwnedTypeAndIncludeFlagsPointer, // offset
+                this.MaxNumBounds
             );
             this.BVH = reader.ReadBlockAt<BVH>(
                 this.BVHPointer // offset
@@ -109,25 +109,25 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             base.Write(writer, parameters);
 
             // update structure data
-            this.ChildrenPointer = (ulong)(this.Children != null ? this.Children.BlockPosition : 0);
-            this.ChildTransformations1Pointer = (ulong)(this.ChildTransformations1 != null ? this.ChildTransformations1.BlockPosition : 0);
-            this.ChildTransformations2Pointer = (ulong)(this.ChildTransformations2 != null ? this.ChildTransformations2.BlockPosition : 0);
+            this.BoundsPointer = (ulong)(this.Bounds != null ? this.Bounds.BlockPosition : 0);
+            this.CurrentMatricesPointer = (ulong)(this.CurrentMatrices != null ? this.CurrentMatrices.BlockPosition : 0);
+            this.LastMatricesPointer = (ulong)(this.LastMatrices != null ? this.LastMatrices.BlockPosition : 0);
             this.ChildBoundingBoxesPointer = (ulong)(this.ChildBoundingBoxes != null ? this.ChildBoundingBoxes.BlockPosition : 0);
-            this.ChildFlags1Pointer = (ulong)(this.ChildFlags1 != null ? this.ChildFlags1.BlockPosition : 0);
-            this.ChildFlags2Pointer = (ulong)(this.ChildFlags2 != null ? this.ChildFlags2.BlockPosition : 0);
-            this.ChildrenCount1 = (ushort)(this.Children != null ? this.Children.Count : 0);
-            this.ChildrenCount2 = (ushort)(this.Children != null ? this.Children.Count : 0);
+            this.TypeAndIncludeFlagsPointer = (ulong)(this.TypeAndIncludeFlags != null ? this.TypeAndIncludeFlags.BlockPosition : 0);
+            this.OwnedTypeAndIncludeFlagsPointer = (ulong)(this.OwnedTypeAndIncludeFlags != null ? this.OwnedTypeAndIncludeFlags.BlockPosition : 0);
+            this.MaxNumBounds = (ushort)(this.Bounds != null ? this.Bounds.Count : 0);
+            this.NumBounds = (ushort)(this.Bounds != null ? this.Bounds.Count : 0);
             this.BVHPointer = (ulong)(this.BVH != null ? this.BVH.BlockPosition : 0);
 
             // write structure data
-            writer.Write(this.ChildrenPointer);
-            writer.Write(this.ChildTransformations1Pointer);
-            writer.Write(this.ChildTransformations2Pointer);
+            writer.Write(this.BoundsPointer);
+            writer.Write(this.CurrentMatricesPointer);
+            writer.Write(this.LastMatricesPointer);
             writer.Write(this.ChildBoundingBoxesPointer);
-            writer.Write(this.ChildFlags1Pointer);
-            writer.Write(this.ChildFlags2Pointer);
-            writer.Write(this.ChildrenCount1);
-            writer.Write(this.ChildrenCount2);
+            writer.Write(this.TypeAndIncludeFlagsPointer);
+            writer.Write(this.OwnedTypeAndIncludeFlagsPointer);
+            writer.Write(this.MaxNumBounds);
+            writer.Write(this.NumBounds);
             writer.Write(this.Unknown_A4h);
             writer.Write(this.BVHPointer);
         }
@@ -138,12 +138,12 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>(base.GetReferences());
-            if (Children != null) list.Add(Children);
-            if (ChildTransformations1 != null) list.Add(ChildTransformations1);
-            if (ChildTransformations2 != null) list.Add(ChildTransformations2);
+            if (Bounds != null) list.Add(Bounds);
+            if (CurrentMatrices != null) list.Add(CurrentMatrices);
+            if (LastMatrices != null) list.Add(LastMatrices);
             if (ChildBoundingBoxes != null) list.Add(ChildBoundingBoxes);
-            if (ChildFlags1 != null) list.Add(ChildFlags1);
-            if (ChildFlags2 != null) list.Add(ChildFlags2);
+            if (TypeAndIncludeFlags != null) list.Add(TypeAndIncludeFlags);
+            if (OwnedTypeAndIncludeFlags != null) list.Add(OwnedTypeAndIncludeFlags);
             if (BVH != null) list.Add(BVH);
             return list.ToArray();
         }
