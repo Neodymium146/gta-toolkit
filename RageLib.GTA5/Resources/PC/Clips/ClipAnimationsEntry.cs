@@ -20,7 +20,7 @@
     THE SOFTWARE.
 */
 
-using System.Collections.Generic;
+using System;
 
 namespace RageLib.Resources.GTA5.PC.Clips
 {
@@ -77,9 +77,7 @@ namespace RageLib.Resources.GTA5.PC.Clips
         /// </summary>
         public override IResourceBlock[] GetReferences()
         {
-            var list = new List<IResourceBlock>();
-            if (Animation != null) list.Add(Animation);
-            return list.ToArray();
+            return Animation == null ? Array.Empty<IResourceBlock>() : new IResourceBlock[] { Animation };
         }
     }
 }
