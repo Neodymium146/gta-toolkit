@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
         // structure data
         public byte DataType;
-        public byte Unknown_1h;
+        public byte RegisterIndex;
         public ushort Unknown_2h;
         public uint Unknown_4h;
         public ulong DataPointer;
@@ -44,7 +44,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             // read structure data
             this.DataType = reader.ReadByte();
-            this.Unknown_1h = reader.ReadByte();
+            this.RegisterIndex = reader.ReadByte();
             this.Unknown_2h = reader.ReadUInt16();
             this.Unknown_4h = reader.ReadUInt32();
             this.DataPointer = reader.ReadUInt64();
@@ -59,7 +59,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         {
             // write structure data
             writer.Write(this.DataType);
-            writer.Write(this.Unknown_1h);
+            writer.Write(this.RegisterIndex);
             writer.Write(this.Unknown_2h);
             writer.Write(this.Unknown_4h);
             writer.Write(this.DataPointer);
