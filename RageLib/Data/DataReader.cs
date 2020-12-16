@@ -81,7 +81,7 @@ namespace RageLib.Data
         {
             this.baseStream = stream;
             this.Endianess = endianess;
-            this.EndianessMatchesArchitecture = DataHelpers.EndianessMatchesCurrentArchitecture(endianess);
+            this.EndianessMatchesArchitecture = endianess.EqualsHostArchitecture();
         }
 
         /// <summary>

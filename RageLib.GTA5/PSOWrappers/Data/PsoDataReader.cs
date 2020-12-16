@@ -81,7 +81,7 @@ namespace RageLib.GTA5.PSOWrappers.Data
             Position += count;
 
             // handle endianess
-            if (!ignoreEndianess && (!DataHelpers.EndianessMatchesCurrentArchitecture(Endianess)))
+            if (!ignoreEndianess && (!Endianess.EqualsHostArchitecture()))
             {
                 Array.Reverse(buffer);
             }

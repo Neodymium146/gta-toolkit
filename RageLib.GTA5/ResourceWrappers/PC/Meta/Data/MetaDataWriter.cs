@@ -103,7 +103,7 @@ namespace RageLib.GTA5.ResourceWrappers.PC.Meta.Data
         protected override void WriteToStream(byte[] value, bool ignoreEndianess = true)
         {
             var currentStream = blocks[BlockIndex].Stream;
-            if (!ignoreEndianess && (!DataHelpers.EndianessMatchesCurrentArchitecture(Endianess)))
+            if (!ignoreEndianess && (!Endianess.EqualsHostArchitecture()))
             {
                 var buffer = (byte[])value.Clone();
                 Array.Reverse(buffer);

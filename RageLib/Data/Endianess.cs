@@ -20,11 +20,23 @@
     THE SOFTWARE.
 */
 
+using System;
+using System.Runtime.CompilerServices;
+
 namespace RageLib.Data
 {
     public enum Endianess
     {
         LittleEndian,
         BigEndian
+    }
+
+    public static class EndianessExtensions
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool EqualsHostArchitecture(this Endianess endianess) =>
+            BitConverter.IsLittleEndian
+            ? endianess == Endianess.LittleEndian
+            : endianess == Endianess.BigEndian;
     }
 }
