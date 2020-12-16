@@ -22,16 +22,17 @@
 
 namespace RageLib.Resources.GTA5.PC.Clothes
 {
-    public class Unknown_C_004 : ResourceSystemBlock
+    // rage__phEdgeData
+    public class EdgeData : ResourceSystemBlock
     {
         public override long BlockLength => 0x10;
 
         // structure data
-        public ushort Unknown_0h;
-        public ushort Unknown_2h;
-        public float Unknown_4h;
-        public float Unknown_8h;
-        public float Unknown_Ch;
+        public ushort vertIndices0;
+        public ushort vertIndices1;
+        public float EdgeLength2;
+        public float Weight0;
+        public float CompressionWeight;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -39,11 +40,11 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt16();
-            this.Unknown_2h = reader.ReadUInt16();
-            this.Unknown_4h = reader.ReadSingle();
-            this.Unknown_8h = reader.ReadSingle();
-            this.Unknown_Ch = reader.ReadSingle();
+            this.vertIndices0 = reader.ReadUInt16();
+            this.vertIndices1 = reader.ReadUInt16();
+            this.EdgeLength2 = reader.ReadSingle();
+            this.Weight0 = reader.ReadSingle();
+            this.CompressionWeight = reader.ReadSingle();
         }
 
         /// <summary>
@@ -52,11 +53,11 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_2h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
+            writer.Write(this.vertIndices0);
+            writer.Write(this.vertIndices1);
+            writer.Write(this.EdgeLength2);
+            writer.Write(this.Weight0);
+            writer.Write(this.CompressionWeight);
         }
     }
 }

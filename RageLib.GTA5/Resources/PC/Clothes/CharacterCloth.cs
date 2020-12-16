@@ -24,6 +24,7 @@ using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Bounds;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Clothes
 {
@@ -35,47 +36,25 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override long BlockLength => 0xD0;
 
         // structure data
-        public ResourceSimpleList64<Unknown_C_001> Unknown_10h;
+        public ResourceSimpleList64<DataVec3V> Poses;
         public ulong ControllerPointer;
-        public ulong BoundPointer;
+        public ulong BoundCompositePointer;
         public SimpleList64<uint> Unknown_30h;
-        public uint Unknown_40h; // 0x00000000
-        public uint Unknown_44h; // 0x00000000
-        public uint Unknown_48h; // 0x00000000
-        public uint Unknown_4Ch; // 0x00000000
-        public uint Unknown_50h; // 0x3F800000
-        public uint Unknown_54h; // 0x00000000
-        public uint Unknown_58h; // 0x00000000
-        public uint Unknown_5Ch; // 0x00000000
-        public uint Unknown_60h; // 0x00000000
-        public uint Unknown_64h; // 0x3F800000
-        public uint Unknown_68h; // 0x00000000
-        public uint Unknown_6Ch; // 0x00000000
-        public uint Unknown_70h; // 0x00000000
-        public uint Unknown_74h; // 0x00000000
-        public uint Unknown_78h; // 0x3F800000
-        public uint Unknown_7Ch; // 0x00000000
-        public uint Unknown_80h; // 0x00000000
-        public uint Unknown_84h; // 0x00000000
-        public uint Unknown_88h; // 0x00000000
-        public uint Unknown_8Ch; // 0x00000000
-        public SimpleList64<uint> Unknown_90h;
-        public uint Unknown_A0h; // 0x00000000
-        public uint Unknown_A4h; // 0x00000000
-        public uint Unknown_A8h; // 0x00000000
-        public uint Unknown_ACh; // 0x00000000
-        public uint Unknown_B0h; // 0x00000000
-        public uint Unknown_B4h; // 0x00000000
-        public uint Unknown_B8h; // 0x00000000
-        public uint Unknown_BCh; // 0x00000000
+        public ulong Unknown_40h; // 0x0000000000000000
+        public ulong Unknown_48h; // 0x0000000000000000
+        public Matrix4x4 Unknown_50h;
+        public SimpleList64<uint> BoneIndex;
+        public ulong Unknown_A0h; // 0x0000000000000000
+        public ulong Unknown_A8h; // 0x0000000000000000
+        public ulong Unknown_B0h; // 0x0000000000000000
+        public ulong Unknown_B8h; // 0x0000000000000000
         public uint Unknown_C0h; // 0x00000001
         public uint Unknown_C4h; // 0x00000000
-        public uint Unknown_C8h; // 0x00000000
-        public uint Unknown_CCh; // 0x00000000
+        public ulong Unknown_C8h; // 0x0000000000000000
 
         // reference data
         public CharacterClothController Controller;
-        public Bound Bound;
+        public BoundComposite BoundComposite;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -85,50 +64,28 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_10h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_001>>();
+            this.Poses = reader.ReadBlock<ResourceSimpleList64<DataVec3V>>();
             this.ControllerPointer = reader.ReadUInt64();
-            this.BoundPointer = reader.ReadUInt64();
+            this.BoundCompositePointer = reader.ReadUInt64();
             this.Unknown_30h = reader.ReadBlock<SimpleList64<uint>>();
-            this.Unknown_40h = reader.ReadUInt32();
-            this.Unknown_44h = reader.ReadUInt32();
-            this.Unknown_48h = reader.ReadUInt32();
-            this.Unknown_4Ch = reader.ReadUInt32();
-            this.Unknown_50h = reader.ReadUInt32();
-            this.Unknown_54h = reader.ReadUInt32();
-            this.Unknown_58h = reader.ReadUInt32();
-            this.Unknown_5Ch = reader.ReadUInt32();
-            this.Unknown_60h = reader.ReadUInt32();
-            this.Unknown_64h = reader.ReadUInt32();
-            this.Unknown_68h = reader.ReadUInt32();
-            this.Unknown_6Ch = reader.ReadUInt32();
-            this.Unknown_70h = reader.ReadUInt32();
-            this.Unknown_74h = reader.ReadUInt32();
-            this.Unknown_78h = reader.ReadUInt32();
-            this.Unknown_7Ch = reader.ReadUInt32();
-            this.Unknown_80h = reader.ReadUInt32();
-            this.Unknown_84h = reader.ReadUInt32();
-            this.Unknown_88h = reader.ReadUInt32();
-            this.Unknown_8Ch = reader.ReadUInt32();
-            this.Unknown_90h = reader.ReadBlock<SimpleList64<uint>>();
-            this.Unknown_A0h = reader.ReadUInt32();
-            this.Unknown_A4h = reader.ReadUInt32();
-            this.Unknown_A8h = reader.ReadUInt32();
-            this.Unknown_ACh = reader.ReadUInt32();
-            this.Unknown_B0h = reader.ReadUInt32();
-            this.Unknown_B4h = reader.ReadUInt32();
-            this.Unknown_B8h = reader.ReadUInt32();
-            this.Unknown_BCh = reader.ReadUInt32();
+            this.Unknown_40h = reader.ReadUInt64();
+            this.Unknown_48h = reader.ReadUInt64();
+            this.Unknown_50h = reader.ReadMatrix4x4();
+            this.BoneIndex = reader.ReadBlock<SimpleList64<uint>>();
+            this.Unknown_A0h = reader.ReadUInt64();
+            this.Unknown_A8h = reader.ReadUInt64();
+            this.Unknown_B0h = reader.ReadUInt64();
+            this.Unknown_B8h = reader.ReadUInt64();
             this.Unknown_C0h = reader.ReadUInt32();
             this.Unknown_C4h = reader.ReadUInt32();
-            this.Unknown_C8h = reader.ReadUInt32();
-            this.Unknown_CCh = reader.ReadUInt32();
+            this.Unknown_C8h = reader.ReadUInt64();
 
             // read reference data
             this.Controller = reader.ReadBlockAt<CharacterClothController>(
                 this.ControllerPointer // offset
             );
-            this.Bound = reader.ReadBlockAt<Bound>(
-                this.BoundPointer // offset
+            this.BoundComposite = reader.ReadBlockAt<BoundComposite>(
+                this.BoundCompositePointer // offset
             );
         }
 
@@ -141,46 +98,24 @@ namespace RageLib.Resources.GTA5.PC.Clothes
 
             // update structure data
             this.ControllerPointer = (ulong)(this.Controller != null ? this.Controller.BlockPosition : 0);
-            this.BoundPointer = (ulong)(this.Bound != null ? this.Bound.BlockPosition : 0);
+            this.BoundCompositePointer = (ulong)(this.BoundComposite != null ? this.BoundComposite.BlockPosition : 0);
 
             // write structure data
-            writer.WriteBlock(this.Unknown_10h);
+            writer.WriteBlock(this.Poses);
             writer.Write(this.ControllerPointer);
-            writer.Write(this.BoundPointer);
+            writer.Write(this.BoundCompositePointer);
             writer.WriteBlock(this.Unknown_30h);
             writer.Write(this.Unknown_40h);
-            writer.Write(this.Unknown_44h);
             writer.Write(this.Unknown_48h);
-            writer.Write(this.Unknown_4Ch);
             writer.Write(this.Unknown_50h);
-            writer.Write(this.Unknown_54h);
-            writer.Write(this.Unknown_58h);
-            writer.Write(this.Unknown_5Ch);
-            writer.Write(this.Unknown_60h);
-            writer.Write(this.Unknown_64h);
-            writer.Write(this.Unknown_68h);
-            writer.Write(this.Unknown_6Ch);
-            writer.Write(this.Unknown_70h);
-            writer.Write(this.Unknown_74h);
-            writer.Write(this.Unknown_78h);
-            writer.Write(this.Unknown_7Ch);
-            writer.Write(this.Unknown_80h);
-            writer.Write(this.Unknown_84h);
-            writer.Write(this.Unknown_88h);
-            writer.Write(this.Unknown_8Ch);
-            writer.WriteBlock(this.Unknown_90h);
+            writer.WriteBlock(this.BoneIndex);
             writer.Write(this.Unknown_A0h);
-            writer.Write(this.Unknown_A4h);
             writer.Write(this.Unknown_A8h);
-            writer.Write(this.Unknown_ACh);
             writer.Write(this.Unknown_B0h);
-            writer.Write(this.Unknown_B4h);
             writer.Write(this.Unknown_B8h);
-            writer.Write(this.Unknown_BCh);
             writer.Write(this.Unknown_C0h);
             writer.Write(this.Unknown_C4h);
             writer.Write(this.Unknown_C8h);
-            writer.Write(this.Unknown_CCh);
         }
 
         /// <summary>
@@ -190,16 +125,16 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         {
             var list = new List<IResourceBlock>(base.GetReferences());
             if (Controller != null) list.Add(Controller);
-            if (Bound != null) list.Add(Bound);
+            if (BoundComposite != null) list.Add(BoundComposite);
             return list.ToArray();
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x10, Unknown_10h),
+                new Tuple<long, IResourceBlock>(0x10, Poses),
                 new Tuple<long, IResourceBlock>(0x30, Unknown_30h),
-                new Tuple<long, IResourceBlock>(0x90, Unknown_90h)
+                new Tuple<long, IResourceBlock>(0x90, BoneIndex)
             };
         }
     }

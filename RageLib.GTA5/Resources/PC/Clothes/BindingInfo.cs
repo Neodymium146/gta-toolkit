@@ -20,21 +20,21 @@
     THE SOFTWARE.
 */
 
+using System.Numerics;
+
 namespace RageLib.Resources.GTA5.PC.Clothes
 {
-    public class Unknown_C_003 : ResourceSystemBlock
+    // rage__characterClothController__BindingInfo
+    public class BindingInfo : ResourceSystemBlock
     {
         public override long BlockLength => 0x20;
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public uint Unknown_10h;
-        public uint Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
+        public Vector4 Weights;
+        public uint BlendIndex0;
+        public uint BlendIndex1;
+        public uint BlendIndex2;
+        public uint BlendIndex4;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -42,14 +42,11 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Weights = reader.ReadVector4();
+            this.BlendIndex0 = reader.ReadUInt32();
+            this.BlendIndex1 = reader.ReadUInt32();
+            this.BlendIndex2 = reader.ReadUInt32();
+            this.BlendIndex4 = reader.ReadUInt32();
         }
 
         /// <summary>
@@ -58,14 +55,11 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
+            writer.Write(this.Weights);
+            writer.Write(this.BlendIndex0);
+            writer.Write(this.BlendIndex1);
+            writer.Write(this.BlendIndex2);
+            writer.Write(this.BlendIndex4);
         }
     }
 }

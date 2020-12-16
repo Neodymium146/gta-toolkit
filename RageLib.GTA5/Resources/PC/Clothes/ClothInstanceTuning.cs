@@ -20,6 +20,8 @@
     THE SOFTWARE.
 */
 
+using System.Numerics;
+
 namespace RageLib.Resources.GTA5.PC.Clothes
 {
     // pgBase
@@ -29,18 +31,17 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override long BlockLength => 0x40;
 
         // structure data
-        public uint Unknown_10h;  // float
-        public uint Unknown_14h;
-        public uint Unknown_18h; // 0x00000000
-        public uint Unknown_1Ch; // 0x00000000
-        public uint Unknown_20h;
-        public uint Unknown_24h;
-        public uint Unknown_28h; // float
-        public uint Unknown_2Ch;
-        public uint Unknown_30h; // no float
-        public uint Unknown_34h; // float
-        public uint Unknown_38h;
-        public uint Unknown_3Ch;
+        public float RotationRate;
+        public float AngleThreshold;
+        public ulong Unknown_18h; // 0x0000000000000000
+        public Vector4 ExtraForce;
+        public ClothTuneFlags Flags;
+        public float Weight;
+        public float DistanceThreshold;
+        public byte PinVert;
+        public byte NonPinVert0;
+        public byte NonPinVert1;
+        public byte Unknown_3Eh; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -50,18 +51,17 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.Unknown_30h = reader.ReadUInt32();
-            this.Unknown_34h = reader.ReadUInt32();
-            this.Unknown_38h = reader.ReadUInt32();
-            this.Unknown_3Ch = reader.ReadUInt32();
+            this.RotationRate = reader.ReadSingle();
+            this.AngleThreshold = reader.ReadSingle();
+            this.Unknown_18h = reader.ReadUInt64();
+            this.ExtraForce = reader.ReadVector4();
+            this.Flags = (ClothTuneFlags)reader.ReadUInt32();
+            this.Weight = reader.ReadSingle();
+            this.DistanceThreshold = reader.ReadSingle();
+            this.PinVert = reader.ReadByte();
+            this.NonPinVert0 = reader.ReadByte();
+            this.NonPinVert1 = reader.ReadByte();
+            this.Unknown_3Eh = reader.ReadByte();
         }
 
         /// <summary>
@@ -72,18 +72,33 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             base.Write(writer, parameters);
 
             // write structure data
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
+            writer.Write(this.RotationRate);
+            writer.Write(this.AngleThreshold);
             writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
-            writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
-            writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
-            writer.Write(this.Unknown_30h);
-            writer.Write(this.Unknown_34h);
-            writer.Write(this.Unknown_38h);
-            writer.Write(this.Unknown_3Ch);
+            writer.Write(this.ExtraForce);
+            writer.Write((uint)this.Flags);
+            writer.Write(this.Weight);
+            writer.Write(this.DistanceThreshold);
+            writer.Write(this.PinVert);
+            writer.Write(this.NonPinVert0);
+            writer.Write(this.NonPinVert1);
+            writer.Write(this.Unknown_3Eh);
         }
     }
+
+    // rage__clothInstanceTuning__enCLOTH_TUNE_FLAGS
+    public enum ClothTuneFlags : uint
+    {
+        _0x02A90554 = 0,
+        _0x4752DAFA = 1,
+        _0xEAC5F797 = 2,
+        _0xBADE1BDA = 3,
+        _0xFBF0F5B2 = 4,
+        _0xD734BB7C = 5,
+        _0x00F9E049 = 6,
+        _0xFE291880 = 7,
+        _0x2844A250 = 8,
+        _0xA9AE6C72 = 9,
+        _0xF10143B9 = 10,
+    };
 }

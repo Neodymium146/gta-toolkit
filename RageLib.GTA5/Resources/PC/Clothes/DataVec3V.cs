@@ -22,7 +22,8 @@
 
 namespace RageLib.Resources.GTA5.PC.Clothes
 {
-    public class Unknown_C_001 : ResourceSystemBlock
+    // rage__dataVec3V
+    public class DataVec3V : ResourceSystemBlock
     {
         public override long BlockLength => 0x10;
 

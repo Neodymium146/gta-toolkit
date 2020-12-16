@@ -32,43 +32,29 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override long BlockLength => 0x140;
 
         // structure data
-        public uint Unknown_10h;
+        public uint Count;
         public uint Unknown_14h;
         public uint Unknown_18h;
         public uint Unknown_1Ch; // 0x00000000
-        public SimpleList64<float> Unknown_20h;
-        public SimpleList64<float> Unknown_30h;
-        public SimpleList64<float> Unknown_40h;
-        public uint Unknown_50h; // 0x00000000
-        public uint Unknown_54h; // 0x00000000
-        public uint Unknown_58h; // 0x00000000
-        public uint Unknown_5Ch; // 0x00000000
-        public SimpleList64<float> Unknown_60h;
-        public SimpleList64<uint> Unknown_70h;
-        public SimpleList64<uint> Unknown_80h;
-        public uint Unknown_90h; // 0x00000000
-        public uint Unknown_94h; // 0x00000000
-        public uint Unknown_98h; // 0x00000000
-        public uint Unknown_9Ch; // 0x00000000
-        public SimpleList64<float> Unknown_A0h;
-        public SimpleList64<uint> Unknown_B0h;
-        public SimpleList64<uint> Unknown_C0h;
-        public uint Unknown_D0h; // 0x00000000
-        public uint Unknown_D4h; // 0x00000000
-        public uint Unknown_D8h; // 0x00000000
-        public uint Unknown_DCh; // 0x00000000
-        public SimpleList64<ushort> Unknown_E0h;
-        public SimpleList64<ushort> Unknown_F0h;
-        public SimpleList64<ushort> Unknown_100h;
-        public uint Unknown_110h; // 0x00000000
-        public uint Unknown_114h; // 0x00000000
-        public uint Unknown_118h; // 0x00000000
-        public uint Unknown_11Ch; // 0x00000000
-        public uint Unknown_120h; // 0x00000000
-        public uint Unknown_124h; // 0x00000000
+        public SimpleList64<float> PinRadius0;
+        public SimpleList64<float> PinRadius1;
+        public SimpleList64<float> PinRadius2;
+        public SimpleList64<float> PinRadius3;
+        public SimpleList64<float> VertexWeight0;
+        public SimpleList64<float> VertexWeight1;
+        public SimpleList64<float> VertexWeight2;
+        public SimpleList64<float> VertexWeight3;
+        public SimpleList64<float> InflationScale0;
+        public SimpleList64<float> InflationScale1;
+        public SimpleList64<float> InflationScale2;
+        public SimpleList64<float> InflationScale3;
+        public SimpleList64<ushort> ClothDisplayMap0;
+        public SimpleList64<ushort> ClothDisplayMap1;
+        public SimpleList64<ushort> ClothDisplayMap2;
+        public SimpleList64<ushort> ClothDisplayMap3;
+        public ulong Unknown_120h; // 0x0000000000000000
         public SimpleList64<uint> Unknown_128h;
-        public uint Unknown_138h; // 0x00000000
-        public uint Unknown_13Ch; // 0x00000000
+        public ulong Unknown_138h; // 0x0000000000000000
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -78,43 +64,29 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_10h = reader.ReadUInt32();
+            this.Count = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadBlock<SimpleList64<float>>();
-            this.Unknown_30h = reader.ReadBlock<SimpleList64<float>>();
-            this.Unknown_40h = reader.ReadBlock<SimpleList64<float>>();
-            this.Unknown_50h = reader.ReadUInt32();
-            this.Unknown_54h = reader.ReadUInt32();
-            this.Unknown_58h = reader.ReadUInt32();
-            this.Unknown_5Ch = reader.ReadUInt32();
-            this.Unknown_60h = reader.ReadBlock<SimpleList64<float>>();
-            this.Unknown_70h = reader.ReadBlock<SimpleList64<uint>>();
-            this.Unknown_80h = reader.ReadBlock<SimpleList64<uint>>();
-            this.Unknown_90h = reader.ReadUInt32();
-            this.Unknown_94h = reader.ReadUInt32();
-            this.Unknown_98h = reader.ReadUInt32();
-            this.Unknown_9Ch = reader.ReadUInt32();
-            this.Unknown_A0h = reader.ReadBlock<SimpleList64<float>>();
-            this.Unknown_B0h = reader.ReadBlock<SimpleList64<uint>>();
-            this.Unknown_C0h = reader.ReadBlock<SimpleList64<uint>>();
-            this.Unknown_D0h = reader.ReadUInt32();
-            this.Unknown_D4h = reader.ReadUInt32();
-            this.Unknown_D8h = reader.ReadUInt32();
-            this.Unknown_DCh = reader.ReadUInt32();
-            this.Unknown_E0h = reader.ReadBlock<SimpleList64<ushort>>();
-            this.Unknown_F0h = reader.ReadBlock<SimpleList64<ushort>>();
-            this.Unknown_100h = reader.ReadBlock<SimpleList64<ushort>>();
-            this.Unknown_110h = reader.ReadUInt32();
-            this.Unknown_114h = reader.ReadUInt32();
-            this.Unknown_118h = reader.ReadUInt32();
-            this.Unknown_11Ch = reader.ReadUInt32();
-            this.Unknown_120h = reader.ReadUInt32();
-            this.Unknown_124h = reader.ReadUInt32();
+            this.PinRadius0 = reader.ReadBlock<SimpleList64<float>>();
+            this.PinRadius1 = reader.ReadBlock<SimpleList64<float>>();
+            this.PinRadius2 = reader.ReadBlock<SimpleList64<float>>();
+            this.PinRadius3 = reader.ReadBlock<SimpleList64<float>>();
+            this.VertexWeight0 = reader.ReadBlock<SimpleList64<float>>();
+            this.VertexWeight1 = reader.ReadBlock<SimpleList64<float>>();
+            this.VertexWeight2 = reader.ReadBlock<SimpleList64<float>>();
+            this.VertexWeight3 = reader.ReadBlock<SimpleList64<float>>();
+            this.InflationScale0 = reader.ReadBlock<SimpleList64<float>>();
+            this.InflationScale1 = reader.ReadBlock<SimpleList64<float>>();
+            this.InflationScale2 = reader.ReadBlock<SimpleList64<float>>();
+            this.InflationScale3 = reader.ReadBlock<SimpleList64<float>>();
+            this.ClothDisplayMap0 = reader.ReadBlock<SimpleList64<ushort>>();
+            this.ClothDisplayMap1 = reader.ReadBlock<SimpleList64<ushort>>();
+            this.ClothDisplayMap2 = reader.ReadBlock<SimpleList64<ushort>>();
+            this.ClothDisplayMap3 = reader.ReadBlock<SimpleList64<ushort>>();
+            this.Unknown_120h = reader.ReadUInt64();
             this.Unknown_128h = reader.ReadBlock<SimpleList64<uint>>();
-            this.Unknown_138h = reader.ReadUInt32();
-            this.Unknown_13Ch = reader.ReadUInt32();
+            this.Unknown_138h = reader.ReadUInt64();
         }
 
         /// <summary>
@@ -125,60 +97,50 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             base.Write(writer, parameters);
 
             // write structure data
-            writer.Write(this.Unknown_10h);
+            writer.Write(this.Count);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
-            writer.WriteBlock(this.Unknown_20h);
-            writer.WriteBlock(this.Unknown_30h);
-            writer.WriteBlock(this.Unknown_40h);
-            writer.Write(this.Unknown_50h);
-            writer.Write(this.Unknown_54h);
-            writer.Write(this.Unknown_58h);
-            writer.Write(this.Unknown_5Ch);
-            writer.WriteBlock(this.Unknown_60h);
-            writer.WriteBlock(this.Unknown_70h);
-            writer.WriteBlock(this.Unknown_80h);
-            writer.Write(this.Unknown_90h);
-            writer.Write(this.Unknown_94h);
-            writer.Write(this.Unknown_98h);
-            writer.Write(this.Unknown_9Ch);
-            writer.WriteBlock(this.Unknown_A0h);
-            writer.WriteBlock(this.Unknown_B0h);
-            writer.WriteBlock(this.Unknown_C0h);
-            writer.Write(this.Unknown_D0h);
-            writer.Write(this.Unknown_D4h);
-            writer.Write(this.Unknown_D8h);
-            writer.Write(this.Unknown_DCh);
-            writer.WriteBlock(this.Unknown_E0h);
-            writer.WriteBlock(this.Unknown_F0h);
-            writer.WriteBlock(this.Unknown_100h);
-            writer.Write(this.Unknown_110h);
-            writer.Write(this.Unknown_114h);
-            writer.Write(this.Unknown_118h);
-            writer.Write(this.Unknown_11Ch);
+            writer.WriteBlock(this.PinRadius0);
+            writer.WriteBlock(this.PinRadius1);
+            writer.WriteBlock(this.PinRadius2);
+            writer.WriteBlock(this.PinRadius3);
+            writer.WriteBlock(this.VertexWeight0);
+            writer.WriteBlock(this.VertexWeight1);
+            writer.WriteBlock(this.VertexWeight2);
+            writer.WriteBlock(this.VertexWeight3);
+            writer.WriteBlock(this.InflationScale0);
+            writer.WriteBlock(this.InflationScale1);
+            writer.WriteBlock(this.InflationScale2);
+            writer.WriteBlock(this.InflationScale3);
+            writer.WriteBlock(this.ClothDisplayMap0);
+            writer.WriteBlock(this.ClothDisplayMap1);
+            writer.WriteBlock(this.ClothDisplayMap2);
+            writer.WriteBlock(this.ClothDisplayMap3);
             writer.Write(this.Unknown_120h);
-            writer.Write(this.Unknown_124h);
             writer.WriteBlock(this.Unknown_128h);
             writer.Write(this.Unknown_138h);
-            writer.Write(this.Unknown_13Ch);
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x20, Unknown_20h),
-                new Tuple<long, IResourceBlock>(0x30, Unknown_30h),
-                new Tuple<long, IResourceBlock>(0x40, Unknown_40h),
-                new Tuple<long, IResourceBlock>(0x60, Unknown_60h),
-                new Tuple<long, IResourceBlock>(0x70, Unknown_70h),
-                new Tuple<long, IResourceBlock>(0x80, Unknown_80h),
-                new Tuple<long, IResourceBlock>(0xA0, Unknown_A0h),
-                new Tuple<long, IResourceBlock>(0xB0, Unknown_B0h),
-                new Tuple<long, IResourceBlock>(0xC0, Unknown_C0h),
-                new Tuple<long, IResourceBlock>(0xE0, Unknown_E0h),
-                new Tuple<long, IResourceBlock>(0xF0, Unknown_F0h),
-                new Tuple<long, IResourceBlock>(0x100, Unknown_100h),
+                new Tuple<long, IResourceBlock>(0x20, PinRadius0),
+                new Tuple<long, IResourceBlock>(0x30, PinRadius1),
+                new Tuple<long, IResourceBlock>(0x40, PinRadius2),
+                new Tuple<long, IResourceBlock>(0x50, PinRadius3),
+                new Tuple<long, IResourceBlock>(0x60, VertexWeight0),
+                new Tuple<long, IResourceBlock>(0x70, VertexWeight1),
+                new Tuple<long, IResourceBlock>(0x80, VertexWeight2),
+                new Tuple<long, IResourceBlock>(0x90, VertexWeight3),
+                new Tuple<long, IResourceBlock>(0xA0, InflationScale0),
+                new Tuple<long, IResourceBlock>(0xB0, InflationScale1),
+                new Tuple<long, IResourceBlock>(0xC0, InflationScale2),
+                new Tuple<long, IResourceBlock>(0xD0, InflationScale3),
+                new Tuple<long, IResourceBlock>(0xE0, ClothDisplayMap0),
+                new Tuple<long, IResourceBlock>(0xF0, ClothDisplayMap1),
+                new Tuple<long, IResourceBlock>(0x100, ClothDisplayMap2),
+                new Tuple<long, IResourceBlock>(0x110, ClothDisplayMap3),
                 new Tuple<long, IResourceBlock>(0x128, Unknown_128h)
             };
         }

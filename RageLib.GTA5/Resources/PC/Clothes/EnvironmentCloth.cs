@@ -22,6 +22,7 @@
 
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Fragments;
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Clothes
@@ -36,27 +37,16 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         // structure data
         public ulong InstanceTuningPointer;
         public ulong DrawablePointer;
-        public uint Unknown_20h; // 0x00000000
-        public uint Unknown_24h; // 0x00000000
+        public ulong Unknown_20h; // 0x0000000000000000
         public ulong ControllerPointer;
-        public uint Unknown_30h; // 0x00000000
-        public uint Unknown_34h; // 0x00000000
-        public uint Unknown_38h; // 0x00000000
-        public uint Unknown_3Ch; // 0x00000000
-        public uint Unknown_40h; // 0x00000000
-        public uint Unknown_44h; // 0x00000000
-        public uint Unknown_48h; // 0x00000000
-        public uint Unknown_4Ch; // 0x00000000
-        public uint Unknown_50h; // 0x00000000
-        public uint Unknown_54h; // 0x00000000
-        public uint Unknown_58h; // 0x00000000
-        public uint Unknown_5Ch; // 0x00000000
-        public ulong pxxxxx_2;
-        public ushort cntxx51a;
-        public ushort cntxx51b;
-        public uint Unknown_6Ch; // 0x00000000
-        public uint Unknown_70h; // 0x00000000
-        public uint Unknown_74h; // 0x00000000
+        public ulong Unknown_30h; // 0x0000000000000000
+        public ulong Unknown_38h; // 0x0000000000000000
+        public ulong Unknown_40h; // 0x0000000000000000
+        public ulong Unknown_48h; // 0x0000000000000000
+        public ulong Unknown_50h; // 0x0000000000000000
+        public ulong Unknown_58h; // 0x0000000000000000
+        public SimpleList64<uint> UserData;
+        public ulong Unknown_70h; // 0x0000000000000000
         public uint Unknown_78h;
         public uint Unknown_7Ch; // 0x00000000
 
@@ -64,7 +54,6 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public ClothInstanceTuning InstanceTuning;
         public FragDrawable Drawable;
         public ClothController Controller;
-        public SimpleArray<uint> pxxxxx_2data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -76,27 +65,16 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             // read structure data
             this.InstanceTuningPointer = reader.ReadUInt64();
             this.DrawablePointer = reader.ReadUInt64();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadUInt64();
             this.ControllerPointer = reader.ReadUInt64();
-            this.Unknown_30h = reader.ReadUInt32();
-            this.Unknown_34h = reader.ReadUInt32();
-            this.Unknown_38h = reader.ReadUInt32();
-            this.Unknown_3Ch = reader.ReadUInt32();
-            this.Unknown_40h = reader.ReadUInt32();
-            this.Unknown_44h = reader.ReadUInt32();
-            this.Unknown_48h = reader.ReadUInt32();
-            this.Unknown_4Ch = reader.ReadUInt32();
-            this.Unknown_50h = reader.ReadUInt32();
-            this.Unknown_54h = reader.ReadUInt32();
-            this.Unknown_58h = reader.ReadUInt32();
-            this.Unknown_5Ch = reader.ReadUInt32();
-            this.pxxxxx_2 = reader.ReadUInt64();
-            this.cntxx51a = reader.ReadUInt16();
-            this.cntxx51b = reader.ReadUInt16();
-            this.Unknown_6Ch = reader.ReadUInt32();
-            this.Unknown_70h = reader.ReadUInt32();
-            this.Unknown_74h = reader.ReadUInt32();
+            this.Unknown_30h = reader.ReadUInt64();
+            this.Unknown_38h = reader.ReadUInt64();
+            this.Unknown_40h = reader.ReadUInt64();
+            this.Unknown_48h = reader.ReadUInt64();
+            this.Unknown_50h = reader.ReadUInt64();
+            this.Unknown_58h = reader.ReadUInt64();
+            this.UserData = reader.ReadBlock<SimpleList64<uint>>();
+            this.Unknown_70h = reader.ReadUInt64();
             this.Unknown_78h = reader.ReadUInt32();
             this.Unknown_7Ch = reader.ReadUInt32();
 
@@ -109,10 +87,6 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             );
             this.Controller = reader.ReadBlockAt<ClothController>(
                 this.ControllerPointer // offset
-            );
-            this.pxxxxx_2data = reader.ReadBlockAt<SimpleArray<uint>>(
-                this.pxxxxx_2, // offset
-                this.cntxx51a
             );
         }
 
@@ -127,34 +101,20 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.InstanceTuningPointer = (ulong)(this.InstanceTuning != null ? this.InstanceTuning.BlockPosition : 0);
             this.DrawablePointer = (ulong)(this.Drawable != null ? this.Drawable.BlockPosition : 0);
             this.ControllerPointer = (ulong)(this.Controller != null ? this.Controller.BlockPosition : 0);
-            this.pxxxxx_2 = (ulong)(this.pxxxxx_2data != null ? this.pxxxxx_2data.BlockPosition : 0);
-            this.cntxx51a = (ushort)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Count : 0);
-            this.cntxx51b = (ushort)(this.pxxxxx_2data != null ? this.pxxxxx_2data.Count : 0);
 
             // write structure data
             writer.Write(this.InstanceTuningPointer);
             writer.Write(this.DrawablePointer);
             writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
             writer.Write(this.ControllerPointer);
             writer.Write(this.Unknown_30h);
-            writer.Write(this.Unknown_34h);
             writer.Write(this.Unknown_38h);
-            writer.Write(this.Unknown_3Ch);
             writer.Write(this.Unknown_40h);
-            writer.Write(this.Unknown_44h);
             writer.Write(this.Unknown_48h);
-            writer.Write(this.Unknown_4Ch);
             writer.Write(this.Unknown_50h);
-            writer.Write(this.Unknown_54h);
             writer.Write(this.Unknown_58h);
-            writer.Write(this.Unknown_5Ch);
-            writer.Write(this.pxxxxx_2);
-            writer.Write(this.cntxx51a);
-            writer.Write(this.cntxx51b);
-            writer.Write(this.Unknown_6Ch);
+            writer.WriteBlock(this.UserData);
             writer.Write(this.Unknown_70h);
-            writer.Write(this.Unknown_74h);
             writer.Write(this.Unknown_78h);
             writer.Write(this.Unknown_7Ch);
         }
@@ -168,8 +128,14 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             if (InstanceTuning != null) list.Add(InstanceTuning);
             if (Drawable != null) list.Add(Drawable);
             if (Controller != null) list.Add(Controller);
-            if (pxxxxx_2data != null) list.Add(pxxxxx_2data);
             return list.ToArray();
+        }
+
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x60, UserData)
+            };
         }
     }
 }

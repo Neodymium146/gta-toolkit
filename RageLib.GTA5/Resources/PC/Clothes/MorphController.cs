@@ -31,15 +31,12 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override long BlockLength => 0x40;
 
         // structure data
-        public uint Unknown_10h; // 0x00000000
-        public uint Unknown_14h; // 0x00000000
+        public ulong Unknown_10h; // 0x0000000000000000
         public ulong Unknown_18h_Pointer;
         public ulong Unknown_20h_Pointer;
         public ulong Unknown_28h_Pointer;
-        public uint Unknown_30h; // 0x00000000
-        public uint Unknown_34h; // 0x00000000
-        public uint Unknown_38h; // 0x00000000
-        public uint Unknown_3Ch; // 0x00000000
+        public ulong Unknown_30h; // 0x0000000000000000
+        public ulong Unknown_38h; // 0x0000000000000000
 
         // reference data
         public Unknown_C_006 Unknown_18h_Data;
@@ -54,15 +51,12 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
+            this.Unknown_10h = reader.ReadUInt64();
             this.Unknown_18h_Pointer = reader.ReadUInt64();
             this.Unknown_20h_Pointer = reader.ReadUInt64();
             this.Unknown_28h_Pointer = reader.ReadUInt64();
-            this.Unknown_30h = reader.ReadUInt32();
-            this.Unknown_34h = reader.ReadUInt32();
-            this.Unknown_38h = reader.ReadUInt32();
-            this.Unknown_3Ch = reader.ReadUInt32();
+            this.Unknown_30h = reader.ReadUInt64();
+            this.Unknown_38h = reader.ReadUInt64();
 
             // read reference data
             this.Unknown_18h_Data = reader.ReadBlockAt<Unknown_C_006>(
@@ -90,14 +84,11 @@ namespace RageLib.Resources.GTA5.PC.Clothes
 
             // write structure data
             writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h_Pointer);
             writer.Write(this.Unknown_20h_Pointer);
             writer.Write(this.Unknown_28h_Pointer);
             writer.Write(this.Unknown_30h);
-            writer.Write(this.Unknown_34h);
             writer.Write(this.Unknown_38h);
-            writer.Write(this.Unknown_3Ch);
         }
 
         /// <summary>

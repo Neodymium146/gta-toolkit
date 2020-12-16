@@ -83,13 +83,13 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public uint Unknown_E0h; // 0x00000000
         public uint Unknown_E4h; // 0x00000000
         public uint Unknown_E8h;
-        public uint Unknown_ECh;
+        public uint NumEdges;
         public uint Unknown_F0h;
         public uint Unknown_F4h; // 0x00000000
         public uint Unknown_F8h;
         public uint Unknown_FCh; // 0x00000000
-        public ResourceSimpleList64<Unknown_C_004> Unknown_100h;
-        public ResourceSimpleList64<Unknown_C_004> Unknown_110h;
+        public ResourceSimpleList64<EdgeData> CustomEdgeData;
+        public ResourceSimpleList64<EdgeData> EdgeData;
         public uint Unknown_120h; // 0x00000000
         public uint Unknown_124h; // 0x00000000
         public uint Unknown_128h; // 0x00000000
@@ -174,13 +174,13 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.Unknown_E0h = reader.ReadUInt32();
             this.Unknown_E4h = reader.ReadUInt32();
             this.Unknown_E8h = reader.ReadUInt32();
-            this.Unknown_ECh = reader.ReadUInt32();
+            this.NumEdges = reader.ReadUInt32();
             this.Unknown_F0h = reader.ReadUInt32();
             this.Unknown_F4h = reader.ReadUInt32();
             this.Unknown_F8h = reader.ReadUInt32();
             this.Unknown_FCh = reader.ReadUInt32();
-            this.Unknown_100h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_004>>();
-            this.Unknown_110h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_004>>();
+            this.CustomEdgeData = reader.ReadBlock<ResourceSimpleList64<EdgeData>>();
+            this.EdgeData = reader.ReadBlock<ResourceSimpleList64<EdgeData>>();
             this.Unknown_120h = reader.ReadUInt32();
             this.Unknown_124h = reader.ReadUInt32();
             this.Unknown_128h = reader.ReadUInt32();
@@ -277,13 +277,13 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             writer.Write(this.Unknown_E0h);
             writer.Write(this.Unknown_E4h);
             writer.Write(this.Unknown_E8h);
-            writer.Write(this.Unknown_ECh);
+            writer.Write(this.NumEdges);
             writer.Write(this.Unknown_F0h);
             writer.Write(this.Unknown_F4h);
             writer.Write(this.Unknown_F8h);
             writer.Write(this.Unknown_FCh);
-            writer.WriteBlock(this.Unknown_100h);
-            writer.WriteBlock(this.Unknown_110h);
+            writer.WriteBlock(this.CustomEdgeData);
+            writer.WriteBlock(this.EdgeData);
             writer.Write(this.Unknown_120h);
             writer.Write(this.Unknown_124h);
             writer.Write(this.Unknown_128h);
@@ -325,8 +325,8 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             return new Tuple<long, IResourceBlock>[] {
                 new Tuple<long, IResourceBlock>(0x70, Unknown_70h),
                 new Tuple<long, IResourceBlock>(0x80, Unknown_80h),
-                new Tuple<long, IResourceBlock>(0x100, Unknown_100h),
-                new Tuple<long, IResourceBlock>(0x110, Unknown_110h)
+                new Tuple<long, IResourceBlock>(0x100, CustomEdgeData),
+                new Tuple<long, IResourceBlock>(0x110, EdgeData)
             };
         }
     }

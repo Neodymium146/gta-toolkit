@@ -22,7 +22,7 @@
 
 using RageLib.Resources.Common;
 using System;
-using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Clothes
 {
@@ -32,19 +32,19 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public override long BlockLength => 0xF0;
 
         // structure data      
-        public SimpleList64<ushort> Unknown_80h;
-        public ResourceSimpleList64<Unknown_C_002> Unknown_90h;
-        public uint Unknown_A0h; // 0x3D23D70A
+        public SimpleList64<ushort> TriIndices;
+        public SimpleList64<Vector4> OriginalPos;
+        public float Unknown_A0h; // 0x3D23D70A
         public uint Unknown_A4h; // 0x00000000
         public uint Unknown_A8h; // 0x00000000
         public uint Unknown_ACh; // 0x00000000
-        public SimpleList64<uint> Unknown_B0h;
-        public ResourceSimpleList64<Unknown_C_003> Unknown_C0h;
+        public SimpleList64<uint> BoneIndexMap;
+        public ResourceSimpleList64<BindingInfo> BindingInfo;
         public uint Unknown_D0h; // 0x00000000
         public uint Unknown_D4h; // 0x00000000
         public uint Unknown_D8h; // 0x00000000
-        public uint Unknown_DCh; // 0x3F800000
-        public SimpleList64<uint> Unknown_E0h;
+        public float Unknown_DCh; // 0x3F800000
+        public SimpleList64<uint> BoneIDMap;
         
         /// <summary>
         /// Reads the data-block from a stream.
@@ -54,19 +54,19 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             base.Read(reader, parameters);
 
             // read structure data         
-            this.Unknown_80h = reader.ReadBlock<SimpleList64<ushort>>();
-            this.Unknown_90h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_002>>();
-            this.Unknown_A0h = reader.ReadUInt32();
+            this.TriIndices = reader.ReadBlock<SimpleList64<ushort>>();
+            this.OriginalPos = reader.ReadBlock<SimpleList64<Vector4>>();
+            this.Unknown_A0h = reader.ReadSingle();
             this.Unknown_A4h = reader.ReadUInt32();
             this.Unknown_A8h = reader.ReadUInt32();
             this.Unknown_ACh = reader.ReadUInt32();
-            this.Unknown_B0h = reader.ReadBlock<SimpleList64<uint>>();
-            this.Unknown_C0h = reader.ReadBlock<ResourceSimpleList64<Unknown_C_003>>();
+            this.BoneIndexMap = reader.ReadBlock<SimpleList64<uint>>();
+            this.BindingInfo = reader.ReadBlock<ResourceSimpleList64<BindingInfo>>();
             this.Unknown_D0h = reader.ReadUInt32();
             this.Unknown_D4h = reader.ReadUInt32();
             this.Unknown_D8h = reader.ReadUInt32();
-            this.Unknown_DCh = reader.ReadUInt32();
-            this.Unknown_E0h = reader.ReadBlock<SimpleList64<uint>>();
+            this.Unknown_DCh = reader.ReadSingle();
+            this.BoneIDMap = reader.ReadBlock<SimpleList64<uint>>();
         }
 
         /// <summary>
@@ -77,29 +77,29 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             base.Write(writer, parameters);
 
             // write structure data           
-            writer.WriteBlock(this.Unknown_80h);
-            writer.WriteBlock(this.Unknown_90h);
+            writer.WriteBlock(this.TriIndices);
+            writer.WriteBlock(this.OriginalPos);
             writer.Write(this.Unknown_A0h);
             writer.Write(this.Unknown_A4h);
             writer.Write(this.Unknown_A8h);
             writer.Write(this.Unknown_ACh);
-            writer.WriteBlock(this.Unknown_B0h);
-            writer.WriteBlock(this.Unknown_C0h);
+            writer.WriteBlock(this.BoneIndexMap);
+            writer.WriteBlock(this.BindingInfo);
             writer.Write(this.Unknown_D0h);
             writer.Write(this.Unknown_D4h);
             writer.Write(this.Unknown_D8h);
             writer.Write(this.Unknown_DCh);
-            writer.WriteBlock(this.Unknown_E0h);
+            writer.WriteBlock(this.BoneIDMap);
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
-                new Tuple<long, IResourceBlock>(0x80, Unknown_80h),
-                new Tuple<long, IResourceBlock>(0x90, Unknown_90h),
-                new Tuple<long, IResourceBlock>(0xB0, Unknown_B0h),
-                new Tuple<long, IResourceBlock>(0xC0, Unknown_C0h),
-                new Tuple<long, IResourceBlock>(0xE0, Unknown_E0h)
+                new Tuple<long, IResourceBlock>(0x80, TriIndices),
+                new Tuple<long, IResourceBlock>(0x90, OriginalPos),
+                new Tuple<long, IResourceBlock>(0xB0, BoneIndexMap),
+                new Tuple<long, IResourceBlock>(0xC0, BindingInfo),
+                new Tuple<long, IResourceBlock>(0xE0, BoneIDMap)
             };
         }
     }
