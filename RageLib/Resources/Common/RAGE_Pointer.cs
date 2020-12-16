@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace RageLib.Resources.Common
 {
-	public class PgRef64<T> : ResourceSystemBlock where T : IResourceBlock, new()
+	// PgRef64<T> ?
+	public class RAGE_Pointer<T> : ResourceSystemBlock where T : IResourceBlock, new()
 	{
 		public override long BlockLength => 0x8;
 
@@ -35,10 +36,8 @@ namespace RageLib.Resources.Common
 		}
 
 		public override IResourceBlock[] GetReferences()
-		{
-			var list = new List<IResourceBlock>();
-			if (Data != null) list.Add(Data);
-			return list.ToArray();
+        {
+			return Data is null ? Array.Empty<IResourceBlock>() : new IResourceBlock[] { Data };
 		}
 	}
 }
