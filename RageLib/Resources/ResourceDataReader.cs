@@ -89,7 +89,7 @@ namespace RageLib.Resources
                 virtualStream.Read(buffer, 0, count);
 
                 // handle endianess
-                if (!ignoreEndianess && !EndianessMatchesArchitecture)
+                if (!ignoreEndianess && !endianessEqualsHostArchitecture)
                 {
                     Array.Reverse(buffer);
                 }
@@ -108,7 +108,7 @@ namespace RageLib.Resources
                 physicalStream.Read(buffer, 0, count);
 
                 // handle endianess
-                if (!ignoreEndianess && !EndianessMatchesArchitecture)
+                if (!ignoreEndianess && !endianessEqualsHostArchitecture)
                 {
                     Array.Reverse(buffer);
                 }

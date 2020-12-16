@@ -35,7 +35,7 @@ namespace RageLib.Data
     {
         private Stream baseStream;
 
-        public bool EndianessMatchesArchitecture { get; protected set; }
+        public readonly bool endianessEqualsHostArchitecture;
 
         /// <summary>
         /// Gets or sets the endianess of the underlying stream.
@@ -79,7 +79,7 @@ namespace RageLib.Data
         {
             this.baseStream = stream;
             this.Endianess = endianess;
-            this.EndianessMatchesArchitecture = endianess.EqualsHostArchitecture();
+            this.endianessEqualsHostArchitecture = endianess.EqualsHostArchitecture();
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace RageLib.Data
         /// </summary>
         protected virtual void WriteToStream(byte[] value, bool ignoreEndianess = false)
         {
-            if (!ignoreEndianess && !EndianessMatchesArchitecture)
+            if (!ignoreEndianess && !endianessEqualsHostArchitecture)
             {
                 var buffer = (byte[])value.Clone();
                 Array.Reverse(buffer);

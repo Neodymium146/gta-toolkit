@@ -80,7 +80,7 @@ namespace RageLib.Resources
                 virtualStream.Position = Position & ~VIRTUAL_BASE;
 
                 // handle endianess
-                if (!ignoreEndianess && !EndianessMatchesArchitecture)
+                if (!ignoreEndianess && !endianessEqualsHostArchitecture)
                 {
                     var buf = (byte[])value.Clone();
                     Array.Reverse(buf);
@@ -102,7 +102,7 @@ namespace RageLib.Resources
                 physicalStream.Position = Position & ~PHYSICAL_BASE;
 
                 // handle endianess
-                if (!ignoreEndianess && !EndianessMatchesArchitecture)
+                if (!ignoreEndianess && !endianessEqualsHostArchitecture)
                 {
                     var buf = (byte[])value.Clone();
                     Array.Reverse(buf);
