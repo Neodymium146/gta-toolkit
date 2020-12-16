@@ -20,6 +20,7 @@
     THE SOFTWARE.
 */
 
+using RageLib.Resources.Common;
 using System;
 
 namespace RageLib.Resources.GTA5.PC.Fragments
@@ -67,7 +68,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public float Unknown_74h;
         public float Unknown_78h;
         public float Unknown_7Ch; // 0x00000000
-        public FragGroupName Name;
+        public string32_r Name;
         public float Unknown_A0h;
         public float Unknown_A4h;
         public float Unknown_A8h;
@@ -117,7 +118,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_74h = reader.ReadSingle();
             this.Unknown_78h = reader.ReadSingle();
             this.Unknown_7Ch = reader.ReadSingle();
-            this.Name = reader.ReadBlock<FragGroupName>();
+            this.Name = reader.ReadBlock<string32_r>();
             this.Unknown_A0h = reader.ReadSingle();
             this.Unknown_A4h = reader.ReadSingle();
             this.Unknown_A8h = reader.ReadSingle();

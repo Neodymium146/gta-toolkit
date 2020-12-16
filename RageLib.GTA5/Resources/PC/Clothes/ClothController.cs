@@ -20,6 +20,8 @@
     THE SOFTWARE.
 */
 
+using RageLib.Resources.Common;
+using System;
 using System.Collections.Generic;
 
 namespace RageLib.Resources.GTA5.PC.Clothes
@@ -35,24 +37,13 @@ namespace RageLib.Resources.GTA5.PC.Clothes
         public ulong VerletCloth1Pointer;
         public ulong VerletCloth2Pointer;
         public ulong VerletCloth3Pointer;
-        public uint Unknown_38h; // 0x00000000
-        public uint Unknown_3Ch; // 0x00000000
-        public uint Unknown_40h; // 0x00000000
-        public uint Unknown_44h; // 0x00000000
-        public uint Unknown_48h; // 0x00000000
-        public uint Unknown_4Ch; // 0x00000000
+        public ulong Unknown_38h; // 0x0000000000000000
+        public ulong Unknown_40h; // 0x0000000000000000
+        public ulong Unknown_48h; // 0x0000000000000000
         public uint Type;
         public uint Unknown_54h; // 0x00000000
-        public uint Unknown_58h;  // no float
-        public uint Unknown_5Ch;  // no float
-        public uint Unknown_60h;  // no float
-        public uint Unknown_64h;  // no float
-        public uint Unknown_68h;  // no float
-        public uint Unknown_6Ch;  // no float
-        public uint Unknown_70h;  // no float
-        public uint Unknown_74h; // 0x00000000
-        public uint Unknown_78h; // 0x00000000
-        public uint Unknown_7Ch; // 0x00000000
+        public string32_r Name;
+        public ulong Unknown_78h; // 0x0000000000000000
 
         // reference data
         public ClothBridgeSimGfx BridgeSimGfx;
@@ -74,24 +65,13 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             this.VerletCloth1Pointer = reader.ReadUInt64();
             this.VerletCloth2Pointer = reader.ReadUInt64();
             this.VerletCloth3Pointer = reader.ReadUInt64();
-            this.Unknown_38h = reader.ReadUInt32();
-            this.Unknown_3Ch = reader.ReadUInt32();
-            this.Unknown_40h = reader.ReadUInt32();
-            this.Unknown_44h = reader.ReadUInt32();
-            this.Unknown_48h = reader.ReadUInt32();
-            this.Unknown_4Ch = reader.ReadUInt32();
+            this.Unknown_38h = reader.ReadUInt64();
+            this.Unknown_40h = reader.ReadUInt64();
+            this.Unknown_48h = reader.ReadUInt64();
             this.Type = reader.ReadUInt32();
             this.Unknown_54h = reader.ReadUInt32();
-            this.Unknown_58h = reader.ReadUInt32();
-            this.Unknown_5Ch = reader.ReadUInt32();
-            this.Unknown_60h = reader.ReadUInt32();
-            this.Unknown_64h = reader.ReadUInt32();
-            this.Unknown_68h = reader.ReadUInt32();
-            this.Unknown_6Ch = reader.ReadUInt32();
-            this.Unknown_70h = reader.ReadUInt32();
-            this.Unknown_74h = reader.ReadUInt32();
-            this.Unknown_78h = reader.ReadUInt32();
-            this.Unknown_7Ch = reader.ReadUInt32();
+            this.Name = reader.ReadBlock<string32_r>();
+            this.Unknown_78h = reader.ReadUInt64();
 
             // read reference data
             this.BridgeSimGfx = reader.ReadBlockAt<ClothBridgeSimGfx>(
@@ -132,23 +112,12 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             writer.Write(this.VerletCloth2Pointer);
             writer.Write(this.VerletCloth3Pointer);
             writer.Write(this.Unknown_38h);
-            writer.Write(this.Unknown_3Ch);
             writer.Write(this.Unknown_40h);
-            writer.Write(this.Unknown_44h);
             writer.Write(this.Unknown_48h);
-            writer.Write(this.Unknown_4Ch);
             writer.Write(this.Type);
             writer.Write(this.Unknown_54h);
-            writer.Write(this.Unknown_58h);
-            writer.Write(this.Unknown_5Ch);
-            writer.Write(this.Unknown_60h);
-            writer.Write(this.Unknown_64h);
-            writer.Write(this.Unknown_68h);
-            writer.Write(this.Unknown_6Ch);
-            writer.Write(this.Unknown_70h);
-            writer.Write(this.Unknown_74h);
+            writer.WriteBlock(this.Name);
             writer.Write(this.Unknown_78h);
-            writer.Write(this.Unknown_7Ch);
         }
 
         /// <summary>
@@ -163,6 +132,13 @@ namespace RageLib.Resources.GTA5.PC.Clothes
             if (VerletCloth2 != null) list.Add(VerletCloth2);
             if (VerletCloth3 != null) list.Add(VerletCloth3);
             return list.ToArray();
+        }
+
+        public override Tuple<long, IResourceBlock>[] GetParts()
+        {
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x58, Name)
+            };
         }
     }
 }

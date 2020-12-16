@@ -20,28 +20,19 @@
     THE SOFTWARE.
 */
 
-using RageLib.Resources.Common;
 using System.Text;
 
-namespace RageLib.Resources.GTA5.PC.Fragments
+namespace RageLib.Resources.Common
 {
-    public class FragGroupName : ResourceSystemBlock
+    // TODO: rework this, consider handling fixed length strings in DataReader/DataWriter
+    public class string32_r : string_r
     {
         public override long BlockLength => 0x20;
 
         // structure data
-        //public uint Unknown_0h;
-        //public uint Unknown_4h;
-        //public uint Unknown_8h;
-        //public uint Unknown_Ch;
-        //public uint Unknown_10h;
-        //public uint Unknown_14h;
-        //public uint Unknown_18h;
-        //public uint Unknown_1Ch;
-
         private byte[] Data;
 
-        public string Value
+        public new string Value
         {
             get
             {
@@ -72,7 +63,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             if (string.IsNullOrEmpty(Value)) 
-                Value = "INVALID_GROUP_NAME";
+                Value = "INVALID_STRING";
 
             // write structure data
             writer.Write(this.Data);
