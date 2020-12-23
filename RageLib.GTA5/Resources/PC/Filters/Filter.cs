@@ -31,16 +31,14 @@ namespace RageLib.Resources.GTA5.PC.Filters
         public override long BlockLength => 0x40;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
+        public ulong VFT;
         public uint Unknown_8h; // 0x00000001
         public uint Unknown_Ch;
         public uint Unknown_10h; // 0x00000004
         public uint Unknown_14h; // 0x00000000
         public SimpleList64<ulong> Unknown_18h;
-        public SimpleList64<uint> Unknown_28h;
-        public uint Unknown_38h; // 0x00000000
-        public uint Unknown_3Ch; // 0x00000000
+        public SimpleList64<float> Unknown_28h;
+        public ulong Unknown_38h; // 0x0000000000000000
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -48,16 +46,14 @@ namespace RageLib.Resources.GTA5.PC.Filters
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
+            this.VFT = reader.ReadUInt64();
             this.Unknown_8h = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadBlock<SimpleList64<ulong>>();
-            this.Unknown_28h = reader.ReadBlock<SimpleList64<uint>>();
-            this.Unknown_38h = reader.ReadUInt32();
-            this.Unknown_3Ch = reader.ReadUInt32();
+            this.Unknown_28h = reader.ReadBlock<SimpleList64<float>>();
+            this.Unknown_38h = reader.ReadUInt64();
         }
 
         /// <summary>
@@ -67,7 +63,6 @@ namespace RageLib.Resources.GTA5.PC.Filters
         {
             // write structure data
             writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
             writer.Write(this.Unknown_8h);
             writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
@@ -75,7 +70,6 @@ namespace RageLib.Resources.GTA5.PC.Filters
             writer.WriteBlock(this.Unknown_18h);
             writer.WriteBlock(this.Unknown_28h);
             writer.Write(this.Unknown_38h);
-            writer.Write(this.Unknown_3Ch);
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()
