@@ -96,7 +96,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (Geometries != null) list.Add(Geometries);
             if (GeometriesBounds != null) list.Add(GeometriesBounds);
             if (ShaderMapping != null) list.Add(ShaderMapping);
             return list.ToArray();
