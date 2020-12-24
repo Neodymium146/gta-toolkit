@@ -96,58 +96,109 @@ namespace RageLib.Resources
 
         public class ResourceBuilderBlockSet
         {
-            public bool IsSystemSet = false;
+            private const int numBuckets = 16;
+            private readonly LinkedList<IResourceBlock>[] buckets;
+
             public IResourceBlock RootBlock = null;
-            public LinkedList<IResourceBlock> BlockList = new LinkedList<IResourceBlock>();
 
-            public int Count => BlockList.Count;
+            public int Count
+            {
+                get
+                {
+                    int count = 0;
 
-            public ResourceBuilderBlockSet(IList<IResourceBlock> blocks, bool sys)
+                    for (int i = 0; i < numBuckets; i++)
+                        count += buckets[i].Count;
+
+                    return count;
+                }
+            }
+
+            public static int GetBucketIndex(long size)
+            {
+                ulong tmp = 1;
+                int index = 0;
+
+                while (tmp < (ulong)size)
+                {
+                    tmp <<= 1;
+                    index++;
+                }
+
+                if (index >= numBuckets) return numBuckets - 1;
+
+                return index;
+            }
+
+            public IResourceBlock GetBestBlock(long size)
+            {
+                if (size == 0) return null;
+
+                int index = GetBucketIndex(size);
+
+                // Get the target bucket
+                while (buckets[index].Count < 1)
+                {
+                    index--;
+                    if (index < 0) return null;
+                }
+
+                var current = GetBestBlockFromBucket(size, index);
+                return current;
+            }
+
+            public IResourceBlock GetBestBlockFromBucket(long size, int index)
+            {
+                var bucket = buckets[index];
+                var current = bucket.First;
+
+                while (current is not null && current.Value.BlockLength > size)
+                {
+                    current = current.Next;
+                }
+
+                if (current is not null)
+                {
+                    bucket.Remove(current);
+                    return current.Value;
+                }
+
+                return null;
+            }
+
+            public ResourceBuilderBlockSet(IList<IResourceBlock> blocks, bool hasRootBlock)
             {
                 if (blocks.Count < 1)
                     return;
 
-                IsSystemSet = sys;
-
                 int indexStart = 0;
 
-                if (IsSystemSet)
+                if (hasRootBlock)
                 {
                     RootBlock = blocks[0];
                     indexStart = 1;
                 }
 
-                //var list = blocks.GetRange(indexStart, blocks.Count - indexStart);
-                var list = new List<IResourceBlock>(blocks.Count - indexStart);
+                List<IResourceBlock>[] lists = new List<IResourceBlock>[numBuckets];
+                for (int i = 0; i < numBuckets; i++)
+                {
+                    lists[i] = new List<IResourceBlock>();
+                }
+
                 for (int i = indexStart; i < blocks.Count; i++)
                 {
-                    list.Add(blocks[i]);
+                    var block = blocks[i];
+                    var index = GetBucketIndex(block.BlockLength);
+
+                    lists[index].Add(block);
                 }
 
-                list.Sort((a, b) => b.BlockLength.CompareTo(a.BlockLength));
-
-                BlockList = new LinkedList<IResourceBlock>(list);
-            }
-
-            private LinkedListNode<IResourceBlock> FindBestBlock(long maxSize)
-            {
-                var n = BlockList.First;
-                while ((n != null) && (n.Value.BlockLength > maxSize))
+                buckets = new LinkedList<IResourceBlock>[numBuckets];
+                for (int i = 0; i < numBuckets; i++)
                 {
-                    n = n.Next;
+                    lists[i].Sort((a, b) => b.BlockLength.CompareTo(a.BlockLength));
+                    buckets[i] = new LinkedList<IResourceBlock>(lists[i]);
                 }
-                return n;
-            }
-
-            public IResourceBlock TakeBestBlock(long maxSize)
-            {
-                var n = FindBestBlock(maxSize);
-                if (n != null)
-                {
-                    BlockList.Remove(n);
-                    return n.Value;
-                }
-                return null;
             }
         }
 
@@ -311,7 +362,7 @@ namespace RageLib.Resources
                 while (blockset.Count > 0)
                 {
                     var isroot = sys && (currentPosition == 0);
-                    var block = isroot ? rootblock : blockset.TakeBestBlock(currentPageSpace);
+                    var block = isroot ? rootblock : blockset.GetBestBlock(currentPageSpace);
 
                     // If there is no block to fit in space left
                     if (block == null)
@@ -321,7 +372,7 @@ namespace RageLib.Resources
                         currentPosition = currentPageStart;
 
                         // Get the biggest block
-                        block = blockset.TakeBestBlock(long.MaxValue);
+                        block = blockset.GetBestBlock(long.MaxValue);
                         var blockLength = block?.BlockLength ?? 0;
 
                         // Get the smallest page which can contain the block
