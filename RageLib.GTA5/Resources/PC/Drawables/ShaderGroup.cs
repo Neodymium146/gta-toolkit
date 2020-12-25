@@ -57,6 +57,18 @@ namespace RageLib.Resources.GTA5.PC.Drawables
 
             // read structure data
             this.TextureDictionaryPointer = reader.ReadUInt64();
+
+            // HACK:    read texture dictionary first!
+            //          this will make sure ShaderParameter Data will point to the already read TextureDX11
+            //          instead of creating duplicated Texture blocks
+
+            // TODO:    edit ResourceDataReader block pool to handle these scenarios!
+
+            // read reference data
+            this.TextureDictionary = reader.ReadBlockAt<PgDictionary64<TextureDX11>>(
+                this.TextureDictionaryPointer // offset
+            );
+
             this.Shaders = reader.ReadBlock<ResourcePointerList64<ShaderFX>>();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
@@ -66,11 +78,6 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_34h = reader.ReadUInt32();
             this.Unknown_38h = reader.ReadUInt32();
             this.Unknown_3Ch = reader.ReadUInt32();
-
-            // read reference data
-            this.TextureDictionary = reader.ReadBlockAt<PgDictionary64<TextureDX11>>(
-                this.TextureDictionaryPointer // offset
-            );
         }
 
         /// <summary>
