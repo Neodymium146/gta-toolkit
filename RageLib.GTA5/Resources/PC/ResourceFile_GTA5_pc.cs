@@ -169,9 +169,15 @@ namespace RageLib.Resources.GTA5
             // data to byte-array
             ////////////////////////////////////////////////////////////////////////////
 
-            var systemStream = new MemoryStream();
-            var graphicsStream = new MemoryStream();
-            var resourceWriter = new ResourceDataWriter(systemStream, graphicsStream);
+            var virtualSize = (int)virtualPageFlags.Size;
+            var physicalSize = (int)physicalPageFlags.Size;
+
+            VirtualData = new byte[virtualSize];
+            PhysicalData = new byte[physicalSize];
+
+            var virtualStream = new MemoryStream(VirtualData);
+            var physicalStream = new MemoryStream(PhysicalData);
+            var resourceWriter = new ResourceDataWriter(virtualStream, physicalStream);
 
             resourceWriter.Position = 0x50000000;
             foreach (var block in systemBlocks)
@@ -203,17 +209,11 @@ namespace RageLib.Resources.GTA5
                 }
             }
 
-            var sysBuf = new byte[virtualPageFlags.Size];
-            systemStream.Flush();
-            systemStream.Position = 0;
-            systemStream.Read(sysBuf, 0, (int)systemStream.Length);
-            VirtualData = sysBuf;
+            virtualStream.Flush();
+            virtualStream.Position = 0;
 
-            var gfxBuf = new byte[physicalPageFlags.Size];
-            graphicsStream.Flush();
-            graphicsStream.Position = 0;
-            graphicsStream.Read(gfxBuf, 0, (int)graphicsStream.Length);
-            PhysicalData = gfxBuf;
+            physicalStream.Flush();
+            physicalStream.Position = 0;
 
             base.Save(stream);
         }        
