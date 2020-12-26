@@ -259,20 +259,20 @@ namespace RageLib.Data
         {
             Matrix4x4 m = new Matrix4x4();
             m.M11 = ReadSingle();
-            m.M21 = ReadSingle();
-            m.M31 = ReadSingle();
-            m.M41 = ReadSingle();
             m.M12 = ReadSingle();
-            m.M22 = ReadSingle();
-            m.M32 = ReadSingle();
-            m.M42 = ReadSingle();
             m.M13 = ReadSingle();
-            m.M23 = ReadSingle();
-            m.M33 = ReadSingle();
-            m.M43 = ReadSingle();
             m.M14 = ReadSingle();
+            m.M21 = ReadSingle();
+            m.M22 = ReadSingle();
+            m.M23 = ReadSingle();
             m.M24 = ReadSingle();
+            m.M31 = ReadSingle();
+            m.M32 = ReadSingle();
+            m.M33 = ReadSingle();
             m.M34 = ReadSingle();
+            m.M41 = ReadSingle();
+            m.M42 = ReadSingle();
+            m.M43 = ReadSingle();
             m.M44 = ReadSingle();
             return m;
         }
