@@ -68,23 +68,21 @@ namespace RageLib.GTA5.PSOWrappers.Data
             this.psoFile = psoFile;
         }
 
-        protected override byte[] ReadFromStream(int count, bool ignoreEndianess = false)
+        protected override Buffer<T> ReadFromStream<T>(int count, bool ignoreEndianess = false)
         {
             // TODO very bad performance, improve this!
             var str = new MemoryStream(psoFile.DataSection.Data);
             str.Position = psoFile.DataMappingSection.Entries[CurrentSectionIndex].Offset;
             str.Position += Position;
 
-            var buffer = new byte[count];
-            str.Read(buffer, 0, count);
+            Buffer<T> buffer = new Buffer<T>(count);
+            str.Read(buffer.Bytes, 0, buffer.Size);
 
-            Position += count;
+            Position += buffer.Size;
 
             // handle endianess
             if (!ignoreEndianess && !endianessEqualsHostArchitecture)
-            {
-                Array.Reverse(buffer);
-            }
+                buffer.Reverse();
 
             return buffer;
         }

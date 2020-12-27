@@ -35,32 +35,22 @@ namespace RageLib.Resources
         private const long VIRTUAL_BASE = 0x50000000;
         private const long PHYSICAL_BASE = 0x60000000;
 
-        private Stream virtualStream;
-        private Stream physicalStream;
+        private readonly Stream virtualStream;
+        private readonly Stream physicalStream;
 
         // this is a dictionary that contains all the resource blocks
         // which were read from this resource reader
-        private Dictionary<long, List<IResourceBlock>> blockPool;
+        private readonly Dictionary<long, List<IResourceBlock>> blockPool;
 
         /// <summary>
         /// Gets the length of the underlying stream.
         /// </summary>
-        public override long Length
-        {
-            get
-            {
-                return -1;
-            }
-        }
+        public override long Length => -1;
 
         /// <summary>
         /// Gets or sets the position within the underlying stream.
         /// </summary>
-        public override long Position
-        {
-            get;
-            set;
-        }
+        public override long Position { get; set; }
 
         /// <summary>
         /// Initializes a new resource data reader for the specified virtual- and physical-stream.
@@ -77,46 +67,41 @@ namespace RageLib.Resources
         /// Reads data from the underlying stream. This is the only method that directly accesses
         /// the data in the underlying stream.
         /// </summary>
-        protected override byte[] ReadFromStream(int count, bool ignoreEndianess = false)
+        protected override Buffer<T> ReadFromStream<T>(int count, bool ignoreEndianess = false)
         {
+            Buffer<T> buffer = new Buffer<T>(count);
+            RawReadFromStream(buffer.BytesSpan);
+
+            // handle endianess
+            if (!ignoreEndianess && !endianessEqualsHostArchitecture)
+                buffer.Reverse();
+
+            return buffer;
+        }
+
+        protected override void RawReadFromStream(Span<byte> span)
+        {
+            Stream stream;
+            long basePosition;
+
             if ((Position & VIRTUAL_BASE) == VIRTUAL_BASE)
             {
                 // read from virtual stream...
-
-                virtualStream.Position = Position & ~0x50000000;
-
-                var buffer = new byte[count];
-                virtualStream.Read(buffer, 0, count);
-
-                // handle endianess
-                if (!ignoreEndianess && !endianessEqualsHostArchitecture)
-                {
-                    Array.Reverse(buffer);
-                }
-
-                Position = virtualStream.Position | 0x50000000;
-                return buffer;
-
+                stream = virtualStream;
+                basePosition = VIRTUAL_BASE;
             }
-            if ((Position & PHYSICAL_BASE) == PHYSICAL_BASE)
+            else if ((Position & PHYSICAL_BASE) == PHYSICAL_BASE)
             {
                 // read from physical stream...
-
-                physicalStream.Position = Position & ~0x60000000;
-
-                var buffer = new byte[count];
-                physicalStream.Read(buffer, 0, count);
-
-                // handle endianess
-                if (!ignoreEndianess && !endianessEqualsHostArchitecture)
-                {
-                    Array.Reverse(buffer);
-                }
-
-                Position = physicalStream.Position | 0x60000000;
-                return buffer;
+                stream = physicalStream;
+                basePosition = PHYSICAL_BASE;
             }
-            throw new Exception("illegal position!");
+            else
+                throw new Exception("illegal position!");
+
+            stream.Position = Position & ~basePosition;
+            stream.Read(span);
+            Position = stream.Position | basePosition;
         }
 
         /// <summary>
