@@ -54,8 +54,10 @@ namespace RageLib.Resources.Common
             // read reference data
             this.Entries = reader.ReadBlockAt<ResourceSimpleArray<T>>(
                 this.EntriesPointer, // offset
-                this.EntriesCount
+                this.EntriesCapacity
             );
+
+            // TODO: see https://github.com/carmineos/gta-toolkit/issues/13
         }
 
         /// <summary>

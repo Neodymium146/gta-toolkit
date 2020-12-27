@@ -138,6 +138,24 @@ namespace RageLib.Resources
                         // has been found at the same address, return it
                         return (T)block;
                     }
+#if DEBUG
+                    else
+                    {
+                        // TODO:    Be sure we aren't reading a base class of an object that
+                        //          we have already read at the same position as but derived type
+                        //          This shouldn't happen, so far only happened if we read
+                        //          ShaderParameter Texture data blocks before and then after
+                        //          we read TextureDX11 from a texture dictionary embedded in the ShaderGroup
+                        //          as the if check above will return false since Texture (in the pool) is not TextureDX11 (but the opposite)
+                        //          the result is that the pool will create another block instead of returning the same
+                        //          We have to workaround limitation of dealing with managed objects (so we can't just recast the pointer)
+                        //          We want to replace it with the new most derived block, and update all the references to it
+                        //          Maybe Texture has a field to which specifies which type of Texture it is?
+                        //          see https://github.com/carmineos/gta-toolkit/issues/11
+
+                        System.Diagnostics.Debug.Assert(!block.GetType().IsAssignableFrom(typeof(T)));
+                    }
+#endif
             }
 
             var result = new T();

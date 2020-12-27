@@ -63,6 +63,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             //          instead of creating duplicated Texture blocks
 
             // TODO:    edit ResourceDataReader block pool to handle these scenarios!
+            //          see https://github.com/carmineos/gta-toolkit/issues/11
 
             // read reference data
             this.TextureDictionary = reader.ReadBlockAt<PgDictionary64<TextureDX11>>(
