@@ -248,11 +248,12 @@ namespace RageLib.Data
 
             if (!endianessEqualsHostArchitecture)
             {
-                if (Unsafe.SizeOf<T>() > 1)
-                {
-                    for (int i = 0; i < items.Length; i++)
-                        span.Slice(i * Unsafe.SizeOf<T>(), Unsafe.SizeOf<T>()).Reverse();
-                }
+                // Don't invert endianess on input array!
+                using Buffer<T> buffer = new Buffer<T>(items.Length);
+                span.CopyTo(buffer.BytesSpan);
+                buffer.Reverse();
+                WriteToStreamRaw(buffer.BytesSpan);
+                return;
             }
 
             WriteToStreamRaw(span);
