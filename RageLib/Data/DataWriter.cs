@@ -244,17 +244,18 @@ namespace RageLib.Data
 
         public void WriteArray<T>(T[] items) where T : unmanaged
         {
-            // if endianess needs to be handled
-            if(!endianessEqualsHostArchitecture)
-            {
-                for (int i = 0; i < items.Length; i++)
-                    WriteToStream<T>(items[i]);
+            var span = MemoryMarshal.AsBytes(items.AsSpan());
 
-                return;
+            if (!endianessEqualsHostArchitecture)
+            {
+                if (Unsafe.SizeOf<T>() > 1)
+                {
+                    for (int i = 0; i < items.Length; i++)
+                        span.Slice(i * Unsafe.SizeOf<T>(), Unsafe.SizeOf<T>()).Reverse();
+                }
             }
 
-            // otherwise write the array directly
-            WriteToStreamRaw(MemoryMarshal.AsBytes(items.AsSpan()));
+            WriteToStreamRaw(span);
         }
 
         protected void WriteToStream<T>(T value) where T : unmanaged
