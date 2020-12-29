@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{36EED776
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArchiveTool", "Tools\ArchiveTool\ArchiveTool.csproj", "{7A5CAE95-08CD-4E4A-A900-77E2732EE6BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureTool", "Tools\TextureTool\TextureTool.csproj", "{0C1A9502-FEF1-423D-8798-FCC5C84EAEFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextureTool", "Tools\TextureTool\TextureTool.csproj", "{0C1A9502-FEF1-423D-8798-FCC5C84EAEFE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RageLib", "RageLib\RageLib.csproj", "{718F3F76-51AE-46CB-B11B-027B9BBC8A0B}"
 EndProject
@@ -31,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{4E24
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing.GTA5", "Testing\Testing.GTA5\Testing.GTA5.csproj", "{E35F87C9-1E39-44E4-BC72-336F5B63CB04}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark", "Testing\Benchmark\Benchmark.csproj", "{54965EB4-16F1-4044-B097-FA268BAB864E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "Testing\Benchmarks\Benchmarks.csproj", "{54965EB4-16F1-4044-B097-FA268BAB864E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing.RDR2", "Testing\Testing.RDR2\Testing.RDR2.csproj", "{49358D85-1177-406A-ABC2-0F5EF7C1D977}"
 EndProject
