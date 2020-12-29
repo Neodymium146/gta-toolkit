@@ -74,12 +74,17 @@ namespace RageLib.Data
             baseStream.Write(value);
         }
 
+        protected virtual void WriteToStreamRaw(byte value)
+        {
+            baseStream.WriteByte(value);
+        }
+
         /// <summary>
         /// Writes a byte.
         /// </summary>
         public void Write(byte value)
         {
-            WriteToStream(value);
+            WriteToStreamRaw(value);
         }
 
         /// <summary>
@@ -159,9 +164,13 @@ namespace RageLib.Data
         /// </summary>
         public void Write(string value)
         {
+            //using Buffer<byte> buffer = new Buffer<byte>(value.Length);
+            //_ = Encoding.ASCII.GetBytes(value.AsSpan(), buffer.BytesSpan);
+            //WriteToStreamRaw(buffer.BytesSpan);
+            
             foreach (var c in value)
-                Write((byte)c);
-            Write((byte)0);
+                WriteToStreamRaw((byte)c);
+            WriteToStreamRaw((byte)0);
         }
 
         /// <summary>
@@ -248,14 +257,14 @@ namespace RageLib.Data
             WriteToStreamRaw(MemoryMarshal.AsBytes(items.AsSpan()));
         }
 
-        protected virtual void WriteToStream<T>(T value, bool ignoreEndianess = false) where T : unmanaged
+        protected void WriteToStream<T>(T value) where T : unmanaged
         {
             var span = MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref value, 1));
 
-            if (!ignoreEndianess && !endianessEqualsHostArchitecture)
+            if (!endianessEqualsHostArchitecture)
                 span.Reverse();
 
-            baseStream.Write(span);
+            WriteToStreamRaw(span);
         }
     }
 }

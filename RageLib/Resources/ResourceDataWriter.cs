@@ -91,14 +91,10 @@ namespace RageLib.Resources
         }
 
         /// <summary>
-        /// Writes a block.
+        /// Writes data to the underlying stream. This is the only method that directly accesses
+        /// the data in the underlying stream.
         /// </summary>
-        public void WriteBlock(IResourceBlock value)
-        {
-            value.Write(this);
-        }
-
-        protected override void WriteToStream<T>(T value, bool ignoreEndianess = false)
+        protected override void WriteToStreamRaw(byte value)
         {
             Stream stream;
             long basePosition;
@@ -120,16 +116,18 @@ namespace RageLib.Resources
 
             stream.Position = Position & ~basePosition;
 
-            // handle endianess
-            var span = MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref value, 1));
-
-            if (!ignoreEndianess && !endianessEqualsHostArchitecture)
-                span.Reverse();
-
-            stream.Write(span);
+            stream.WriteByte(value);
 
             Position = stream.Position | basePosition;
             return;
+        }
+
+        /// <summary>
+        /// Writes a block.
+        /// </summary>
+        public void WriteBlock(IResourceBlock value)
+        {
+            value.Write(this);
         }
     }
 }
