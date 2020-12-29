@@ -67,14 +67,11 @@ namespace RageLib.Data
             this.endianessEqualsHostArchitecture = endianess.EqualsHostArchitecture();
         }
 
-        /// <summary>
-        /// Reads data from the underlying stream. This is the only method that directly accesses
-        /// the data in the underlying stream.
-        /// </summary>
-        protected virtual Buffer<T> ReadFromStream<T>(int count, bool ignoreEndianess = false) where T : unmanaged
+        
+        protected Buffer<T> ReadFromStream<T>(int count, bool ignoreEndianess = false) where T : unmanaged
         {
             Buffer<T> buffer = new Buffer<T>(count);
-            RawReadFromStream(buffer.BytesSpan);
+            ReadFromStreamRaw(buffer.BytesSpan);
 
             // handle endianess
             if (!ignoreEndianess && !endianessEqualsHostArchitecture)
@@ -83,7 +80,11 @@ namespace RageLib.Data
             return buffer;
         }
 
-        protected virtual void RawReadFromStream(Span<byte> span)
+        /// <summary>
+        /// Reads data from the underlying stream. This is the only method that directly accesses
+        /// the data in the underlying stream.
+        /// </summary>
+        protected virtual void ReadFromStreamRaw(Span<byte> span)
         {
             baseStream.Read(span);
         }
@@ -103,7 +104,7 @@ namespace RageLib.Data
         public byte[] ReadBytes(int count)
         {
             byte[] array = new byte[count];
-            RawReadFromStream(array.AsSpan());
+            ReadFromStreamRaw(array.AsSpan());
             return array;
         }
 
@@ -261,7 +262,7 @@ namespace RageLib.Data
         {
             T[] array = new T[count];
             var bytes = MemoryMarshal.AsBytes(array.AsSpan());
-            RawReadFromStream(bytes);
+            ReadFromStreamRaw(bytes);
 
             // handle endianess
             if (!endianessEqualsHostArchitecture)

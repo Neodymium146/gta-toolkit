@@ -63,23 +63,7 @@ namespace RageLib.Resources
             this.blockPool = new Dictionary<long, List<IResourceBlock>>();
         }
 
-        /// <summary>
-        /// Reads data from the underlying stream. This is the only method that directly accesses
-        /// the data in the underlying stream.
-        /// </summary>
-        protected override Buffer<T> ReadFromStream<T>(int count, bool ignoreEndianess = false)
-        {
-            Buffer<T> buffer = new Buffer<T>(count);
-            RawReadFromStream(buffer.BytesSpan);
-
-            // handle endianess
-            if (!ignoreEndianess && !endianessEqualsHostArchitecture)
-                buffer.Reverse();
-
-            return buffer;
-        }
-
-        protected override void RawReadFromStream(Span<byte> span)
+        protected override void ReadFromStreamRaw(Span<byte> span)
         {
             Stream stream;
             long basePosition;
