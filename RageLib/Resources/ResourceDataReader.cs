@@ -88,6 +88,32 @@ namespace RageLib.Resources
             Position = stream.Position | basePosition;
         }
 
+        protected override byte ReadByteFromStreamRaw()
+        {
+            Stream stream;
+            long basePosition;
+
+            if ((Position & VIRTUAL_BASE) == VIRTUAL_BASE)
+            {
+                // read from virtual stream...
+                stream = virtualStream;
+                basePosition = VIRTUAL_BASE;
+            }
+            else if ((Position & PHYSICAL_BASE) == PHYSICAL_BASE)
+            {
+                // read from physical stream...
+                stream = physicalStream;
+                basePosition = PHYSICAL_BASE;
+            }
+            else
+                throw new Exception("illegal position!");
+
+            stream.Position = Position & ~basePosition;
+            var b = (byte)stream.ReadByte();
+            Position = stream.Position | basePosition;
+            return b;
+        }
+
         /// <summary>
         /// Reads a block.
         /// </summary>

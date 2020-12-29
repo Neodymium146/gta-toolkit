@@ -89,13 +89,17 @@ namespace RageLib.Data
             baseStream.Read(span);
         }
 
+        protected virtual byte ReadByteFromStreamRaw()
+        {
+            return (byte)baseStream.ReadByte();
+        }
+
         /// <summary>
         /// Reads a byte.
         /// </summary>
         public byte ReadByte()
         {
-            using Buffer<byte> buffer = ReadFromStream<byte>(1);
-            return buffer.Span[0];
+            return ReadByteFromStreamRaw();
         }
 
         /// <summary>
@@ -190,7 +194,7 @@ namespace RageLib.Data
             {
                 int i = 0;
                 byte c;
-                while ((c = ReadByte()) != 0)
+                while ((c = ReadByteFromStreamRaw()) != 0)
                 {
                     buffer.Bytes[i] = c;
                     i++;
