@@ -56,18 +56,7 @@ namespace RageLib.Resources.GTA5
             uint virtualPageFlags = reader.ReadUInt32();
             uint physicalPageFlags = reader.ReadUInt32();
 
-            ResourceFileHeader = new DatResourceFileHeader()
-            {   
-                Id = ident,
-                Flags = flags,
-                
-                ResourceInfo = new DatResourceInfo()
-                {
-                    VirtualFlags = virtualPageFlags,
-                    PhysicalFlags = physicalPageFlags
-                },
-            };
-            
+            ResourceFileHeader = new DatResourceFileHeader(ident, flags, virtualPageFlags, physicalPageFlags);
             Version = (int)ResourceFileHeader.Flags & 0xFF;
 
             var virtualSize = ((ResourceChunkFlags)virtualPageFlags).Size;
@@ -134,43 +123,18 @@ namespace RageLib.Resources.GTA5
 
         public override void Save(Stream stream)
         {
-            var resBlock = (IResourceBlock)ResourceData;
-            var fileBase = (PgBase64)resBlock;
-
-            // Create a temp datResourceMap
-            fileBase.PagesInfo = new PagesInfo(64, 64);
-
             ResourceHelpers.GetBlocks(ResourceData, out IList<IResourceBlock> systemBlocks, out IList<IResourceBlock> graphicBlocks);
 
-            ResourceHelpers.AssignPositions(systemBlocks, 0x50000000, out ResourceChunkFlags virtualPageFlags, 0);
-            
-            ResourceHelpers.AssignPositions(graphicBlocks, 0x60000000, out ResourceChunkFlags physicalPageFlags, virtualPageFlags.Count);
-
-            fileBase.PagesInfo.VirtualPagesCount = (byte)virtualPageFlags.Count;
-            fileBase.PagesInfo.PhysicalPagesCount = (byte)physicalPageFlags.Count;
-
-            // Add version to the flags
-            virtualPageFlags += ((((uint)Version >> 4) & 0xF) << 28);
-            physicalPageFlags += ((((uint)Version >> 0) & 0xF) << 28);
-
-            // create a header
-            ResourceFileHeader = new DatResourceFileHeader
-            {
-                Id = RESOURCE_IDENT,
-                Flags = (uint)Version,
-                ResourceInfo = new DatResourceInfo()
-                {
-                    VirtualFlags = virtualPageFlags,
-                    PhysicalFlags = physicalPageFlags
-                }
-            };
+            RemapBlocks(systemBlocks, graphicBlocks);
 
             ////////////////////////////////////////////////////////////////////////////
             // data to byte-array
             ////////////////////////////////////////////////////////////////////////////
+            
+            var resourceInfo = ResourceFileHeader.ResourceInfo;
 
-            var virtualSize = (int)virtualPageFlags.Size;
-            var physicalSize = (int)physicalPageFlags.Size;
+            var virtualSize = (int)((ResourceChunkFlags)resourceInfo.VirtualFlags).Size;
+            var physicalSize = (int)((ResourceChunkFlags)resourceInfo.PhysicalFlags).Size;
 
             VirtualData = new byte[virtualSize];
             PhysicalData = new byte[physicalSize];
@@ -217,6 +181,27 @@ namespace RageLib.Resources.GTA5
 
             base.Save(stream);
         }        
+
+        public void RemapBlocks(IList<IResourceBlock> systemBlocks, IList<IResourceBlock> graphicBlocks)
+        {
+            var rootBlock = (IResourceBlock)ResourceData;
+            var pgBase = (PgBase64)rootBlock;
+
+            // Create a temp datResourceMap
+            pgBase.PagesInfo = new PagesInfo(64, 64);
+
+            ResourceHelpers.AssignPositions(systemBlocks, 0x50000000, out ResourceChunkFlags virtualPageFlags, 0);
+            ResourceHelpers.AssignPositions(graphicBlocks, 0x60000000, out ResourceChunkFlags physicalPageFlags, virtualPageFlags.Count);
+            pgBase.PagesInfo.VirtualPagesCount = (byte)virtualPageFlags.Count;
+            pgBase.PagesInfo.PhysicalPagesCount = (byte)physicalPageFlags.Count;
+
+            // Add version to the flags
+            virtualPageFlags |= (((uint)Version >> 4) & 0xF) << 28;
+            physicalPageFlags |= (((uint)Version >> 0) & 0xF) << 28;
+
+            // create new a header
+            ResourceFileHeader = new DatResourceFileHeader(RESOURCE_IDENT, (uint)Version, virtualPageFlags, physicalPageFlags);
+        }
 
         public void Rebuild()
         {

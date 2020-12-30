@@ -6,6 +6,13 @@
         public uint Id;
         public uint Flags;
         public DatResourceInfo ResourceInfo;
+
+        public DatResourceFileHeader(uint id, uint flags, uint virtualFlags, uint physicalFlags)
+        {
+            Id = id;
+            Flags = flags;
+            ResourceInfo = new DatResourceInfo(virtualFlags, physicalFlags);
+        }
     }
 
     // datResourceInfo
@@ -14,18 +21,10 @@
         public uint VirtualFlags;
         public uint PhysicalFlags;
 
-        public static implicit operator ulong(DatResourceInfo value)
+        public DatResourceInfo(uint virtualFlags, uint physicalFlags)
         {
-            return (((ulong)value.VirtualFlags << 32) & 0xFFFFFFFF00000000) | (value.PhysicalFlags & 0x00000000FFFFFFFF);
-        }
-
-        public static implicit operator DatResourceInfo(ulong value)
-        {
-            return new DatResourceInfo()
-            {
-                VirtualFlags = (uint)((value & 0xFFFFFFFF00000000) >> 32),
-                PhysicalFlags = (uint)(value & 0x00000000FFFFFFFF),
-            };
+            VirtualFlags = virtualFlags;
+            PhysicalFlags = physicalFlags;
         }
     }
 }
