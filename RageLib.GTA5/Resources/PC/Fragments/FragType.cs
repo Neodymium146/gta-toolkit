@@ -67,10 +67,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public float Unknown_D0h;
         public float Unknown_D4h;
         public byte Unknown_D8h;
-        public byte Count3;
+        public byte GlassPaneModelInfosCount;
         public ushort Unknown_DAh;
         public uint Unknown_DCh; // 0x00000000
-        public ulong Unknown_E0h_Pointer;
+        public ulong GlassPaneModelInfosPointer;
         public ulong Unknown_E8h; // 0x0000000000000000
         public ulong PhysicsLODGroupPointer;
         public ulong ClothDrawablePointer;
@@ -86,7 +86,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
         public ResourcePointerArray64<string_r> DrawablesNames;
         public string_r Name;
         public MatrixSet MatrixSet;
-        public ResourcePointerArray64<Unknown_F_004> Unknown_E0h_Data;
+        public ResourcePointerArray64<GlassPaneModelInfo> GlassPaneModelInfos;
         public FragPhysicsLODGroup PhysicsLODGroup;
         public FragDrawable ClothDrawable;
         public VehicleGlassWindowData VehicleGlassWindowData;
@@ -130,10 +130,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.Unknown_D0h = reader.ReadSingle();
             this.Unknown_D4h = reader.ReadSingle();
             this.Unknown_D8h = reader.ReadByte();
-            this.Count3 = reader.ReadByte();
+            this.GlassPaneModelInfosCount = reader.ReadByte();
             this.Unknown_DAh = reader.ReadUInt16();
             this.Unknown_DCh = reader.ReadUInt32();
-            this.Unknown_E0h_Pointer = reader.ReadUInt64();
+            this.GlassPaneModelInfosPointer = reader.ReadUInt64();
             this.Unknown_E8h = reader.ReadUInt64();
             this.PhysicsLODGroupPointer = reader.ReadUInt64();
             this.ClothDrawablePointer = reader.ReadUInt64();
@@ -161,9 +161,9 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.MatrixSet = reader.ReadBlockAt<MatrixSet>(
                 this.MatrixSetPointer // offset
             );
-            this.Unknown_E0h_Data = reader.ReadBlockAt<ResourcePointerArray64<Unknown_F_004>>(
-                this.Unknown_E0h_Pointer, // offset
-                this.Count3
+            this.GlassPaneModelInfos = reader.ReadBlockAt<ResourcePointerArray64<GlassPaneModelInfo>>(
+                this.GlassPaneModelInfosPointer, // offset
+                this.GlassPaneModelInfosCount
             );
             this.PhysicsLODGroup = reader.ReadBlockAt<FragPhysicsLODGroup>(
                 this.PhysicsLODGroupPointer // offset
@@ -189,7 +189,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             this.DrawablesNamesPointer = (ulong)(this.DrawablesNames != null ? this.DrawablesNames.BlockPosition : 0);
             this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
             this.MatrixSetPointer = (ulong)(this.MatrixSet != null ? this.MatrixSet.BlockPosition : 0);
-            this.Unknown_E0h_Pointer = (ulong)(this.Unknown_E0h_Data != null ? this.Unknown_E0h_Data.BlockPosition : 0);
+            this.GlassPaneModelInfosPointer = (ulong)(this.GlassPaneModelInfos != null ? this.GlassPaneModelInfos.BlockPosition : 0);
             this.PhysicsLODGroupPointer = (ulong)(this.PhysicsLODGroup != null ? this.PhysicsLODGroup.BlockPosition : 0);
             this.ClothDrawablePointer = (ulong)(this.ClothDrawable != null ? this.ClothDrawable.BlockPosition : 0);
             this.VehicleGlassWindowDataPointer = (ulong)(this.VehicleGlassWindowData != null ? this.VehicleGlassWindowData.BlockPosition : 0);
@@ -226,10 +226,10 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             writer.Write(this.Unknown_D0h);
             writer.Write(this.Unknown_D4h);
             writer.Write(this.Unknown_D8h);
-            writer.Write(this.Count3);
+            writer.Write(this.GlassPaneModelInfosCount);
             writer.Write(this.Unknown_DAh);
             writer.Write(this.Unknown_DCh);
-            writer.Write(this.Unknown_E0h_Pointer);
+            writer.Write(this.GlassPaneModelInfosPointer);
             writer.Write(this.Unknown_E8h);
             writer.Write(this.PhysicsLODGroupPointer);
             writer.Write(this.ClothDrawablePointer);
@@ -251,7 +251,7 @@ namespace RageLib.Resources.GTA5.PC.Fragments
             if (DrawablesNames != null) list.Add(DrawablesNames);
             if (Name != null) list.Add(Name);
             if (MatrixSet != null) list.Add(MatrixSet);
-            if (Unknown_E0h_Data != null) list.Add(Unknown_E0h_Data);
+            if (GlassPaneModelInfos != null) list.Add(GlassPaneModelInfos);
             if (PhysicsLODGroup != null) list.Add(PhysicsLODGroup);
             if (ClothDrawable != null) list.Add(ClothDrawable);
             if (VehicleGlassWindowData != null) list.Add(VehicleGlassWindowData);
