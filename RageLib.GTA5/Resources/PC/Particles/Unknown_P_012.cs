@@ -23,6 +23,7 @@
 using RageLib.Resources.Common;
 using RageLib.Resources.GTA5.PC.Drawables;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Particles
 {
@@ -31,19 +32,16 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override long BlockLength => 0x30;
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public uint Unknown_8h;
-        public uint Unknown_Ch;
-        public ulong Unknown_10h_Pointer;
+        public Vector4 Unknown_0h;
+        public ulong NamePointer;
         public ulong DrawablePointer;
-        public uint Unknown_20h;
+        public uint NameHash;
         public uint Unknown_24h; // 0x00000000
         public uint Unknown_28h; // 0x00000000
         public uint Unknown_2Ch; // 0x00000000
 
         // reference data
-        public string_r Unknown_10h_Data;
+        public string_r Name;
         public Drawable Drawable;
 
         /// <summary>
@@ -52,20 +50,17 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h_Pointer = reader.ReadUInt64();
+            this.Unknown_0h = reader.ReadVector4();
+            this.NamePointer = reader.ReadUInt64();
             this.DrawablePointer = reader.ReadUInt64();
-            this.Unknown_20h = reader.ReadUInt32();
+            this.NameHash = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
             this.Unknown_28h = reader.ReadUInt32();
             this.Unknown_2Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Unknown_10h_Data = reader.ReadBlockAt<string_r>(
-                this.Unknown_10h_Pointer // offset
+            this.Name = reader.ReadBlockAt<string_r>(
+                this.NamePointer // offset
             );
             this.Drawable = reader.ReadBlockAt<Drawable>(
                 this.DrawablePointer // offset
@@ -78,17 +73,14 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.Unknown_10h_Pointer = (ulong)(this.Unknown_10h_Data != null ? this.Unknown_10h_Data.BlockPosition : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
             this.DrawablePointer = (ulong)(this.Drawable != null ? this.Drawable.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h_Pointer);
+            writer.Write(this.NamePointer);
             writer.Write(this.DrawablePointer);
-            writer.Write(this.Unknown_20h);
+            writer.Write(this.NameHash);
             writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
             writer.Write(this.Unknown_2Ch);
@@ -100,7 +92,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (Unknown_10h_Data != null) list.Add(Unknown_10h_Data);
+            if (Name != null) list.Add(Name);
             if (Drawable != null) list.Add(Drawable);
             return list.ToArray();
         }

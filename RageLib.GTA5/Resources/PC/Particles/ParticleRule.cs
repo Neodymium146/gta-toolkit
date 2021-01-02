@@ -65,16 +65,14 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_1A4h; // 0x00000000
         public uint Unknown_1A8h; // 0x00000000
         public uint Unknown_1ACh; // 0x00000000
-        public uint VFTx3;
-        public uint Unknown_1B4h; // 0x00000001
-        public ulong p9;
-        public ulong p10;
+        public ulong VFTx3;
+        public ulong ShaderNamePointer;
+        public ulong ShaderTechniqueNamePointer;
         public uint Unknown_1C8h; // 0x00000000
         public uint Unknown_1CCh; // 0x00000000
         public uint Unknown_1D0h;
         public uint Unknown_1D4h; // 0x00000000
-        public uint VFTx4;
-        public uint Unknown_1DCh; // 0x00000001
+        public ulong VFTx4;
         public uint Unknown_1E0h;
         public uint Unknown_1E4h;
         public uint Unknown_1E8h;
@@ -82,7 +80,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public ResourcePointerList64<ShaderVar> ShaderVars;
         public uint Unknown_200h; // 0x00000001
         public uint Unknown_204h; // 0x00000000
-        public uint Unknown_208h;
+        public uint ShaderNameHash;
         public uint Unknown_20Ch; // 0x00000000
         public ResourceSimpleList64<Unknown_P_012> Unknown_210h;
         public uint Unknown_220h;
@@ -96,8 +94,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // reference data
         public string_r Name;
-        public string_r p9data;
-        public string_r p10data;
+        public string_r ShaderName;
+        public string_r ShaderTechniqueName;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -138,16 +136,14 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_1A4h = reader.ReadUInt32();
             this.Unknown_1A8h = reader.ReadUInt32();
             this.Unknown_1ACh = reader.ReadUInt32();
-            this.VFTx3 = reader.ReadUInt32();
-            this.Unknown_1B4h = reader.ReadUInt32();
-            this.p9 = reader.ReadUInt64();
-            this.p10 = reader.ReadUInt64();
+            this.VFTx3 = reader.ReadUInt64();
+            this.ShaderNamePointer = reader.ReadUInt64();
+            this.ShaderTechniqueNamePointer = reader.ReadUInt64();
             this.Unknown_1C8h = reader.ReadUInt32();
             this.Unknown_1CCh = reader.ReadUInt32();
             this.Unknown_1D0h = reader.ReadUInt32();
             this.Unknown_1D4h = reader.ReadUInt32();
-            this.VFTx4 = reader.ReadUInt32();
-            this.Unknown_1DCh = reader.ReadUInt32();
+            this.VFTx4 = reader.ReadUInt64();
             this.Unknown_1E0h = reader.ReadUInt32();
             this.Unknown_1E4h = reader.ReadUInt32();
             this.Unknown_1E8h = reader.ReadUInt32();
@@ -155,7 +151,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.ShaderVars = reader.ReadBlock<ResourcePointerList64<ShaderVar>>();
             this.Unknown_200h = reader.ReadUInt32();
             this.Unknown_204h = reader.ReadUInt32();
-            this.Unknown_208h = reader.ReadUInt32();
+            this.ShaderNameHash = reader.ReadUInt32();
             this.Unknown_20Ch = reader.ReadUInt32();
             this.Unknown_210h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_012>>();
             this.Unknown_220h = reader.ReadUInt32();
@@ -171,11 +167,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Name = reader.ReadBlockAt<string_r>(
                 this.NamePointer // offset
             );
-            this.p9data = reader.ReadBlockAt<string_r>(
-                this.p9 // offset
+            this.ShaderName = reader.ReadBlockAt<string_r>(
+                this.ShaderNamePointer // offset
             );
-            this.p10data = reader.ReadBlockAt<string_r>(
-                this.p10 // offset
+            this.ShaderTechniqueName = reader.ReadBlockAt<string_r>(
+                this.ShaderTechniqueNamePointer // offset
             );
         }
 
@@ -188,8 +184,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
             // update structure data
             this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
-            this.p9 = (ulong)(this.p9data != null ? this.p9data.BlockPosition : 0);
-            this.p10 = (ulong)(this.p10data != null ? this.p10data.BlockPosition : 0);
+            this.ShaderNamePointer = (ulong)(this.ShaderName != null ? this.ShaderName.BlockPosition : 0);
+            this.ShaderTechniqueNamePointer = (ulong)(this.ShaderTechniqueName != null ? this.ShaderTechniqueName.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_10h);
@@ -224,15 +220,13 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_1A8h);
             writer.Write(this.Unknown_1ACh);
             writer.Write(this.VFTx3);
-            writer.Write(this.Unknown_1B4h);
-            writer.Write(this.p9);
-            writer.Write(this.p10);
+            writer.Write(this.ShaderNamePointer);
+            writer.Write(this.ShaderTechniqueNamePointer);
             writer.Write(this.Unknown_1C8h);
             writer.Write(this.Unknown_1CCh);
             writer.Write(this.Unknown_1D0h);
             writer.Write(this.Unknown_1D4h);
             writer.Write(this.VFTx4);
-            writer.Write(this.Unknown_1DCh);
             writer.Write(this.Unknown_1E0h);
             writer.Write(this.Unknown_1E4h);
             writer.Write(this.Unknown_1E8h);
@@ -240,7 +234,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.WriteBlock(this.ShaderVars);
             writer.Write(this.Unknown_200h);
             writer.Write(this.Unknown_204h);
-            writer.Write(this.Unknown_208h);
+            writer.Write(this.ShaderNameHash);
             writer.Write(this.Unknown_20Ch);
             writer.WriteBlock(this.Unknown_210h);
             writer.Write(this.Unknown_220h);
@@ -260,8 +254,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
         {
             var list = new List<IResourceBlock>(base.GetReferences());
             if (Name != null) list.Add(Name);
-            if (p9data != null) list.Add(p9data);
-            if (p10data != null) list.Add(p10data);
+            if (ShaderName != null) list.Add(ShaderName);
+            if (ShaderTechniqueName != null) list.Add(ShaderTechniqueName);
             return list.ToArray();
         }
 
