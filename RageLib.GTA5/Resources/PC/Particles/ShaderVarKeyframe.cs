@@ -35,7 +35,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_1Ch; // 0x00000001
         public uint Unknown_20h; // 0x00000000
         public uint Unknown_24h; // 0x00000000
-        public ResourceSimpleList64<Unknown_P_001> Unknown_28h;
+        public ResourceSimpleList64<Unknown_P_009> Unknown_28h;
         public uint Unknown_38h; // 0x00000000
         public uint Unknown_3Ch; // 0x00000000
         public uint Unknown_40h; // 0x00000000
@@ -55,7 +55,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_1Ch = reader.ReadUInt32();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_001>>();
+            this.Unknown_28h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_009>>();
             this.Unknown_38h = reader.ReadUInt32();
             this.Unknown_3Ch = reader.ReadUInt32();
             this.Unknown_40h = reader.ReadUInt32();

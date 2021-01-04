@@ -20,21 +20,23 @@
     THE SOFTWARE.
 */
 
-using System.Collections.Generic;
+using RageLib.Resources.Common;
+using System;
 
 namespace RageLib.Resources.GTA5.PC.Particles
 {
-    public class Unknown_P_010 : ResourceSystemBlock
+    public class EvolutionParameters : ResourceSystemBlock
     {
-        public override long BlockLength => 0x10;
+        public override long BlockLength => 0x40;
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h; // 0x00000000
-        public ulong Unknown_8h_Pointer;
-
-        // reference data
-        public Unknown_P_003 Unknown_8h_Data;
+        public ResourceSimpleList64<EvolutionName> EvolutionNames;
+        public ResourceSimpleList64<Unknown_P_003> Unknown_10h;
+        public uint Unknown_20h; // 0x00000001
+        public uint Unknown_24h; // 0x00000000
+        public ResourceSimpleList64<Unknown_P_007> Unknown_28h;
+        public uint Unknown_38h; // 0x00000000
+        public uint Unknown_3Ch; // 0x00000000
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -42,14 +44,13 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h_Pointer = reader.ReadUInt64();
-
-            // read reference data
-            this.Unknown_8h_Data = reader.ReadBlockAt<Unknown_P_003>(
-                this.Unknown_8h_Pointer // offset
-            );
+            this.EvolutionNames = reader.ReadBlock<ResourceSimpleList64<EvolutionName>>();
+            this.Unknown_10h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_003>>();
+            this.Unknown_20h = reader.ReadUInt32();
+            this.Unknown_24h = reader.ReadUInt32();
+            this.Unknown_28h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_007>>();
+            this.Unknown_38h = reader.ReadUInt32();
+            this.Unknown_3Ch = reader.ReadUInt32();
         }
 
         /// <summary>
@@ -57,23 +58,23 @@ namespace RageLib.Resources.GTA5.PC.Particles
         /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            // update structure data
-            this.Unknown_8h_Pointer = (ulong)(this.Unknown_8h_Data != null ? this.Unknown_8h_Data.BlockPosition : 0);
-
             // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h_Pointer);
+            writer.WriteBlock(this.EvolutionNames);
+            writer.WriteBlock(this.Unknown_10h);
+            writer.Write(this.Unknown_20h);
+            writer.Write(this.Unknown_24h);
+            writer.WriteBlock(this.Unknown_28h);
+            writer.Write(this.Unknown_38h);
+            writer.Write(this.Unknown_3Ch);
         }
 
-        /// <summary>
-        /// Returns a list of data blocks which are referenced by this block.
-        /// </summary>
-        public override IResourceBlock[] GetReferences()
+        public override Tuple<long, IResourceBlock>[] GetParts()
         {
-            var list = new List<IResourceBlock>();
-            if (Unknown_8h_Data != null) list.Add(Unknown_8h_Data);
-            return list.ToArray();
+            return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0, EvolutionNames),
+                new Tuple<long, IResourceBlock>(0x10, Unknown_10h),
+                new Tuple<long, IResourceBlock>(0x28, Unknown_28h)
+            };
         }
     }
 }

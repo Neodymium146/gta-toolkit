@@ -22,6 +22,7 @@
 
 using RageLib.Resources.Common;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Particles
 {
@@ -32,34 +33,33 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override long BlockLength => 0x70;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
-        public uint Unknown_8h;
+        public ulong VFT;
+        public uint Index;
         public uint Unknown_Ch; // 0x00000000
         public uint Unknown_10h;
-        public uint Unknown_14h; // 0x00000000
-        public ulong p1;
+        public float Unknown_14h; // 0x00000000
+        public ulong EvolutionParamsPointer;
         public uint Unknown_20h; // 0x00000000
         public uint Unknown_24h; // 0x00000000
         public uint Unknown_28h; // 0x00000000
         public uint Unknown_2Ch; // 0x00000000
-        public ulong p2;
-        public ulong p3;
-        public ulong p4;
-        public ulong p5;
-        public uint Unknown_50h;
-        public uint Unknown_54h;
-        public uint Unknown_58h;
-        public uint Unknown_5Ch;
+        public ulong EmitterNamePointer;
+        public ulong ParticleNamePointer;
+        public ulong EmitterRulePointer;
+        public ulong ParticleRulePointer;
+        public float MoveSpeedScale;
+        public float MoveSpeedScaleModifier;
+        public float ParticleScale;
+        public float ParticleScaleModifier;
         public uint Unknown_60h;
         public uint Unknown_64h;
         public uint Unknown_68h; // 0x00000000
         public uint Unknown_6Ch; // 0x00000000
 
         // reference data
-        public Unknown_P_005 p1data;
-        public string_r p2data;
-        public string_r p3data;
+        public EvolutionParameters EvolutionParams;
+        public string_r EmitterName;
+        public string_r ParticleName;
         public EmitterRule EmitterRule;
         public ParticleRule ParticleRule;
 
@@ -69,45 +69,44 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
+            this.VFT = reader.ReadUInt64();
+            this.Index = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
             this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.p1 = reader.ReadUInt64();
+            this.Unknown_14h = reader.ReadSingle();
+            this.EvolutionParamsPointer = reader.ReadUInt64();
             this.Unknown_20h = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
             this.Unknown_28h = reader.ReadUInt32();
             this.Unknown_2Ch = reader.ReadUInt32();
-            this.p2 = reader.ReadUInt64();
-            this.p3 = reader.ReadUInt64();
-            this.p4 = reader.ReadUInt64();
-            this.p5 = reader.ReadUInt64();
-            this.Unknown_50h = reader.ReadUInt32();
-            this.Unknown_54h = reader.ReadUInt32();
-            this.Unknown_58h = reader.ReadUInt32();
-            this.Unknown_5Ch = reader.ReadUInt32();
+            this.EmitterNamePointer = reader.ReadUInt64();
+            this.ParticleNamePointer = reader.ReadUInt64();
+            this.EmitterRulePointer = reader.ReadUInt64();
+            this.ParticleRulePointer = reader.ReadUInt64();
+            this.MoveSpeedScale = reader.ReadSingle();
+            this.MoveSpeedScaleModifier = reader.ReadSingle();
+            this.ParticleScale = reader.ReadSingle();
+            this.ParticleScaleModifier = reader.ReadSingle();
             this.Unknown_60h = reader.ReadUInt32();
             this.Unknown_64h = reader.ReadUInt32();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
 
             // read reference data
-            this.p1data = reader.ReadBlockAt<Unknown_P_005>(
-                this.p1 // offset
+            this.EvolutionParams = reader.ReadBlockAt<EvolutionParameters>(
+                this.EvolutionParamsPointer // offset
             );
-            this.p2data = reader.ReadBlockAt<string_r>(
-                this.p2 // offset
+            this.EmitterName = reader.ReadBlockAt<string_r>(
+                this.EmitterNamePointer // offset
             );
-            this.p3data = reader.ReadBlockAt<string_r>(
-                this.p3 // offset
+            this.ParticleName = reader.ReadBlockAt<string_r>(
+                this.ParticleNamePointer // offset
             );
             this.EmitterRule = reader.ReadBlockAt<EmitterRule>(
-                this.p4 // offset
+                this.EmitterRulePointer // offset
             );
             this.ParticleRule = reader.ReadBlockAt<ParticleRule>(
-                this.p5 // offset
+                this.ParticleRulePointer // offset
             );
         }
 
@@ -117,32 +116,31 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.BlockPosition : 0);
-            this.p2 = (ulong)(this.p2data != null ? this.p2data.BlockPosition : 0);
-            this.p3 = (ulong)(this.p3data != null ? this.p3data.BlockPosition : 0);
-            this.p4 = (ulong)(this.EmitterRule != null ? this.EmitterRule.BlockPosition : 0);
-            this.p5 = (ulong)(this.ParticleRule != null ? this.ParticleRule.BlockPosition : 0);
+            this.EvolutionParamsPointer = (ulong)(this.EvolutionParams != null ? this.EvolutionParams.BlockPosition : 0);
+            this.EmitterNamePointer = (ulong)(this.EmitterName != null ? this.EmitterName.BlockPosition : 0);
+            this.ParticleNamePointer = (ulong)(this.ParticleName != null ? this.ParticleName.BlockPosition : 0);
+            this.EmitterRulePointer = (ulong)(this.EmitterRule != null ? this.EmitterRule.BlockPosition : 0);
+            this.ParticleRulePointer = (ulong)(this.ParticleRule != null ? this.ParticleRule.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
+            writer.Write(this.Index);
             writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
-            writer.Write(this.p1);
+            writer.Write(this.EvolutionParamsPointer);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
             writer.Write(this.Unknown_2Ch);
-            writer.Write(this.p2);
-            writer.Write(this.p3);
-            writer.Write(this.p4);
-            writer.Write(this.p5);
-            writer.Write(this.Unknown_50h);
-            writer.Write(this.Unknown_54h);
-            writer.Write(this.Unknown_58h);
-            writer.Write(this.Unknown_5Ch);
+            writer.Write(this.EmitterNamePointer);
+            writer.Write(this.ParticleNamePointer);
+            writer.Write(this.EmitterRulePointer);
+            writer.Write(this.ParticleRulePointer);
+            writer.Write(this.MoveSpeedScale);
+            writer.Write(this.MoveSpeedScaleModifier);
+            writer.Write(this.ParticleScale);
+            writer.Write(this.ParticleScaleModifier);
             writer.Write(this.Unknown_60h);
             writer.Write(this.Unknown_64h);
             writer.Write(this.Unknown_68h);
@@ -155,9 +153,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>();
-            if (p1data != null) list.Add(p1data);
-            if (p2data != null) list.Add(p2data);
-            if (p3data != null) list.Add(p3data);
+            if (EvolutionParams != null) list.Add(EvolutionParams);
+            if (EmitterName != null) list.Add(EmitterName);
+            if (ParticleName != null) list.Add(ParticleName);
             if (EmitterRule != null) list.Add(EmitterRule);
             if (ParticleRule != null) list.Add(ParticleRule);
             return list.ToArray();

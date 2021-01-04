@@ -29,7 +29,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override long BlockLength => 0x10;
 
         // structure data
-        public uint Unknown_0h;
+        public uint Hash;
         public uint Unknown_4h; // 0x00000000
         public ulong p1;
 
@@ -42,7 +42,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
+            this.Hash = reader.ReadUInt32();
             this.Unknown_4h = reader.ReadUInt32();
             this.p1 = reader.ReadUInt64();
 
@@ -61,7 +61,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.p1 = (ulong)(this.p1data != null ? this.p1data.BlockPosition : 0);
 
             // write structure data
-            writer.Write(this.Unknown_0h);
+            writer.Write(this.Hash);
             writer.Write(this.Unknown_4h);
             writer.Write(this.p1);
         }

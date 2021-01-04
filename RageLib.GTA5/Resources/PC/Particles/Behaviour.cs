@@ -57,8 +57,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override long BlockLength => 0x10;
 
         // structure data
-        public uint VFT;
-        public uint Unknown_4h; // 0x00000001
+        public ulong VFT;
         public uint Type;
         public uint Unknown_Ch; // 0x00000000
 
@@ -68,8 +67,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.VFT = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
+            this.VFT = reader.ReadUInt64();
             this.Type = reader.ReadUInt32();
             this.Unknown_Ch = reader.ReadUInt32();
         }
@@ -81,7 +79,6 @@ namespace RageLib.Resources.GTA5.PC.Particles
         {
             // write structure data
             writer.Write(this.VFT);
-            writer.Write(this.Unknown_4h);
             writer.Write(this.Type);
             writer.Write(this.Unknown_Ch);
         }

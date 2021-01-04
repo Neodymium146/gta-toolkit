@@ -20,6 +20,8 @@
     THE SOFTWARE.
 */
 
+using System.Numerics;
+
 namespace RageLib.Resources.GTA5.PC.Particles
 {
     public class Unknown_P_009 : ResourceSystemBlock
@@ -27,14 +29,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override long BlockLength => 0x20;
 
         // structure data
-        public uint Unknown_0h;
-        public uint Unknown_4h;
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
-        public float Unknown_10h;
-        public float Unknown_14h;
-        public uint Unknown_18h;
-        public uint Unknown_1Ch;
+        public Vector4 Unknown_0h;
+        public Vector4 Unknown_10h;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -42,14 +38,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadSingle();
-            this.Unknown_14h = reader.ReadSingle();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Unknown_0h = reader.ReadVector4();
+            this.Unknown_10h = reader.ReadVector4();
         }
 
         /// <summary>
@@ -59,13 +49,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         {
             // write structure data
             writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
             writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
         }
     }
 }

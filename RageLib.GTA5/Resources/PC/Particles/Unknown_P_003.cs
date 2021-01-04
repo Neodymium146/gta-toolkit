@@ -31,7 +31,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // structure data
         public ResourceSimpleList64<Unknown_P_006> Unknown_0h;
-        public uint Unknown_10h;
+        public uint Hash;
         public uint Unknown_14h;
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         {
             // read structure data
             this.Unknown_0h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_006>>();
-            this.Unknown_10h = reader.ReadUInt32();
+            this.Hash = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
         }
 
@@ -52,7 +52,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         {
             // write structure data
             writer.WriteBlock(this.Unknown_0h);
-            writer.Write(this.Unknown_10h);
+            writer.Write(this.Hash);
             writer.Write(this.Unknown_14h);
         }
 

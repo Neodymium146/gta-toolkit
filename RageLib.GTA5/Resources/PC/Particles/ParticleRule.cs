@@ -45,7 +45,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_108h;
         public uint Unknown_10Ch;
         public uint Unknown_110h; // 0x00000000
-        public uint Unknown_114h;
+        public float Unknown_114h;
         public uint Unknown_118h;
         public uint Unknown_11Ch;
         public ulong NamePointer;
@@ -116,7 +116,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_108h = reader.ReadUInt32();
             this.Unknown_10Ch = reader.ReadUInt32();
             this.Unknown_110h = reader.ReadUInt32();
-            this.Unknown_114h = reader.ReadUInt32();
+            this.Unknown_114h = reader.ReadSingle();
             this.Unknown_118h = reader.ReadUInt32();
             this.Unknown_11Ch = reader.ReadUInt32();
             this.NamePointer = reader.ReadUInt64();
