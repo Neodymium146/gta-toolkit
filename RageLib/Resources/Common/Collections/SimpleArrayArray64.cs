@@ -28,7 +28,7 @@ namespace RageLib.Resources.Common
     /// <summary>
     /// Represents an array of type T.
     /// </summary>
-    public class ResourceSimpleArrayArray64<T> : ListBase<ResourceSimpleArray<T>> where T : IResourceSystemBlock, new()
+    public class SimpleArrayArray64<T> : ListBase<SimpleArray<T>> where T : unmanaged
     {
         /// <summary>
         /// Gets the length of the data block.
@@ -45,9 +45,9 @@ namespace RageLib.Resources.Common
         }
 
 
-        public ResourceSimpleArrayArray64()
+        public SimpleArrayArray64()
         {
-            Data = new List<ResourceSimpleArray<T>>();
+            Data = new List<SimpleArray<T>>();
         }
 
 
@@ -71,7 +71,7 @@ namespace RageLib.Resources.Common
 
             for (int i = 0; i < numEl.Count; i++)
             {
-                var xarr = reader.ReadBlockAt<ResourceSimpleArray<T>>(ptr_list[i], (uint)numEl[i]);
+                var xarr = reader.ReadBlockAt<SimpleArray<T>>(ptr_list[i], numEl[i]);
                 Data.Add(xarr);
             }
 
@@ -104,9 +104,9 @@ namespace RageLib.Resources.Common
                 x.Write(writer);
 
         }
-
-
-
+        
+        
+        
         public override IResourceBlock[] GetReferences()
         {
             var children = new List<IResourceBlock>();
@@ -129,7 +129,7 @@ namespace RageLib.Resources.Common
                     len += f.BlockLength;
                 }
             }
-      
+
             return children.ToArray();
         }
 

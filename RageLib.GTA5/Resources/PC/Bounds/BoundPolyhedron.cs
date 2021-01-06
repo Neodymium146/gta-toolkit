@@ -61,7 +61,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public ResourceSimpleArray<BoundVertex> Vertices;
         public SimpleArray<uint> Unknown_B8h_Data;
         public SimpleArray<uint> Unknown_C0h_Data;
-        public ResourceSimpleArrayArray64<uint_r> Unknown_C8h_Data;
+        public SimpleArrayArray64<uint> Unknown_C8h_Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -112,7 +112,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 this.Unknown_C0h_Pointer, // offset
                 8
             );
-            this.Unknown_C8h_Data = reader.ReadBlockAt<ResourceSimpleArrayArray64<uint_r>>(
+            this.Unknown_C8h_Data = reader.ReadBlockAt<SimpleArrayArray64<uint>>(
                 this.Unknown_C8h_Pointer, // offset
                 8,
                 this.Unknown_C0h_Data
