@@ -188,7 +188,9 @@ namespace RageLib.Resources.GTA5
             var pgBase = (PgBase64)rootBlock;
 
             // Create a temp datResourceMap
-            pgBase.PagesInfo = new PagesInfo(64, 64);
+            //pgBase.PagesInfo = new PagesInfo(64, 64);
+            pgBase.PagesInfo.VirtualPagesCount = 64;
+            pgBase.PagesInfo.PhysicalPagesCount = 64;
 
             ResourceHelpers.AssignPositions(systemBlocks, 0x50000000, out ResourceChunkFlags virtualPageFlags, 0);
             ResourceHelpers.AssignPositions(graphicBlocks, 0x60000000, out ResourceChunkFlags physicalPageFlags, virtualPageFlags.Count);
