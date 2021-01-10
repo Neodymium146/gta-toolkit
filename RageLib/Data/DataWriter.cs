@@ -33,43 +33,26 @@ namespace RageLib.Data
     /// </summary>
     public class DataWriter
     {
-        private Stream baseStream;
-
-        public readonly bool endianessEqualsHostArchitecture;
+        private readonly Stream baseStream;
+        protected readonly bool endianessEqualsHostArchitecture;
 
         /// <summary>
         /// Gets or sets the endianess of the underlying stream.
         /// </summary>
-        public Endianess Endianess
-        {
-            get;
-            set;
-        }
+        public Endianess Endianess { get; set; }
 
         /// <summary>
         /// Gets the length of the underlying stream.
         /// </summary>
-        public virtual long Length
-        {
-            get
-            {
-                return baseStream.Length;
-            }
-        }
+        public virtual long Length => baseStream.Length;
 
         /// <summary>
         /// Gets or sets the position within the underlying stream.
         /// </summary>
         public virtual long Position
         {
-            get
-            {
-                return baseStream.Position;
-            }
-            set
-            {
-                baseStream.Position = value;
-            }
+            get => baseStream.Position;
+            set => baseStream.Position = value;
         }
                 
         /// <summary>
@@ -86,26 +69,22 @@ namespace RageLib.Data
         /// Writes data to the underlying stream. This is the only method that directly accesses
         /// the data in the underlying stream.
         /// </summary>
-        protected virtual void WriteToStream(byte[] value, bool ignoreEndianess = false)
+        protected virtual void WriteToStreamRaw(Span<byte> value)
         {
-            if (!ignoreEndianess && !endianessEqualsHostArchitecture)
-            {
-                var buffer = (byte[])value.Clone();
-                Array.Reverse(buffer);
-                baseStream.Write(buffer, 0, buffer.Length);
-            }
-            else
-            {
-                baseStream.Write(value, 0, value.Length);
-            }
+            baseStream.Write(value);
         }
-        
+
+        protected virtual void WriteToStreamRaw(byte value)
+        {
+            baseStream.WriteByte(value);
+        }
+
         /// <summary>
         /// Writes a byte.
         /// </summary>
         public void Write(byte value)
         {
-            WriteToStream(new byte[] { value });
+            WriteToStreamRaw(value);
         }
 
         /// <summary>
@@ -113,7 +92,7 @@ namespace RageLib.Data
         /// </summary>
         public void Write(byte[] value)
         {
-            WriteToStream(value, true);
+            WriteToStreamRaw(value);
         }
 
         /// <summary>
@@ -121,7 +100,7 @@ namespace RageLib.Data
         /// </summary>
         public void Write(short value)
         {
-            WriteToStream(BitConverter.GetBytes(value));
+            WriteToStream(value);
         }
 
         /// <summary>
@@ -129,7 +108,7 @@ namespace RageLib.Data
         /// </summary>
         public void Write(int value)
         {
-            WriteToStream(BitConverter.GetBytes(value));
+            WriteToStream(value);
         }
 
         /// <summary>
@@ -137,7 +116,7 @@ namespace RageLib.Data
         /// </summary>
         public void Write(long value)
         {
-            WriteToStream(BitConverter.GetBytes(value));
+            WriteToStream(value);
         }
 
         /// <summary>
@@ -145,7 +124,7 @@ namespace RageLib.Data
         /// </summary>
         public void Write(ushort value)
         {
-            WriteToStream(BitConverter.GetBytes(value));
+            WriteToStream(value);
         }
 
         /// <summary>
@@ -153,7 +132,7 @@ namespace RageLib.Data
         /// </summary>
         public void Write(uint value)
         {
-            WriteToStream(BitConverter.GetBytes(value));
+            WriteToStream(value);
         }
 
         /// <summary>
@@ -161,7 +140,7 @@ namespace RageLib.Data
         /// </summary>
         public void Write(ulong value)
         {
-            WriteToStream(BitConverter.GetBytes(value));
+            WriteToStream(value);
         }
 
         /// <summary>
@@ -169,7 +148,7 @@ namespace RageLib.Data
         /// </summary>
         public void Write(float value)
         {
-            WriteToStream(BitConverter.GetBytes(value));
+            WriteToStream(value);
         }
 
         /// <summary>
@@ -177,7 +156,7 @@ namespace RageLib.Data
         /// </summary>
         public void Write(double value)
         {
-            WriteToStream(BitConverter.GetBytes(value));
+            WriteToStream(value);
         }
 
         /// <summary>
@@ -185,9 +164,13 @@ namespace RageLib.Data
         /// </summary>
         public void Write(string value)
         {
+            //using Buffer<byte> buffer = new Buffer<byte>(value.Length);
+            //_ = Encoding.ASCII.GetBytes(value.AsSpan(), buffer.BytesSpan);
+            //WriteToStreamRaw(buffer.BytesSpan);
+            
             foreach (var c in value)
-                Write((byte)c);
-            Write((byte)0);
+                WriteToStreamRaw((byte)c);
+            WriteToStreamRaw((byte)0);
         }
 
         /// <summary>
@@ -261,11 +244,29 @@ namespace RageLib.Data
 
         public void WriteArray<T>(T[] items) where T : unmanaged
         {
-            if (items == null) 
-                return;
+            var span = MemoryMarshal.AsBytes(items.AsSpan());
 
-            Span<byte> span = MemoryMarshal.Cast<T, byte>(items.AsSpan());
-            Write(span.ToArray());
+            if (!endianessEqualsHostArchitecture)
+            {
+                // Don't invert endianess on input array!
+                using Buffer<T> buffer = new Buffer<T>(items.Length);
+                span.CopyTo(buffer.BytesSpan);
+                buffer.Reverse();
+                WriteToStreamRaw(buffer.BytesSpan);
+                return;
+            }
+
+            WriteToStreamRaw(span);
+        }
+
+        protected void WriteToStream<T>(T value) where T : unmanaged
+        {
+            var span = MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref value, 1));
+
+            if (!endianessEqualsHostArchitecture)
+                span.Reverse();
+
+            WriteToStreamRaw(span);
         }
     }
 }
