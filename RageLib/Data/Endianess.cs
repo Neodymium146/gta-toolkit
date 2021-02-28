@@ -126,24 +126,26 @@ namespace RageLib.Data
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix4x4 ReverseEndianness(Matrix4x4 value)
         {
-            return new Matrix4x4(
-                ReverseEndianness(value.M11),
-                ReverseEndianness(value.M12),
-                ReverseEndianness(value.M13),
-                ReverseEndianness(value.M14),
-                ReverseEndianness(value.M21),
-                ReverseEndianness(value.M22),
-                ReverseEndianness(value.M23),
-                ReverseEndianness(value.M24),
-                ReverseEndianness(value.M31),
-                ReverseEndianness(value.M32),
-                ReverseEndianness(value.M33),
-                ReverseEndianness(value.M34),
-                ReverseEndianness(value.M41),
-                ReverseEndianness(value.M42),
-                ReverseEndianness(value.M43),
-                ReverseEndianness(value.M44)
-                );
+            Matrix4x4 mat;
+
+            mat.M11 = ReverseEndianness(value.M11);
+            mat.M12 = ReverseEndianness(value.M12);
+            mat.M13 = ReverseEndianness(value.M13);
+            mat.M14 = ReverseEndianness(value.M14);
+            mat.M21 = ReverseEndianness(value.M21);
+            mat.M22 = ReverseEndianness(value.M22);
+            mat.M23 = ReverseEndianness(value.M23);
+            mat.M24 = ReverseEndianness(value.M24);
+            mat.M31 = ReverseEndianness(value.M31);
+            mat.M32 = ReverseEndianness(value.M32);
+            mat.M33 = ReverseEndianness(value.M33);
+            mat.M34 = ReverseEndianness(value.M34);
+            mat.M41 = ReverseEndianness(value.M41);
+            mat.M42 = ReverseEndianness(value.M42);
+            mat.M43 = ReverseEndianness(value.M43);
+            mat.M44 = ReverseEndianness(value.M44);
+
+            return mat;
         }
     }
 }
