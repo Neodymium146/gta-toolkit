@@ -18,10 +18,10 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public float BoundingSphereRadius;
         public Vector4 BoundingBoxMin;
         public Vector4 BoundingBoxMax;
-        public ulong DrawableModelsHighPointer;
-        public ulong DrawableModelsMediumPointer;
-        public ulong DrawableModelsLowPointer;
-        public ulong DrawableModelsVeryLowPointer;
+        public ulong LodHighPointer;
+        public ulong LodMediumPointer;
+        public ulong LodLowPointer;
+        public ulong LodVeryLowPointer;
         public float LodDistanceHigh;
         public float LodDistanceMedium;
         public float LodDistanceLow;
@@ -32,10 +32,10 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public uint DrawBucketMaskVeryLow;
 
         // reference data
-        public ResourcePointerList64<DrawableModel> DrawableModelsHigh;
-        public ResourcePointerList64<DrawableModel> DrawableModelsMedium;
-        public ResourcePointerList64<DrawableModel> DrawableModelsLow;
-        public ResourcePointerList64<DrawableModel> DrawableModelsVeryLow;
+        public Lod LodHigh;
+        public Lod LodMedium;
+        public Lod LodLow;
+        public Lod LodVeryLow;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -47,10 +47,10 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.BoundingSphereRadius = reader.ReadSingle();
             this.BoundingBoxMin = reader.ReadVector4();
             this.BoundingBoxMax = reader.ReadVector4();
-            this.DrawableModelsHighPointer = reader.ReadUInt64();
-            this.DrawableModelsMediumPointer = reader.ReadUInt64();
-            this.DrawableModelsLowPointer = reader.ReadUInt64();
-            this.DrawableModelsVeryLowPointer = reader.ReadUInt64();
+            this.LodHighPointer = reader.ReadUInt64();
+            this.LodMediumPointer = reader.ReadUInt64();
+            this.LodLowPointer = reader.ReadUInt64();
+            this.LodVeryLowPointer = reader.ReadUInt64();
             this.LodDistanceHigh = reader.ReadSingle();
             this.LodDistanceMedium = reader.ReadSingle();
             this.LodDistanceLow = reader.ReadSingle();
@@ -61,19 +61,10 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.DrawBucketMaskVeryLow = reader.ReadUInt32();
 
             // read reference data
-            this.DrawableModelsHigh = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(
-                this.DrawableModelsHighPointer // offset
-            );
-            this.DrawableModelsMedium = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(
-                this.DrawableModelsMediumPointer // offset
-            );
-            this.DrawableModelsLow = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(
-                this.DrawableModelsLowPointer // offset
-            );
-            this.DrawableModelsVeryLow = reader.ReadBlockAt<ResourcePointerList64<DrawableModel>>(
-                this.DrawableModelsVeryLowPointer // offset
-            );
-
+            this.LodHigh = reader.ReadBlockAt<Lod>(this.LodHighPointer);
+            this.LodMedium = reader.ReadBlockAt<Lod>(this.LodMediumPointer);
+            this.LodLow = reader.ReadBlockAt<Lod>(this.LodLowPointer);
+            this.LodVeryLow = reader.ReadBlockAt<Lod>(this.LodVeryLowPointer);
         }
 
         /// <summary>
@@ -82,20 +73,20 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // update structure data
-            this.DrawableModelsHighPointer = (ulong)(this.DrawableModelsHigh != null ? this.DrawableModelsHigh.BlockPosition : 0);
-            this.DrawableModelsMediumPointer = (ulong)(this.DrawableModelsMedium != null ? this.DrawableModelsMedium.BlockPosition : 0);
-            this.DrawableModelsLowPointer = (ulong)(this.DrawableModelsLow != null ? this.DrawableModelsLow.BlockPosition : 0);
-            this.DrawableModelsVeryLowPointer = (ulong)(this.DrawableModelsVeryLow != null ? this.DrawableModelsVeryLow.BlockPosition : 0);
+            this.LodHighPointer = (ulong)(this.LodHigh != null ? this.LodHigh.BlockPosition : 0);
+            this.LodMediumPointer = (ulong)(this.LodMedium != null ? this.LodMedium.BlockPosition : 0);
+            this.LodLowPointer = (ulong)(this.LodLow != null ? this.LodLow.BlockPosition : 0);
+            this.LodVeryLowPointer = (ulong)(this.LodVeryLow != null ? this.LodVeryLow.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.BoundingCenter);
             writer.Write(this.BoundingSphereRadius);
             writer.Write(this.BoundingBoxMin);
             writer.Write(this.BoundingBoxMax);
-            writer.Write(this.DrawableModelsHighPointer);
-            writer.Write(this.DrawableModelsMediumPointer);
-            writer.Write(this.DrawableModelsLowPointer);
-            writer.Write(this.DrawableModelsVeryLowPointer);
+            writer.Write(this.LodHighPointer);
+            writer.Write(this.LodMediumPointer);
+            writer.Write(this.LodLowPointer);
+            writer.Write(this.LodVeryLowPointer);
             writer.Write(this.LodDistanceHigh);
             writer.Write(this.LodDistanceMedium);
             writer.Write(this.LodDistanceLow);
@@ -112,10 +103,10 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public override IResourceBlock[] GetReferences()
         {
             var list = new List<IResourceBlock>(base.GetReferences());
-            if (DrawableModelsHigh != null) list.Add(DrawableModelsHigh);
-            if (DrawableModelsMedium != null) list.Add(DrawableModelsMedium);
-            if (DrawableModelsLow != null) list.Add(DrawableModelsLow);
-            if (DrawableModelsVeryLow != null) list.Add(DrawableModelsVeryLow);
+            if (LodHigh != null) list.Add(LodHigh);
+            if (LodMedium != null) list.Add(LodMedium);
+            if (LodLow != null) list.Add(LodLow);
+            if (LodVeryLow != null) list.Add(LodVeryLow);
             return list.ToArray();
         }
     }
