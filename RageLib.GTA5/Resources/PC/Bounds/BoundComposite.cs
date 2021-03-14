@@ -47,7 +47,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public ResourcePointerArray64<Bound> Bounds;
         public SimpleArray<Matrix4x4> CurrentMatrices;
         public SimpleArray<Matrix4x4> LastMatrices;
-        public ResourceSimpleArray<RAGE_AABB> ChildBoundingBoxes;
+        public SimpleArray<Aabb> ChildBoundingBoxes;
         public SimpleArray<ulong> TypeAndIncludeFlags;
         public SimpleArray<ulong> OwnedTypeAndIncludeFlags;
         public BVH BVH;
@@ -84,7 +84,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 this.LastMatricesPointer, // offset
                 this.MaxNumBounds
             );
-            this.ChildBoundingBoxes = reader.ReadBlockAt<ResourceSimpleArray<RAGE_AABB>>(
+            this.ChildBoundingBoxes = reader.ReadBlockAt<SimpleArray<Aabb>>(
                 this.ChildBoundingBoxesPointer, // offset
                 this.MaxNumBounds
             );

@@ -89,7 +89,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
     public struct BoundPrimitiveTriangle : IBoundPrimitive, IResourceStruct<BoundPrimitiveTriangle>
     {
         // structure data
-        public float triArea;
+        public int triArea;
         public ushort triIndex1;
         public ushort triIndex2;
         public ushort triIndex3;
@@ -102,8 +102,8 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
         public float Area
         {
-            get => BitConverter.Int32BitsToSingle((int)(BitConverter.SingleToInt32Bits(triArea) & 0xFFFFFFF8));
-            set => triArea = BitConverter.Int32BitsToSingle((int)(BitConverter.SingleToInt32Bits(value) & 0xFFFFFFF8));
+            get => BitConverter.Int32BitsToSingle((int)(triArea & 0xFFFFFFF8));
+            set => triArea = (int)(BitConverter.SingleToInt32Bits(value) & 0xFFFFFFF8);
         }
 
         public ushort VertexIndex1
