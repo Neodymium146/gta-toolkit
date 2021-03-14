@@ -68,13 +68,13 @@ namespace RageLib.Data
         }
 
         
-        protected Buffer<T> ReadFromStream<T>(int count, bool ignoreEndianess = false) where T : unmanaged
+        protected Buffer<T> ReadFromStream<T>(int count) where T : unmanaged
         {
             Buffer<T> buffer = new Buffer<T>(count);
             ReadFromStreamRaw(buffer.BytesSpan);
 
             // handle endianess
-            if (!ignoreEndianess && !endianessEqualsHostArchitecture)
+            if (!endianessEqualsHostArchitecture)
                 buffer.Reverse();
 
             return buffer;
