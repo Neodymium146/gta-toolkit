@@ -20,37 +20,25 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
+
 namespace RageLib.Resources.GTA5.PC.Nodes
 {
-    public class Unknown_ND_003 : ResourceSystemBlock
+    public struct Unknown_ND_003 : IResourceStruct<Unknown_ND_003>
     {
-        public override long BlockLength => 12;
-
         // structure data
         public uint Unknown_0h;
         public uint Unknown_4h;
         public uint Unknown_8h;
 
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public Unknown_ND_003 ReverseEndianness()
         {
-            // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
+            return new Unknown_ND_003()
+            {
+                Unknown_0h = EndiannessExtensions.ReverseEndianness(Unknown_0h),
+                Unknown_4h = EndiannessExtensions.ReverseEndianness(Unknown_4h),
+                Unknown_8h = EndiannessExtensions.ReverseEndianness(Unknown_8h),
+            };
         }
     }
 }
