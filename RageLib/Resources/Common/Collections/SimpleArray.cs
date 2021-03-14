@@ -59,6 +59,11 @@ namespace RageLib.Resources.Common
             set => Data[index] = value;
         }
 
+        public Span<T> AsSpan()
+        {
+            return Data.AsSpan();
+        }
+
         // TODO: Check usage to know if it's safe to return without creating a copy
         public T[] ToArray()
         {
