@@ -19,7 +19,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
         public ulong Unknown_38h;           // 0x0000000000000000
 
         // reference data
-        public ResourceSimpleArray<RAGE_AABB> GeometriesBounds;
+        public SimpleArray<Aabb> GeometriesBounds;
         public SimpleArray<ushort> ShaderMapping;
 
         public override void Read(ResourceDataReader reader, params object[] parameters)
@@ -37,7 +37,7 @@ namespace RageLib.Resources.RDR2.PC.Drawables
             this.Unknown_38h = reader.ReadUInt64();
 
             // read reference data
-            this.GeometriesBounds = reader.ReadBlockAt<ResourceSimpleArray<RAGE_AABB>>(GeometriesBoundsPointer, GeometriesCount > 1 ? GeometriesCount + 1 : GeometriesCount);
+            this.GeometriesBounds = reader.ReadBlockAt<SimpleArray<Aabb>>(GeometriesBoundsPointer, GeometriesCount > 1 ? GeometriesCount + 1 : GeometriesCount);
             this.ShaderMapping = reader.ReadBlockAt<SimpleArray<ushort>>(ShaderMappingPointer, GeometriesCount);
         }
 

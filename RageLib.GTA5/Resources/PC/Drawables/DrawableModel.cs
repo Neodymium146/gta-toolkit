@@ -41,7 +41,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public ushort GeometriesCount;
 
         // reference data
-        public ResourceSimpleArray<RAGE_AABB> GeometriesBounds;
+        public SimpleArray<Aabb> GeometriesBounds;
         public SimpleArray<ushort> ShaderMapping;
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.GeometriesCount = reader.ReadUInt16();
 
             // read reference data
-            this.GeometriesBounds = reader.ReadBlockAt<ResourceSimpleArray<RAGE_AABB>>(
+            this.GeometriesBounds = reader.ReadBlockAt<SimpleArray<Aabb>>(
                 this.GeometriesBoundsPointer, // offset
                 this.GeometriesCount > 1 ? this.GeometriesCount + 1 : this.GeometriesCount
             );
