@@ -20,6 +20,7 @@
     THE SOFTWARE.
 */
 
+using RageLib.Resources;
 using System;
 using System.IO;
 using System.Numerics;
@@ -250,10 +251,21 @@ namespace RageLib.Data
             {
                 // Don't invert endianess on input array!
                 using Buffer<T> buffer = new Buffer<T>(items.Length);
-                span.CopyTo(buffer.BytesSpan);
-                buffer.Reverse();
-                WriteToStreamRaw(buffer.BytesSpan);
-                return;
+                {
+                    span.CopyTo(buffer.BytesSpan);
+
+                    // If it's a struct, let it reverse its endianness
+                    if (typeof(IResourceStruct<T>).IsAssignableFrom(typeof(T)))
+                    {
+                        for (int i = 0; i < buffer.Count; i++)
+                            buffer.Span[i] = ((IResourceStruct<T>)buffer.Span[i]).ReverseEndianness();
+                    }
+                    else // If it's a primitive type
+                        buffer.Reverse();
+
+                    WriteToStreamRaw(buffer.BytesSpan);
+                    return;
+                }
             }
 
             WriteToStreamRaw(span);
@@ -266,6 +278,15 @@ namespace RageLib.Data
             if (!endianessEqualsHostArchitecture)
                 span.Reverse();
 
+            WriteToStreamRaw(span);
+        }
+
+        public void WriteStruct<T>(T value) where T : unmanaged, IResourceStruct<T>
+        {
+            if (!endianessEqualsHostArchitecture)
+                value = value.ReverseEndianness();
+
+            var span = MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref value, 1));
             WriteToStreamRaw(span);
         }
     }
