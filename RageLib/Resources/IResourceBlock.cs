@@ -81,4 +81,17 @@ namespace RageLib.Resources
     /// </summary>
     public interface IResourceGraphicsBlock : IResourceBlock
     { }
+
+    /// <summary>
+    /// Represents a struct of unmanaged type which is not a primitive type.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IResourceStruct<T> where T : unmanaged
+    {
+        /// <summary>
+        /// Returns a copy of the <see cref="T"/> instance with the endianness of all its fields reversed.
+        /// </summary>
+        /// <returns></returns>
+        T ReverseEndianness();
+    }
 }

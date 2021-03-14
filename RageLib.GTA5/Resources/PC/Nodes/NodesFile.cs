@@ -52,11 +52,11 @@ namespace RageLib.Resources.GTA5.PC.Nodes
         public uint Unknown_6Ch; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<Node> Nodes;
-        public ResourceSimpleArray<Unknown_ND_002> Unknown_28h_Data;
-        public ResourceSimpleArray<Unknown_ND_003> Unknown_38h_Data;
+        public SimpleArray<Node> Nodes;
+        public SimpleArray<Unknown_ND_002> Unknown_28h_Data;
+        public SimpleArray<Unknown_ND_003> Unknown_38h_Data;
         public SimpleArray<byte> Unknown_40h_Data;
-        public ResourceSimpleArray<Unknown_ND_004> Unknown_50h_Data;
+        public SimpleArray<Unknown_ND_004> Unknown_50h_Data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -88,15 +88,15 @@ namespace RageLib.Resources.GTA5.PC.Nodes
             this.Unknown_6Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Nodes = reader.ReadBlockAt<ResourceSimpleArray<Node>>(
+            this.Nodes = reader.ReadBlockAt<SimpleArray<Node>>(
                 this.NodesPointer, // offset
                 this.NodesCount
             );
-            this.Unknown_28h_Data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_ND_002>>(
+            this.Unknown_28h_Data = reader.ReadBlockAt<SimpleArray<Unknown_ND_002>>(
                 this.Unknown_28h_Pointer, // offset
                 this.DataPointer1Length
             );
-            this.Unknown_38h_Data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_ND_003>>(
+            this.Unknown_38h_Data = reader.ReadBlockAt<SimpleArray<Unknown_ND_003>>(
                 this.Unknown_38h_Pointer, // offset
                 this.len4
             );
@@ -104,7 +104,7 @@ namespace RageLib.Resources.GTA5.PC.Nodes
                 this.Unknown_40h_Pointer, // offset
                 this.len5
             );
-            this.Unknown_50h_Data = reader.ReadBlockAt<ResourceSimpleArray<Unknown_ND_004>>(
+            this.Unknown_50h_Data = reader.ReadBlockAt<SimpleArray<Unknown_ND_004>>(
                 this.Unknown_50h_Pointer, // offset
                 this.cnt5b
             );

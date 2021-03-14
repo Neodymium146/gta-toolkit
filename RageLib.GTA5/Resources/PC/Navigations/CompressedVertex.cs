@@ -20,38 +20,26 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
+
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
     // CNavMeshCompressedVertex
-    public class CompressedVertex : ResourceSystemBlock
+    public struct CompressedVertex : IResourceStruct<CompressedVertex>
     {
-        public override long BlockLength => 6;
-
         // structure data
-        public ushort Unknown_0h;
-        public ushort Unknown_2h;
-        public ushort Unknown_4h;
+        public short X;
+        public short Y;
+        public short Z;
 
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public CompressedVertex ReverseEndianness()
         {
-            // read structure data
-            this.Unknown_0h = reader.ReadUInt16();
-            this.Unknown_2h = reader.ReadUInt16();
-            this.Unknown_4h = reader.ReadUInt16();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_2h);
-            writer.Write(this.Unknown_4h);
+            return new CompressedVertex()
+            {
+                X = EndiannessExtensions.ReverseEndianness(X),
+                Y = EndiannessExtensions.ReverseEndianness(Y),
+                Z = EndiannessExtensions.ReverseEndianness(Z),
+            };
         }
     }
 }

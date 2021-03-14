@@ -49,7 +49,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public uint Unknown_12Ch; // 0x00000000
 
         // reference data
-        public ResourceSimpleArray<BoundMaterial> Materials;
+        public SimpleArray<BoundMaterial> Materials;
         public SimpleArray<uint> MaterialColours;
         public SimpleArray<byte> PolygonMaterialIndices;
 
@@ -78,7 +78,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Unknown_12Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Materials = reader.ReadBlockAt<ResourceSimpleArray<BoundMaterial>>(
+            this.Materials = reader.ReadBlockAt<SimpleArray<BoundMaterial>>(
                 this.MaterialsPointer, // offset
                 this.MaterialsCount
             );

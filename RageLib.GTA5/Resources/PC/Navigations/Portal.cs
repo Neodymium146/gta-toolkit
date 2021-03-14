@@ -20,13 +20,13 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
+
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
     // occurrences: 13969
-    public class Portal : ResourceSystemBlock
+    public struct Portal : IResourceStruct<Portal>
     {
-        public override long BlockLength => 28;
-
         // structure data
         public uint Unknown_0h;
         public uint Unknown_4h;
@@ -38,38 +38,20 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public ushort Unknown_16h;
         public uint Unknown_18h;
 
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public Portal ReverseEndianness()
         {
-            // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt16();
-            this.Unknown_12h = reader.ReadUInt16();
-            this.Unknown_14h = reader.ReadUInt16();
-            this.Unknown_16h = reader.ReadUInt16();
-            this.Unknown_18h = reader.ReadUInt32();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_12h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_16h);
-            writer.Write(this.Unknown_18h);
+            return new Portal()
+            {
+                Unknown_0h = EndiannessExtensions.ReverseEndianness(Unknown_0h),
+                Unknown_4h = EndiannessExtensions.ReverseEndianness(Unknown_4h),
+                Unknown_8h = EndiannessExtensions.ReverseEndianness(Unknown_8h),
+                Unknown_Ch = EndiannessExtensions.ReverseEndianness(Unknown_Ch),
+                Unknown_10h = EndiannessExtensions.ReverseEndianness(Unknown_10h),
+                Unknown_12h = EndiannessExtensions.ReverseEndianness(Unknown_12h),
+                Unknown_14h = EndiannessExtensions.ReverseEndianness(Unknown_14h),
+                Unknown_16h = EndiannessExtensions.ReverseEndianness(Unknown_16h),
+                Unknown_18h = EndiannessExtensions.ReverseEndianness(Unknown_18h),
+            };
         }
     }
 }

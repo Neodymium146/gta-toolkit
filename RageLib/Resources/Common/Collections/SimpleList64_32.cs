@@ -26,7 +26,7 @@ using System.Collections.Generic;
 namespace RageLib.Resources.Common
 {
     // TODO: Find a better name to these classes
-    public class ResourceSimpleList32_64<T> : ResourceSystemBlock where T : IResourceSystemBlock, new()
+    public class SimpleList64_32<T> : ResourceSystemBlock where T : unmanaged
     {
         public override long BlockLength
         {
@@ -39,7 +39,7 @@ namespace RageLib.Resources.Common
         public uint EntriesCapacity;
 
         // reference data
-        public ResourceSimpleArray<T> Entries;
+        public SimpleArray<T> Entries;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -52,7 +52,7 @@ namespace RageLib.Resources.Common
             this.EntriesCapacity = reader.ReadUInt32();
 
             // read reference data
-            this.Entries = reader.ReadBlockAt<ResourceSimpleArray<T>>(
+            this.Entries = reader.ReadBlockAt<SimpleArray<T>>(
                 this.EntriesPointer, // offset
                 this.EntriesCapacity
             );

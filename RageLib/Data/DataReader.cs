@@ -20,6 +20,7 @@
     THE SOFTWARE.
 */
 
+using RageLib.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -67,7 +68,7 @@ namespace RageLib.Data
             this.endianessEqualsHostArchitecture = endianess.EqualsHostArchitecture();
         }
 
-        
+
         protected Buffer<T> ReadFromStream<T>(int count) where T : unmanaged
         {
             Buffer<T> buffer = new Buffer<T>(count);
@@ -271,7 +272,13 @@ namespace RageLib.Data
             // handle endianess
             if (!endianessEqualsHostArchitecture)
             {
-                if (Unsafe.SizeOf<T>() > 1)
+                // If it's a struct, let it reverse its endianness
+                if (typeof(IResourceStruct<T>).IsAssignableFrom(typeof(T)))
+                {
+                    for (int i = 0; i < count; i++)
+                        array[i] = ((IResourceStruct<T>)array[i]).ReverseEndianness();
+                }
+                else if (Unsafe.SizeOf<T>() > 1)
                 {
                     for (int i = 0; i < count; i++)
                         bytes.Slice(i * Unsafe.SizeOf<T>(), Unsafe.SizeOf<T>()).Reverse();
@@ -279,6 +286,20 @@ namespace RageLib.Data
             }
 
             return array;
+        }
+
+        public T ReadStruct<T>() where T : unmanaged, IResourceStruct<T>
+        {
+            using Buffer<T> buffer = new Buffer<T>(1);
+            ReadFromStreamRaw(buffer.BytesSpan);
+
+            var value = buffer.Span[0];
+
+            // handle endianess
+            if (!endianessEqualsHostArchitecture)
+                value = value.ReverseEndianness();
+
+            return value;
         }
     }
 }

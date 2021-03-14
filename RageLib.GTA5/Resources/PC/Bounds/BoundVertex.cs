@@ -20,37 +20,24 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
+
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
-    public class BoundVertex : ResourceSystemBlock
+    public struct BoundVertex : IResourceStruct<BoundVertex>
     {
-        public override long BlockLength => 6;
-
-        // structure data
         public short X;
         public short Y;
         public short Z;
 
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public BoundVertex ReverseEndianness()
         {
-            // read structure data
-            this.X = reader.ReadInt16();
-            this.Y = reader.ReadInt16();
-            this.Z = reader.ReadInt16();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.X);
-            writer.Write(this.Y);
-            writer.Write(this.Z);
+            return new BoundVertex()
+            {
+                X = EndiannessExtensions.ReverseEndianness(X),
+                Y = EndiannessExtensions.ReverseEndianness(Y),
+                Z = EndiannessExtensions.ReverseEndianness(Z),
+            };
         }
     }
 }

@@ -20,52 +20,35 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
+
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
-    public class BVHNode : ResourceSystemBlock
+    public struct BVHNode : IResourceStruct<BVHNode>
     {
-        public override long BlockLength => 0x10;
+        public short MinX;
+        public short MinY;
+        public short MinZ;
+        public short MaxX;
+        public short MaxY;
+        public short MaxZ;
+        public short NodeId;
+        public short ChildrenCount;
 
-        // structure data
-        public ushort MinX;
-        public ushort MinY;
-        public ushort MinZ;
-        public ushort MaxX;
-        public ushort MaxY;
-        public ushort MaxZ;
-        public ushort Unknown_Ch;
-        public ushort Unknown_Eh;
-
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public BVHNode ReverseEndianness()
         {
-            // read structure data
-            this.MinX = reader.ReadUInt16();
-            this.MinY = reader.ReadUInt16();
-            this.MinZ = reader.ReadUInt16();
-            this.MaxX = reader.ReadUInt16();
-            this.MaxY = reader.ReadUInt16();
-            this.MaxZ = reader.ReadUInt16();
-            this.Unknown_Ch = reader.ReadUInt16();
-            this.Unknown_Eh = reader.ReadUInt16();
-        }
+            return new BVHNode()
+            {
 
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.MinX);
-            writer.Write(this.MinY);
-            writer.Write(this.MinZ);
-            writer.Write(this.MaxX);
-            writer.Write(this.MaxY);
-            writer.Write(this.MaxZ);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_Eh);
+                MinX = EndiannessExtensions.ReverseEndianness(MinX),
+                MinY = EndiannessExtensions.ReverseEndianness(MinY),
+                MinZ = EndiannessExtensions.ReverseEndianness(MinZ),
+                MaxX = EndiannessExtensions.ReverseEndianness(MaxX),
+                MaxY = EndiannessExtensions.ReverseEndianness(MaxY),
+                MaxZ = EndiannessExtensions.ReverseEndianness(MaxZ),
+                NodeId = EndiannessExtensions.ReverseEndianness(NodeId),
+                ChildrenCount = EndiannessExtensions.ReverseEndianness(ChildrenCount),
+            };
         }
     }
 }

@@ -32,7 +32,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override long BlockLength => 0x80;
 
         // structure data
-        public ResourceSimpleList32_64<BVHNode> Nodes;
+        public SimpleList64_32<BVHNode> Nodes;
         public uint Unknown_10h; // 0x00000000
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
@@ -42,7 +42,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public Vector4 BoundingBoxCenter;
         public Vector4 QuantumInverse;
         public Vector4 Quantum; // bounding box dimension / 2^16
-        public ResourceSimpleList64<BVHTreeInfo> Trees;
+        public SimpleList64<BVHTreeInfo> Trees;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -50,7 +50,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Nodes = reader.ReadBlock<ResourceSimpleList32_64<BVHNode>>();
+            this.Nodes = reader.ReadBlock<SimpleList64_32<BVHNode>>();
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
@@ -60,7 +60,7 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.BoundingBoxCenter = reader.ReadVector4();
             this.QuantumInverse = reader.ReadVector4();
             this.Quantum = reader.ReadVector4();
-            this.Trees = reader.ReadBlock<ResourceSimpleList64<BVHTreeInfo>>();
+            this.Trees = reader.ReadBlock<SimpleList64<BVHTreeInfo>>();
         }
 
         /// <summary>

@@ -20,13 +20,13 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
+
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
     // TNavMeshPoly
-    public class Poly : ResourceSystemBlock
+    public struct Poly : IResourceStruct<Poly>
     {
-        public override long BlockLength => 0x30;
-
         // structure data
         public uint Unknown_0h;
         public uint Unknown_4h;
@@ -41,44 +41,23 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public uint Unknown_28h;
         public uint Unknown_2Ch;
 
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public Poly ReverseEndianness()
         {
-            // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
-            writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
-            writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
+            return new Poly()
+            {
+                Unknown_0h = EndiannessExtensions.ReverseEndianness(Unknown_0h),
+                Unknown_4h = EndiannessExtensions.ReverseEndianness(Unknown_4h),
+                Unknown_8h = EndiannessExtensions.ReverseEndianness(Unknown_8h),
+                Unknown_Ch = EndiannessExtensions.ReverseEndianness(Unknown_Ch),
+                Unknown_10h = EndiannessExtensions.ReverseEndianness(Unknown_10h),
+                Unknown_14h = EndiannessExtensions.ReverseEndianness(Unknown_14h),
+                Unknown_18h = EndiannessExtensions.ReverseEndianness(Unknown_18h),
+                Unknown_1Ch = EndiannessExtensions.ReverseEndianness(Unknown_1Ch),
+                Unknown_20h = EndiannessExtensions.ReverseEndianness(Unknown_20h),
+                Unknown_24h = EndiannessExtensions.ReverseEndianness(Unknown_24h),
+                Unknown_28h = EndiannessExtensions.ReverseEndianness(Unknown_28h),
+                Unknown_2Ch = EndiannessExtensions.ReverseEndianness(Unknown_2Ch),
+            };
         }
     }
 }
