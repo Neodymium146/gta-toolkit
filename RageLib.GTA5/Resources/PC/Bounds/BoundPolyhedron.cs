@@ -56,9 +56,9 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public ulong Unknown_E8h; // 0x0000000000000000
 
         // reference data
-        public ResourceSimpleArray<BoundVertex> ShrunkVertices;
-        public ResourceSimpleArray<BoundPrimitive> Primitives;
-        public ResourceSimpleArray<BoundVertex> Vertices;
+        public SimpleArray<BoundVertex> ShrunkVertices;
+        public SimpleArray<BoundPrimitive> Primitives;
+        public SimpleArray<BoundVertex> Vertices;
         public SimpleArray<uint> Unknown_B8h_Data;
         public SimpleArray<uint> Unknown_C0h_Data;
         public SimpleArrayArray64<uint> Unknown_C8h_Data;
@@ -92,15 +92,15 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             this.Unknown_E8h = reader.ReadUInt64();
 
             // read reference data
-            this.ShrunkVertices = reader.ReadBlockAt<ResourceSimpleArray<BoundVertex>>(
+            this.ShrunkVertices = reader.ReadBlockAt<SimpleArray<BoundVertex>>(
                 this.ShrunkVerticesPointer, // offset
                 this.VerticesCount2
             );
-            this.Primitives = reader.ReadBlockAt<ResourceSimpleArray<BoundPrimitive>>(
+            this.Primitives = reader.ReadBlockAt<SimpleArray<BoundPrimitive>>(
                 this.PrimitivesPointer, // offset
                 this.PrimitivesCount
             );
-            this.Vertices = reader.ReadBlockAt<ResourceSimpleArray<BoundVertex>>(
+            this.Vertices = reader.ReadBlockAt<SimpleArray<BoundVertex>>(
                 this.VerticesPointer, // offset
                 this.VerticesCount2
             );
@@ -248,20 +248,24 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
         public void TestTriangleArea()
         {
+            var primitivesSpan = Primitives.AsSpan();
+
             for (int i = 0; i < PrimitivesCount; i++)
             {
-                var primitive = Primitives[i];
-
-                if (primitive is not BoundPrimitiveTriangle primitiveTriangle)
+                if (primitivesSpan[i].PrimitiveType != BoundPrimitiveType.Triangle)
                     continue;
 
-                var vertex1 = GetVertex(Vertices[primitiveTriangle.VertexIndex1]);
-                var vertex2 = GetVertex(Vertices[primitiveTriangle.VertexIndex2]);
-                var vertex3 = GetVertex(Vertices[primitiveTriangle.VertexIndex3]);
+                ref BoundPrimitiveTriangle triangle = ref primitivesSpan[i].AsTriangle();
+                
+                var vertex1 = GetVertex(Vertices[triangle.VertexIndex1]);
+                var vertex2 = GetVertex(Vertices[triangle.VertexIndex2]);
+                var vertex3 = GetVertex(Vertices[triangle.VertexIndex3]);
 
                 var triangleArea = Vector3.Cross(vertex2 - vertex1, vertex3 - vertex1).Length() * 0.5f;
 
-                Debug.Assert(MathF.Abs(triangleArea - primitiveTriangle.triArea) < 0.0001f);
+                Debug.Assert(MathF.Abs(triangleArea - triangle.Area) < 0.0001f);
+
+                triangle.Area = triangleArea;
             }
         }
 
@@ -286,12 +290,14 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             Dictionary <ValueTuple<ushort, ushort>, ValueTuple<int, int>> edgesMap = new();
             ValueTuple<ushort, ushort>[] edges = new (ushort, ushort)[3];
 
+            var primitivesSpan = Primitives.AsSpan();
+
             for (int i = 0; i < PrimitivesCount; i++)
             {
-                var primitive = Primitives[i];
-
-                if (primitive is not BoundPrimitiveTriangle triangle)
+                if (primitivesSpan[i].PrimitiveType != BoundPrimitiveType.Triangle)
                     continue;
+
+                ref BoundPrimitiveTriangle triangle = ref primitivesSpan[i].AsTriangle();
 
                 edges[0] = GetEdge(triangle.VertexIndex1, triangle.VertexIndex2);
                 edges[1] = GetEdge(triangle.VertexIndex2, triangle.VertexIndex3);
@@ -312,10 +318,10 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
             for (int i = 0; i < PrimitivesCount; i++)
             {
-                var primitive = Primitives[i];
-
-                if (primitive is not BoundPrimitiveTriangle triangle)
+                if (primitivesSpan[i].PrimitiveType != BoundPrimitiveType.Triangle)
                     continue;
+
+                ref BoundPrimitiveTriangle triangle = ref primitivesSpan[i].AsTriangle();
 
                 var edge1 = edgesMap[GetEdge(triangle.VertexIndex1, triangle.VertexIndex2)];
                 var edge2 = edgesMap[GetEdge(triangle.VertexIndex2, triangle.VertexIndex3)];
@@ -328,6 +334,10 @@ namespace RageLib.Resources.GTA5.PC.Bounds
                 Debug.Assert(edgeIndex1 == triangle.NeighborIndex1);
                 Debug.Assert(edgeIndex2 == triangle.NeighborIndex2);
                 Debug.Assert(edgeIndex3 == triangle.NeighborIndex3);
+
+                triangle.NeighborIndex1 = edgeIndex1;
+                triangle.NeighborIndex2 = edgeIndex2;
+                triangle.NeighborIndex3 = edgeIndex3;
             }
         }
     }

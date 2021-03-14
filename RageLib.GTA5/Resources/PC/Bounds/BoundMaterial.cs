@@ -20,14 +20,13 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
 using System;
 
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
-    public class BoundMaterial : ResourceSystemBlock
+    public struct BoundMaterial : IResourceStruct<BoundMaterial>
     {
-        public override long BlockLength => 8;
-
         // structure data
         public ulong Data;
 
@@ -73,22 +72,12 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             set => Data &= 0x0000FFFFFFFFFFFFu | ((ulong)value << 48);
         }
 
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public BoundMaterial ReverseEndianness()
         {
-            // read structure data
-            this.Data = reader.ReadUInt64();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.Data);
+            return new BoundMaterial()
+            {
+                Data = EndiannessExtensions.ReverseEndianness(Data)
+            };
         }
     }
 

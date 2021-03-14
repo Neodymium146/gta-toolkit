@@ -20,45 +20,73 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
 using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
+    public interface IBoundPrimitive
+    {
+        public ref BoundPrimitive AsRawData();
+    }
+
+    public enum BoundPrimitiveType : byte
+    {
+        Triangle = 0,
+        Sphere = 1,
+        Capsule = 2,
+        Box = 3,
+        Cylinder = 4,
+    }
+
     // phPrimitiveBase
     // phPrimitive
-    public class BoundPrimitive : ResourceSystemBlock, IResourceXXSystemBlock
+    public struct BoundPrimitive : IResourceStruct<BoundPrimitive>
     {
-        public override long BlockLength => 0x10;
+        public uint Data0;
+        public uint Data1;
+        public uint Data2;
+        public uint Data3;
 
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public BoundPrimitiveType PrimitiveType 
         {
-            throw new NotImplementedException();
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => (BoundPrimitiveType)(MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref this, 1))[0] & 0x7); 
         }
 
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            throw new NotImplementedException();
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref BoundPrimitiveTriangle AsTriangle() => ref MemoryMarshal.AsRef<BoundPrimitiveTriangle>(MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref this, 1)));
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref BoundPrimitiveSphere AsSphere() => ref MemoryMarshal.AsRef<BoundPrimitiveSphere>(MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref this, 1)));
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref BoundPrimitiveCapsule AsCapsule() => ref MemoryMarshal.AsRef<BoundPrimitiveCapsule>(MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref this, 1)));
 
-        public IResourceSystemBlock GetType(ResourceDataReader reader, params object[] parameters)
-        {
-            var type = reader.ReadByte() & 0x7;
-            reader.Position -= 1;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref BoundPrimitiveBox AsBox() => ref MemoryMarshal.AsRef<BoundPrimitiveBox>(MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref this, 1)));
 
-            switch (type)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref BoundPrimitiveCylinder AsCylinder() => ref MemoryMarshal.AsRef<BoundPrimitiveCylinder>(MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref this, 1)));
+
+        public BoundPrimitive ReverseEndianness()
+        {
+            return PrimitiveType switch
             {
-                case 0: return new BoundPrimitiveTriangle();
-                case 1: return new BoundPrimitiveSphere();
-                case 2: return new BoundPrimitiveCapsule();
-                case 3: return new BoundPrimitiveBox();
-                case 4: return new BoundPrimitiveCylinder();
-                default: throw new Exception("Unknown primitive bound type");
-            }
+                BoundPrimitiveType.Triangle => AsTriangle().ReverseEndianness().AsRawData(),
+                BoundPrimitiveType.Sphere => AsSphere().ReverseEndianness().AsRawData(),
+                BoundPrimitiveType.Capsule => AsSphere().ReverseEndianness().AsRawData(),
+                BoundPrimitiveType.Box => AsBox().ReverseEndianness().AsRawData(),
+                BoundPrimitiveType.Cylinder => AsCylinder().ReverseEndianness().AsRawData(),
+                _ => this,
+            };
         }
     }
 
     // PrimitiveTriangle
-    public class BoundPrimitiveTriangle : BoundPrimitive
+    public struct BoundPrimitiveTriangle : IBoundPrimitive, IResourceStruct<BoundPrimitiveTriangle>
     {
         // structure data
         public float triArea;
@@ -68,6 +96,15 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public short NeighborIndex1;
         public short NeighborIndex2;
         public short NeighborIndex3;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref BoundPrimitive AsRawData() => ref MemoryMarshal.AsRef<BoundPrimitive>(MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref this, 1)));
+
+        public float Area
+        {
+            get => BitConverter.Int32BitsToSingle((int)(BitConverter.SingleToInt32Bits(triArea) & 0xFFFFFFF8));
+            set => triArea = BitConverter.Int32BitsToSingle((int)(BitConverter.SingleToInt32Bits(value) & 0xFFFFFFF8));
+        }
 
         public ushort VertexIndex1
         {
@@ -123,64 +160,51 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             }
         }
 
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public BoundPrimitiveTriangle ReverseEndianness()
         {
-            triArea = reader.ReadSingle();
-            triIndex1 = reader.ReadUInt16();
-            triIndex2 = reader.ReadUInt16();
-            triIndex3 = reader.ReadUInt16();
-            NeighborIndex1 = reader.ReadInt16();
-            NeighborIndex2 = reader.ReadInt16();
-            NeighborIndex3 = reader.ReadInt16();
-        }
-
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            writer.Write(triArea);
-            writer.Write(triIndex1);
-            writer.Write(triIndex2);
-            writer.Write(triIndex3);
-            writer.Write(NeighborIndex1);
-            writer.Write(NeighborIndex2);
-            writer.Write(NeighborIndex3);
+            return new BoundPrimitiveTriangle()
+            {
+                triArea = EndiannessExtensions.ReverseEndianness(triArea),
+                triIndex1 = EndiannessExtensions.ReverseEndianness(triIndex1),
+                triIndex2 = EndiannessExtensions.ReverseEndianness(triIndex2),
+                triIndex3 = EndiannessExtensions.ReverseEndianness(triIndex3),
+                NeighborIndex1 = EndiannessExtensions.ReverseEndianness(NeighborIndex1),
+                NeighborIndex2 = EndiannessExtensions.ReverseEndianness(NeighborIndex2),
+                NeighborIndex3 = EndiannessExtensions.ReverseEndianness(NeighborIndex3),
+            };
         }
     }
 
     // PrimitiveSphere
-    public class BoundPrimitiveSphere : BoundPrimitive
+    public struct BoundPrimitiveSphere : IBoundPrimitive, IResourceStruct<BoundPrimitiveSphere>
     {
         // structure data
-
         public ushort sphereType;
         public ushort sphereIndex;
         public float sphereRadius;
         public uint unused0;
         public uint unused1;
 
-        public override void Read(ResourceDataReader reader, params object[] parameters)
-        {
-            sphereType = reader.ReadUInt16();
-            sphereIndex = reader.ReadUInt16();
-            sphereRadius = reader.ReadSingle();
-            unused0 = reader.ReadUInt32();
-            unused1 = reader.ReadUInt32();
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref BoundPrimitive AsRawData() => ref MemoryMarshal.AsRef<BoundPrimitive>(MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref this, 1)));
 
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        public BoundPrimitiveSphere ReverseEndianness()
         {
-            writer.Write(sphereType);
-            writer.Write(sphereIndex);
-            writer.Write(sphereRadius);
-            writer.Write(unused0);
-            writer.Write(unused1);
+            return new BoundPrimitiveSphere()
+            {
+                sphereType = EndiannessExtensions.ReverseEndianness(sphereType),
+                sphereIndex = EndiannessExtensions.ReverseEndianness(sphereIndex),
+                sphereRadius = EndiannessExtensions.ReverseEndianness(sphereRadius),
+                unused0 = EndiannessExtensions.ReverseEndianness(unused0),
+                unused1 = EndiannessExtensions.ReverseEndianness(unused1),
+            };
         }
     }
 
     // PrimitiveCapsule
-    public class BoundPrimitiveCapsule : BoundPrimitive
+    public struct BoundPrimitiveCapsule : IBoundPrimitive, IResourceStruct<BoundPrimitiveCapsule>
     {
         // structure data
-
         public ushort capsuleType;
         public ushort capsuleIndex1;
         public float capsuleRadius;
@@ -188,32 +212,27 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public ushort unused0;
         public uint unused1;
 
-        public override void Read(ResourceDataReader reader, params object[] parameters)
-        {
-            capsuleType = reader.ReadUInt16();
-            capsuleIndex1 = reader.ReadUInt16();
-            capsuleRadius = reader.ReadSingle();
-            capsuleIndex2 = reader.ReadUInt16();
-            unused0 = reader.ReadUInt16();
-            unused1 = reader.ReadUInt32();
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref BoundPrimitive AsRawData() => ref MemoryMarshal.AsRef<BoundPrimitive>(MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref this, 1)));
 
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        public BoundPrimitiveCapsule ReverseEndianness()
         {
-            writer.Write(capsuleType);
-            writer.Write(capsuleIndex1);
-            writer.Write(capsuleRadius);
-            writer.Write(capsuleIndex2);
-            writer.Write(unused0);
-            writer.Write(unused1);
+            return new BoundPrimitiveCapsule()
+            {
+                capsuleType = EndiannessExtensions.ReverseEndianness(capsuleType),
+                capsuleIndex1 = EndiannessExtensions.ReverseEndianness(capsuleIndex1),
+                capsuleRadius = EndiannessExtensions.ReverseEndianness(capsuleRadius),
+                capsuleIndex2 = EndiannessExtensions.ReverseEndianness(capsuleIndex2),
+                unused0 = EndiannessExtensions.ReverseEndianness(unused0),
+                unused1 = EndiannessExtensions.ReverseEndianness(unused1),
+            };
         }
     }
 
     // PrimitiveBox
-    public class BoundPrimitiveBox : BoundPrimitive
+    public struct BoundPrimitiveBox : IBoundPrimitive, IResourceStruct<BoundPrimitiveBox>
     {
         // structure data
-
         public uint boxType;
         public short boxIndex1;
         public short boxIndex2;
@@ -221,32 +240,27 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public short boxIndex4;
         public uint unused0;
 
-        public override void Read(ResourceDataReader reader, params object[] parameters)
-        {
-            boxType = reader.ReadUInt32();
-            boxIndex1 = reader.ReadInt16();
-            boxIndex2 = reader.ReadInt16();
-            boxIndex3 = reader.ReadInt16();
-            boxIndex4 = reader.ReadInt16();
-            unused0 = reader.ReadUInt32();
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref BoundPrimitive AsRawData() => ref MemoryMarshal.AsRef<BoundPrimitive>(MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref this, 1)));
 
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        public BoundPrimitiveBox ReverseEndianness()
         {
-            writer.Write(boxType);
-            writer.Write(boxIndex1);
-            writer.Write(boxIndex2);
-            writer.Write(boxIndex3);
-            writer.Write(boxIndex4);
-            writer.Write(unused0);
+            return new BoundPrimitiveBox()
+            {
+                boxType = EndiannessExtensions.ReverseEndianness(boxType),
+                boxIndex1 = EndiannessExtensions.ReverseEndianness(boxIndex1),
+                boxIndex2 = EndiannessExtensions.ReverseEndianness(boxIndex2),
+                boxIndex3 = EndiannessExtensions.ReverseEndianness(boxIndex3),
+                boxIndex4 = EndiannessExtensions.ReverseEndianness(boxIndex4),
+                unused0 = EndiannessExtensions.ReverseEndianness(unused0),
+            };
         }
     }
 
     // PrimitiveCylinder
-    public class BoundPrimitiveCylinder : BoundPrimitive
+    public struct BoundPrimitiveCylinder : IBoundPrimitive, IResourceStruct<BoundPrimitiveCylinder>
     {
         // structure data
-
         public ushort cylinderType;
         public ushort cylinderIndex1;
         public float cylinderRadius;
@@ -254,24 +268,20 @@ namespace RageLib.Resources.GTA5.PC.Bounds
         public ushort unused0;
         public uint unused1;
 
-        public override void Read(ResourceDataReader reader, params object[] parameters)
-        {
-            cylinderType = reader.ReadUInt16();
-            cylinderIndex1 = reader.ReadUInt16();
-            cylinderRadius = reader.ReadSingle();
-            cylinderIndex2 = reader.ReadUInt16();
-            unused0 = reader.ReadUInt16();
-            unused1 = reader.ReadUInt32();
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ref BoundPrimitive AsRawData() => ref MemoryMarshal.AsRef<BoundPrimitive>(MemoryMarshal.AsBytes(MemoryMarshal.CreateSpan(ref this, 1)));
 
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
+        public BoundPrimitiveCylinder ReverseEndianness()
         {
-            writer.Write(cylinderType);
-            writer.Write(cylinderIndex1);
-            writer.Write(cylinderRadius);
-            writer.Write(cylinderIndex2);
-            writer.Write(unused0);
-            writer.Write(unused1);
+            return new BoundPrimitiveCylinder()
+            {
+                cylinderType = EndiannessExtensions.ReverseEndianness(cylinderType),
+                cylinderIndex1 = EndiannessExtensions.ReverseEndianness(cylinderIndex1),
+                cylinderRadius = EndiannessExtensions.ReverseEndianness(cylinderRadius),
+                cylinderIndex2 = EndiannessExtensions.ReverseEndianness(cylinderIndex2),
+                unused0 = EndiannessExtensions.ReverseEndianness(unused0),
+                unused1 = EndiannessExtensions.ReverseEndianness(unused1),
+            };
         }
     }
 }

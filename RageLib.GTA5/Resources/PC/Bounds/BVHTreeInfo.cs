@@ -20,52 +20,34 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
+
 namespace RageLib.Resources.GTA5.PC.Bounds
 {
-    public class BVHTreeInfo : ResourceSystemBlock
+    public struct BVHTreeInfo : IResourceStruct<BVHTreeInfo>
     {
-        public override long BlockLength => 0x10;
+        public short MinX;
+        public short MinY;
+        public short MinZ;
+        public short MaxX;
+        public short MaxY;
+        public short MaxZ;
+        public short NodeIndex1;
+        public short NodeIndex2;
 
-        // structure data
-        public ushort MinX;
-        public ushort MinY;
-        public ushort MinZ;
-        public ushort MaxX;
-        public ushort MaxY;
-        public ushort MaxZ;
-        public ushort NodeIndex1;
-        public ushort NodeIndex2;
-
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public BVHTreeInfo ReverseEndianness()
         {
-            // read structure data
-            this.MinX = reader.ReadUInt16();
-            this.MinY = reader.ReadUInt16();
-            this.MinZ = reader.ReadUInt16();
-            this.MaxX = reader.ReadUInt16();
-            this.MaxY = reader.ReadUInt16();
-            this.MaxZ = reader.ReadUInt16();
-            this.NodeIndex1 = reader.ReadUInt16();
-            this.NodeIndex2 = reader.ReadUInt16();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.MinX);
-            writer.Write(this.MinY);
-            writer.Write(this.MinZ);
-            writer.Write(this.MaxX);
-            writer.Write(this.MaxY);
-            writer.Write(this.MaxZ);
-            writer.Write(this.NodeIndex1);
-            writer.Write(this.NodeIndex2);
+            return new BVHTreeInfo()
+            {
+                MinX = EndiannessExtensions.ReverseEndianness(MinX),
+                MinY = EndiannessExtensions.ReverseEndianness(MinY),
+                MinZ = EndiannessExtensions.ReverseEndianness(MinZ),
+                MaxX = EndiannessExtensions.ReverseEndianness(MaxX),
+                MaxY = EndiannessExtensions.ReverseEndianness(MaxY),
+                MaxZ = EndiannessExtensions.ReverseEndianness(MaxZ),
+                NodeIndex1 = EndiannessExtensions.ReverseEndianness(NodeIndex1),
+                NodeIndex2 = EndiannessExtensions.ReverseEndianness(NodeIndex2),
+            };
         }
     }
 }
