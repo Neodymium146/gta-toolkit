@@ -97,12 +97,12 @@ namespace RageLib.Resources.GTA5.PC.Navigations
         public uint Unknown_16Ch; // 0x00000000
 
         // reference data
-        public ResourceSplitArray<CompressedVertex> Vertices;
-        public ResourceSplitArray<ushort_r> Indices;
-        public ResourceSplitArray<AdjPoly> AdjPolys;
-        public ResourceSplitArray<Poly> Polys;
+        public SimpleSplitArray<CompressedVertex> Vertices;
+        public SimpleSplitArray<ushort> Indices;
+        public SimpleSplitArray<AdjPoly> AdjPolys;
+        public SimpleSplitArray<Poly> Polys;
         public Sector SectorTree;
-        public ResourceSimpleArray<Portal> Portals;
+        public SimpleArray<Portal> Portals;
         public SimpleArray<ushort> p8data;
 
         /// <summary>
@@ -178,22 +178,22 @@ namespace RageLib.Resources.GTA5.PC.Navigations
             this.Unknown_16Ch = reader.ReadUInt32();
 
             // read reference data
-            this.Vertices = reader.ReadBlockAt<ResourceSplitArray<CompressedVertex>>(
+            this.Vertices = reader.ReadBlockAt<SimpleSplitArray<CompressedVertex>>(
                 this.VerticesPointer // offset
             );
-            this.Indices = reader.ReadBlockAt<ResourceSplitArray<ushort_r>>(
+            this.Indices = reader.ReadBlockAt<SimpleSplitArray<ushort>>(
                 this.IndicesPointer // offset
             );
-            this.AdjPolys = reader.ReadBlockAt<ResourceSplitArray<AdjPoly>>(
+            this.AdjPolys = reader.ReadBlockAt<SimpleSplitArray<AdjPoly>>(
                 this.AdjPolysPointer // offset
             );
-            this.Polys = reader.ReadBlockAt<ResourceSplitArray<Poly>>(
+            this.Polys = reader.ReadBlockAt<SimpleSplitArray<Poly>>(
                 this.PolysPointer // offset
             );
             this.SectorTree = reader.ReadBlockAt<Sector>(
                 this.SectorTreePointer // offset
             );
-            this.Portals = reader.ReadBlockAt<ResourceSimpleArray<Portal>>(
+            this.Portals = reader.ReadBlockAt<SimpleArray<Portal>>(
                 this.PortalsPointer, // offset
                 this.PortalsCount
             );

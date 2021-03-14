@@ -20,35 +20,24 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
+
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
     // TAdjPoly
-    public class AdjPoly : ResourceSystemBlock
+    public struct AdjPoly : IResourceStruct<AdjPoly>
     {
-        public override long BlockLength => 8;
-
         // structure data
         public uint Unknown_0h;
         public uint Unknown_4h;
 
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public AdjPoly ReverseEndianness()
         {
-            // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
+            return new AdjPoly()
+            {
+                Unknown_0h = EndiannessExtensions.ReverseEndianness(Unknown_0h),
+                Unknown_4h = EndiannessExtensions.ReverseEndianness(Unknown_4h),
+            };
         }
     }
 }

@@ -40,7 +40,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
 
         // reference data
         public SimpleArray<ushort> p1data;
-        public ResourceSimpleArray<SectorDataUnk> p2data;
+        public SimpleArray<SectorDataUnk> p2data;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -61,7 +61,7 @@ namespace RageLib.Resources.GTA5.PC.Navigations
                 this.p1, // offset
                 this.c2
             );
-            this.p2data = reader.ReadBlockAt<ResourceSimpleArray<SectorDataUnk>>(
+            this.p2data = reader.ReadBlockAt<SimpleArray<SectorDataUnk>>(
                 this.p2, // offset
                 this.c3
             );

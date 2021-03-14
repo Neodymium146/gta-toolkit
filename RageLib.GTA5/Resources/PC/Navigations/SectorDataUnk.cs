@@ -20,40 +20,27 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
+
 namespace RageLib.Resources.GTA5.PC.Navigations
 {
-    public class SectorDataUnk : ResourceSystemBlock
+    public struct SectorDataUnk : IResourceStruct<SectorDataUnk>
     {
-        public override long BlockLength => 8;
-
         // structure data
         public ushort Unknown_0h;
         public ushort Unknown_2h;
         public ushort Unknown_4h;
         public ushort Unknown_6h;
 
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public SectorDataUnk ReverseEndianness()
         {
-            // read structure data
-            this.Unknown_0h = reader.ReadUInt16();
-            this.Unknown_2h = reader.ReadUInt16();
-            this.Unknown_4h = reader.ReadUInt16();
-            this.Unknown_6h = reader.ReadUInt16();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_2h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_6h);
+            return new SectorDataUnk()
+            {
+                Unknown_0h = EndiannessExtensions.ReverseEndianness(Unknown_0h),
+                Unknown_2h = EndiannessExtensions.ReverseEndianness(Unknown_2h),
+                Unknown_4h = EndiannessExtensions.ReverseEndianness(Unknown_4h),
+                Unknown_6h = EndiannessExtensions.ReverseEndianness(Unknown_6h),
+            };
         }
     }
 }
