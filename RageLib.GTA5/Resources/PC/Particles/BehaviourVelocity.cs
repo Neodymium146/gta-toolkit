@@ -28,14 +28,10 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override long BlockLength => 0x30;
 
         // structure data
-        public uint Unknown_10h; // 0x00000000
-        public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h; // 0x00000000
-        public uint Unknown_1Ch; // 0x00000000
-        public uint Unknown_20h; // 0x00000000
-        public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
+        public ulong Unknown_10h; // 0x0000000000000000
+        public ulong Unknown_18h; // 0x0000000000000000
+        public ulong Unknown_20h; // 0x0000000000000000
+        public ulong Unknown_28h; // 0x0000000000000000
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -45,14 +41,10 @@ namespace RageLib.Resources.GTA5.PC.Particles
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
+            this.Unknown_10h = reader.ReadUInt64();
+            this.Unknown_18h = reader.ReadUInt64();
+            this.Unknown_20h = reader.ReadUInt64();
+            this.Unknown_28h = reader.ReadUInt64();
         }
 
         /// <summary>
@@ -64,13 +56,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
             // write structure data
             writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
         }
     }
 }

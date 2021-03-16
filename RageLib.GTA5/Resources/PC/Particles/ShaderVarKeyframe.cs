@@ -33,15 +33,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
         // structure data
         public uint Unknown_18h;
         public uint Unknown_1Ch; // 0x00000001
-        public uint Unknown_20h; // 0x00000000
-        public uint Unknown_24h; // 0x00000000
+        public ulong Unknown_20h; // 0x0000000000000000
         public ResourceSimpleList64<Unknown_P_009> Unknown_28h;
-        public uint Unknown_38h; // 0x00000000
-        public uint Unknown_3Ch; // 0x00000000
-        public uint Unknown_40h; // 0x00000000
-        public uint Unknown_44h; // 0x00000000
-        public uint Unknown_48h; // 0x00000000
-        public uint Unknown_4Ch; // 0x00000000
+        public ulong Unknown_38h; // 0x0000000000000000
+        public ulong Unknown_40h; // 0x0000000000000000
+        public ulong Unknown_48h; // 0x0000000000000000
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -53,15 +49,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
             // read structure data
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadUInt64();
             this.Unknown_28h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_009>>();
-            this.Unknown_38h = reader.ReadUInt32();
-            this.Unknown_3Ch = reader.ReadUInt32();
-            this.Unknown_40h = reader.ReadUInt32();
-            this.Unknown_44h = reader.ReadUInt32();
-            this.Unknown_48h = reader.ReadUInt32();
-            this.Unknown_4Ch = reader.ReadUInt32();
+            this.Unknown_38h = reader.ReadUInt64();
+            this.Unknown_40h = reader.ReadUInt64();
+            this.Unknown_48h = reader.ReadUInt64();
         }
 
         /// <summary>
@@ -75,14 +67,10 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
             writer.WriteBlock(this.Unknown_28h);
             writer.Write(this.Unknown_38h);
-            writer.Write(this.Unknown_3Ch);
             writer.Write(this.Unknown_40h);
-            writer.Write(this.Unknown_44h);
             writer.Write(this.Unknown_48h);
-            writer.Write(this.Unknown_4Ch);
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()

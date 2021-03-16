@@ -51,13 +51,13 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_50h; // 0x00000000
         public uint Unknown_54h; // 0x00000000
         public ulong EmitterRulePointer;
-        public ulong p1;
+        public ulong NamePointer;
         public uint Unknown_68h;
         public uint Unknown_6Ch;
 
         // reference data
         public EffectRule EmitterRule;
-        public string_r p1data;
+        public string_r Name;
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -86,7 +86,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_50h = reader.ReadUInt32();
             this.Unknown_54h = reader.ReadUInt32();
             this.EmitterRulePointer = reader.ReadUInt64();
-            this.p1 = reader.ReadUInt64();
+            this.NamePointer = reader.ReadUInt64();
             this.Unknown_68h = reader.ReadUInt32();
             this.Unknown_6Ch = reader.ReadUInt32();
 
@@ -94,8 +94,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.EmitterRule = reader.ReadBlockAt<EffectRule>(
                 this.EmitterRulePointer // offset
             );
-            this.p1data = reader.ReadBlockAt<string_r>(
-                this.p1 // offset
+            this.Name = reader.ReadBlockAt<string_r>(
+                this.NamePointer // offset
             );
         }
 
@@ -108,7 +108,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
             // update structure data
             this.EmitterRulePointer = (ulong)(this.EmitterRule != null ? this.EmitterRule.BlockPosition : 0);
-            this.p1 = (ulong)(this.p1data != null ? this.p1data.BlockPosition : 0);
+            this.NamePointer = (ulong)(this.Name != null ? this.Name.BlockPosition : 0);
 
             // write structure data
             writer.Write(this.Unknown_10h);
@@ -130,7 +130,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_50h);
             writer.Write(this.Unknown_54h);
             writer.Write(this.EmitterRulePointer);
-            writer.Write(this.p1);
+            writer.Write(this.NamePointer);
             writer.Write(this.Unknown_68h);
             writer.Write(this.Unknown_6Ch);
         }
@@ -142,7 +142,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         {
             var list = new List<IResourceBlock>(base.GetReferences());
             if (EmitterRule != null) list.Add(EmitterRule);
-            if (p1data != null) list.Add(p1data);
+            if (Name != null) list.Add(Name);
             return list.ToArray();
         }
     }

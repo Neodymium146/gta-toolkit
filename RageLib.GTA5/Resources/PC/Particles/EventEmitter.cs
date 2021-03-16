@@ -39,10 +39,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_10h;
         public float Unknown_14h; // 0x00000000
         public ulong EvolutionParamsPointer;
-        public uint Unknown_20h; // 0x00000000
-        public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
+        public ulong Unknown_20h; // 0x0000000000000000
+        public ulong Unknown_28h; // 0x0000000000000000
         public ulong EmitterNamePointer;
         public ulong ParticleNamePointer;
         public ulong EmitterRulePointer;
@@ -53,8 +51,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public float ParticleScaleModifier;
         public uint Unknown_60h;
         public uint Unknown_64h;
-        public uint Unknown_68h; // 0x00000000
-        public uint Unknown_6Ch; // 0x00000000
+        public ulong Unknown_68h; // 0x0000000000000000
 
         // reference data
         public EvolutionParameters EvolutionParams;
@@ -75,10 +72,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadSingle();
             this.EvolutionParamsPointer = reader.ReadUInt64();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadUInt64();
+            this.Unknown_28h = reader.ReadUInt64();
             this.EmitterNamePointer = reader.ReadUInt64();
             this.ParticleNamePointer = reader.ReadUInt64();
             this.EmitterRulePointer = reader.ReadUInt64();
@@ -89,8 +84,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.ParticleScaleModifier = reader.ReadSingle();
             this.Unknown_60h = reader.ReadUInt32();
             this.Unknown_64h = reader.ReadUInt32();
-            this.Unknown_68h = reader.ReadUInt32();
-            this.Unknown_6Ch = reader.ReadUInt32();
+            this.Unknown_68h = reader.ReadUInt64();
 
             // read reference data
             this.EvolutionParams = reader.ReadBlockAt<EvolutionParameters>(
@@ -130,9 +124,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_14h);
             writer.Write(this.EvolutionParamsPointer);
             writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
             writer.Write(this.EmitterNamePointer);
             writer.Write(this.ParticleNamePointer);
             writer.Write(this.EmitterRulePointer);
@@ -144,7 +136,6 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_60h);
             writer.Write(this.Unknown_64h);
             writer.Write(this.Unknown_68h);
-            writer.Write(this.Unknown_6Ch);
         }
 
         /// <summary>

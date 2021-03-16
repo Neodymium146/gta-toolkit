@@ -38,14 +38,10 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_14h; // 0x00000000
         public uint Unknown_18h; // 0x00000000
         public uint Unknown_1Ch; // 0x00000000
-        public uint Unknown_20h; // 0x00000000
-        public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
-        public uint Unknown_30h; // 0x00000000
-        public uint Unknown_34h; // 0x00000000
-        public uint Unknown_38h; // 0x00000000
-        public uint Unknown_3Ch; // 0x00000000
+        public ulong Unknown_20h; // 0x0000000000000000
+        public ulong Unknown_28h; // 0x0000000000000000
+        public ulong Unknown_30h; // 0x0000000000000000
+        public ulong Unknown_38h; // 0x0000000000000000
         public SimpleList64<uint> Unknown_40h;
         public uint Unknown_50h;
         public uint Unknown_54h; // 0x00000000
@@ -64,14 +60,10 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_14h = reader.ReadUInt32();
             this.Unknown_18h = reader.ReadUInt32();
             this.Unknown_1Ch = reader.ReadUInt32();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.Unknown_30h = reader.ReadUInt32();
-            this.Unknown_34h = reader.ReadUInt32();
-            this.Unknown_38h = reader.ReadUInt32();
-            this.Unknown_3Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadUInt64();
+            this.Unknown_28h = reader.ReadUInt64();
+            this.Unknown_30h = reader.ReadUInt64();
+            this.Unknown_38h = reader.ReadUInt64();
             this.Unknown_40h = reader.ReadBlock<SimpleList64<uint>>();
             this.Unknown_50h = reader.ReadUInt32();
             this.Unknown_54h = reader.ReadUInt32();
@@ -92,13 +84,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_18h);
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
             writer.Write(this.Unknown_30h);
-            writer.Write(this.Unknown_34h);
             writer.Write(this.Unknown_38h);
-            writer.Write(this.Unknown_3Ch);
             writer.WriteBlock(this.Unknown_40h);
             writer.Write(this.Unknown_50h);
             writer.Write(this.Unknown_54h);

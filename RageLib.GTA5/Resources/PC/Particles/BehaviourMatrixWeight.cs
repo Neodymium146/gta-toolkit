@@ -32,15 +32,12 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;
-        public uint Unknown_20h; // 0x00000000
-        public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
+        public ulong Unknown_20h; // 0x0000000000000000
+        public ulong Unknown_28h; // 0x0000000000000000
         public KeyframeProp KeyframeProp0;
         public uint Unknown_C0h;
         public uint Unknown_C4h; // 0x00000000
-        public uint Unknown_C8h; // 0x00000000
-        public uint Unknown_CCh; // 0x00000000
+        public ulong Unknown_C8h; // 0x0000000000000000
 
         /// <summary>
         /// Reads the data-block from a stream.
@@ -51,15 +48,12 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
             // read structure data
             this.KeyframeProps = reader.ReadBlock<ResourcePointerList64<KeyframeProp>>();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadUInt64();
+            this.Unknown_28h = reader.ReadUInt64();
             this.KeyframeProp0 = reader.ReadBlock<KeyframeProp>();
             this.Unknown_C0h = reader.ReadUInt32();
             this.Unknown_C4h = reader.ReadUInt32();
-            this.Unknown_C8h = reader.ReadUInt32();
-            this.Unknown_CCh = reader.ReadUInt32();
+            this.Unknown_C8h = reader.ReadUInt64();
         }
 
         /// <summary>
@@ -72,14 +66,11 @@ namespace RageLib.Resources.GTA5.PC.Particles
             // write structure data
             writer.WriteBlock(this.KeyframeProps);
             writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
             writer.WriteBlock(this.KeyframeProp0);
             writer.Write(this.Unknown_C0h);
             writer.Write(this.Unknown_C4h);
             writer.Write(this.Unknown_C8h);
-            writer.Write(this.Unknown_CCh);
         }
 
         public override Tuple<long, IResourceBlock>[] GetParts()

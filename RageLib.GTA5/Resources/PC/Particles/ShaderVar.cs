@@ -31,9 +31,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override long BlockLength => 24;
 
         // structure data
-        public uint Unknown_8h; // 0x00000000
-        public uint Unknown_Ch; // 0x00000000
-        public uint Unknown_10h;
+        public ulong Unknown_8h; // 0x0000000000000000
+        public uint Hash;
         public byte Type;
         public byte Unknown_15h;
         public ushort Unknown_16h;
@@ -46,9 +45,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
             base.Read(reader, parameters);
 
             // read structure data
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
+            this.Unknown_8h = reader.ReadUInt64();
+            this.Hash = reader.ReadUInt32();
             this.Type = reader.ReadByte();
             this.Unknown_15h = reader.ReadByte();
             this.Unknown_16h = reader.ReadUInt16();
@@ -63,8 +61,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
             // write structure data
             writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h);
+            writer.Write(this.Hash);
             writer.Write(this.Type);
             writer.Write(this.Unknown_15h);
             writer.Write(this.Unknown_16h);

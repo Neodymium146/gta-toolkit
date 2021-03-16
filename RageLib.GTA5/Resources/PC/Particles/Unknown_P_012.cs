@@ -37,8 +37,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public ulong DrawablePointer;
         public uint NameHash;
         public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
+        public ulong Unknown_28h; // 0x0000000000000000
 
         // reference data
         public string_r Name;
@@ -55,8 +54,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.DrawablePointer = reader.ReadUInt64();
             this.NameHash = reader.ReadUInt32();
             this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
+            this.Unknown_28h = reader.ReadUInt64();
 
             // read reference data
             this.Name = reader.ReadBlockAt<string_r>(
@@ -83,7 +81,6 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.NameHash);
             writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
         }
 
         /// <summary>

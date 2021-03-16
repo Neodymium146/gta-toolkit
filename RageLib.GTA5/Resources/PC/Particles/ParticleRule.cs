@@ -36,8 +36,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         // structure data
         public uint Unknown_10h;
         public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h; // 0x00000000
-        public uint Unknown_1Ch; // 0x00000000
+        public ulong Unknown_18h; // 0x0000000000000000
         public EffectSpawner emb1;
         public EffectSpawner emb2;
         public uint Unknown_100h;
@@ -54,22 +53,16 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public ResourcePointerList64<Behaviour> Unknown_148h;
         public ResourcePointerList64<Behaviour> Unknown_158h;
         public ResourcePointerList64<Behaviour> Unknown_168h;
-        public uint Unknown_178h; // 0x00000000
-        public uint Unknown_17Ch; // 0x00000000
-        public uint Unknown_180h; // 0x00000000
-        public uint Unknown_184h; // 0x00000000
+        public ulong Unknown_178h; // 0x0000000000000000
+        public ulong Unknown_180h; // 0x0000000000000000
         public ResourceSimpleList64<Unknown_P_013> Unknown_188h;
-        public uint Unknown_198h; // 0x00000000
-        public uint Unknown_19Ch; // 0x00000000
-        public uint Unknown_1A0h; // 0x00000000
-        public uint Unknown_1A4h; // 0x00000000
-        public uint Unknown_1A8h; // 0x00000000
-        public uint Unknown_1ACh; // 0x00000000
+        public ulong Unknown_198h; // 0x0000000000000000
+        public ulong Unknown_1A0h; // 0x0000000000000000
+        public ulong Unknown_1A8h; // 0x0000000000000000
         public ulong VFTx3;
         public ulong ShaderNamePointer;
         public ulong ShaderTechniqueNamePointer;
-        public uint Unknown_1C8h; // 0x00000000
-        public uint Unknown_1CCh; // 0x00000000
+        public ulong Unknown_1C8h; // 0x0000000000000000
         public uint Unknown_1D0h;
         public uint Unknown_1D4h; // 0x00000000
         public ulong VFTx4;
@@ -85,12 +78,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public ResourceSimpleList64<Unknown_P_012> Unknown_210h;
         public uint Unknown_220h;
         public uint Unknown_224h; // 0x00000000
-        public uint Unknown_228h; // 0x00000000
-        public uint Unknown_22Ch; // 0x00000000
-        public uint Unknown_230h; // 0x00000000
-        public uint Unknown_234h; // 0x00000000
-        public uint Unknown_238h; // 0x00000000
-        public uint Unknown_23Ch; // 0x00000000
+        public ulong Unknown_228h; // 0x0000000000000000
+        public ulong Unknown_230h; // 0x0000000000000000
+        public ulong Unknown_238h; // 0x0000000000000000
 
         // reference data
         public string_r Name;
@@ -107,8 +97,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             // read structure data
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Unknown_18h = reader.ReadUInt64();
             this.emb1 = reader.ReadBlock<EffectSpawner>();
             this.emb2 = reader.ReadBlock<EffectSpawner>();
             this.Unknown_100h = reader.ReadUInt32();
@@ -125,22 +114,16 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_148h = reader.ReadBlock<ResourcePointerList64<Behaviour>>();
             this.Unknown_158h = reader.ReadBlock<ResourcePointerList64<Behaviour>>();
             this.Unknown_168h = reader.ReadBlock<ResourcePointerList64<Behaviour>>();
-            this.Unknown_178h = reader.ReadUInt32();
-            this.Unknown_17Ch = reader.ReadUInt32();
-            this.Unknown_180h = reader.ReadUInt32();
-            this.Unknown_184h = reader.ReadUInt32();
+            this.Unknown_178h = reader.ReadUInt64();
+            this.Unknown_180h = reader.ReadUInt64();
             this.Unknown_188h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_013>>();
-            this.Unknown_198h = reader.ReadUInt32();
-            this.Unknown_19Ch = reader.ReadUInt32();
-            this.Unknown_1A0h = reader.ReadUInt32();
-            this.Unknown_1A4h = reader.ReadUInt32();
-            this.Unknown_1A8h = reader.ReadUInt32();
-            this.Unknown_1ACh = reader.ReadUInt32();
+            this.Unknown_198h = reader.ReadUInt64();
+            this.Unknown_1A0h = reader.ReadUInt64();
+            this.Unknown_1A8h = reader.ReadUInt64();
             this.VFTx3 = reader.ReadUInt64();
             this.ShaderNamePointer = reader.ReadUInt64();
             this.ShaderTechniqueNamePointer = reader.ReadUInt64();
-            this.Unknown_1C8h = reader.ReadUInt32();
-            this.Unknown_1CCh = reader.ReadUInt32();
+            this.Unknown_1C8h = reader.ReadUInt64();
             this.Unknown_1D0h = reader.ReadUInt32();
             this.Unknown_1D4h = reader.ReadUInt32();
             this.VFTx4 = reader.ReadUInt64();
@@ -156,12 +139,9 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_210h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_012>>();
             this.Unknown_220h = reader.ReadUInt32();
             this.Unknown_224h = reader.ReadUInt32();
-            this.Unknown_228h = reader.ReadUInt32();
-            this.Unknown_22Ch = reader.ReadUInt32();
-            this.Unknown_230h = reader.ReadUInt32();
-            this.Unknown_234h = reader.ReadUInt32();
-            this.Unknown_238h = reader.ReadUInt32();
-            this.Unknown_23Ch = reader.ReadUInt32();
+            this.Unknown_228h = reader.ReadUInt64();
+            this.Unknown_230h = reader.ReadUInt64();
+            this.Unknown_238h = reader.ReadUInt64();
 
             // read reference data
             this.Name = reader.ReadBlockAt<string_r>(
@@ -191,7 +171,6 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_10h);
             writer.Write(this.Unknown_14h);
             writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
             writer.WriteBlock(this.emb1);
             writer.WriteBlock(this.emb2);
             writer.Write(this.Unknown_100h);
@@ -209,21 +188,15 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.WriteBlock(this.Unknown_158h);
             writer.WriteBlock(this.Unknown_168h);
             writer.Write(this.Unknown_178h);
-            writer.Write(this.Unknown_17Ch);
             writer.Write(this.Unknown_180h);
-            writer.Write(this.Unknown_184h);
             writer.WriteBlock(this.Unknown_188h);
             writer.Write(this.Unknown_198h);
-            writer.Write(this.Unknown_19Ch);
             writer.Write(this.Unknown_1A0h);
-            writer.Write(this.Unknown_1A4h);
             writer.Write(this.Unknown_1A8h);
-            writer.Write(this.Unknown_1ACh);
             writer.Write(this.VFTx3);
             writer.Write(this.ShaderNamePointer);
             writer.Write(this.ShaderTechniqueNamePointer);
             writer.Write(this.Unknown_1C8h);
-            writer.Write(this.Unknown_1CCh);
             writer.Write(this.Unknown_1D0h);
             writer.Write(this.Unknown_1D4h);
             writer.Write(this.VFTx4);
@@ -240,11 +213,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_220h);
             writer.Write(this.Unknown_224h);
             writer.Write(this.Unknown_228h);
-            writer.Write(this.Unknown_22Ch);
             writer.Write(this.Unknown_230h);
-            writer.Write(this.Unknown_234h);
             writer.Write(this.Unknown_238h);
-            writer.Write(this.Unknown_23Ch);
         }
 
         /// <summary>

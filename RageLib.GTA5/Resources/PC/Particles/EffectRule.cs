@@ -37,11 +37,10 @@ namespace RageLib.Resources.GTA5.PC.Particles
         // structure data
         public uint Unknown_10h; // 0x00000001
         public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h; // 0x40866666
+        public float Unknown_18h; // 0x40866666
         public uint Unknown_1Ch; // 0x00000000
         public ulong NamePointer;
-        public uint Unknown_28h; // 0x50000000 -> ".?AVptxFxList@rage@@" pointer to itself
-        public uint Unknown_2Ch; // 0x00000000
+        public ulong Unknown_28h; // 0x5000000000000000 -> ".?AVptxFxList@rage@@" pointer to itself
         public ulong VFTx2;
         public ResourcePointerList64<EventEmitter> EventEmitters;
         public ulong p4;
@@ -68,10 +67,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public uint Unknown_3A4h; // 0x00000000
         public float Unknown_3A8h; // 0x42C80000
         public uint Unknown_3ACh; // 0x00000000
-        public uint Unknown_3B0h; // 0x00000000
-        public uint Unknown_3B4h; // 0x00000000
-        public uint Unknown_3B8h; // 0x00000000
-        public uint Unknown_3BCh; // 0x00000000
+        public ulong Unknown_3B0h; // 0x0000000000000000
+        public ulong Unknown_3B8h; // 0x0000000000000000
 
         // reference data
         public string_r Name;
@@ -87,11 +84,10 @@ namespace RageLib.Resources.GTA5.PC.Particles
             // read structure data
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
+            this.Unknown_18h = reader.ReadSingle();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.NamePointer = reader.ReadUInt64();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
+            this.Unknown_28h = reader.ReadUInt64();
             this.VFTx2 = reader.ReadUInt64();
             this.EventEmitters = reader.ReadBlock<ResourcePointerList64<EventEmitter>>();
             this.p4 = reader.ReadUInt64();
@@ -118,10 +114,8 @@ namespace RageLib.Resources.GTA5.PC.Particles
             this.Unknown_3A4h = reader.ReadUInt32();
             this.Unknown_3A8h = reader.ReadSingle();
             this.Unknown_3ACh = reader.ReadUInt32();
-            this.Unknown_3B0h = reader.ReadUInt32();
-            this.Unknown_3B4h = reader.ReadUInt32();
-            this.Unknown_3B8h = reader.ReadUInt32();
-            this.Unknown_3BCh = reader.ReadUInt32();
+            this.Unknown_3B0h = reader.ReadUInt64();
+            this.Unknown_3B8h = reader.ReadUInt64();
 
             // read reference data
             this.Name = reader.ReadBlockAt<string_r>(
@@ -152,7 +146,6 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.NamePointer);
             writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
             writer.Write(this.VFTx2);
             writer.WriteBlock(this.EventEmitters);
             writer.Write(this.p4);
@@ -180,9 +173,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_3A8h);
             writer.Write(this.Unknown_3ACh);
             writer.Write(this.Unknown_3B0h);
-            writer.Write(this.Unknown_3B4h);
             writer.Write(this.Unknown_3B8h);
-            writer.Write(this.Unknown_3BCh);
         }
 
         /// <summary>

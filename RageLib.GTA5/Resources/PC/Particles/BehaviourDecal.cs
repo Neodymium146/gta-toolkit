@@ -32,23 +32,21 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
         // structure data
         public ResourcePointerList64<KeyframeProp> KeyframeProps;
-        public uint Unknown_20h; // 0x00000000
-        public uint Unknown_24h; // 0x00000000
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
+        public ulong Unknown_20h; // 0x0000000000000000
+        public ulong Unknown_28h; // 0x0000000000000000
         public KeyframeProp KeyframeProp0;
         public KeyframeProp KeyframeProp1;
         public uint Unknown_150h;
-        public uint Unknown_154h;
-        public uint Unknown_158h;
-        public uint Unknown_15Ch;
-        public uint Unknown_160h;
-        public uint Unknown_164h;
-        public uint Unknown_168h;
-        public uint Unknown_16Ch;
+        public float Unknown_154h;
+        public float Unknown_158h;
+        public float Unknown_15Ch;
+        public float Unknown_160h;
+        public float Unknown_164h;
+        public float Unknown_168h;
+        public float Unknown_16Ch;
         public uint Unknown_170h;
-        public uint Unknown_174h; // 0x3E99999A
-        public uint Unknown_178h; // 0x3F800000
+        public float Unknown_174h; // 0x3E99999A
+        public float Unknown_178h; // 0x3F800000
         public uint Unknown_17Ch; // 0x00000000
 
         /// <summary>
@@ -60,23 +58,21 @@ namespace RageLib.Resources.GTA5.PC.Particles
 
             // read structure data
             this.KeyframeProps = reader.ReadBlock<ResourcePointerList64<KeyframeProp>>();
-            this.Unknown_20h = reader.ReadUInt32();
-            this.Unknown_24h = reader.ReadUInt32();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
+            this.Unknown_20h = reader.ReadUInt64();
+            this.Unknown_28h = reader.ReadUInt64();
             this.KeyframeProp0 = reader.ReadBlock<KeyframeProp>();
             this.KeyframeProp1 = reader.ReadBlock<KeyframeProp>();
             this.Unknown_150h = reader.ReadUInt32();
-            this.Unknown_154h = reader.ReadUInt32();
-            this.Unknown_158h = reader.ReadUInt32();
-            this.Unknown_15Ch = reader.ReadUInt32();
-            this.Unknown_160h = reader.ReadUInt32();
-            this.Unknown_164h = reader.ReadUInt32();
-            this.Unknown_168h = reader.ReadUInt32();
-            this.Unknown_16Ch = reader.ReadUInt32();
+            this.Unknown_154h = reader.ReadSingle();
+            this.Unknown_158h = reader.ReadSingle();
+            this.Unknown_15Ch = reader.ReadSingle();
+            this.Unknown_160h = reader.ReadSingle();
+            this.Unknown_164h = reader.ReadSingle();
+            this.Unknown_168h = reader.ReadSingle();
+            this.Unknown_16Ch = reader.ReadSingle();
             this.Unknown_170h = reader.ReadUInt32();
-            this.Unknown_174h = reader.ReadUInt32();
-            this.Unknown_178h = reader.ReadUInt32();
+            this.Unknown_174h = reader.ReadSingle();
+            this.Unknown_178h = reader.ReadSingle();
             this.Unknown_17Ch = reader.ReadUInt32();
         }
 
@@ -90,9 +86,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
             // write structure data
             writer.WriteBlock(this.KeyframeProps);
             writer.Write(this.Unknown_20h);
-            writer.Write(this.Unknown_24h);
             writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
             writer.WriteBlock(this.KeyframeProp0);
             writer.WriteBlock(this.KeyframeProp1);
             writer.Write(this.Unknown_150h);

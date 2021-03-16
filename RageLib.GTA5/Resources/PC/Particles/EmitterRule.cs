@@ -36,26 +36,19 @@ namespace RageLib.Resources.GTA5.PC.Particles
         // structure data
         public uint Unknown_10h;
         public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h; // 0x40833333 
+        public float Unknown_18h; // 0x40833333 
         public uint Unknown_1Ch; // 0x00000000
         public ulong NamePointer;
-        public uint Unknown_28h; // 0x00000000
-        public uint Unknown_2Ch; // 0x00000000
-        public uint Unknown_30h; // 0x00000000
-        public uint Unknown_34h; // 0x00000000
+        public ulong Unknown_28h; // 0x0000000000000000
+        public ulong Unknown_30h; // 0x0000000000000000
         public ulong p2;
-        public uint Unknown_40h; // 0x00000000
-        public uint Unknown_44h; // 0x00000000
+        public ulong Unknown_40h; // 0x0000000000000000
         public ulong p3;
-        public uint Unknown_50h; // 0x00000000
-        public uint Unknown_54h; // 0x00000000
+        public ulong Unknown_50h; // 0x0000000000000000
         public ulong p4;
-        public uint Unknown_60h; // 0x00000000
-        public uint Unknown_64h; // 0x00000000
-        public uint Unknown_68h; // 0x00000000
-        public uint Unknown_6Ch; // 0x00000000
-        public uint Unknown_70h; // 0x00000000
-        public uint Unknown_74h; // 0x00000000
+        public ulong Unknown_60h; // 0x0000000000000000
+        public ulong Unknown_68h; // 0x0000000000000000
+        public ulong Unknown_70h; // 0x0000000000000000
         public KeyframeProp KeyframeProp0;
         public KeyframeProp KeyframeProp1;
         public KeyframeProp KeyframeProp2;
@@ -86,26 +79,19 @@ namespace RageLib.Resources.GTA5.PC.Particles
             // read structure data
             this.Unknown_10h = reader.ReadUInt32();
             this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
+            this.Unknown_18h = reader.ReadSingle();
             this.Unknown_1Ch = reader.ReadUInt32();
             this.NamePointer = reader.ReadUInt64();
-            this.Unknown_28h = reader.ReadUInt32();
-            this.Unknown_2Ch = reader.ReadUInt32();
-            this.Unknown_30h = reader.ReadUInt32();
-            this.Unknown_34h = reader.ReadUInt32();
+            this.Unknown_28h = reader.ReadUInt64();
+            this.Unknown_30h = reader.ReadUInt64();
             this.p2 = reader.ReadUInt64();
-            this.Unknown_40h = reader.ReadUInt32();
-            this.Unknown_44h = reader.ReadUInt32();
+            this.Unknown_40h = reader.ReadUInt64();
             this.p3 = reader.ReadUInt64();
-            this.Unknown_50h = reader.ReadUInt32();
-            this.Unknown_54h = reader.ReadUInt32();
+            this.Unknown_50h = reader.ReadUInt64();
             this.p4 = reader.ReadUInt64();
-            this.Unknown_60h = reader.ReadUInt32();
-            this.Unknown_64h = reader.ReadUInt32();
-            this.Unknown_68h = reader.ReadUInt32();
-            this.Unknown_6Ch = reader.ReadUInt32();
-            this.Unknown_70h = reader.ReadUInt32();
-            this.Unknown_74h = reader.ReadUInt32();
+            this.Unknown_60h = reader.ReadUInt64();
+            this.Unknown_68h = reader.ReadUInt64();
+            this.Unknown_70h = reader.ReadUInt64();
             this.KeyframeProp0 = reader.ReadBlock<KeyframeProp>();
             this.KeyframeProp1 = reader.ReadBlock<KeyframeProp>();
             this.KeyframeProp2 = reader.ReadBlock<KeyframeProp>();
@@ -156,22 +142,15 @@ namespace RageLib.Resources.GTA5.PC.Particles
             writer.Write(this.Unknown_1Ch);
             writer.Write(this.NamePointer);
             writer.Write(this.Unknown_28h);
-            writer.Write(this.Unknown_2Ch);
             writer.Write(this.Unknown_30h);
-            writer.Write(this.Unknown_34h);
             writer.Write(this.p2);
             writer.Write(this.Unknown_40h);
-            writer.Write(this.Unknown_44h);
             writer.Write(this.p3);
             writer.Write(this.Unknown_50h);
-            writer.Write(this.Unknown_54h);
             writer.Write(this.p4);
             writer.Write(this.Unknown_60h);
-            writer.Write(this.Unknown_64h);
             writer.Write(this.Unknown_68h);
-            writer.Write(this.Unknown_6Ch);
             writer.Write(this.Unknown_70h);
-            writer.Write(this.Unknown_74h);
             writer.WriteBlock(this.KeyframeProp0);
             writer.WriteBlock(this.KeyframeProp1);
             writer.WriteBlock(this.KeyframeProp2);
