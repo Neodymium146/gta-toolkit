@@ -20,36 +20,24 @@
     THE SOFTWARE.
 */
 
+using RageLib.Data;
 using System.Numerics;
 
 namespace RageLib.Resources.GTA5.PC.Particles
 {
-    public class Unknown_P_009 : ResourceSystemBlock
+    public struct Unknown_P_009 : IResourceStruct<Unknown_P_009>
     {
-        public override long BlockLength => 0x20;
-
         // structure data
         public Vector4 Unknown_0h;
         public Vector4 Unknown_10h;
 
-        /// <summary>
-        /// Reads the data-block from a stream.
-        /// </summary>
-        public override void Read(ResourceDataReader reader, params object[] parameters)
+        public Unknown_P_009 ReverseEndianness()
         {
-            // read structure data
-            this.Unknown_0h = reader.ReadVector4();
-            this.Unknown_10h = reader.ReadVector4();
-        }
-
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
-        public override void Write(ResourceDataWriter writer, params object[] parameters)
-        {
-            // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_10h);
+            return new Unknown_P_009()
+            {
+                Unknown_0h = EndiannessExtensions.ReverseEndianness(Unknown_0h),
+                Unknown_10h = EndiannessExtensions.ReverseEndianness(Unknown_10h),
+            };
         }
     }
 }

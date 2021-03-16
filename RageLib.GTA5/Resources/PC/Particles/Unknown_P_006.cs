@@ -30,7 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override long BlockLength => 0x30;
 
         // structure data
-        public ResourceSimpleList64<Unknown_P_009> Unknown_0h;
+        public SimpleList64<Unknown_P_009> Unknown_0h;
         public ulong Unknown_10h; // 0x0000000000000000
         public ulong Unknown_18h; // 0x0000000000000000
         public uint Unknown_20h;
@@ -43,7 +43,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadBlock<ResourceSimpleList64<Unknown_P_009>>();
+            this.Unknown_0h = reader.ReadBlock<SimpleList64<Unknown_P_009>>();
             this.Unknown_10h = reader.ReadUInt64();
             this.Unknown_18h = reader.ReadUInt64();
             this.Unknown_20h = reader.ReadUInt32();
