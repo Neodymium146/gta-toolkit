@@ -20,6 +20,8 @@
     THE SOFTWARE.
 */
 
+using System.Numerics;
+
 namespace RageLib.Resources.GTA5.PC.Drawables
 {
     public class JointRotationLimit : ResourceSystemBlock
@@ -51,12 +53,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
         public float Unknown_50h; // -pi
         public float Unknown_54h; // pi
         public float Unknown_58h; // 1.0
-        public float Unknown_5Ch;
-        public float Unknown_60h;
-        public float Unknown_64h;
-        public float Unknown_68h;
-        public float Unknown_6Ch;
-        public float Unknown_70h;
+        public Vector3 Min; // in rad
+        public Vector3 Max; // in rad
         public float Unknown_74h; // pi
         public float Unknown_78h; // -pi
         public float Unknown_7Ch; // pi
@@ -107,12 +105,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             this.Unknown_50h = reader.ReadSingle();
             this.Unknown_54h = reader.ReadSingle();
             this.Unknown_58h = reader.ReadSingle();
-            this.Unknown_5Ch = reader.ReadSingle();
-            this.Unknown_60h = reader.ReadSingle();
-            this.Unknown_64h = reader.ReadSingle();
-            this.Unknown_68h = reader.ReadSingle();
-            this.Unknown_6Ch = reader.ReadSingle();
-            this.Unknown_70h = reader.ReadSingle();
+            this.Min = reader.ReadVector3();
+            this.Max = reader.ReadVector3();
             this.Unknown_74h = reader.ReadSingle();
             this.Unknown_78h = reader.ReadSingle();
             this.Unknown_7Ch = reader.ReadSingle();
@@ -164,12 +158,8 @@ namespace RageLib.Resources.GTA5.PC.Drawables
             writer.Write(this.Unknown_50h);
             writer.Write(this.Unknown_54h);
             writer.Write(this.Unknown_58h);
-            writer.Write(this.Unknown_5Ch);
-            writer.Write(this.Unknown_60h);
-            writer.Write(this.Unknown_64h);
-            writer.Write(this.Unknown_68h);
-            writer.Write(this.Unknown_6Ch);
-            writer.Write(this.Unknown_70h);
+            writer.Write(this.Min);
+            writer.Write(this.Max);
             writer.Write(this.Unknown_74h);
             writer.Write(this.Unknown_78h);
             writer.Write(this.Unknown_7Ch);
