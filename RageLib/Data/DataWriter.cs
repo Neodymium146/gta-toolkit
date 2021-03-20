@@ -175,6 +175,21 @@ namespace RageLib.Data
         }
 
         /// <summary>
+        /// Writes a string with fixed length (the string gets padded if shorter or trimmed if longer)
+        /// </summary>
+        public void Write(string value, int fixedLength)
+        {
+            int min = (value.Length <= fixedLength) ? value.Length : fixedLength;
+            
+            int i;
+            for (i = 0; i < min; i++)
+                WriteToStreamRaw((byte)value[i]);
+
+            for (; i < fixedLength; i++)
+                WriteToStreamRaw((byte)0);
+        }
+
+        /// <summary>
         /// Writes a vector with two single precision floating point values
         /// </summary>
         /// <param name="value"></param>

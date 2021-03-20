@@ -24,49 +24,35 @@ using System.Text;
 
 namespace RageLib.Resources.Common
 {
-    // TODO: rework this, consider handling fixed length strings in DataReader/DataWriter
-    public class string32_r : string_r
+    public class string32_r : ResourceSystemBlock
     {
         public override long BlockLength => 0x20;
 
-        // structure data
-        private byte[] Data;
-
-        public new string Value
-        {
-            get
-            {
-                return Data != null ? Encoding.ASCII.GetString(Data).TrimEnd('\0') : null;
-            }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                    return;
-
-                string name = value.Length > 0x20 ? value.Substring(0, 0x20) : value.PadRight(0x20, '\0');
-                Data = Encoding.ASCII.GetBytes(name);
-            }
-        }
-
         /// <summary>
-        /// Reads the data-block from a stream.
+        /// Gets or sets the string value.
         /// </summary>
+        public string Value { get; set; }
+
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
-            // read structure data
-            this.Data = reader.ReadBytes(0x20);
+            Value = reader.ReadString(32).Trim('\0');
         }
 
-        /// <summary>
-        /// Writes the data-block to a stream.
-        /// </summary>
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
-            if (string.IsNullOrEmpty(Value)) 
-                Value = "INVALID_STRING";
+            writer.Write(Value, 32);
+        }
 
-            // write structure data
-            writer.Write(this.Data);
+        public static explicit operator string(string32_r value)
+        {
+            return value.Value;
+        }
+
+        public static explicit operator string32_r(string value)
+        {
+            var x = new string32_r();
+            x.Value = value;
+            return x;
         }
     }
 }
