@@ -20,7 +20,9 @@
     THE SOFTWARE.
 */
 
+using RageLib.Numerics;
 using RageLib.Resources.Common;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -146,6 +148,44 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             if (OwnedTypeAndIncludeFlags != null) list.Add(OwnedTypeAndIncludeFlags);
             if (BVH != null) list.Add(BVH);
             return list.ToArray();
+        }
+
+        public override void Rebuild()
+        {
+            base.Rebuild();
+
+            if (Bounds is null || Bounds.data_items is null)
+            {
+                MaxNumBounds = 0;
+                NumBounds = 0;
+                CurrentMatrices = null;
+                LastMatrices = null;
+                ChildBoundingBoxes = null;
+                TypeAndIncludeFlags = null;
+                OwnedTypeAndIncludeFlags = null;
+                return;
+            }
+
+            MaxNumBounds = (ushort)Bounds.Count;
+            NumBounds = MaxNumBounds;
+
+            // TODO:    Try to reuse existing arrays if already of the required size  
+            UpdateChildrenAabb();
+        }
+
+        private void UpdateChildrenAabb()
+        {
+            Aabb[] boundingBoxes = new Aabb[NumBounds];
+
+            for (int i = 0; i < NumBounds; i++)
+            {
+                var bound = Bounds[i];
+                var min = new Vector4(bound.BoundingBoxMin, BitConverter.Int32BitsToSingle((int)bound.RefCount));
+                var max = new Vector4(bound.BoundingBoxMax, bound.Margin);
+                boundingBoxes[i] = new Aabb(min, max);
+            }
+
+            ChildBoundingBoxes = new SimpleArray<Aabb>(boundingBoxes);
         }
     }
 }
