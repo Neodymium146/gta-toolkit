@@ -171,6 +171,10 @@ namespace RageLib.Resources.GTA5.PC.Bounds
 
             // TODO:    Try to reuse existing arrays if already of the required size  
             UpdateChildrenAabb();
+            
+            // This should be invoked only if we aren't editing an existing asset, which might contain actual transform data!
+            // TODO:    Once we have bounds wrappers, we should cache transform on loading so we can retrieve it on saving!
+            //UpdateChildrenMatrices();
         }
 
         private void UpdateChildrenAabb()
@@ -186,6 +190,25 @@ namespace RageLib.Resources.GTA5.PC.Bounds
             }
 
             ChildBoundingBoxes = new SimpleArray<Aabb>(boundingBoxes);
+        }
+
+        private void UpdateChildrenMatrices()
+        {
+            var mat = Matrix4x4.Identity;
+            mat.M14 = FloatHelpers.SignalingNaN;
+            mat.M24 = FloatHelpers.SignalingNaN;
+            mat.M34 = FloatHelpers.SignalingNaN;
+            mat.M44 = FloatHelpers.SignalingNaN;
+
+            Matrix4x4[] matrices = new Matrix4x4[NumBounds];
+
+            for (int i = 0; i < NumBounds; i++)
+            {
+                matrices[i] = mat;
+            }
+
+            CurrentMatrices = new SimpleArray<Matrix4x4>(matrices);
+            LastMatrices = new SimpleArray<Matrix4x4>((Matrix4x4[])matrices.Clone());
         }
     }
 }
