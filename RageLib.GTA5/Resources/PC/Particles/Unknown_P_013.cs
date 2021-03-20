@@ -30,14 +30,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override long BlockLength => 0x58;
 
         // structure data
-        public uint Unknown_0h; // 0x73616942
-        public uint Unknown_4h; // 0x6E694C20
-        public uint Unknown_8h; // 0x6553206B
-        public uint Unknown_Ch; // 0x30305F74
-        public uint Unknown_10h; // 0x00000000
-        public uint Unknown_14h; // 0x00000000
-        public uint Unknown_18h; // 0x00000000
-        public uint Unknown_1Ch; // 0x00000000
+        public string32_r Unknown_0h;
         public ulong Unknown_20h; // 0x0000000000000000
         public ulong Unknown_28h; // 0x0000000000000000
         public ulong Unknown_30h; // 0x0000000000000000
@@ -52,14 +45,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Read(ResourceDataReader reader, params object[] parameters)
         {
             // read structure data
-            this.Unknown_0h = reader.ReadUInt32();
-            this.Unknown_4h = reader.ReadUInt32();
-            this.Unknown_8h = reader.ReadUInt32();
-            this.Unknown_Ch = reader.ReadUInt32();
-            this.Unknown_10h = reader.ReadUInt32();
-            this.Unknown_14h = reader.ReadUInt32();
-            this.Unknown_18h = reader.ReadUInt32();
-            this.Unknown_1Ch = reader.ReadUInt32();
+            this.Unknown_0h = reader.ReadBlock<string32_r>();
             this.Unknown_20h = reader.ReadUInt64();
             this.Unknown_28h = reader.ReadUInt64();
             this.Unknown_30h = reader.ReadUInt64();
@@ -75,14 +61,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override void Write(ResourceDataWriter writer, params object[] parameters)
         {
             // write structure data
-            writer.Write(this.Unknown_0h);
-            writer.Write(this.Unknown_4h);
-            writer.Write(this.Unknown_8h);
-            writer.Write(this.Unknown_Ch);
-            writer.Write(this.Unknown_10h);
-            writer.Write(this.Unknown_14h);
-            writer.Write(this.Unknown_18h);
-            writer.Write(this.Unknown_1Ch);
+            writer.WriteBlock(this.Unknown_0h);
             writer.Write(this.Unknown_20h);
             writer.Write(this.Unknown_28h);
             writer.Write(this.Unknown_30h);
@@ -95,6 +74,7 @@ namespace RageLib.Resources.GTA5.PC.Particles
         public override Tuple<long, IResourceBlock>[] GetParts()
         {
             return new Tuple<long, IResourceBlock>[] {
+                new Tuple<long, IResourceBlock>(0x0, Unknown_0h),
                 new Tuple<long, IResourceBlock>(0x40, Unknown_40h)
             };
         }
