@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RageLib.Resources
 {
@@ -96,74 +97,57 @@ namespace RageLib.Resources
 
         public class ResourceBuilderBlockSet
         {
-            private const int numBuckets = 16;
-            private readonly LinkedList<IResourceBlock>[] buckets;
-
+            private readonly Dictionary<long,LinkedList<IResourceBlock>> buckets;
+            private List<long> _orderedKeys;
+            private int _count;
+            
             public IResourceBlock RootBlock = null;
-
-            public int Count
-            {
-                get
-                {
-                    int count = 0;
-
-                    for (int i = 0; i < numBuckets; i++)
-                        count += buckets[i].Count;
-
-                    return count;
-                }
-            }
-
-            public static int GetBucketIndex(long size)
-            {
-                ulong tmp = 1;
-                int index = 0;
-
-                while (tmp < (ulong)size)
-                {
-                    tmp <<= 1;
-                    index++;
-                }
-
-                if (index >= numBuckets) return numBuckets - 1;
-
-                return index;
-            }
+            public int Count => _count;
 
             public IResourceBlock GetBestBlock(long size)
             {
                 if (size == 0) return null;
+                
+                long bucketKey = 0;
+                LinkedList<IResourceBlock> bucketValue = null;
 
-                int index = GetBucketIndex(size);
-
-                // Get the target bucket
-                while (buckets[index].Count < 1)
+                // If there is a bucket for blocks of the exact requested size
+                if (buckets.TryGetValue(size, out LinkedList<IResourceBlock> bucket))
                 {
-                    index--;
-                    if (index < 0) return null;
+                    bucketKey = size;
+                    bucketValue = bucket;
+                }
+                else
+                {
+                    // Iterate the ordered keys until we find a buckets for blocks of size less or equal to the requested size
+                    foreach (var key in _orderedKeys)
+                    {
+                        if (key > size)
+                            continue;
+
+                        bucketValue = buckets[key];
+                        bucketKey = key;
+                        break;
+                    }
                 }
 
-                var current = GetBestBlockFromBucket(size, index);
-                return current;
-            }
+                // In case no bucket is found, then we have no block to fit the requested size
+                if (bucketValue is null)
+                    return null;
 
-            public IResourceBlock GetBestBlockFromBucket(long size, int index)
-            {
-                var bucket = buckets[index];
-                var current = bucket.First;
+                // Get the block
+                var lastNode = bucketValue.Last;
+                bucketValue.RemoveLast();
+                _count--;
 
-                while (current is not null && current.Value.BlockLength > size)
+                // If such bucket hasn't any block left, remove it and update ordered keys
+                if (bucketValue.Count == 0)
                 {
-                    current = current.Next;
+                    buckets.Remove(bucketKey);
+                    _orderedKeys.Remove(bucketKey);
                 }
 
-                if (current is not null)
-                {
-                    bucket.Remove(current);
-                    return current.Value;
-                }
-
-                return null;
+                return lastNode.Value;
             }
 
             public ResourceBuilderBlockSet(IList<IResourceBlock> blocks, bool hasRootBlock)
@@ -173,32 +157,47 @@ namespace RageLib.Resources
 
                 int indexStart = 0;
 
+                _count = blocks.Count;
+
                 if (hasRootBlock)
                 {
                     RootBlock = blocks[0];
                     indexStart = 1;
+                    _count--;
                 }
 
-                List<IResourceBlock>[] lists = new List<IResourceBlock>[numBuckets];
-                for (int i = 0; i < numBuckets; i++)
-                {
-                    lists[i] = new List<IResourceBlock>();
-                }
+                buckets = new Dictionary<long, LinkedList<IResourceBlock>>();
 
                 for (int i = indexStart; i < blocks.Count; i++)
                 {
                     var block = blocks[i];
-                    var index = GetBucketIndex(block.BlockLength);
+                    long bucketKey = block.BlockLength;
 
-                    lists[index].Add(block);
+                    if (buckets.TryGetValue(bucketKey, out LinkedList<IResourceBlock> bucketValue))
+                        bucketValue.AddLast(block);
+                    else
+                    {
+                        var linkedList = new LinkedList<IResourceBlock>();
+                        linkedList.AddLast(block);
+                        buckets[bucketKey] = linkedList;
+                    }
                 }
 
-                buckets = new LinkedList<IResourceBlock>[numBuckets];
-                for (int i = 0; i < numBuckets; i++)
-                {
-                    lists[i].Sort((a, b) => b.BlockLength.CompareTo(a.BlockLength));
-                    buckets[i] = new LinkedList<IResourceBlock>(lists[i]);
-                }
+                _orderedKeys = buckets.Keys.ToList();
+                _orderedKeys.Sort((a, b) => b.CompareTo(a));
+                
+                // Because of central limit theorem the function of the block-size will have a normal distribution,
+                // with average being around 32 bytes (and a very small variance), so some buckets will still be too much long compared to the others
+                // So using the buckets approach increased a lot the performances, but it's not the optimal case.
+                // A better approach would be to have a bucket for each different size,
+                // which in the worst case would require to have a number of checks equals to the number of different sizes
+                // this number of sizes seems always be a very small amount (not even 100 in core.ypt which is the asset with the highest amount of blocks),
+                // but once we have our bucket we can just pick the tail/head item
+                // compared to the actual approach which allows to access a bucket in constant time but the number of elements to iterate in such bucket could be still very high!
+
+                // So the idea is to use something like 
+                // Dictionary<long,LinkedList<IResourceBlock>> Buckets
+                // And have a property to cache keys collection sorted which removes the specific key when a buckets has sorted all its blocks
             }
         }
 
